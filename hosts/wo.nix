@@ -73,6 +73,8 @@
           sshKeys = [ "D10BD70AF981C671C8EE4D288F23BAE560675CA3" ];
         };
       };
+
+      manual.manpages.enable = false;
     };
   };
 
