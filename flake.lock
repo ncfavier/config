@@ -5,16 +5,15 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1591751635,
-        "narHash": "sha256-KgGtyFlkI/fsp+j8VEgJ/ynY9B91aX35Xp04HlDLRTo=",
+        "lastModified": 1600023128,
+        "narHash": "sha256-oSkMOe0rQ90bC5pfNSl85ren05cmk9Z9xrzrf5rVbr0=",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "b3fee796fcd5531693d9b84ece76ad6836bb1cfa",
+        "rev": "472ca211cac604efdf621337067a237be9df389e",
         "type": "github"
       },
       "original": {
         "owner": "rycee",
-        "ref": "bqv-flakes",
         "repo": "home-manager",
         "type": "github"
       }
