@@ -66,6 +66,34 @@
     useGlobalPkgs = true;
 
     users.n = {
+      programs = {
+        bash.enable = true;
+
+        readline = {
+          enable = true;
+          bindings = {
+            "\\e[A" = "history-search-backward";
+            "\\e[B" = "history-search-forward";
+          };
+        };
+
+        vim = {
+          enable = true;
+          plugins = with pkgs.vimPlugins; [ vim-nix ];
+        };
+
+        git = rec {
+          enable = true;
+          package = pkgs.gitAndTools.gitFull;
+          userName = "Naïm Favier";
+          userEmail = "n@monade.li";
+          signing = {
+            key = userEmail;
+            signByDefault = true;
+          };
+        };
+      };
+
       services = {
         gpg-agent = {
           enable = true;

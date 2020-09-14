@@ -15,7 +15,7 @@
         nixos.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ({ pkgs, ... }: {
+            ({ pkgs, lib, ... }: {
               networking.hostName = host;
 
               nix = {
@@ -29,7 +29,7 @@
                 };
               };
 
-              system.configurationRevision = self.rev;
+              system.configurationRevision = lib.mkIf (self ? rev) self.rev;
             })
             home-manager.nixosModules.home-manager
             (import (./hosts + "/${host}.nix"))
