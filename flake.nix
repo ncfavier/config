@@ -4,7 +4,7 @@
   inputs = {
     nixos.url = flake:nixpkgs/release-20.09;
     nixos-hardware.url = flake:nixos-hardware;
-    home-manager.url = github:rycee/home-manager/bqv-flakes;
+    home-manager.url = github:rycee/home-manager;
   };
 
   outputs = inputs: with inputs;
