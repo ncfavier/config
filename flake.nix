@@ -1,4 +1,6 @@
-{
+let
+  hosts = [ "wo" ];
+in {
   description = "ncfavier's configurations";
 
   inputs = {
@@ -7,31 +9,31 @@
     home-manager.url = github:rycee/home-manager/bqv-flakes;
   };
 
-  outputs = inputs: with inputs; let
-    nixosSystem = hostname: nixos.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ({ pkgs, ... }: {
-          networking.hostName = hostname;
+  outputs = inputs: with inputs; {
+    nixosConfigurations = nixos.lib.genAttrs hosts (host:
+      nixos.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ({ pkgs, ... }: {
+            networking.hostName = host;
 
-          nix = {
-            package = pkgs.nixFlakes;
-            extraOptions = ''
-              experimental-features = nix-command flakes ca-references
-            '';
-            registry = {
-              config.flake = self;
-              nixos.flake = nixos;
+            nix = {
+              package = pkgs.nixFlakes;
+              extraOptions = ''
+                experimental-features = nix-command flakes ca-references
+              '';
+              registry = {
+                config.flake = self;
+                nixos.flake = nixos;
+              };
             };
-          };
 
-          system.configurationRevision = self.rev;
-        })
-        home-manager.nixosModules.home-manager
-        (import (./hosts + "/${hostname}.nix"))
-      ];
-    };
-  in {
-    nixosConfigurations = nixos.lib.genAttrs [ "wo" ] nixosSystem;
+            system.configurationRevision = self.rev;
+          })
+          home-manager.nixosModules.home-manager
+          (import (./hosts + "/${host}.nix"))
+        ];
+      }
+    );
   };
 }
