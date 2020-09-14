@@ -61,5 +61,20 @@
     extraGroups = [ "wheel" ];
   };
 
+  home-manager = {
+    useUserPackages = true;
+    useGlobalPkgs = true;
+
+    users.n = {
+      services = {
+        gpg-agent = {
+          enable = true;
+          enableSshSupport = true;
+          sshKeys = [ "D10BD70AF981C671C8EE4D288F23BAE560675CA3" ];
+        };
+      };
+    };
+  };
+
   system.stateVersion = "20.09";
 }
