@@ -113,7 +113,7 @@
             c = "!git commit --allow-empty-message -m \"$*\" #";
             ca = "!git commit --allow-empty-message -am \"$*\" #";
             ce = "commit --edit";
-            cf = "!git commit -m \"$(fortune -sn 60 | tr -s '[:space:]' '[ *]')\"";
+            cf = "!git commit -m \"$(${pkgs.fortune}/bin/fortune -sn 60 | tr -s '[:space:]' '[ *]')\"";
             co = "checkout";
             r = "reset";
             p = "push";
