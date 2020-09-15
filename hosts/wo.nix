@@ -67,7 +67,12 @@
 
     users.n = {
       programs = {
-        bash.enable = true;
+        bash = {
+          enable = true;
+          shellAliases = {
+            config = "sudo nixos-rebuild --flake ~/config";
+          };
+        };
 
         readline = {
           enable = true;
@@ -80,6 +85,9 @@
         vim = {
           enable = true;
           plugins = with pkgs.vimPlugins; [ vim-nix ];
+          settings = {
+            mouse = "a";
+          };
         };
 
         git = rec {
@@ -90,6 +98,31 @@
           signing = {
             key = userEmail;
             signByDefault = true;
+          };
+          aliases = {
+            i = "init";
+            s = "status";
+            d = "diff";
+            dh = "diff HEAD";
+            dc = "diff --cached";
+            do = "diff origin";
+            b = "branch";
+            a = "add";
+            aa = "add -A";
+            au = "add -u";
+            c = "!git commit --allow-empty-message -m \"$*\" #";
+            ca = "!git commit --allow-empty-message -am \"$*\" #";
+            ce = "commit --edit";
+            cf = "!git commit -m \"$(fortune -sn 60 | tr -s '[:space:]' '[ *]')\"";
+            co = "checkout";
+            r = "reset";
+            p = "push";
+            pa = "push --all";
+            pl = "pull --rebase --autostash";
+            cl = "clone";
+            cl1 = "clone --depth=1";
+            l = "log --graph --oneline";
+            la = "log --graph --oneline --all";
           };
         };
       };
