@@ -52,8 +52,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    tmux
     vim
+    rxvt-unicode-unwrapped.terminfo
   ];
 
   services = {
