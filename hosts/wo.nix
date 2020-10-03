@@ -7,18 +7,15 @@
     loader.grub = {
       enable = true;
       version = 2;
-      device = "/dev/sda";
-      #device = "/dev/vda";
+      device = "/dev/vda";
     };
 
-    initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "sd_mod" ];
-    #initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];
+    initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/7a2d7da5-0e2b-40d6-81ee-34734a4eaced";
-      #device = "/dev/disk/by-uuid/c4acae87-9dd9-4675-b5eb-2dd059955e8f";
+      device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
   };
