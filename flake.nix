@@ -43,49 +43,48 @@
           secretsPath = toString ./secrets;
           profilesPath = toString ./profiles;
         };
-        modules =
-          [
-            sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            simple-nixos-mailserver.nixosModule
-            ({ config, pkgs, me, my, ... }: {
-              _module.args = {
-                pkgsUnstable = import nixpkgs { inherit (config.nixpkgs) system; };
+        modules = [
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          simple-nixos-mailserver.nixosModule
+          ({ config, pkgs, me, my, ... }: {
+            _module.args = {
+              pkgsUnstable = import nixpkgs { inherit (config.nixpkgs) system; };
 
-                me = "n";
-                my = config.users.users.${me} // {
-                  realName = "Naïm Favier";
-                  email = "${me}@monade.li";
-                  emailFor = what: "${me}+${what}@monade.li";
-                };
-                myHm = config.home-manager.users.${me};
-                configPath = "${my.home}/git/config";
+              me = "n";
+              my = config.users.users.${me} // {
+                realName = "Naïm Favier";
+                email = "${me}@monade.li";
+                emailFor = what: "${me}+${what}@monade.li";
               };
+              myHm = config.home-manager.users.${me};
+              configPath = "${my.home}/git/config";
+            };
 
-              networking.hostName = host;
+            networking.hostName = host;
 
-              system.configurationRevision = self.rev or "dirty-${self.lastModifiedDate}";
+            system.configurationRevision = self.rev or "dirty-${self.lastModifiedDate}";
 
-              nix = {
-                package = pkgs.nixFlakes;
-                nixPath = [ "nixpkgs=${nixpkgs}" "nixos=${nixos}" ];
-                registry = {
-                  config.flake = self;
-                  nixos.flake = nixos;
-                };
-                extraOptions = ''
-                  experimental-features = nix-command flakes ca-references
-                '';
+            nix = {
+              package = pkgs.nixFlakes;
+              nixPath = [ "nixpkgs=${nixpkgs}" "nixos=${nixos}" ];
+              registry = {
+                config.flake = self;
+                nixos.flake = nixos;
               };
+              extraOptions = ''
+                experimental-features = nix-command flakes ca-references
+              '';
+            };
 
-              sops = {
-                gnupgHome = "${my.home}/.gnupg";
-                sshKeyPaths = [];
-                validateSopsFiles = false;
-              };
-            })
-            path
-          ] ++ builtins.attrValues self.nixosModules;
+            sops = {
+              gnupgHome = "${my.home}/.gnupg";
+              sshKeyPaths = [];
+              validateSopsFiles = false;
+            };
+          })
+          path
+        ] ++ builtins.attrValues self.nixosModules;
       };
     };
 
