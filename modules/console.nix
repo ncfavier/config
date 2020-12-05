@@ -1,0 +1,5 @@
+{
+  console = {
+    earlySetup = true;
+  };
+}
