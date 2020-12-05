@@ -74,32 +74,19 @@ in {
       weechat-unwrapped = super.weechat-unwrapped.overrideAttrs (old: {
         patches = [
           (builtins.toFile "weechat-patch" ''
-            diff --git a/src/core/weechat.c b/src/core/weechat.c
-            index fd636979c..300926320 100644
+            Avoid reloading configuration on SIGHUP (https://github.com/weechat/weechat/issues/1595)
             --- a/src/core/weechat.c
             +++ b/src/core/weechat.c
-            @@ -695,7 +695,7 @@ weechat_locale_check ()
-             void
-             weechat_sighup ()
-             {
+            @@ -698 +698 @@ weechat_sighup ()
             -    weechat_reload_signal = SIGHUP;
             +    weechat_quit_signal = SIGHUP;
-             }
 
-             /*
-            diff --git a/src/plugins/exec/exec.c b/src/plugins/exec/exec.c
-            index 5daf7ec83..7a0da49f5 100644
+            Revert https://github.com/weechat/weechat/commit/dff1bf6f
             --- a/src/plugins/exec/exec.c
             +++ b/src/plugins/exec/exec.c
-            @@ -89,7 +89,7 @@ exec_search_by_id (const char *id)
-                 error = NULL;
-                 number = strtol (id, &error, 10);
-                 if (!error || error[0])
+            @@ -92 +92 @@ exec_search_by_id (const char *id)
             -        return NULL;
             +        number = -1;
-
-                 for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
-                      ptr_exec_cmd = ptr_exec_cmd->next_cmd)
           '')
         ];
       });
