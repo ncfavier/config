@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "dns": {
+      "inputs": {
+        "nixpkgs": [
+          "nixos"
+        ]
+      },
+      "locked": {
+        "lastModified": 1606918933,
+        "narHash": "sha256-nkayeLpTvkj1IbwwUKZtz8Nxqxyl7UOuyDvSx5Y0WVY=",
+        "owner": "kirelagin",
+        "repo": "nix-dns",
+        "rev": "985797066ffaf8fb05693169c7c2c3222c704365",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kirelagin",
+        "repo": "nix-dns",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -82,6 +102,7 @@
     },
     "root": {
       "inputs": {
+        "dns": "dns",
         "home-manager": "home-manager",
         "monade.li": "monade.li",
         "nixos": "nixos",

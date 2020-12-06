@@ -9,6 +9,7 @@
 in {
   sops.secrets.passwd = {
     sopsFile = "${secretsPath}/passwd.json";
+    format = "json";
     key = config.networking.hostName;
   };
 
@@ -28,4 +29,8 @@ in {
       } // authentication;
     };
   };
+
+  system.activationScripts."home-${me}-permissions" = lib.stringAfter [ "users" ] ''
+    chmod =755 ${my.home}
+  '';
 }

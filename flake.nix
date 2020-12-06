@@ -13,6 +13,10 @@
       url = "github:rycee/home-manager/release-20.09";
       inputs.nixpkgs.follows = "nixos";
     };
+    dns = {
+      url = "github:kirelagin/nix-dns";
+      inputs.nixpkgs.follows = "nixos";
+    };
     "monade.li" = {
       url = "github:ncfavier/monade.li";
       flake = false;

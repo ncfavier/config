@@ -3,6 +3,7 @@
     "${modulesPath}/profiles/qemu-guest.nix"
 
     "${profilesPath}/wireguard-server.nix"
+    "${profilesPath}/dns.nix"
     "${profilesPath}/nginx.nix"
     "${profilesPath}/mailserver.nix"
     "${profilesPath}/weechat"

@@ -7,6 +7,7 @@ in {
 
   sops.secrets.wireguard = {
     sopsFile = "${secretsPath}/wireguard.json";
+    format = "json";
     key = config.networking.hostName;
   };
 
