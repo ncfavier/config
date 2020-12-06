@@ -1,4 +1,4 @@
-{ inputs, lib, ... }: let
+{ inputs, ... }: let
   dns = inputs.dns.lib;
   ipv4 = "199.247.15.22";
   ipv6 = "2001:19f0:6801:413:5400:2ff:feff:23e0";
