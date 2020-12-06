@@ -35,7 +35,7 @@ in {
         {
           p = "quarantine";
           sp = "quarantine";
-          rua = "mailto:n+dmarc@monade.li";
+          rua = "mailto:dmarc@monade.li";
         }
       ];
 
