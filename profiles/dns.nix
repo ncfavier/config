@@ -9,50 +9,45 @@ in {
     ipTransparent = true;
     ratelimit.enable = true;
 
-    zones."monade.li" = {
-      data = with dns.combinators; let
-        theHost = {
-          A = [ (a ipv4) ];
-          AAAA = [ (aaaa ipv6) ];
-        };
+    zones."monade.li".data = with dns.combinators; let
+      theHost = {
+        A = [ (a ipv4) ];
+        AAAA = [ (aaaa ipv6) ];
+      };
+      github.CNAME = [ "ncfavier.github.io." ];
+    in dns.toString "monade.li" (theHost // {
+      SOA = {
+        nameServer = "@";
+        adminEmail = "dns@monade.li";
+        serial = 2020120600;
+      };
 
-        github.CNAME = [ "ncfavier.github.io." ];
+      NS = [ "@" ];
 
-        zone = theHost // {
-          SOA = {
-            nameServer = "@";
-            adminEmail = "dns@monade.li";
-            serial = 2020120600;
-          };
+      MX = [ (mx.mx 10 "@") ];
+      DKIM = [
+        {
+          selector = "mail";
+          p = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/MUKMp4lOoDhaeyIh5hzVNkr5eJ7GMekGRCvVMpSx2DWgUPg8UR68VT1ObmEAQZVDd696XdRNFgFJZuaGSTqcjPfGVq7e+DFVZcRZbISat8mlvOyuDe7J2EwZQxn3gup9hwbesfFPCY6V+ZMwLylT0j974xqJPxEvkebZ+DylUwIDAQAB";
+        }
+      ];
+      DMARC = [
+        {
+          p = "quarantine";
+          sp = "quarantine";
+          rua = "mailto:n+dmarc@monade.li";
+        }
+      ];
 
-          NS = [ "@" ];
+      TXT = [ (spf.strict [ "mx" ]) ];
 
-          MX = [ (mx.mx 10 "@") ];
-          DKIM = [
-            {
-              selector = "mail";
-              p = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/MUKMp4lOoDhaeyIh5hzVNkr5eJ7GMekGRCvVMpSx2DWgUPg8UR68VT1ObmEAQZVDd696XdRNFgFJZuaGSTqcjPfGVq7e+DFVZcRZbISat8mlvOyuDe7J2EwZQxn3gup9hwbesfFPCY6V+ZMwLylT0j974xqJPxEvkebZ+DylUwIDAQAB";
-            }
-          ];
-          DMARC = [
-            {
-              p = "quarantine";
-              sp = "quarantine";
-              rua = "mailto:n+dmarc@monade.li";
-            }
-          ];
+      CAA = letsEncrypt "dns+caa@monade.li";
 
-          TXT = [ (spf.strict [ "mx" ]) ];
-
-          CAA = letsEncrypt "dns+caa@monade.li";
-
-          subdomains = {
-            "*" = theHost;
-            inherit github;
-            glam = github;
-          };
-        };
-      in dns.toString "monade.li" zone;
-    };
+      subdomains = {
+        "*" = theHost;
+        inherit github;
+        glam = github;
+      };
+    });
   };
 }
