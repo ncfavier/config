@@ -50,4 +50,37 @@ in {
       };
     });
   };
+
+  services.unbound = {
+    enable = true;
+    allowedAccess = [ "127.0.0.1/8" "::1/128" "10.42.0.1/16" "fd42::0:1/16" ];
+    interfaces = [ "127.0.0.1" "::1" "10.42.0.1" "fd42::0:1" ];
+    forwardAddresses = [ "1.1.1.1" "1.0.0.1" ];
+    extraConfig = ''
+      local-data: "wo.wg42.  A    10.42.0.1"
+      local-data: "wo.wg42.  AAAA fd42::0:1"
+      local-data: "fu.wg42.  A    10.42.1.1"
+      local-data: "fu.wg42.  AAAA fd42::1:1"
+      local-data: "mo.wg42.  A    10.42.2.1"
+      local-data: "mo.wg42.  AAAA fd42::2:1"
+      local-data: "tsu.wg42. A    10.42.3.1"
+      local-data: "tsu.wg42. AAAA fd42::3:1"
+      local-data-ptr: "10.42.0.1 wo.wg42."
+      local-data-ptr: "fd42::0:1 wo.wg42."
+      local-data-ptr: "10.42.1.1 fu.wg42."
+      local-data-ptr: "fd42::1:1 fu.wg42."
+      local-data-ptr: "10.42.2.1 mo.wg42."
+      local-data-ptr: "fd42::2:1 mo.wg42."
+      local-data-ptr: "10.42.3.1 tsu.wg42."
+      local-data-ptr: "fd42::3:1 tsu.wg42."
+    '';
+  };
+
+  networking.search = [ "wg42" ];
+  networking.nameservers = [ "127.0.0.1" "::1" ];
+
+  networking.firewall = {
+    allowedTCPPorts = [ 53 ];
+    allowedUDPPorts = [ 53 ];
+  };
 }

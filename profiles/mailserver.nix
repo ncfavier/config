@@ -12,6 +12,7 @@ in {
     enableImapSsl = true;
     enableSubmission = false;
     enableSubmissionSsl = true;
+    localDnsResolver = false;
     fqdn = "monade.li";
     domains = [ "monade.li" ];
     certificateScheme = 1;

@@ -36,17 +36,6 @@ in {
       };
     };
 
-    hosts = {
-      "10.42.0.1" = [ "wo" ];
-      "fd42::0:1" = [ "wo" ];
-      "10.42.1.1" = [ "fu" ];
-      "fd42::1:1" = [ "fu" ];
-      "10.42.2.1" = [ "mo" ];
-      "fd42::2:1" = [ "mo" ];
-      "10.42.3.1" = [ "tsu" ];
-      "fd42::3:1" = [ "tsu" ];
-    };
-
     firewall = {
       trustedInterfaces = [ interface ];
       allowedUDPPorts = [ port ];
