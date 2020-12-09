@@ -59,16 +59,16 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1606262943,
-        "narHash": "sha256-N6BrqYBBQKJyXO2ckcO4EbumQGqGvc0s+tvUpUn7KkM=",
+        "lastModified": 1607432359,
+        "narHash": "sha256-hfznJ/1ikvkSQ7N1/+CWFK8XzXKOsQZA8Hsj2fnc7nE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7a7bae5f7f8525b13da30f7fe50a5f51255c2775",
+        "rev": "78dc359abf8217da2499a6da0fcf624b139d7ac3",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "release-20.09",
+        "ref": "nixos-20.09",
         "type": "indirect"
       }
     },
@@ -86,17 +86,18 @@
         "type": "indirect"
       }
     },
-    "nixpkgs": {
+    "nixos-unstable": {
       "locked": {
-        "lastModified": 1606794009,
-        "narHash": "sha256-wVn7BW2KhZbeeIY6g2K0nu4jcE6WBxtuDBgxL+9teA8=",
+        "lastModified": 1607479660,
+        "narHash": "sha256-TxyUTkUUl9m8vuABhOxbN56BRn0mFQlI1KHaGZ8RqcY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a87ab948d216fea24bebed3e777bff5efab97f3e",
+        "rev": "3537ea7a8358abe11d07223812305faebf3d5074",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
         "type": "indirect"
       }
     },
@@ -107,7 +108,7 @@
         "monade.li": "monade.li",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixos-unstable": "nixos-unstable",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix"
       }

@@ -2,8 +2,8 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixpkgs.url = "flake:nixpkgs";
-    nixos.url = "flake:nixpkgs/release-20.09";
+    nixos.url          = "flake:nixpkgs/nixos-20.09";
+    nixos-unstable.url = "flake:nixpkgs/nixpkgs-unstable"; # TODO change to nixos-unstable
     nixos-hardware.url = "flake:nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -51,9 +51,11 @@
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           simple-nixos-mailserver.nixosModule
-          ({ config, pkgs, me, my, ... }: {
+          ({ config, pkgs, me, my, profilesPath, ... }: {
+            imports = [ "${profilesPath}" ];
+
             _module.args = {
-              pkgsUnstable = import nixpkgs { inherit (config.nixpkgs) system; };
+              pkgsUnstable = import nixos-unstable { inherit (config.nixpkgs) system; };
 
               me = "n";
               my = config.users.users.${me} // {
@@ -71,7 +73,7 @@
 
             nix = {
               package = pkgs.nixFlakes;
-              nixPath = [ "nixpkgs=${nixpkgs}" "nixos=${nixos}" ];
+              nixPath = [ "nixos=${nixos}" "nixos-unstable=${nixos-unstable}" ];
               registry = {
                 config.flake = self;
                 nixos.flake = nixos;

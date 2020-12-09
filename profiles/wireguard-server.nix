@@ -3,7 +3,7 @@
   port = 500;
 in {
   disabledModules = [ "services/networking/nat.nix" ];
-  imports = [ "${inputs.nixpkgs}/nixos/modules/services/networking/nat.nix" ];
+  imports = [ "${inputs.nixos-unstable}/nixos/modules/services/networking/nat.nix" ];
 
   sops.secrets.wireguard = {
     sopsFile = "${secretsPath}/wireguard.json";
