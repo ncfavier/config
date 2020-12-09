@@ -18,5 +18,7 @@
       colorScheme = 1;
       treeView = true;
     };
+
+    home.file.".hushlogin".text = "";
   };
 }
