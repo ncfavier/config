@@ -1,4 +1,4 @@
-{ pkgs, me, ... }: {
+{ pkgs, lib, me, ... }: {
   #programs.vim = {
   #  defaultEditor = true;
   #  package = pkgs.vim_configurable.customize {
@@ -22,7 +22,7 @@
 
   home-manager.users.${me}.programs.vim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs.vimPlugins; lib.mkForce [
       nerdtree
       nerdcommenter
       vim-surround

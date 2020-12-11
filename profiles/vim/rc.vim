@@ -33,7 +33,7 @@ set hidden
 set hlsearch
 set ignorecase
 set incsearch
-set laststatus=1 " TODO not working
+set laststatus=1
 set modeline
 set mouse=a
 set nonumber
