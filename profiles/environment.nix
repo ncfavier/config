@@ -9,6 +9,7 @@
       SYSTEMD_LESS = LESS;
       MANOPT = "--no-hyphenation";
       MANPAGER = "less -+F";
+      NIX_SHELL_PRESERVE_PROMPT = "1";
     };
   };
 

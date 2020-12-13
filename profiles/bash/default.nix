@@ -35,22 +35,9 @@
         watch = "watch ";
       };
       initExtra = ''
-        stty -ixon
-
-        set -b +H
-
         ${builtins.readFile ./functions.bash}
 
-        PS1='\[\e[0m\]''\'''${SSH_CONNECTION+$(hostname_short) }'\[\e[1m\]\w\[\e[0m\] \$ '
-        PS2='\[\e[0m\]> '
-        PROMPT_COMMAND='printf "\\033]0;%s\\007" "''${SSH_CONNECTION+$HOSTNAME:}$(pwd_short)"'
-
-        if [[ $TERM != *linux* ]]; then
-            trap '(( AT_PROMPT )) && AT_PROMPT=0 SECONDS_LAST=$SECONDS' debug
-            PROMPT_COMMAND+=''${PROMPT_COMMAND:+; }'(( SECONDS - SECONDS_LAST >= 3 )) && { (( SECONDS_ELAPSED = SECONDS - SECONDS_LAST )); printf \\a; }; AT_PROMPT=1'
-        fi
-
-        [[ -v BASH_STARTUP ]] && eval "$BASH_STARTUP"
+        ${builtins.readFile ./init.bash}
       '';
     };
 

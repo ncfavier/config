@@ -3,7 +3,7 @@
 
   inputs = {
     nixos.url          = "flake:nixpkgs/nixos-20.09";
-    nixos-unstable.url = "flake:nixpkgs/nixpkgs-unstable"; # TODO change to nixos-unstable
+    nixos-unstable.url = "flake:nixpkgs/nixos-unstable";
     nixos-hardware.url = "flake:nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -28,7 +28,7 @@
   };
 
   outputs = inputs: with inputs; let
-    inherit (nixos) lib;
+    inherit (nixos-unstable) lib;
 
     importDir = { dir, _import ? _: f: import f }: lib.pipe dir [
       builtins.readDir

@@ -152,6 +152,7 @@ command! ToggleTerm call ToggleTerm()
 if v:version >= 800
     noremap  <silent> <C-t> :ToggleTerm<Return>
     tnoremap <silent> <C-t> <C-w>:ToggleTerm<Return>
+    tnoremap <silent> <Esc><Esc> <C-\><C-n>
 
     function! ToggleTerm()
         if &buftype == 'terminal'

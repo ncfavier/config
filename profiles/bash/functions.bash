@@ -29,9 +29,13 @@ pwd_short() {
     printf '%s\n' "$pwd"
 }
 
-hostname_short() {
+hostname_pretty() {
     local -A kana=([wo]=ヲ [mo]=モ [fu]=フ [tsu]=ツ)
-    echo "${kana[$HOSTNAME]:-$HOSTNAME}"
+    if [[ $TERM != *linux* && -v 'kana[$HOSTNAME]' ]]; then
+        echo "${kana[$HOSTNAME]}"
+    else
+        echo "$HOSTNAME"
+    fi
 }
 
 # Files
