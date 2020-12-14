@@ -14,5 +14,6 @@
     "${profilesPath}/tmux.nix"
     "${profilesPath}/users.nix"
     "${profilesPath}/vim"
+    "${profilesPath}/ghci.nix"
   ];
 }
