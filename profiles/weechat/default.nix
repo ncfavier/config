@@ -12,11 +12,12 @@
     "go.py"
     "screen_away.py"
     "title.py"
+    "tmux_env.py"
   ];
 in {
   system.activationScripts."linger-${me}" = lib.stringAfter [ "users" ] ''
     /run/current-system/systemd/bin/loginctl enable-linger ${me}
-  '';
+  ''; # TODO module
 
   sops.secrets.weechat-sec = {
     sopsFile = "${secretsPath}/weechat-sec";
@@ -46,13 +47,10 @@ in {
             '';
           };
         };
-        PATH = lib.replaceStrings [ "$USER" "$HOME" ] [ me my.home ]
-          (lib.makeBinPath ([ weechat ] ++ config.environment.profiles));
-      in {
+      in with pkgs; {
         Type = "forking";
-        Environment = "PATH=${PATH}";
-        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d weechat";
-        ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off";
+        ExecStart     = "${tmux}/bin/tmux -L weechat new-session -s weechat -d ${bash}/bin/bash -lc 'exec ${weechat}/bin/weechat'";
+        ExecStartPost = "${tmux}/bin/tmux -L weechat set-option status off";
       };
     };
 
