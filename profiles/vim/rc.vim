@@ -20,6 +20,12 @@ let vim_markdown_math = 1
 let vim_markdown_frontmatter = 1
 let vim_markdown_new_list_item_indent = 0
 
+let g:haskell_enable_quantification = 1
+let g:haskell_enable_recursivedo = 1
+let g:haskell_enable_arrowsyntax = 1
+let g:haskell_enable_pattern_synonyms = 1
+let g:haskell_enable_typeroles = 1
+
 " Options
 
 set autoindent

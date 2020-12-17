@@ -121,15 +121,15 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1606665895,
-        "narHash": "sha256-zqSho3fFGlDPPJ+ptnIkzDChGXbOjrV4xpZL7Dn/FAY=",
-        "owner": "ncfavier",
+        "lastModified": 1608045284,
+        "narHash": "sha256-tyvjh+B3M/ig1Y1KQ3E3eJjZNmO5+vfyqL/Lrkdrrt8=",
+        "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
-        "rev": "037e8f9e8ef34173ab9b0e6f1fb15c17c5b6d942",
+        "rev": "ae89eafb817f6c691cb0e97f9e67cd9204ada3a4",
         "type": "gitlab"
       },
       "original": {
-        "owner": "ncfavier",
+        "owner": "simple-nixos-mailserver",
         "repo": "nixos-mailserver",
         "type": "gitlab"
       }

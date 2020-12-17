@@ -7,7 +7,6 @@
     "${profilesPath}/nginx.nix"
     "${profilesPath}/mailserver.nix"
     "${profilesPath}/weechat"
-    "${profilesPath}/hydra.nix"
     "${profilesPath}/syncthing.nix"
     "${profilesPath}/ulmaoc-topic.nix"
   ];
@@ -15,7 +14,6 @@
   boot = {
     loader.grub = {
       enable = true;
-      version = 2;
       device = "/dev/vda";
     };
 

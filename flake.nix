@@ -22,7 +22,7 @@
       flake = false;
     };
     simple-nixos-mailserver = {
-      url = "gitlab:ncfavier/nixos-mailserver";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixos";
     };
   };
@@ -49,8 +49,6 @@
         };
         modules = [
           sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          simple-nixos-mailserver.nixosModule
           ({ config, pkgs, me, my, profilesPath, ... }: {
             imports = [ "${profilesPath}" ];
 

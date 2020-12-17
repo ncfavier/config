@@ -1,4 +1,6 @@
-{ lib, ... }: {
+{ inputs, lib, ... }: {
+  imports = [ inputs.home-manager.nixosModules.home-manager];
+
   #options.home-manager.users = lib.mkOption {
   #  type = with lib.types; attrsOf (submoduleWith {
   #    modules = [];

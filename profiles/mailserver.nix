@@ -1,6 +1,8 @@
-{ config, my, secretsPath, ... }: let
+{ inputs, config, my, secretsPath, ... }: let
   cert = config.security.acme.certs."monade.li";
 in {
+  imports = [ inputs.simple-nixos-mailserver.nixosModule ];
+
   sops.secrets.mail = {
     sopsFile = "${secretsPath}/mail";
     format = "binary";
