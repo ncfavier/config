@@ -29,6 +29,14 @@ pwd_short() {
     printf '%s\n' "$pwd"
 }
 
+prompt_char() {
+    if [[ -v IN_NIX_SHELL || -v DIRENV_DIR ]]; then
+        printf '\1%s\2$\1%s\2' "$(tput setaf 4)" "$(tput sgr0)"
+    else
+        printf '$'
+    fi
+}
+
 hostname_pretty() {
     local -A kana=([wo]=ヲ [mo]=モ [fu]=フ [tsu]=ツ)
     if [[ $TERM != *linux* && -v 'kana[$HOSTNAME]' ]]; then

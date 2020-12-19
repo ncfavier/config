@@ -1,6 +1,7 @@
 { profilesPath, ... }: {
   imports = [
     "${profilesPath}/bash"
+    "${profilesPath}/direnv.nix"
     "${profilesPath}/console.nix"
     "${profilesPath}/environment.nix"
     "${profilesPath}/git.nix"

@@ -76,6 +76,7 @@
               registry = {
                 config.flake = self;
                 nixos.flake = nixos;
+                nixpkgs.flake = nixos-unstable;
               };
               extraOptions = ''
                 experimental-features = nix-command flakes ca-references
