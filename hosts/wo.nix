@@ -9,6 +9,7 @@
     "${profilesPath}/weechat"
     "${profilesPath}/syncthing.nix"
     "${profilesPath}/ulmaoc-topic.nix"
+    "${profilesPath}/lambdabot.nix"
   ];
 
   boot = {
