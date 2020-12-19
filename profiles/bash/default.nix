@@ -60,5 +60,10 @@
         "\\el"  = ''"\C-e | less"'';
       };
     };
+
+    z-lua = {
+      enable = true;
+      enableAliases = true;
+    };
   };
 }
