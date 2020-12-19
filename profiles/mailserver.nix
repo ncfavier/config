@@ -4,7 +4,7 @@ in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
 
   sops.secrets.mail = {
-    sopsFile = "${secretsPath}/mail";
+    sopsFile = secretsPath + "/mail";
     format = "binary";
   };
 

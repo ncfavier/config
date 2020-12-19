@@ -20,7 +20,7 @@ in {
   ''; # TODO module
 
   sops.secrets.weechat-sec = {
-    sopsFile = "${secretsPath}/weechat-sec";
+    sopsFile = secretsPath + "/weechat-sec";
     format = "binary";
     owner = me;
     inherit (my) group;

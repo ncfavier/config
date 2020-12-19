@@ -3,7 +3,7 @@
   port = 500;
 in {
   sops.secrets.wireguard = {
-    sopsFile = "${secretsPath}/wireguard.json";
+    sopsFile = secretsPath + "/wireguard.json";
     format = "json";
     key = config.networking.hostName;
   };

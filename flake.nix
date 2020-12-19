@@ -44,11 +44,11 @@
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
-          secretsPath = toString ./secrets;
-          profilesPath = toString ./profiles;
+          profilesPath = toString "${self}/profiles";
         };
         modules = [
           sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
           ({ config, pkgs, me, my, profilesPath, ... }: {
             imports = [ "${profilesPath}" ];
 
@@ -63,6 +63,7 @@
               };
               myHm = config.home-manager.users.${me};
               configPath = "${my.home}/git/config";
+              secretsPath = ./secrets;
             };
 
             networking.hostName = host;
@@ -84,7 +85,13 @@
             sops = {
               gnupgHome = "${my.home}/.gnupg";
               sshKeyPaths = [];
-              validateSopsFiles = false;
+              # validateSopsFiles = false;
+            };
+
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              verbose = true;
             };
           })
           path

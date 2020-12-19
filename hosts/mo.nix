@@ -1,4 +1,4 @@
-{ inputs, pkgs, profilesPath, modulesPath, ... }: {
+{ inputs, pkgs, me, profilesPath, modulesPath, ... }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t420
@@ -50,6 +50,10 @@
   services.xserver.displayManager.startx.enable = true;
 
   services.xserver.libinput.enable = true;
+
+  home-manager.users.${me}.manual.manpages.enable = false;
+
+  users.users.${me}.home = "/home/n2";
 
   system.stateVersion = "20.09";
 }

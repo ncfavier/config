@@ -1,12 +1,12 @@
 { config, me, my, secretsPath, ... }: {
   sops.secrets = {
     syncthing-cert = {
-      sopsFile = "${secretsPath}/syncthing-cert.json";
+      sopsFile = secretsPath + "/syncthing-cert.json";
       format = "json";
       key = config.networking.hostName;
     };
     syncthing-key = {
-      sopsFile = "${secretsPath}/syncthing-key.json";
+      sopsFile = secretsPath + "/syncthing-key.json";
       format = "json";
       key = config.networking.hostName;
     };

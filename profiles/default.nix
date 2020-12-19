@@ -5,7 +5,6 @@
     "${profilesPath}/environment.nix"
     "${profilesPath}/git.nix"
     "${profilesPath}/gpg.nix"
-    "${profilesPath}/home-manager.nix"
     "${profilesPath}/localisation.nix"
     "${profilesPath}/networking.nix"
     "${profilesPath}/nix.nix"
