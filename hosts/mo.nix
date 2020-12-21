@@ -1,4 +1,4 @@
-{ inputs, pkgs, me, profilesPath, modulesPath, ... }: {
+{ inputs, config, lib, pkgs, me, profilesPath, modulesPath, ... }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t420
@@ -37,7 +37,7 @@
     }
   ];
 
-  networking.interfaces.enp0s25 = {
+  networking.interfaces.enp0s25 = lib.mkIf (! config.virtualisation ? qemu) {
     useDHCP = true;
     tempAddress = "disabled";
   };

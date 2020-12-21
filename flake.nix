@@ -74,7 +74,7 @@
               package = pkgs.nixFlakes;
               nixPath = [ "nixos=${nixos}" "nixpkgs=${nixos-unstable}" ];
               registry = {
-                config.flake = self;
+                self.flake = self;
                 nixos.flake = nixos;
                 nixpkgs.flake = nixos-unstable;
               };
