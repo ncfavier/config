@@ -19,4 +19,6 @@
     '';
     startAt = "12-1..25 05:00:00 UTC";
   };
+
+  systemd.timers.ulmaoc-topic.timerConfig.AccuracySec = "1s";
 }
