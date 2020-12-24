@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixos";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-20.09";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos";
     };
     dns = {

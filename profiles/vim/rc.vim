@@ -148,6 +148,9 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 " upload to ix.io on write
 autocmd BufWriteCmd http://ix.io/* write !curl -F 'f:1=<-' ix.io | tee >(clip)
 
+" balance windows when the terminal is resized
+autocmd VimResized * wincmd =
+
 " Commands
 
 command! Reload source $MYVIMRC
