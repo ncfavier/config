@@ -10,6 +10,27 @@ in {
 
   services.lambdabot = {
     enable = true;
+    package = pkgs.lambdabot.override {
+      packages = p: with p; [
+        adjunctions
+        arithmoi
+        array
+        comonad
+        containers
+        kan-extensions
+        lattices
+        lens
+        linear
+        megaparsec
+        microlens-platform
+        mtl
+        profunctors
+        safe
+        split
+        unordered-containers
+        vector
+      ];
+    };
     script = ''
       irc-connect ulminfo localhost ${toString tunnelPort} lambdabot lambdabot
       rc ${config.sops.secrets.ulminfo-lambdabot.path}
@@ -36,11 +57,9 @@ in {
         src = "${final.fetchFromGitHub {
           owner = "lambdabot";
           repo = "lambdabot";
-          rev = "87c3597122d030506f1b5aac81b42cb880194110";
-          sha256 = "f69THxc7QbYrpJ5UUqEuKDf7E5Tbwt9KCEFWqJnDd2c=";
+          rev = "e63f9f28e0ce1be080a17bb37764ff2a4f84294d";
+          sha256 = "5FJAsRJRgFcg/CM3hISp3w/Veupl8Cj2qGd2SPpdjWM=";
         }}/lambdabot";
-        patches = [];
-        postPatch = "";
       });
     })
   ];
