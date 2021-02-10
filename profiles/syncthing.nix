@@ -74,11 +74,6 @@
           devices = [ "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
-        uploads = {
-          path = "${my.home}/uploads";
-          devices = [ "fu" "mo" ];
-          versioning = trashcan;
-        };
         saves = {
           path = "${my.home}/saves";
           devices = [ "fu" "mo" ];
@@ -88,6 +83,11 @@
           path = "${my.home}/irc-logs";
           devices = [ "fu" "mo" ];
           watch = false;
+          versioning = trashcan;
+        };
+        uploads = {
+          path = "/srv/uploads"; # TODO create /srv/uploads
+          devices = [ "fu" "mo" ];
           versioning = trashcan;
         };
       };

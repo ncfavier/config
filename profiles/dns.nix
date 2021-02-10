@@ -57,12 +57,16 @@ in {
     interfaces = [ "127.0.0.1" "::1" "10.42.0.1" "fd42::0:1" ];
     forwardAddresses = [ "1.1.1.1" "1.0.0.1" ];
     extraConfig = ''
+      local-zone: "wo.wg42." redirect
       local-data: "wo.wg42.  A    10.42.0.1"
       local-data: "wo.wg42.  AAAA fd42::0:1"
+      local-zone: "fu.wg42." redirect
       local-data: "fu.wg42.  A    10.42.1.1"
       local-data: "fu.wg42.  AAAA fd42::1:1"
+      local-zone: "mo.wg42." redirect
       local-data: "mo.wg42.  A    10.42.2.1"
       local-data: "mo.wg42.  AAAA fd42::2:1"
+      local-zone: "tsu.wg42." redirect
       local-data: "tsu.wg42. A    10.42.3.1"
       local-data: "tsu.wg42. AAAA fd42::3:1"
       local-data-ptr: "10.42.0.1 wo.wg42."

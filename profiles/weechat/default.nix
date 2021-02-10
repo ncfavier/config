@@ -1,5 +1,5 @@
 { config, pkgs, lib, me, my, myHm, configPath, secretsPath, ... }: let
-  relayPort = 6666;
+  relayPort = 6600;
   logsPath = "${my.home}/irc-logs";
   scripts = [
     "color_popup.pl"

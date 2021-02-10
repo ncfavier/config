@@ -230,28 +230,6 @@ myip6() {
     dig -6 +short @resolver1.opendns.com myip.opendns.com aaaa
 }
 
-http() {
-    local port password source=${1-.} tmpdir response_fifo
-    read -rp "Port? " port
-    port=${port:-4242}
-    if [[ -d $1 ]]; then
-        read -rsp "Password? " password
-        echo
-        caddy -conf=<(echo ":${port:-12345}"; echo browse; [[ $password ]] && echo "basicauth / naim $password") ${1+-root="$1"}
-    elif [[ -x $1 ]]; then
-        [[ $source == */* ]] || source=./$source
-        tmpdir=$(mktemp --tmpdir -d http-XXXXX) || return 1
-        response_fifo=$tmpdir/reponse
-        mkfifo "$response_fifo" || return 1
-        echo "Serving $source at http://localhost:$port"
-        while
-            nc -l -p "$port" -N < "$response_fifo" | "$source" > "$response_fifo"
-        do :; done
-    else
-        echo "Invalid source." >&2
-    fi
-}
-
 wg-toggle() {
     local interface=wg0
     if systemctl -q is-active wg-quick@"$interface"; then

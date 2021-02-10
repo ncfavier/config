@@ -86,7 +86,6 @@
             sops = {
               gnupgHome = "${my.home}/.gnupg";
               sshKeyPaths = [];
-              # validateSopsFiles = false;
             };
 
             home-manager = {

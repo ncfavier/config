@@ -18,7 +18,7 @@ in {
         comonad
         containers
         kan-extensions
-        lattices
+        # lattices
         lens
         linear
         megaparsec

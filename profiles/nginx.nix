@@ -1,18 +1,20 @@
-{ inputs, profilesPath, lib, my, ... }: {
+{ inputs, config, lib, profilesPath, ... }: {
   imports = [ "${profilesPath}/acme.nix" ];
 
   services.nginx = {
     enable = true;
     recommendedTlsSettings = true;
-    recommendedProxySettings = true;
-    commonHttpConfig = "charset utf-8;";
+    commonHttpConfig = ''
+      charset utf-8;
+      types {
+        text/plain sh csh tex latex rs tcl pl markdown md;
+      }
+    '';
 
     virtualHosts = let
       mkVirtualHost = lib.recursiveUpdate {
         enableACME = true;
         forceSSL = true;
-        extraConfig = "error_page 404 @404;";
-        locations."@404".return = "404 '404 Not found'";
       };
     in {
       "monade.li" = mkVirtualHost {
@@ -21,7 +23,7 @@
       };
 
       "up.monade.li" = mkVirtualHost {
-        locations."/".root = "${my.home}/uploads";
+        locations."/".root = config.services.syncthing.declarative.folders.uploads.path;
       };
 
       "git.monade.li" = mkVirtualHost {
