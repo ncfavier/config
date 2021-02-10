@@ -39,10 +39,6 @@
           id = "VVLGMST-LA633IY-KWESSFD-7FFF7LE-PNJAEML-ZXZSBLL-ATLQHPT-MUHEDAR";
           introducer = true;
         };
-        sigma = {
-          id = "3CDCOO6-EBIGLQN-XXHHZTX-RV2CFSD-ME5UBVS-R5S7ABD-GY7AZ34-DM7VMQQ";
-          introducer = true;
-        };
       };
 
       overrideFolders = true;
@@ -54,7 +50,7 @@
       in {
         my = {
           path = "${my.home}/my";
-          devices = [ "fu" "mo" "sigma" ];
+          devices = [ "fu" "mo" ];
           versioning = {
             type = "simple";
             params = {
@@ -65,32 +61,32 @@
         };
         pictures = {
           path = "${my.home}/pictures";
-          devices = [ "fu" "mo" "tsu" "sigma" ];
+          devices = [ "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         music = {
           path = "${my.home}/music";
-          devices = [ "fu" "mo" "tsu" "sigma" ];
+          devices = [ "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         camera = {
           path = "${my.home}/camera";
-          devices = [ "fu" "mo" "tsu" "sigma" ];
+          devices = [ "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         uploads = {
           path = "${my.home}/uploads";
-          devices = [ "fu" "mo" "sigma" ];
+          devices = [ "fu" "mo" ];
           versioning = trashcan;
         };
         saves = {
           path = "${my.home}/saves";
-          devices = [ "fu" "mo" "sigma" ];
+          devices = [ "fu" "mo" ];
           versioning = trashcan;
         };
         irc-logs = {
           path = "${my.home}/irc-logs";
-          devices = [ "fu" "mo" "sigma" ];
+          devices = [ "fu" "mo" ];
           watch = false;
           versioning = trashcan;
         };
