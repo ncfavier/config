@@ -1,5 +1,6 @@
 { profilesPath, ... }: {
   imports = [
+    "${profilesPath}/home-manager.nix"
     "${profilesPath}/bash"
     "${profilesPath}/direnv.nix"
     "${profilesPath}/console.nix"

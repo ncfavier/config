@@ -87,12 +87,6 @@
               gnupgHome = "${my.home}/.gnupg";
               sshKeyPaths = [];
             };
-
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              verbose = true;
-            };
           })
           path
         ] ++ builtins.attrValues self.nixosModules;

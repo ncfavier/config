@@ -2,6 +2,8 @@
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t420
+
+    "${profilesPath}/graphical.nix"
   ];
 
   boot = {
@@ -41,17 +43,6 @@
     useDHCP = true;
     tempAddress = "disabled";
   };
-
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-
-  services.xserver.enable = true;
-  services.xserver.layout = "fr";
-  services.xserver.displayManager.startx.enable = true;
-
-  services.xserver.libinput.enable = true;
-
-  home-manager.users.${me}.manual.manpages.enable = false;
 
   users.users.${me}.home = "/home/n2";
 
