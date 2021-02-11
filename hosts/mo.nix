@@ -1,8 +1,9 @@
 { config, lib, hardware, pkgs, me, profilesPath, modulesPath, ... }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
-    hardware.nixosModules.lenovo-thinkpad-t420
+    hardware.lenovo-thinkpad-t420
 
+    "${profilesPath}/wireguard-client.nix"
     "${profilesPath}/graphical.nix"
   ];
 
@@ -25,10 +26,12 @@
       device = "/dev/disk/by-partlabel/nixos";
       fsType = "ext4";
     };
+
     "/boot" = {
       device = "/dev/disk/by-partlabel/boot";
       fsType = "vfat";
     };
+
     "/home" = {
       device = "/dev/disk/by-partlabel/home";
       fsType = "ext4";
@@ -41,12 +44,12 @@
     }
   ];
 
-  networking.interfaces.enp0s25 = lib.mkIf (! config.virtualisation ? qemu) {
+  networking.interfaces.enp0s25 = {
     useDHCP = true;
     tempAddress = "disabled";
   };
 
   users.users.${me}.home = "/home/n2";
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.03";
 }

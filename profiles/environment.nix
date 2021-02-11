@@ -13,6 +13,11 @@
     };
   };
 
+  # programs.command-not-found = {
+  #   enable = true;
+  #   dbPath = "${fetchTarball "channel:nixos-unstable"}/programs.sqlite";
+  # };
+
   home-manager.users.${me} = {
     programs.htop = {
       enable = true;

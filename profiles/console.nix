@@ -5,10 +5,7 @@
   };
 
   environment.etc.issue = lib.mkForce {
-    text = ''
-      \e{magenta}\n\e{reset} | \e{reset}\l\e{reset} | \d \t
-
-    '';
+    text = " \e{magenta}\n\e{reset} | \e{reset}\l\e{reset} | \d \t\n\n";
   };
 
   # TODO PR services.mingetty.extraArgs = "--nohostname";

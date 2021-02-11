@@ -45,5 +45,5 @@
     rxvt-unicode-unwrapped.terminfo
   ];
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.03";
 }
