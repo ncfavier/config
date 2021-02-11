@@ -45,6 +45,7 @@
         specialArgs = {
           inherit inputs;
           profilesPath = toString "${self}/profiles";
+          hardware = nixos-hardware.nixosModules;
         };
         modules = [
           sops-nix.nixosModules.sops

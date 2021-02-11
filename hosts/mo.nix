@@ -1,16 +1,18 @@
-{ inputs, config, lib, pkgs, me, profilesPath, modulesPath, ... }: {
+{ config, lib, hardware, pkgs, me, profilesPath, modulesPath, ... }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t420
+    hardware.nixosModules.lenovo-thinkpad-t420
 
     "${profilesPath}/graphical.nix"
   ];
 
   boot = {
-    loader.efi.canTouchEfiVariables = true;
-    loader.systemd-boot = {
-      enable = true;
-      configurationLimit = 20;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 20;
+      };
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
