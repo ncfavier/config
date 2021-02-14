@@ -63,18 +63,14 @@ set wildignorecase
 set visualbell
 set t_vb=
 
-if $TERM =~ '^rxvt'
-    if $TERM =~ '^urxvt\|^rxvt-unicode'
-        set ttymouse=urxvt
-    else
-        set ttymouse=xterm2
-    endif
-
-    " cursor shapes
-    let &t_SI = "\<Esc>[5 q"
-    let &t_EI = "\<Esc>[0 q"
-    let &t_SR = "\<Esc>[3 q"
+if $TERM =~ '^rxvt-unicode'
+    set ttymouse=urxvt
 endif
+
+" cursor shapes
+let &t_SI = "\<Esc>[5 q"
+let &t_EI = "\<Esc>[0 q"
+let &t_SR = "\<Esc>[3 q"
 
 colorscheme peachpuff
 
