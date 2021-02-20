@@ -1,6 +1,6 @@
 { config, pkgs, lib, me, my, myHm, configPath, secretsPath, ... }: let
   relayPort = 6600;
-  logsPath = "${my.home}/irc-logs";
+  logsPath = config.services.syncthing.declarative.folders.irc-logs.path;
   scripts = [
     "color_popup.pl"
     "highmon.pl"
@@ -50,7 +50,7 @@ in {
       in with pkgs; {
         Type = "forking";
         ExecStart     = "${tmux}/bin/tmux -L weechat new-session -s weechat -d ${bash}/bin/bash -lc 'exec ${weechat}/bin/weechat'";
-        ExecStartPost = "${tmux}/bin/tmux -L weechat set-option status off";
+        ExecStartPost = "${tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
       };
     };
 

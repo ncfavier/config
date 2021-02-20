@@ -18,7 +18,7 @@
     inherit (my) group;
     dataDir = my.home;
 
-    guiAddress = "10.42.0.1:8384"; # TODO host's IP
+    guiAddress = "[fd42::0:1]:8384"; # TODO host's IP
     openDefaultPorts = true;
 
     declarative = { # TODO insecureAdminAccess
