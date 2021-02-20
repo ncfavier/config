@@ -65,5 +65,16 @@
       enable = true;
       enableAliases = true;
     };
+
+    dircolors = {
+      enable = true;
+      settings = {
+        TERM = "*";
+        DIR = "1";
+        LINK = "target";
+        ORPHAN = "3;31";
+        EXEC = "1;35";
+      };
+    };
   };
 }

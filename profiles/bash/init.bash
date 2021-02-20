@@ -2,7 +2,6 @@ stty -ixon
 
 set -b +H
 
-
 PS1='\['$(tput sgr0)'\]'${SSH_CONNECTION+$(hostname_pretty) }'\['$(tput bold)'\]\w\['$(tput sgr0)'\] $(prompt_char) '
 PS2='\['$(tput sgr0)'\]> '
 PROMPT_COMMAND+=${PROMPT_COMMAND:+;}'printf "\\033]0;%s\\007" "${SSH_CONNECTION+$HOSTNAME:}$(pwd_short)"'
