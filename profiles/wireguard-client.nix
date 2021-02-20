@@ -12,7 +12,7 @@ in {
   networking.wg-quick.interfaces.${interface} = {
     privateKeyFile = config.sops.secrets.wireguard.path;
     address = [ "10.42.2.1/16" "fd42::2:1/16" ];
-    dns = [ "10.42.0.1" "fd42::0:1" interface ];
+    dns = [ "10.42.0.1" "fd42::0:1" ];
     peers = [
       {
         endpoint = "monade.li:${toString port}";

@@ -53,30 +53,28 @@ in {
 
   services.unbound = {
     enable = true;
-    allowedAccess = [ "127.0.0.1/8" "::1/128" "10.42.0.1/16" "fd42::0:1/16" ];
     interfaces = [ "127.0.0.1" "::1" "10.42.0.1" "fd42::0:1" ];
+    allowedAccess = [ "127.0.0.0/8" "::1/128" "10.42.0.0/16" "fd42::/16" ];
     forwardAddresses = [ "1.1.1.1" "1.0.0.1" ];
     extraConfig = ''
-      local-zone: "wo.wg42." redirect
-      local-data: "wo.wg42.  A    10.42.0.1"
-      local-data: "wo.wg42.  AAAA fd42::0:1"
-      local-zone: "fu.wg42." redirect
-      local-data: "fu.wg42.  A    10.42.1.1"
-      local-data: "fu.wg42.  AAAA fd42::1:1"
-      local-zone: "mo.wg42." redirect
-      local-data: "mo.wg42.  A    10.42.2.1"
-      local-data: "mo.wg42.  AAAA fd42::2:1"
-      local-zone: "tsu.wg42." redirect
-      local-data: "tsu.wg42. A    10.42.3.1"
-      local-data: "tsu.wg42. AAAA fd42::3:1"
-      local-data-ptr: "10.42.0.1 wo.wg42."
-      local-data-ptr: "fd42::0:1 wo.wg42."
-      local-data-ptr: "10.42.1.1 fu.wg42."
-      local-data-ptr: "fd42::1:1 fu.wg42."
-      local-data-ptr: "10.42.2.1 mo.wg42."
-      local-data-ptr: "fd42::2:1 mo.wg42."
-      local-data-ptr: "10.42.3.1 tsu.wg42."
-      local-data-ptr: "fd42::3:1 tsu.wg42."
+      private-address: 10.42.0.0/16
+      private-address: fd42::/16
+      local-data: "wo. AAAA fd42::0:1"
+      local-data: "v4.wo. A 10.42.0.1"
+      local-data: "fu. AAAA fd42::1:1"
+      local-data: "v4.fu. A 10.42.1.1"
+      local-data: "mo. AAAA fd42::2:1"
+      local-data: "v4.mo. A 10.42.2.1"
+      local-data: "tsu. AAAA fd42::3:1"
+      local-data: "v4.tsu. A 10.42.3.1"
+      local-data-ptr: "fd42::0:1 wo."
+      local-data-ptr: "10.42.0.1 v4.wo."
+      local-data-ptr: "fd42::1:1 fu."
+      local-data-ptr: "10.42.1.1 v4.fu."
+      local-data-ptr: "fd42::2:1 mo."
+      local-data-ptr: "10.42.2.1 v4.mo."
+      local-data-ptr: "fd42::3:1 tsu."
+      local-data-ptr: "10.42.3.1 v4.tsu."
     '';
   };
 
