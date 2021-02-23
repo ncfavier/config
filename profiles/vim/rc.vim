@@ -124,6 +124,16 @@ noremap  <silent> <Leader>u        :write !upload<Return>
 noremap  <silent> <Leader>x        :execute '!chmod +x -- '.shellescape(@%)<Return>
 noremap  <silent> <Leader>d        :execute 'write !diff - '.shellescape(@%)<Return>
 
+" work around vim+alacritty bug
+map  <ESC>[1;5A <C-Up>
+map  <ESC>[1;5B <C-Down>
+map  <ESC>[1;5C <C-Right>
+map  <ESC>[1;5D <C-Left>
+imap <ESC>[1;5A <C-Up>
+imap <ESC>[1;5B <C-Down>
+imap <ESC>[1;5C <C-Right>
+imap <ESC>[1;5D <C-Left>
+
 " Autocommands
 
 " quit if NERDTree is the last buffer open
