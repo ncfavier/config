@@ -24,11 +24,10 @@
       self = builtins.getFlake "self";
       inherit (nixos) lib;
       machines = self.nixosConfigurations;
-      here = machines.''${lib.fileContents /etc/hostname};
+      local = self.nixosConfigurations.${config.networking.hostName};
     in {
-      inherit nixos nixpkgs self lib here;
-      inherit (here) config;
-      inherit (here._module.args) pkgs;
-    } // machines
+      inherit nixos nixpkgs self lib local;
+      inherit (local) config;
+    } // machines // local._module.args
   '';
 }
