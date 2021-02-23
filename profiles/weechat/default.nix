@@ -1,6 +1,5 @@
 { config, pkgs, lib, me, my, myHm, configPath, secretsPath, ... }: let
   relayPort = 6600;
-  logsPath = config.services.syncthing.declarative.folders.irc-logs.path;
   scripts = [
     "color_popup.pl"
     "highmon.pl"
@@ -14,6 +13,16 @@
     "title.py"
     "tmux_env.py"
   ];
+  weechat = pkgs.weechat.override {
+    configure = { availablePlugins, ... }: {
+      plugins = with availablePlugins; [ python perl ];
+      init = ''
+        /set relay.port.weechat ${toString relayPort}
+        /set logger.file.path ${config.services.syncthing.declarative.folders.irc-logs.path}
+        /script install ${builtins.concatStringsSep " " scripts}
+      '';
+    };
+  };
 in {
   system.activationScripts."linger-${me}" = lib.stringAfter [ "users" ] ''
     /run/current-system/systemd/bin/loginctl enable-linger ${me}
@@ -36,33 +45,21 @@ in {
 
       Install.WantedBy = [ "default.target" ];
 
-      Service = let
-        weechat = pkgs.weechat.override {
-          configure = { availablePlugins, ... }: {
-            plugins = with availablePlugins; [ python perl ];
-            init = ''
-              /set relay.port.weechat ${toString relayPort}
-              /set logger.file.path ${logsPath}
-              /script install ${builtins.concatStringsSep " " scripts}
-            '';
-          };
-        };
-      in with pkgs; {
+      Service = {
         Type = "forking";
-        ExecStart     = "${tmux}/bin/tmux -L weechat new-session -s weechat -d ${weechat}/bin/weechat";
-        ExecStartPost = "${tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
+        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${weechat}/bin/weechat";
+        ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
       };
     };
 
-    home.file = let
-      confs = map (f: "${f}.conf")
-        [ "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
-          "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
-          "script" "sec" "spell" "trigger" "weechat" "xfer" ];
-    in lib.listToAttrs (map (file: {
-      name = ".weechat/${file}";
-      value.source = myHm.lib.file.mkOutOfStoreSymlink "${configPath}/profiles/weechat/config/${file}";
-    }) confs);
+    home.file = lib.listToAttrs (map (name: {
+      name = ".weechat/${name}.conf";
+      value.source = myHm.lib.file.mkOutOfStoreSymlink "${configPath}/profiles/weechat/config/${name}.conf";
+    }) [
+      "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
+      "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
+      "script" "sec" "spell" "trigger" "weechat" "xfer"
+    ]);
   };
 
   networking.firewall.allowedTCPPorts = [ relayPort ];

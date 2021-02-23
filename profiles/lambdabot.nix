@@ -38,9 +38,14 @@ in {
     '';
   };
 
-  systemd.services.lambdabot.serviceConfig.SupplementaryGroups = [
-    config.users.groups.keys.name
-  ];
+  systemd.services.lambdabot = {
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+
+    serviceConfig.SupplementaryGroups = [
+      config.users.groups.keys.name
+    ];
+  };
 
   services.stunnel = {
     enable = true;
