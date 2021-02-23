@@ -17,7 +17,7 @@
 in {
   system.activationScripts."linger-${me}" = lib.stringAfter [ "users" ] ''
     /run/current-system/systemd/bin/loginctl enable-linger ${me}
-  ''; # TODO module
+  ''; # TODO linger module
 
   sops.secrets.weechat-sec = {
     sopsFile = secretsPath + "/weechat-sec";

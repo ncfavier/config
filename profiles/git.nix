@@ -41,6 +41,7 @@
 
       extraConfig = {
         credential.helper = "store";
+        init.defaultBranch = "master";
         pull.rebase = true;
         rebase = {
           autoStash = true;
