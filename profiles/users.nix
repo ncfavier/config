@@ -27,4 +27,7 @@ in {
       } // authentication;
     };
   };
+
+  # TODO PR expose processed session/profile variables
+  home-manager.users.${me}.systemd.user.sessionVariables.PATH = lib.concatStringsSep ":" ([ config.security.wrapperDir ] ++ lib.concatMap (profile: map (suffix: profile + suffix) config.environment.profileRelativeSessionVariables.PATH) config.environment.profiles);
 }

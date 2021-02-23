@@ -49,7 +49,7 @@ in {
         };
       in with pkgs; {
         Type = "forking";
-        ExecStart     = "${tmux}/bin/tmux -L weechat new-session -s weechat -d ${bash}/bin/bash -lc 'exec ${weechat}/bin/weechat'";
+        ExecStart     = "${tmux}/bin/tmux -L weechat new-session -s weechat -d ${weechat}/bin/weechat";
         ExecStartPost = "${tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
       };
     };
@@ -70,7 +70,7 @@ in {
   nixpkgs.overlays = [
     (self: super: {
       weechat-unwrapped = super.weechat-unwrapped.overrideAttrs (old: {
-        patches = [
+        patches = old.patches or [] ++ [
           (builtins.toFile "weechat-patch" ''
             Avoid reloading configuration on SIGHUP (https://github.com/weechat/weechat/issues/1595)
             --- a/src/core/weechat.c
@@ -78,13 +78,6 @@ in {
             @@ -698 +698 @@ weechat_sighup ()
             -    weechat_reload_signal = SIGHUP;
             +    weechat_quit_signal = SIGHUP;
-
-            Revert https://github.com/weechat/weechat/commit/dff1bf6f
-            --- a/src/plugins/exec/exec.c
-            +++ b/src/plugins/exec/exec.c
-            @@ -92 +92 @@ exec_search_by_id (const char *id)
-            -        return NULL;
-            +        number = -1;
           '')
         ];
       });

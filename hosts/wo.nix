@@ -32,7 +32,7 @@
   swapDevices = [
     {
       device = "/swap";
-      size = 4096;
+      size = 2048;
     }
   ];
 

@@ -40,7 +40,5 @@
     };
   };
 
-  systemd.services.nginx.serviceConfig.ProtectHome = false;
-
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }
