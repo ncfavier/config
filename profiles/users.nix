@@ -1,4 +1,4 @@
-{ config, lib, me, my, secretsPath, ... }: let
+{ config, me, my, secretsPath, ... }: let
   passwords = {
     "wo" = "$6$jvQ36QMw6kyzUjx$ApZlmPkvPyNAf2t51KpnocvMDo/1BubqCMR3q5jZD5OcM1awyAnTIgIeyaVl2XpAiNZPTouyuM1AOzBIGBu4m.";
 	"mo" = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
@@ -28,6 +28,14 @@ in {
     };
   };
 
-  # TODO PR expose processed session/profile variables
-  home-manager.users.${me}.systemd.user.sessionVariables.PATH = lib.concatStringsSep ":" ([ config.security.wrapperDir ] ++ lib.concatMap (profile: map (suffix: profile + suffix) config.environment.profileRelativeSessionVariables.PATH) config.environment.profiles);
+  # TODO move import-environment to systemd.nix
+  home-manager.users.${me}.systemd.user.services.import-environment = {
+    Install.WantedBy = [ "default.target" ];
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+      UnsetEnvironment = "__ETC_PROFILE_DONE __NIXOS_SET_ENVIRONMENT_DONE __HM_SESS_VARS_SOURCED";
+      ExecStart = "/bin/sh -lc 'systemctl --user import-environment'";
+    };
+  };
 }

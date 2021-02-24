@@ -1,3 +1,4 @@
+# TODO reorganise environment.nix
 { pkgs, me, ... }: {
   environment = {
     systemPackages = with pkgs; [

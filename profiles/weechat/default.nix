@@ -39,8 +39,8 @@ in {
     systemd.user.services.tmux-weechat = {
       Unit = {
         Description = "weechat in a tmux session";
-        Wants = [ "network-online.target" ];
-        After = [ "network-online.target" "network.target" ];
+        Wants = [ "import-environment.service" "network-online.target" ];
+        After = [ "import-environment.service" "network-online.target" "network.target" ];
       };
 
       Install.WantedBy = [ "default.target" ];
