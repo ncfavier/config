@@ -17,6 +17,7 @@
     configure = { availablePlugins, ... }: {
       plugins = with availablePlugins; [ python perl ];
       init = ''
+        /set sec.crypt.passphrase_file ${config.sops.secrets.weechat-sec.path}
         /set relay.port.weechat ${toString relayPort}
         /set logger.file.path ${config.services.syncthing.declarative.folders.irc-logs.path}
         /script install ${builtins.concatStringsSep " " scripts}
@@ -24,9 +25,10 @@
     };
   };
 in {
+  # TODO linger module
   system.activationScripts."linger-${me}" = lib.stringAfter [ "users" ] ''
     /run/current-system/systemd/bin/loginctl enable-linger ${me}
-  ''; # TODO linger module
+  '';
 
   sops.secrets.weechat-sec = {
     sopsFile = secretsPath + "/weechat-sec";
@@ -39,15 +41,15 @@ in {
     systemd.user.services.tmux-weechat = {
       Unit = {
         Description = "weechat in a tmux session";
-        Wants = [ "import-environment.service" "network-online.target" ];
-        After = [ "import-environment.service" "network-online.target" "network.target" ];
+        Wants = [ "network-online.target" ];
+        After = [ "network-online.target" "network.target" ];
       };
 
       Install.WantedBy = [ "default.target" ];
 
       Service = {
         Type = "forking";
-        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${weechat}/bin/weechat";
+        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shell} -lc 'exec ${weechat}/bin/weechat'";
         ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
       };
     };

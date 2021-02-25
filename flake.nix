@@ -44,26 +44,28 @@
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
-          profilesPath = toString "${self}/profiles";
-          hardware = nixos-hardware.nixosModules;
+          profilesPath = "${self}/profiles";
         };
         modules = [
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
-          ({ config, pkgs, me, my, profilesPath, ... }: {
+          # TODO move this into separate modules
+          ({ config, pkgs, utils, me, my, profilesPath, ... }: {
             imports = [ "${profilesPath}" ];
 
             _module.args = {
               pkgsUnstable = import nixos-unstable { inherit (config.nixpkgs) system; };
+              hardware = nixos-hardware.nixosModules;
 
               me = "n";
               my = config.users.users.${me} // {
                 realName = "Naïm Favier";
                 email = "${me}@monade.li";
                 emailFor = what: "${me}+${what}@monade.li";
+                shellPath = utils.toShellPath my.shell;
               };
               myHm = config.home-manager.users.${me};
-              configPath = "${my.home}/git/config";
+              configPath = "${my.home}/git/config"; # TODO rename configPath to mutableSelf or something
               secretsPath = ./secrets;
             };
 

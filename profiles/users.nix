@@ -1,7 +1,7 @@
-{ config, me, my, secretsPath, ... }: let
+{ config, me, my, ... }: let
   passwords = {
     "wo" = "$6$jvQ36QMw6kyzUjx$ApZlmPkvPyNAf2t51KpnocvMDo/1BubqCMR3q5jZD5OcM1awyAnTIgIeyaVl2XpAiNZPTouyuM1AOzBIGBu4m.";
-	"mo" = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
+    "mo" = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
   };
   authentication = {
     hashedPassword = passwords.${config.networking.hostName};
@@ -28,14 +28,14 @@ in {
     };
   };
 
-  # TODO move import-environment to systemd.nix
-  home-manager.users.${me}.systemd.user.services.import-environment = {
-    Install.WantedBy = [ "default.target" ];
-    Service = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
-      UnsetEnvironment = "__ETC_PROFILE_DONE __NIXOS_SET_ENVIRONMENT_DONE __HM_SESS_VARS_SOURCED";
-      ExecStart = "/bin/sh -lc 'systemctl --user import-environment'";
-    };
-  };
+  # TODX move import-environment to systemd.nix
+  # home-manager.users.${me}.systemd.user.services.import-environment = {
+  #   Install.WantedBy = [ "default.target" ];
+  #   Service = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = "yes";
+  #     UnsetEnvironment = "__ETC_PROFILE_DONE __NIXOS_SET_ENVIRONMENT_DONE __HM_SESS_VARS_SOURCED";
+  #     ExecStart = "/bin/sh -lc 'systemctl --user import-environment'";
+  #   };
+  # };
 }
