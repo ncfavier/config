@@ -1,7 +1,8 @@
-# TODO reorganise environment.nix
-{ pkgs, me, ... }: {
+# TODO {environment,bash}.nix -> shell.nix?
+{ pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
+      manpages
       ripgrep
     ];
 
@@ -14,12 +15,15 @@
     };
   };
 
+  # TODO automatically add channel
   # programs.command-not-found = {
   #   enable = true;
   #   dbPath = "${fetchTarball "channel:nixos-unstable"}/programs.sqlite";
   # };
 
-  home-manager.users.${me} = {
+  # TODO top
+
+  myHm = {
     programs.htop = {
       enable = true;
       colorScheme = 1;
@@ -28,4 +32,6 @@
 
     home.file.".hushlogin".text = "";
   };
+
+  documentation.dev.enable = true;
 }

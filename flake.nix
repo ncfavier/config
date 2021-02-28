@@ -44,7 +44,7 @@
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
-          profilesPath = "${self}/profiles";
+          profilesPath = toString ./profiles;
         };
         modules = [
           sops-nix.nixosModules.sops
@@ -63,10 +63,11 @@
                 email = "${me}@monade.li";
                 emailFor = what: "${me}+${what}@monade.li";
                 shellPath = utils.toShellPath my.shell;
+                mutableConfig = "${my.home}/git/config";
               };
-              myHm = config.home-manager.users.${me};
-              configPath = "${my.home}/git/config"; # TODO rename configPath to mutableSelf or something
-              secretsPath = ./secrets;
+              secretPath = s: ./secrets + "/${s}";
+              secrets = config.sops.secrets;
+              syncedFolders = config.services.syncthing.declarative.folders;
             };
 
             networking.hostName = host;

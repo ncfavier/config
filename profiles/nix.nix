@@ -1,4 +1,4 @@
-{ inputs, config, me, ... }: {
+{ inputs, config, ... }: {
   nix = {
     trustedUsers = [ "root" "@wheel" ];
 
@@ -17,7 +17,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  home-manager.users.${me}.home.file.".nix-defexpr/default.nix".text = ''
+  myHm.home.file.".nix-defexpr/default.nix".text = ''
     let
       nixos = import (builtins.getFlake "nixos") {};
       nixpkgs = import (builtins.getFlake "nixpkgs") {};

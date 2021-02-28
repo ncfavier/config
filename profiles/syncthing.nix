@@ -1,12 +1,12 @@
-{ config, me, my, secretsPath, ... }: {
+{ config, lib, me, my, secretPath, secrets, syncedFolders, ... }: {
   sops.secrets = {
     syncthing-cert = {
-      sopsFile = secretsPath + "/syncthing-cert.json";
+      sopsFile = secretPath "syncthing-cert.json";
       format = "json";
       key = config.networking.hostName;
     };
     syncthing-key = {
-      sopsFile = secretsPath + "/syncthing-key.json";
+      sopsFile = secretPath "syncthing-key.json";
       format = "json";
       key = config.networking.hostName;
     };
@@ -18,25 +18,29 @@
     inherit (my) group;
     dataDir = my.home;
 
-    guiAddress = "[fd42::0:1]:8384"; # TODO host's IP
+    guiAddress = "[fd42::0:1]:8384"; # TODO support other machines
     openDefaultPorts = true;
 
     declarative = { # TODO insecureAdminAccess
-      cert = config.sops.secrets.syncthing-cert.path;
-      key = config.sops.secrets.syncthing-key.path;
+      cert = secrets.syncthing-cert.path;
+      key = secrets.syncthing-key.path;
 
       overrideDevices = true;
       devices = {
+        wo = {
+          id = "7YQ7LRQ-IAWYNHN-VGHTAEQ-JDSH3C7-DUPWBYD-G6L4OJC-W3YLUFZ-SSM5CA6";
+          introducer = true;
+        };
+        fu = {
+          id = "VVLGMST-LA633IY-KWESSFD-7FFF7LE-PNJAEML-ZXZSBLL-ATLQHPT-MUHEDAR";
+          introducer = true;
+        };
         mo = {
           id = "WO4GV6E-AJGKLLQ-M7RZGFT-WY7CCOW-LXODXRY-F3QPEJ2-AXDVWKR-SWBGDQP";
           introducer = true;
         };
         tsu = {
           id = "KXGLMP5-D2RKWZR-QUASDWC-T6H337M-HMEYLX7-D7EW4LM-UARXLZN-NXKVZAU";
-          introducer = true;
-        };
-        fu = {
-          id = "VVLGMST-LA633IY-KWESSFD-7FFF7LE-PNJAEML-ZXZSBLL-ATLQHPT-MUHEDAR";
           introducer = true;
         };
       };
@@ -50,7 +54,7 @@
       in {
         my = {
           path = "${my.home}/my";
-          devices = [ "fu" "mo" ];
+          devices = [ "wo" "fu" "mo" ];
           versioning = {
             type = "simple";
             params = {
@@ -61,36 +65,40 @@
         };
         pictures = {
           path = "${my.home}/pictures";
-          devices = [ "fu" "mo" "tsu" ];
+          devices = [ "wo" "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         music = {
           path = "${my.home}/music";
-          devices = [ "fu" "mo" "tsu" ];
+          devices = [ "wo" "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         camera = {
           path = "${my.home}/camera";
-          devices = [ "fu" "mo" "tsu" ];
+          devices = [ "wo" "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         saves = {
           path = "${my.home}/saves";
-          devices = [ "fu" "mo" ];
+          devices = [ "wo" "fu" "mo" ];
           versioning = trashcan;
         };
         irc-logs = {
           path = "${my.home}/irc-logs";
-          devices = [ "fu" "mo" ];
+          devices = [ "wo" "fu" "mo" ];
           watch = false;
           versioning = trashcan;
         };
         uploads = {
-          path = "/srv/uploads"; # TODO create /srv/uploads
-          devices = [ "fu" "mo" ];
+          path = "/srv/uploads";
+          devices = [ "wo" "fu" "mo" ];
           versioning = trashcan;
         };
       };
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "q ${syncedFolders.uploads.path} - ${me} ${my.group}"
+  ];
 }

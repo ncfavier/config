@@ -1,5 +1,5 @@
-{ me, ... }: {
-  home-manager.users.${me} = {
+{
+  myHm = {
     programs.direnv = {
       enable = true;
       enableNixDirenvIntegration = true;

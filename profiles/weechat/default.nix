@@ -1,4 +1,4 @@
-{ config, pkgs, lib, me, my, myHm, configPath, secretsPath, ... }: let
+{ config, pkgs, lib, me, my, secretPath, secrets, syncedFolders, ... }: let
   relayPort = 6600;
   scripts = [
     "color_popup.pl"
@@ -11,15 +11,14 @@
     "go.py"
     "screen_away.py"
     "title.py"
-    "tmux_env.py"
   ];
   weechat = pkgs.weechat.override {
     configure = { availablePlugins, ... }: {
       plugins = with availablePlugins; [ python perl ];
       init = ''
-        /set sec.crypt.passphrase_file ${config.sops.secrets.weechat-sec.path}
+        /set sec.crypt.passphrase_file ${secrets.weechat-sec.path}
         /set relay.port.weechat ${toString relayPort}
-        /set logger.file.path ${config.services.syncthing.declarative.folders.irc-logs.path}
+        /set logger.file.path ${syncedFolders.irc-logs.path}
         /script install ${builtins.concatStringsSep " " scripts}
       '';
     };
@@ -31,13 +30,13 @@ in {
   '';
 
   sops.secrets.weechat-sec = {
-    sopsFile = secretsPath + "/weechat-sec";
+    sopsFile = secretPath "weechat-sec";
     format = "binary";
     owner = me;
     inherit (my) group;
   };
 
-  home-manager.users.${me} = { lib, ... }: {
+  myHm = { lib, ... }: {
     systemd.user.services.tmux-weechat = {
       Unit = {
         Description = "weechat in a tmux session";
@@ -49,14 +48,14 @@ in {
 
       Service = {
         Type = "forking";
-        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shell} -lc 'exec ${weechat}/bin/weechat'";
+        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
         ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
       };
     };
 
     home.file = lib.listToAttrs (map (name: {
       name = ".weechat/${name}.conf";
-      value.source = myHm.lib.file.mkOutOfStoreSymlink "${configPath}/profiles/weechat/config/${name}.conf";
+      value.source = config.myHm.lib.file.mkOutOfStoreSymlink "${my.mutableConfig}/profiles/weechat/config/${name}.conf";
     }) [
       "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
       "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"

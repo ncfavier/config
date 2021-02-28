@@ -1,5 +1,5 @@
-{ me, ... }: {
-  home-manager.users.${me}.home.file = {
+{
+  myHm.home.file = {
     ".ghci".text = ''
       :set prompt      "> "
       :set prompt-cont "| "

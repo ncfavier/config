@@ -1,7 +1,7 @@
-{ pkgs, lib, me, ... }: {
+{ pkgs, lib, ... }: {
   environment.sessionVariables.EDITOR = "vim";
 
-  home-manager.users.${me}.programs.vim = {
+  myHm.programs.vim = {
     enable = true;
     plugins = with pkgs.vimPlugins; lib.mkForce [
       nerdtree

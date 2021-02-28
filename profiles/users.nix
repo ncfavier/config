@@ -27,15 +27,4 @@ in {
       } // authentication;
     };
   };
-
-  # TODX move import-environment to systemd.nix
-  # home-manager.users.${me}.systemd.user.services.import-environment = {
-  #   Install.WantedBy = [ "default.target" ];
-  #   Service = {
-  #     Type = "oneshot";
-  #     RemainAfterExit = "yes";
-  #     UnsetEnvironment = "__ETC_PROFILE_DONE __NIXOS_SET_ENVIRONMENT_DONE __HM_SESS_VARS_SOURCED";
-  #     ExecStart = "/bin/sh -lc 'systemctl --user import-environment'";
-  #   };
-  # };
 }

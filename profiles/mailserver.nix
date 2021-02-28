@@ -1,10 +1,10 @@
-{ inputs, config, my, secretsPath, ... }: let
+{ inputs, config, my, secretPath, secrets, ... }: let
   cert = config.security.acme.certs."monade.li";
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
 
   sops.secrets.mail = {
-    sopsFile = secretsPath + "/mail";
+    sopsFile = secretPath "mail";
     format = "binary";
   };
 
@@ -21,7 +21,7 @@ in {
     certificateFile = "${cert.directory}/fullchain.pem";
     keyFile = "${cert.directory}/key.pem";
     loginAccounts.${my.email} = {
-      hashedPasswordFile = config.sops.secrets.mail.path;
+      hashedPasswordFile = secrets.mail.path;
       aliases = [ "@monade.li" ];
     };
     lmtpSaveToDetailMailbox = "no";

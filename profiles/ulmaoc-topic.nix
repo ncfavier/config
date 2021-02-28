@@ -1,6 +1,6 @@
-{ config, me, my, secretsPath, ... }: {
+{ config, me, my, secretPath, secrets, ... }: {
   sops.secrets.ulmaoc-leaderboard = {
-    sopsFile = secretsPath + "/ulmaoc-leaderboard";
+    sopsFile = secretPath "ulmaoc-leaderboard";
     format = "binary";
     owner = me;
     inherit (my) group;
@@ -11,7 +11,7 @@
     script = ''
       fifo=~/.weechat/weechat_fifo
       (( day = $(TZ=America/New_York date +%j) - $(date -d "december 1" +%j) + 1 ))
-      board=$(< ${config.sops.secrets.ulmaoc-leaderboard.path})
+      board=$(< ${secrets.ulmaoc-leaderboard.path})
 
       topic="Advent of Code $(date +%Y) https://adventofcode.com | Jour $day | Leaderboard $board | Spoilers -> #adventofcode-spoilers"
 

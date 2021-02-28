@@ -1,5 +1,5 @@
-{ pkgs, me, my, ... }: {
-  home-manager.users.${me} = {
+{ pkgs, my, ... }: {
+  myHm = {
     programs.git = {
       enable = true;
       package = pkgs.gitAndTools.gitFull;

@@ -1,5 +1,5 @@
-{ me, ... }: {
-  home-manager.users.${me} = {
+{
+  myHm = {
     programs.gpg.enable = true;
 
     services.gpg-agent = {

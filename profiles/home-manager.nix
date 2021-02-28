@@ -1,17 +1,11 @@
-{ config, lib, ... }: {
-  options.home-manager.users = lib.mkOption {
-    type = with lib.types; attrsOf (submoduleWith {
-      modules = [
-        {
-          home.stateVersion = config.system.stateVersion;
-        }
-      ];
-    });
-  };
+{ config, lib, me, ... }: {
+  imports = [ (lib.mkAliasOptionModule [ "myHm" ] [ "home-manager" "users" me ]) ];
 
-  config.home-manager = {
+  home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     verbose = true;
   };
+
+  myHm.home.stateVersion = config.system.stateVersion;
 }

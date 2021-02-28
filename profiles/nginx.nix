@@ -1,4 +1,4 @@
-{ inputs, config, lib, profilesPath, ... }: {
+{ inputs, config, profilesPath, syncedFolders, ... }: {
   imports = [ "${profilesPath}/acme.nix" ];
 
   services.nginx = {
@@ -12,21 +12,25 @@
     '';
 
     virtualHosts = let
-      mkVirtualHost = lib.recursiveUpdate {
+      ssl = {
         enableACME = true;
         forceSSL = true;
       };
     in {
-      "monade.li" = mkVirtualHost {
+      "monade.li" = ssl // {
         serverAliases = [ "www.monade.li" ];
         locations."/".root = inputs."monade.li";
       };
 
-      "up.monade.li" = mkVirtualHost {
-        locations."/".root = config.services.syncthing.declarative.folders.uploads.path;
+      "up.monade.li" = ssl // {
+        root = syncedFolders.uploads.path;
+        locations."/rice".extraConfig = "autoindex on;";
+        extraConfig = ''
+          default_type text/plain;
+        '';
       };
 
-      "git.monade.li" = mkVirtualHost {
+      "git.monade.li" = ssl // {
         locations."/".return = "301 https://github.com/ncfavier$request_uri";
       };
 

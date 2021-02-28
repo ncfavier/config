@@ -1,5 +1,5 @@
-{ me, configPath, ... }: {
-  home-manager.users.${me}.programs = {
+{ my, ... }: {
+  myHm.programs = {
     bash = {
       enable = true;
       historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
@@ -8,7 +8,7 @@
       shellAliases = {
         C = "LC_ALL=C ";
         comm = "comm --output-delimiter=$'\\t\\t'";
-        config = "sudo nixos-rebuild --flake ${configPath} -v";
+        config = "sudo nixos-rebuild --flake ${my.mutableConfig} -v";
         cp = "cp -i";
         cxa = "clip | xargs";
         cxan = "clip | xargs -d'\\n'";

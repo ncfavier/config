@@ -1,9 +1,9 @@
-{ config, lib, inputs, secretsPath, ... }: let
+{ config, lib, inputs, secretPath, secrets, ... }: let
   interface = "wg42";
   port = 500;
 in {
   sops.secrets.wireguard = {
-    sopsFile = secretsPath + "/wireguard.json";
+    sopsFile = secretPath "wireguard.json";
     format = "json";
     key = config.networking.hostName;
   };
@@ -12,7 +12,7 @@ in {
     wireguard = {
       enable = true;
       interfaces.${interface} = {
-        privateKeyFile = config.sops.secrets.wireguard.path;
+        privateKeyFile = secrets.wireguard.path;
         ips = [ "10.42.0.1/16" "fd42::0:1/16" ];
         listenPort = port;
         allowedIPsAsRoutes = false;

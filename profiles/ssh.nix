@@ -1,4 +1,4 @@
-{ me, ... }: let
+let
   port = 2242;
 in {
   services.openssh = {
@@ -14,7 +14,7 @@ in {
 
   programs.mosh.enable = true;
 
-  home-manager.users.${me}.programs.ssh = {
+  myHm.programs.ssh = {
     enable = true;
     matchBlocks = {
       "10.42.0.1 fd42::0:1 wo wo.wg42 monade.li up.monade.li" = {

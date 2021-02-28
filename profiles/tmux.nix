@@ -1,5 +1,5 @@
-{ me, ... }: {
-  home-manager.users.${me}.programs.tmux = {
+{
+  myHm.programs.tmux = {
     enable = true;
     secureSocket = false;
 
