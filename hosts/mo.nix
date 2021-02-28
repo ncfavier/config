@@ -49,6 +49,14 @@
     tempAddress = "disabled";
   };
 
+  services.xserver.libinput = {
+    enable = true;
+    touchpad = {
+      accelSpeed = "0.6";
+      tapping = false;
+    };
+  };
+
   users.users.${me}.home = "/home/n2";
 
   system.stateVersion = "21.03";

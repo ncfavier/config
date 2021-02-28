@@ -56,6 +56,21 @@
         "type": "github"
       }
     },
+    "myNixpkgs": {
+      "locked": {
+        "lastModified": 1614341824,
+        "narHash": "sha256-AuMu2KAATLApi7n4WpvrK8hJJ6uIpcvMc0uNdnMZwBs=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "302fcc4674803169af9efdb247fd529e65853459",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixos": {
       "locked": {
         "lastModified": 1613980253,
@@ -105,6 +120,7 @@
         "dns": "dns",
         "home-manager": "home-manager",
         "monade.li": "monade.li",
+        "myNixpkgs": "myNixpkgs",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nixos-unstable": "nixos-unstable",

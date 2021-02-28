@@ -4,6 +4,7 @@
   inputs = {
     nixos.url          = "flake:nixpkgs/nixos-20.09";
     nixos-unstable.url = "flake:nixpkgs/nixos-unstable";
+    myNixpkgs.url      = "github:ncfavier/nixpkgs";
     nixos-hardware.url = "flake:nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -44,6 +45,8 @@
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
+          hardware = nixos-hardware.nixosModules;
+
           profilesPath = toString ./profiles;
         };
         modules = [
@@ -55,7 +58,6 @@
 
             _module.args = {
               pkgsUnstable = import nixos-unstable { inherit (config.nixpkgs) system; };
-              hardware = nixos-hardware.nixosModules;
 
               me = "n";
               my = config.users.users.${me} // {

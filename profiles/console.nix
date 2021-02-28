@@ -1,4 +1,7 @@
-{ pkgs, lib, ... }: {
+{ inputs, lib, ... }: {
+  disabledModules = [ "services/ttys/getty.nix" ];
+  imports = [ "${inputs.myNixpkgs}/nixos/modules/services/ttys/getty.nix" ];
+
   console = {
     earlySetup = true;
     useXkbConfig = true;
@@ -8,9 +11,5 @@
     text = " \\e{magenta}\\n\\e{reset} | \\e{reset}\\l\\e{reset} | \\d \\t\n\n";
   };
 
-  # TODO PR services.getty.extraArgs = "--nohostname";
-  systemd.services."getty@".serviceConfig.ExecStart = lib.mkForce [
-    ""
-    "@${pkgs.util-linux}/sbin/agetty agetty --login-program ${pkgs.shadow}/bin/login --noclear --nohostname --keep-baud %I 115200,38400,9600 $TERM"
-  ];
+  services.getty.extraArgs = [ "--nohostname" ];
 }
