@@ -1,4 +1,6 @@
-{ inputs, config, profilesPath, syncedFolders, ... }: {
+{ inputs, config, profilesPath, syncedFolders, ... }: let
+  uploadsRoot = "/srv/uploads";
+in {
   imports = [ "${profilesPath}/acme.nix" ];
 
   services.nginx = {
@@ -23,7 +25,7 @@
       };
 
       "up.monade.li" = ssl // {
-        root = syncedFolders.uploads.path;
+        root = uploadsRoot;
         locations."/rice".extraConfig = "autoindex on;";
         extraConfig = ''
           default_type text/plain;
@@ -43,6 +45,8 @@
       };
     };
   };
+
+  systemd.services.nginx.serviceConfig.BindReadOnlyPaths = "${syncedFolders.uploads.path}:${uploadsRoot}";
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

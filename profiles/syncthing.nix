@@ -90,15 +90,11 @@
           versioning = trashcan;
         };
         uploads = {
-          path = "/srv/uploads";
+          path = "${my.home}/uploads";
           devices = [ "wo" "fu" "mo" ];
           versioning = trashcan;
         };
       };
     };
   };
-
-  systemd.tmpfiles.rules = [
-    "q ${syncedFolders.uploads.path} - ${me} ${my.group}"
-  ];
 }
