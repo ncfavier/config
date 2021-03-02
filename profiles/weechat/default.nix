@@ -59,8 +59,8 @@ in {
 
   nixpkgs.overlays = [
     (self: super: {
-      weechat-unwrapped = super.weechat-unwrapped.overrideAttrs (old: {
-        patches = old.patches or [] ++ [
+      weechat-unwrapped = super.weechat-unwrapped.overrideAttrs ({ patches ? [], ... }: {
+        patches = patches ++ [
           (builtins.toFile "weechat-patch" ''
             Avoid reloading configuration on SIGHUP (https://github.com/weechat/weechat/issues/1595)
             --- a/src/core/weechat.c
