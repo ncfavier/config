@@ -26,7 +26,7 @@ in {
 
       "up.monade.li" = ssl // {
         root = uploadsRoot;
-        locations."/rice".extraConfig = "autoindex on;";
+        locations."/rice/".extraConfig = "autoindex on;";
         extraConfig = ''
           default_type text/plain;
         '';

@@ -16,6 +16,6 @@
     "${profilesPath}/users.nix"
     "${profilesPath}/vim"
     "${profilesPath}/ghci.nix"
-    "${profilesPath}/clipboard.nix"
+    "${profilesPath}/clip.nix"
   ];
 }

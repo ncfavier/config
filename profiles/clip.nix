@@ -1,10 +1,9 @@
+# TODO merge to environment/shell/bash
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    xsel
-    vim
-    (writeShellScriptBin "clip" ''
-      clipin()  { xsel -bi;              }
-      clipout() { xsel -bo 2> /dev/null; }
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "clip" ''
+      clipin()  { ${pkgs.xsel}/bin/xsel -bi; }
+      clipout() { ${pkgs.xsel}/bin/xsel -bo 2> /dev/null; }
 
       newline= edit= unfold=
 
@@ -21,7 +20,7 @@
       if (( edit )); then
           tmpfile=$(mktemp) || exit 1
           clipout > "$tmpfile"
-          vim "$tmpfile"
+          ${EDITOR:-nano} "$tmpfile"
           clipin < "$tmpfile"
           rm -- "$tmpfile"
       elif (( unfold )); then

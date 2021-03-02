@@ -12,12 +12,12 @@ in {
     StrictHostKeyChecking accept-new
   '';
 
-  programs.mosh.enable = true;
+  programs.mosh.enable = true; # TODO patch alacritty title
 
   myHm.programs.ssh = {
     enable = true;
     matchBlocks = {
-      "10.42.0.1 fd42::0:1 wo wo.wg42 monade.li up.monade.li" = {
+      "fd42::0:1 10.42.0.1 wo v4.wo monade.li up.monade.li" = {
         inherit port;
         forwardX11 = true;
         forwardX11Trusted = true;

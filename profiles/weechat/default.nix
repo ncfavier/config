@@ -24,11 +24,6 @@
     };
   };
 in {
-  # TODO linger module
-  system.activationScripts."linger-${me}" = lib.stringAfter [ "users" ] ''
-    /run/current-system/systemd/bin/loginctl enable-linger ${me}
-  '';
-
   sops.secrets.weechat-sec = {
     sopsFile = secretPath "weechat-sec";
     format = "binary";
@@ -36,32 +31,29 @@ in {
     inherit (my) group;
   };
 
-  myHm = { lib, ... }: {
-    systemd.user.services.tmux-weechat = {
-      Unit = {
-        Description = "weechat in a tmux session";
-        Wants = [ "network-online.target" ];
-        After = [ "network-online.target" "network.target" ];
-      };
-
-      Install.WantedBy = [ "default.target" ];
-
-      Service = {
-        Type = "forking";
-        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
-        ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
-      };
+  systemd.services."tmux-weechat-${me}" = {
+    description = "WeeChat in a tmux session";
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" "nss-lookup.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      User = me;
+      Group = my.group;
+      Type = "forking";
+      ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
+      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
     };
-
-    home.file = lib.listToAttrs (map (name: {
-      name = ".weechat/${name}.conf";
-      value.source = config.myHm.lib.file.mkOutOfStoreSymlink "${my.mutableConfig}/profiles/weechat/config/${name}.conf";
-    }) [
-      "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
-      "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
-      "script" "sec" "spell" "trigger" "weechat" "xfer"
-    ]);
+    restartIfChanged = false;
   };
+
+  myHm.home.file = lib.listToAttrs (map (name: {
+    name = ".weechat/${name}.conf";
+    value.source = config.myHm.lib.file.mkOutOfStoreSymlink "${my.mutableConfig}/profiles/weechat/config/${name}.conf";
+  }) [
+    "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
+    "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
+    "script" "sec" "spell" "trigger" "weechat" "xfer"
+  ]);
 
   networking.firewall.allowedTCPPorts = [ relayPort ];
 

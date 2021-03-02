@@ -10,12 +10,12 @@ in {
     ratelimit.enable = true;
 
     zones."monade.li".data = with dns.combinators; let
-      theHost = {
+      base = {
         A = [ (a ipv4) ];
         AAAA = [ (aaaa ipv6) ];
       };
       github.CNAME = [ "ncfavier.github.io." ];
-    in dns.toString "monade.li" (theHost // {
+    in dns.toString "monade.li" (base // {
       SOA = {
         nameServer = "@";
         adminEmail = "dns@monade.li";
@@ -44,7 +44,7 @@ in {
       CAA = letsEncrypt "dns+caa@monade.li";
 
       subdomains = {
-        "*" = theHost;
+        "*" = base;
         inherit github;
         glam = github;
       };
@@ -55,10 +55,10 @@ in {
     enable = true;
     interfaces = [ "127.0.0.1" "::1" "10.42.0.1" "fd42::0:1" ];
     allowedAccess = [ "127.0.0.0/8" "::1/128" "10.42.0.0/16" "fd42::/16" ];
-    forwardAddresses = [ "1.1.1.1" "1.0.0.1" ];
+    forwardAddresses = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
     extraConfig = ''
-      private-address: 10.42.0.0/16
       private-address: fd42::/16
+      private-address: 10.42.0.0/16
       local-data: "wo. AAAA fd42::0:1"
       local-data: "v4.wo. A 10.42.0.1"
       local-data: "fu. AAAA fd42::1:1"
@@ -78,8 +78,8 @@ in {
     '';
   };
 
-  networking.firewall = {
+  networking.firewall = rec {
     allowedTCPPorts = [ 53 ];
-    allowedUDPPorts = [ 53 ];
+    allowedUDPPorts = allowedTCPPorts;
   };
 }
