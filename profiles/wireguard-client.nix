@@ -1,10 +1,9 @@
 # TODO merge with wireguard-server
-{ config, secretPath, secrets, ... }: let
+{ config, secrets, ... }: let
   interface = "wg42";
   port = 500;
 in {
   sops.secrets.wireguard = {
-    sopsFile = secretPath "wireguard.json";
     format = "json";
     key = config.networking.hostName;
   };

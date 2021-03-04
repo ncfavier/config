@@ -1,15 +1,7 @@
-{ config, lib, me, my, secretPath, secrets, syncedFolders, ... }: {
-  sops.secrets = {
-    syncthing-cert = {
-      sopsFile = secretPath "syncthing-cert.json";
-      format = "json";
-      key = config.networking.hostName;
-    };
-    syncthing-key = {
-      sopsFile = secretPath "syncthing-key.json";
-      format = "json";
-      key = config.networking.hostName;
-    };
+{ config, lib, me, my, secrets, syncedFolders, ... }: {
+  sops.secrets.syncthing = {
+    format = "json";
+    key = config.networking.hostName;
   };
 
   services.syncthing = {
@@ -22,8 +14,7 @@
     openDefaultPorts = true;
 
     declarative = { # TODO insecureAdminAccess
-      cert = secrets.syncthing-cert.path;
-      key = secrets.syncthing-key.path;
+      key = secrets.syncthing.path;
 
       overrideDevices = true;
       devices = {

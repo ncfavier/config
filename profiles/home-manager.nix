@@ -1,5 +1,8 @@
-{ config, lib, me, ... }: {
-  imports = [ (lib.mkAliasOptionModule [ "myHm" ] [ "home-manager" "users" me ]) ];
+{ inputs, config, lib, me, ... }: {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    (lib.mkAliasOptionModule [ "myHm" ] [ "home-manager" "users" me ])
+  ];
 
   home-manager = {
     useGlobalPkgs = true;

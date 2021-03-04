@@ -1,9 +1,7 @@
-{ config, pkgs, secretPath, secrets, ... }: let
+{ config, pkgs, secrets, ... }: let
   tunnelPort = 6642;
 in {
   sops.secrets.ulminfo-lambdabot = {
-    sopsFile = secretPath "ulminfo-lambdabot";
-    format = "binary";
     owner = config.users.users.lambdabot.name;
     group = config.users.users.lambdabot.group;
   };

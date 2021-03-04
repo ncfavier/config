@@ -179,8 +179,7 @@ in {
       package = pkgs.alacritty.overrideAttrs ({ patches ? [], ... }: {
         patches = patches ++ [
           (builtins.toFile "alacritty-patch" ''
-            diff --git a/alacritty/src/input.rs b/alacritty/src/input.rs
-            index 155fab0..9d9fb3a 100644
+            Fix https://github.com/alacritty/alacritty/issues/4862
             --- a/alacritty/src/input.rs
             +++ b/alacritty/src/input.rs
             @@ -891 +890,0 @@ impl<'a, T: EventListener, A: ActionContext<T>> Processor<'a, T, A> {

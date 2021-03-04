@@ -1,4 +1,3 @@
-# TODO {environment,bash}.nix -> shell.nix?
 { pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [

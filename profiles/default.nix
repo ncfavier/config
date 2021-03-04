@@ -1,5 +1,6 @@
 { profilesPath, ... }: {
   imports = [
+    "${profilesPath}/sops.nix"
     "${profilesPath}/home-manager.nix"
     "${profilesPath}/bash"
     "${profilesPath}/direnv.nix"

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, me, my, secretPath, secrets, syncedFolders, ... }: let
+{ config, pkgs, lib, me, my, secrets, syncedFolders, ... }: let
   relayPort = 6600;
   scripts = [
     "color_popup.pl"
@@ -25,8 +25,6 @@
   };
 in {
   sops.secrets.weechat-sec = {
-    sopsFile = secretPath "weechat-sec";
-    format = "binary";
     owner = me;
     inherit (my) group;
   };

@@ -1,12 +1,15 @@
-{ inputs, config, my, secretPath, secrets, ... }: let
-  cert = config.security.acme.certs."monade.li";
+{ inputs, config, my, secrets, ... }: let
+  cert = config.security.acme.certs.${config.mailserver.fqdn};
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
 
-  sops.secrets.mail = {
-    sopsFile = secretPath "mail";
-    format = "binary";
+  sops.secrets.dkim = {
+    path = "/etc/dkim/${config.mailserver.fqdn}.${config.mailserver.dkimSelector}.key";
+    owner = config.services.opendkim.user;
+    group = config.services.opendkim.group;
   };
+
+  environment.etc."dkim/${config.mailserver.fqdn}.${config.mailserver.dkimSelector}.txt".text = ""; # so the key isn't regenerated
 
   mailserver = {
     enable = true;
@@ -14,16 +17,19 @@ in {
     enableImapSsl = true;
     enableSubmission = false;
     enableSubmissionSsl = true;
-    localDnsResolver = false;
+    localDnsResolver = ! config.networking.resolvconf.useLocalResolver;
     fqdn = "monade.li";
-    domains = [ "monade.li" ];
+    domains = [ "${config.mailserver.fqdn}" ];
     certificateScheme = 1;
     certificateFile = "${cert.directory}/fullchain.pem";
     keyFile = "${cert.directory}/key.pem";
+    dkimKeyDirectory = "/etc/dkim";
     loginAccounts.${my.email} = {
-      hashedPasswordFile = secrets.mail.path;
-      aliases = [ "@monade.li" ];
+      hashedPassword = "$6$.ak/mUMQc5$6P0QSz5WZrzhEo56K1z6KAX.nMUfJMB6evxT4UD7p3f4cVp7nwnpVIagSyaFpUDiEM.rontDmltwT1hcT9oay0";
+      aliases = [ "@${config.mailserver.fqdn}" ];
     };
     lmtpSaveToDetailMailbox = "no";
   };
+
+  systemd.services.opendkim.serviceConfig.SupplementaryGroups = [ config.users.groups.keys.name ];
 }

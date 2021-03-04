@@ -1,39 +1,46 @@
-{ my, ... }: {
+{ pkgs, lib, me, my, ... }: {
+  environment.systemPackages = [ (lib.hiPrio pkgs.bashInteractive_5) ];
+
+  users.users.${me}.shell = pkgs.bashInteractive_5;
+
+  programs.bash = {
+    shellAliases = {
+      C = "LC_ALL=C ";
+      comm = "comm --output-delimiter=$'\\t\\t'";
+      config = "sudo nixos-rebuild --flake ${my.mutableConfig} -v";
+      cp = "cp -i";
+      cxa = "clip | xargs";
+      cxan = "clip | xargs -d'\\n'";
+      df = "df -h";
+      dp = "declare -p";
+      du = "du -h";
+      exec = "exec ";
+      fc-grep = "fc-list | rg -i";
+      free = "free -h";
+      j = "jobs";
+      ls = "ls --color=auto --group-directories-first";
+      l = "ls -lh";
+      ll = "ls -lah";
+      lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
+      mosh = "MOSH_TITLE_NOPREFIX=y mosh";
+      mv = "mv -i";
+      o = "xdg-open";
+      ocaml = "rlwrap ocaml";
+      rlwrap = "rlwrap ";
+      sl = "sudo systemctl";
+      ul = "systemctl --user";
+      sudo = "sudo ";
+      tail = "tail -f -n +1";
+      watch = "watch ";
+    };
+  };
+
   myHm.programs = {
     bash = {
       enable = true;
       historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
       historyIgnore = [ "ls" "l" "ll" "la" ];
       shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
-      shellAliases = {
-        C = "LC_ALL=C ";
-        comm = "comm --output-delimiter=$'\\t\\t'";
-        config = "sudo nixos-rebuild --flake ${my.mutableConfig} -v";
-        cp = "cp -i";
-        cxa = "clip | xargs";
-        cxan = "clip | xargs -d'\\n'";
-        df = "df -h";
-        dp = "declare -p";
-        du = "du -h";
-        exec = "exec ";
-        fc-grep = "fc-list | rg -i";
-        free = "free -h";
-        j = "jobs";
-        ls = "ls --color=auto --group-directories-first -h";
-        l = "ls -lh";
-        ll = "ls -lah";
-        lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
-        mosh = "MOSH_TITLE_NOPREFIX=y mosh";
-        mv = "mv -i";
-        o = "xdg-open";
-        ocaml = "rlwrap ocaml";
-        rlwrap = "rlwrap ";
-        sl = "sudo systemctl";
-        ul = "systemctl --user";
-        sudo = "sudo ";
-        tail = "tail -f -n +1";
-        watch = "watch ";
-      };
       initExtra = ''
         ${builtins.readFile ./functions.bash}
 

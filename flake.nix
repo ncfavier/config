@@ -2,12 +2,12 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixos.url          = "flake:nixpkgs/nixos-20.09";
-    nixos-unstable.url = "flake:nixpkgs/nixos-unstable";
-    myNixpkgs.url      = "github:ncfavier/nixpkgs";
+    nixos.url          = "flake:nixpkgs/nixos-unstable";
+    nixos-stable.url   = "flake:nixpkgs/nixos-20.09";
+    nixpkgs-mine.url   = "github:ncfavier/nixpkgs";
     nixos-hardware.url = "flake:nixos-hardware";
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      url = "github:ncfavier/sops-nix";
       inputs.nixpkgs.follows = "nixos";
     };
     home-manager = {
@@ -18,18 +18,18 @@
       url = "github:kirelagin/nix-dns";
       inputs.nixpkgs.follows = "nixos";
     };
-    "monade.li" = {
-      url = "github:ncfavier/monade.li";
-      flake = false;
-    };
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixos";
     };
+    "monade.li" = {
+      url = "github:ncfavier/monade.li";
+      flake = false;
+    };
   };
 
-  outputs = inputs: with inputs; let
-    inherit (nixos-unstable) lib;
+  outputs = inputs: let
+    inherit (inputs.nixos) lib;
 
     importDir = { dir, _import ? _: f: import f }: lib.pipe dir [
       builtins.readDir
@@ -40,62 +40,44 @@
       }))
     ];
   in {
-    nixosConfigurations = importDir { dir = ./hosts; _import = host: path:
+    nixosConfigurations = importDir { dir = ./hosts; _import = host: localModule:
       lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
-          hardware = nixos-hardware.nixosModules;
+          hardware = inputs.nixos-hardware.nixosModules;
 
           profilesPath = toString ./profiles;
         };
-        modules = [
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          # TODO move this into separate modules
-          ({ config, pkgs, utils, me, my, profilesPath, ... }: {
-            imports = [ "${profilesPath}" ];
+        modules = builtins.attrValues inputs.self.nixosModules ++ [
+          ({ config, utils, me, my, profilesPath, ... }: {
+            imports = [ "${profilesPath}" localModule ];
 
+            # TODO move _module.args into separate modules?
             _module.args = {
-              pkgsUnstable = import nixos-unstable { inherit (config.nixpkgs) system; };
+              pkgsStable = import inputs.nixos-stable {
+                inherit (config.nixpkgs) localSystem crossSystem config overlays;
+              };
 
               me = "n";
               my = config.users.users.${me} // {
                 realName = "Naïm Favier";
-                email = "${me}@monade.li";
-                emailFor = what: "${me}+${what}@monade.li";
+                domain = "monade.li";
+                email = "${me}@${my.domain}";
+                emailFor = what: "${me}+${what}@${my.domain}";
+                pgpFingerprint = "D10BD70AF981C671C8EE4D288F23BAE560675CA3";
                 shellPath = utils.toShellPath my.shell;
                 mutableConfig = "${my.home}/git/config";
               };
-              secretPath = s: ./secrets + "/${s}";
               secrets = config.sops.secrets;
               syncedFolders = config.services.syncthing.declarative.folders;
             };
 
             networking.hostName = host;
 
-            system.configurationRevision = self.rev or "dirty-${self.lastModifiedDate}";
-
-            nix = {
-              package = pkgs.nixFlakes;
-              nixPath = [ "nixos=${nixos}" "nixpkgs=${nixos-unstable}" ];
-              registry = {
-                self.flake = self;
-                nixos.flake = nixos;
-                nixpkgs.flake = nixos-unstable;
-              };
-              extraOptions = ''
-                experimental-features = nix-command flakes ca-references
-              '';
-            };
-
-            sops = {
-              gnupgHome = "${my.home}/.gnupg";
-              sshKeyPaths = [];
-            };
+            system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
           })
-          path
-        ] ++ builtins.attrValues self.nixosModules;
+        ];
       };
     };
 

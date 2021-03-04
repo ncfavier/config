@@ -1,6 +1,6 @@
 { inputs, lib, ... }: {
   disabledModules = [ "services/ttys/getty.nix" ];
-  imports = [ "${inputs.myNixpkgs}/nixos/modules/services/ttys/getty.nix" ];
+  imports = [ "${inputs.nixpkgs-mine}/nixos/modules/services/ttys/getty.nix" ];
 
   console = {
     earlySetup = true;

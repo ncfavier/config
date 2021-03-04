@@ -1,7 +1,5 @@
-{ config, me, my, secretPath, secrets, ... }: {
+{ config, me, my, secrets, ... }: {
   sops.secrets.ulmaoc-leaderboard = {
-    sopsFile = secretPath "ulmaoc-leaderboard";
-    format = "binary";
     owner = me;
     inherit (my) group;
   };
