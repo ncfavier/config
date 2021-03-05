@@ -1,4 +1,4 @@
-{ inputs, config, lib, my, here, ... }: let
+{ inputs, config, lib, domain, here, my, ... }: let
   dns = inputs.dns.lib;
   ipv4 = "199.247.15.22";
   ipv6 = "2001:19f0:6801:413:5400:2ff:feff:23e0";
@@ -10,13 +10,13 @@ in {
       ipTransparent = true;
       ratelimit.enable = true;
 
-      zones.${my.domain}.data = with dns.combinators; let
+      zones.${domain}.data = with dns.combinators; let
         base = {
           A = [ (a ipv4) ];
           AAAA = [ (aaaa ipv6) ];
         };
         github.CNAME = [ "ncfavier.github.io." ];
-      in dns.toString my.domain (base // {
+      in dns.toString domain (base // {
         SOA = {
           nameServer = "@";
           adminEmail = my.emailFor "dns";

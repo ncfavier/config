@@ -1,6 +1,4 @@
-{ inputs, config, pkgs, lib, my, ... }: let
-  flakes = [ "self" "nixos" "nixos-stable" ];
-in {
+{ inputs, config, pkgs, lib, my, ... }: {
   _module.args = let
     importNixpkgs = nixpkgs: import nixpkgs {
       inherit (config.nixpkgs) localSystem crossSystem config overlays;
@@ -14,8 +12,10 @@ in {
 
     trustedUsers = [ "root" "@wheel" ];
 
-    nixPath = map (flake: "${flake}=${inputs.${flake}}") flakes ++ [ "nixpkgs=${inputs.nixos}" ];
-    registry = lib.genAttrs flakes (flake: { flake = inputs.${flake}; });
+    nixPath = [ "nixpkgs=${inputs.nixos}" ];
+
+    registry = lib.genAttrs [ "self" "nixos" "nixos-stable" ] (flake:
+      { flake = inputs.${flake}; });
 
     gc = {
       automatic = true;

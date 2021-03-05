@@ -1,4 +1,4 @@
-{ inputs, config, lib, my, here, syncedFolders, ... }: let
+{ inputs, config, lib, domain, here, syncedFolders, ... }: let
   uploadsRoot = "/srv/uploads";
 in {
   config = lib.mkIf here.isServer {
@@ -18,12 +18,12 @@ in {
           forceSSL = true;
         };
       in {
-        "monade.li" = ssl // {
-          serverAliases = [ "www.monade.li" ];
-          locations."/".root = inputs."monade.li";
+        ${domain} = ssl // {
+          serverAliases = [ "www.${domain}" ];
+          locations."/".root = inputs.${domain};
         };
 
-        "up.monade.li" = ssl // {
+        "up.${domain}" = ssl // {
           root = uploadsRoot;
           locations."/rice/".extraConfig = "autoindex on;";
           extraConfig = ''
@@ -31,14 +31,14 @@ in {
           '';
         };
 
-        "git.monade.li" = ssl // {
+        "git.${domain}" = ssl // {
           locations."/".return = "301 https://github.com/ncfavier$request_uri";
         };
 
         default = {
           default = true;
           serverName = "_";
-          useACMEHost = "monade.li";
+          useACMEHost = domain;
           addSSL = true;
           extraConfig = "return 444;";
         };

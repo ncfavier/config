@@ -1,4 +1,4 @@
-{ config, pkgs, lib, me, here, ... }: let
+{ config, pkgs, lib, here, ... }: let
   font      = "bitmap";
   black     = "#0b000d";
   darkGrey  = "#444444";
@@ -17,16 +17,6 @@ in {
         startx.enable = true;
         # xserverArgs = [ "-keeptty" ];
       };
-      # displayManager = {
-      #   lightdm = {
-      #     enable = true;
-      #     greeters.mini = {
-      #       enable = true;
-      #       user = me;
-      #     };
-      #   };
-      # };
-      # desktopManager.xterm.enable = true;
       autoRepeatDelay = 250;
     };
 
@@ -83,7 +73,7 @@ in {
 
     services.dbus.packages = [ pkgs.dconf ];
 
-    home-manager.users.${me} = {
+    myHm = {
       xsession = {
         enable = true;
         scriptPath = ".xinitrc";

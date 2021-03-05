@@ -1,11 +1,11 @@
-{ config, lib, here, my, secrets, ... }: let
+{ config, lib, hostName, domain, here, secrets, ... }: let
   interface = "wg42";
   port = 500;
   server = config.machines.wo; # TODO abstract
 in {
   sops.secrets.wireguard = {
     format = "json";
-    key = config.networking.hostName;
+    key = hostName;
   };
 
   networking = lib.mkMerge [
@@ -54,7 +54,7 @@ in {
         dns = [ server.wireguard.ipv4 server.wireguard.ipv6 ];
         peers = [
           {
-            endpoint = "${my.domain}:${toString port}";
+            endpoint = "${domain}:${toString port}";
             inherit (server.wireguard) publicKey;
             allowedIPs = [ "0.0.0.0/0" "::/0" ];
             persistentKeepalive = 21;

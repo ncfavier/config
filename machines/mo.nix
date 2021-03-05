@@ -1,4 +1,4 @@
-{ config, lib, hardware, pkgs, me, modulesPath, ... }: {
+{ config, lib, hardware, pkgs, modulesPath, ... }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
     hardware.lenovo-thinkpad-t420
@@ -54,10 +54,8 @@
     };
   };
 
-  users.users.${me} = {
-    hashedPassword = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
-    home = "/home/n2";
-  };
+  my.hashedPassword = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
+  my.home = "/home/n2";
 
   system.stateVersion = "21.03";
 }

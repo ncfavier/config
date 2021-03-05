@@ -1,4 +1,4 @@
-{ config, pkgs, lib, me, my, here, secrets, syncedFolders, ... }: let
+{ config, pkgs, lib, here, secrets, me, my, syncedFolders, ... }: let
   relayPort = 6600;
   scripts = [
     "color_popup.pl"

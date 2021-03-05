@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, lib, hostName, ... }: {
   options.machines = lib.mkOption {
     type = with lib.types; attrsOf (submodule {
       options = {
@@ -32,7 +32,7 @@
   };
 
   config = {
-    _module.args.here = config.machines.${config.networking.hostName};
+    _module.args.here = config.machines.${hostName};
 
     machines = {
       wo = {

@@ -1,9 +1,9 @@
-{ config, lib, me, my, here, secrets, syncedFolders, ... }: {
+{ config, lib, hostName, here, secrets, me, my, syncedFolders, ... }: {
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
 
   sops.secrets.syncthing = {
     format = "json";
-    key = config.networking.hostName;
+    key = hostName;
   };
 
   services.syncthing = {

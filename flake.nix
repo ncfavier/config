@@ -33,35 +33,20 @@
   in {
     nixosModules = lib.importDir ./modules;
 
-    nixosConfigurations = lib.mapAttrs (name: localConfig:
+    nixosConfigurations = lib.mapAttrs (hostName: localConfig:
       lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          inherit inputs;
+          inherit inputs hostName;
+          me = "n";
+          domain = "monade.li";
           hardware = inputs.nixos-hardware.nixosModules;
         };
         modules = builtins.attrValues inputs.self.nixosModules ++ [
           localConfig
-          ({ config, utils, me, my, ... }: {
-            _module.args = {
-              me = "n";
-              my = config.users.users.${me} // {
-                realName = "Naïm Favier";
-                domain = "monade.li";
-                email = "${me}@${my.domain}";
-                emailFor = what: "${what}@${my.domain}";
-                pgpFingerprint = "D10BD70AF981C671C8EE4D288F23BAE560675CA3";
-                shellPath = utils.toShellPath my.shell;
-                mutableConfig = "${my.home}/git/config";
-                mkMutableSymlink = path: config.myHm.lib.file.mkOutOfStoreSymlink
-                  "${my.mutableConfig}${lib.removePrefix (toString inputs.self) (toString path)}";
-              };
-            };
-
-            networking.hostName = name;
-
+          {
             system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
-          })
+          }
         ];
       }
     ) (lib.importDir ./machines);

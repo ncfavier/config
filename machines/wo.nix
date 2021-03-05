@@ -1,4 +1,4 @@
-{ pkgs, me, modulesPath, ... }: {
+{ pkgs, modulesPath, ... }: {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
   ];
@@ -29,7 +29,7 @@
     alacritty.terminfo
   ];
 
-  users.users.${me}.hashedPassword = "$6$jvQ36QMw6kyzUjx$ApZlmPkvPyNAf2t51KpnocvMDo/1BubqCMR3q5jZD5OcM1awyAnTIgIeyaVl2XpAiNZPTouyuM1AOzBIGBu4m.";
+  my.hashedPassword = "$6$jvQ36QMw6kyzUjx$ApZlmPkvPyNAf2t51KpnocvMDo/1BubqCMR3q5jZD5OcM1awyAnTIgIeyaVl2XpAiNZPTouyuM1AOzBIGBu4m.";
 
   services.syncthing.declarative.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----

@@ -1,4 +1,4 @@
-{ config, lib, me, my, here, secrets, ... }: {
+{ config, lib, here, secrets, me, my, ... }: {
   config = lib.mkIf here.isServer {
     sops.secrets.ulmaoc-leaderboard = {
       owner = me;

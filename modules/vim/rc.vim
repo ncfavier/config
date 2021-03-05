@@ -53,8 +53,9 @@ set splitbelow
 set splitright
 set suffixes+=.hi,.dyn_hi,.dyn_o,.cmi,.cmo,.bcf,.fdb_latexmk,.fls,.pdf,.xdv,.aux,.blg,.bbl,.run.xml,.lock
 set tabstop=4
+set timeoutlen=10
 set title
-set ttimeoutlen=10
+set ttimeoutlen=-1
 set ttymouse=xterm2
 set whichwrap=b,s,<,>,[,]
 set wildignore+=**/dist-newstyle/**
