@@ -28,7 +28,7 @@
     };
   };
 
-  outputs = inputs: let
+  outputs = inputs@{ self, ... }: let
     lib = inputs.nixos.lib.extend (import ./lib.nix);
   in {
     nixosModules = lib.importDir ./modules;
@@ -42,10 +42,10 @@
           domain = "monade.li";
           hardware = inputs.nixos-hardware.nixosModules;
         };
-        modules = builtins.attrValues inputs.self.nixosModules ++ [
+        modules = builtins.attrValues self.nixosModules ++ [
           localConfig
           {
-            system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
+            system.configurationRevision = self.rev or "dirty-${self.lastModifiedDate}";
           }
         ];
       }

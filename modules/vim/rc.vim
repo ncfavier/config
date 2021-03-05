@@ -53,9 +53,8 @@ set splitbelow
 set splitright
 set suffixes+=.hi,.dyn_hi,.dyn_o,.cmi,.cmo,.bcf,.fdb_latexmk,.fls,.pdf,.xdv,.aux,.blg,.bbl,.run.xml,.lock
 set tabstop=4
-set timeoutlen=10
 set title
-set ttimeoutlen=-1
+set ttimeoutlen=10
 set ttymouse=xterm2
 set whichwrap=b,s,<,>,[,]
 set wildignore+=**/dist-newstyle/**
@@ -66,6 +65,11 @@ set t_vb=
 
 if $TERM =~ '^rxvt-unicode'
     set ttymouse=urxvt
+endif
+
+" work around ctrl+arrow bug
+if $TERM == 'alacritty'
+    set term=xterm-256color
 endif
 
 " cursor shapes
@@ -124,16 +128,6 @@ noremap  <silent> <Leader>s        :sort<Return>
 noremap  <silent> <Leader>u        :write !upload<Return>
 noremap  <silent> <Leader>x        :execute '!chmod +x -- '.shellescape(@%)<Return>
 noremap  <silent> <Leader>d        :execute 'write !diff - '.shellescape(@%)<Return>
-
-" work around vim+alacritty bug
-map  <ESC>[1;5A <C-Up>
-map  <ESC>[1;5B <C-Down>
-map  <ESC>[1;5C <C-Right>
-map  <ESC>[1;5D <C-Left>
-imap <ESC>[1;5A <C-Up>
-imap <ESC>[1;5B <C-Down>
-imap <ESC>[1;5C <C-Right>
-imap <ESC>[1;5D <C-Left>
 
 " Autocommands
 
