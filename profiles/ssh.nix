@@ -1,4 +1,4 @@
-let
+{ config, lib, my, ... }: let
   port = 2242;
 in {
   services.openssh = {
@@ -14,21 +14,27 @@ in {
 
   myHm.programs.ssh = {
     enable = true;
-    matchBlocks = {
-      "fd42::0:1 10.42.0.1 wo v4.wo monade.li *.monade.li" = { # TODO add other machines
+    matchBlocks = lib.mapAttrs' (n: m: {
+      name = lib.concatStringsSep " " ([
+        m.wireguard.ipv6 m.wireguard.ipv4
+        n "v4.${n}"
+      ] ++ lib.optionals m.isServer [ my.domain "*.${my.domain}" ]);
+      value = {
         inherit port;
         forwardX11 = true;
         forwardX11Trusted = true;
       };
-
+    }) config.machines // {
       "ens sas sas.eleves.ens.fr" = {
         hostname = "sas.eleves.ens.fr";
         user = "nfavier";
       };
+
       "phare phare.normalesup.org" = {
         hostname = "phare.normalesup.org";
         user = "nfavier";
       };
+
       "zeus zeus.ens.wtf" = {
         hostname = "zeus.ens.wtf";
         port = 4022;

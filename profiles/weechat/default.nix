@@ -1,4 +1,4 @@
-{ config, pkgs, lib, me, my, secrets, syncedFolders, ... }: let
+{ config, pkgs, lib, me, my, here, secrets, syncedFolders, ... }: let
   relayPort = 6600;
   scripts = [
     "color_popup.pl"
@@ -24,51 +24,53 @@
     };
   };
 in {
-  sops.secrets.weechat-sec = {
-    owner = me;
-    inherit (my) group;
-  };
-
-  systemd.services."tmux-weechat-${me}" = {
-    description = "WeeChat in a tmux session";
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" "nss-lookup.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      User = me;
-      Group = my.group;
-      Type = "forking";
-      ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
-      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
+  config = lib.mkIf here.isServer {
+    sops.secrets.weechat-sec = {
+      owner = me;
+      inherit (my) group;
     };
-    restartIfChanged = false;
+
+    systemd.services."tmux-weechat-${me}" = {
+      description = "WeeChat in a tmux session";
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" "nss-lookup.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        User = me;
+        Group = my.group;
+        Type = "forking";
+        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
+        ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
+      };
+      restartIfChanged = false;
+    };
+
+    myHm.home.file = lib.listToAttrs (map (name: {
+      name = ".weechat/${name}.conf";
+      value.source = my.mkMutableSymlink (./config + "/${name}.conf");
+    }) [
+      "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
+      "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
+      "script" "sec" "spell" "trigger" "weechat" "xfer"
+    ]);
+
+    networking.firewall.allowedTCPPorts = [ relayPort ];
+
+    nixpkgs.overlays = [
+      (self: super: {
+        weechat-unwrapped = super.weechat-unwrapped.overrideAttrs ({ patches ? [], ... }: {
+          patches = patches ++ [
+            (builtins.toFile "weechat-patch" ''
+              Avoid reloading configuration on SIGHUP (https://github.com/weechat/weechat/issues/1595)
+              --- a/src/core/weechat.c
+              +++ b/src/core/weechat.c
+              @@ -698 +698 @@ weechat_sighup ()
+              -    weechat_reload_signal = SIGHUP;
+              +    weechat_quit_signal = SIGHUP;
+            '')
+          ];
+        });
+      })
+    ];
   };
-
-  myHm.home.file = lib.listToAttrs (map (name: {
-    name = ".weechat/${name}.conf";
-    value.source = config.myHm.lib.file.mkOutOfStoreSymlink "${my.mutableConfig}/profiles/weechat/config/${name}.conf";
-  }) [
-    "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
-    "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
-    "script" "sec" "spell" "trigger" "weechat" "xfer"
-  ]);
-
-  networking.firewall.allowedTCPPorts = [ relayPort ];
-
-  nixpkgs.overlays = [
-    (self: super: {
-      weechat-unwrapped = super.weechat-unwrapped.overrideAttrs ({ patches ? [], ... }: {
-        patches = patches ++ [
-          (builtins.toFile "weechat-patch" ''
-            Avoid reloading configuration on SIGHUP (https://github.com/weechat/weechat/issues/1595)
-            --- a/src/core/weechat.c
-            +++ b/src/core/weechat.c
-            @@ -698 +698 @@ weechat_sighup ()
-            -    weechat_reload_signal = SIGHUP;
-            +    weechat_quit_signal = SIGHUP;
-          '')
-        ];
-      });
-    })
-  ];
 }

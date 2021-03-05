@@ -1,15 +1,6 @@
-{ pkgs, me, profilesPath, modulesPath, ... }: {
+{ pkgs, me, modulesPath, ... }: {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
-
-    "${profilesPath}/wireguard-server.nix"
-    "${profilesPath}/dns.nix"
-    "${profilesPath}/nginx.nix"
-    "${profilesPath}/mailserver.nix"
-    "${profilesPath}/weechat"
-    "${profilesPath}/syncthing.nix"
-    "${profilesPath}/ulmaoc-topic.nix"
-    "${profilesPath}/lambdabot.nix"
   ];
 
   boot = {

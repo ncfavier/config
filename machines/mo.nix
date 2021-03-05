@@ -1,10 +1,7 @@
-{ config, lib, hardware, pkgs, me, profilesPath, modulesPath, ... }: {
+{ config, lib, hardware, pkgs, me, modulesPath, ... }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
     hardware.lenovo-thinkpad-t420
-
-    "${profilesPath}/wireguard-client.nix"
-    "${profilesPath}/graphical.nix"
   ];
 
   boot = {

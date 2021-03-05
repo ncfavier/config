@@ -1,4 +1,6 @@
-{ config, lib, me, my, secrets, syncedFolders, ... }: {
+{ config, lib, me, my, here, secrets, syncedFolders, ... }: {
+  _module.args.syncedFolders = config.services.syncthing.declarative.folders;
+
   sops.secrets.syncthing = {
     format = "json";
     key = config.networking.hostName;
@@ -10,31 +12,17 @@
     inherit (my) group;
     dataDir = my.home;
 
-    guiAddress = "[fd42::0:1]:8384"; # TODO support other machines
+    guiAddress = "[${here.wireguard.ipv6}]:8384";
     openDefaultPorts = true;
 
     declarative = { # TODO insecureAdminAccess
       key = secrets.syncthing.path;
 
       overrideDevices = true;
-      devices = {
-        wo = {
-          id = "7YQ7LRQ-IAWYNHN-VGHTAEQ-JDSH3C7-DUPWBYD-G6L4OJC-W3YLUFZ-SSM5CA6";
-          introducer = true;
-        };
-        fu = {
-          id = "VVLGMST-LA633IY-KWESSFD-7FFF7LE-PNJAEML-ZXZSBLL-ATLQHPT-MUHEDAR";
-          introducer = true;
-        };
-        mo = {
-          id = "WO4GV6E-AJGKLLQ-M7RZGFT-WY7CCOW-LXODXRY-F3QPEJ2-AXDVWKR-SWBGDQP";
-          introducer = true;
-        };
-        tsu = {
-          id = "KXGLMP5-D2RKWZR-QUASDWC-T6H337M-HMEYLX7-D7EW4LM-UARXLZN-NXKVZAU";
-          introducer = true;
-        };
-      };
+      devices = lib.mapAttrs (_: m: {
+        inherit (m.syncthing) id;
+        introducer = true;
+      }) config.machines;
 
       overrideFolders = true;
       folders = let

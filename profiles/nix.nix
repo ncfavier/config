@@ -1,6 +1,14 @@
 { inputs, config, pkgs, lib, my, ... }: let
   flakes = [ "self" "nixos" "nixos-stable" ];
 in {
+  _module.args = let
+    importNixpkgs = nixpkgs: import nixpkgs {
+      inherit (config.nixpkgs) localSystem crossSystem config overlays;
+    };
+  in {
+    pkgsStable = importNixpkgs inputs.nixos-stable;
+  };
+
   nix = {
     package = pkgs.nixFlakes;
 
@@ -33,7 +41,7 @@ in {
       mutableSelf = builtins.getFlake ${lib.strings.escapeNixString my.mutableConfig};
       inherit (nixos) lib;
       machines = (if mutable then mutableSelf else self).nixosConfigurations;
-      local = machines.${lib.strings.escapeNixIdentifier config.networking.hostName};
+      local = machines.''${lib.fileContents /etc/hostname};
     in {
       inherit nixos nixpkgs self mutableSelf lib local;
       inherit (local) config;

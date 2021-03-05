@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, my, ... }: {
+{ inputs, config, pkgs, lib, my, ... }: {
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   options.sops.secrets = lib.mkOption {
@@ -9,6 +9,8 @@
   };
 
   config = {
+    _module.args.secrets = config.sops.secrets;
+
     sops = {
       gnupgHome = "${my.home}/.gnupg";
       sshKeyPaths = [];

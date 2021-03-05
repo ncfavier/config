@@ -29,68 +29,41 @@
   };
 
   outputs = inputs: let
-    inherit (inputs.nixos) lib;
-
-    importDir = { dir, _import ? _: f: import f }: lib.pipe dir [
-      builtins.readDir
-      (lib.filterAttrs (n: v: v == "regular" && lib.hasSuffix ".nix" n && n != "default.nix"))
-      (lib.mapAttrs' (n: v: rec {
-        name = lib.removeSuffix ".nix" n;
-        value = _import name "${toString dir}/${n}";
-      }))
-    ];
+    lib = inputs.nixos.lib.extend (import ./lib.nix);
   in {
-    nixosConfigurations = importDir { dir = ./hosts; _import = host: localModule:
+    nixosModules = lib.importDir ./profiles;
+
+    nixosConfigurations = lib.mapAttrs (name: localConfig:
       lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
           hardware = inputs.nixos-hardware.nixosModules;
-
-          profilesPath = toString ./profiles;
         };
         modules = builtins.attrValues inputs.self.nixosModules ++ [
-          ({ config, utils, me, my, profilesPath, ... }: {
-            imports = [ "${profilesPath}" localModule ];
-
-            # TODO move _module.args into separate modules?
+          localConfig
+          ({ config, utils, me, my, ... }: {
             _module.args = {
-              pkgsStable = import inputs.nixos-stable {
-                inherit (config.nixpkgs) localSystem crossSystem config overlays;
-              };
-
               me = "n";
               my = config.users.users.${me} // {
                 realName = "Naïm Favier";
                 domain = "monade.li";
                 email = "${me}@${my.domain}";
-                emailFor = what: "${me}+${what}@${my.domain}";
+                emailFor = what: "${what}@${my.domain}";
                 pgpFingerprint = "D10BD70AF981C671C8EE4D288F23BAE560675CA3";
                 shellPath = utils.toShellPath my.shell;
                 mutableConfig = "${my.home}/git/config";
+                mkMutableSymlink = path: config.myHm.lib.file.mkOutOfStoreSymlink
+                  "${my.mutableConfig}${lib.removePrefix (toString inputs.self) (toString path)}";
               };
-              secrets = config.sops.secrets;
-              syncedFolders = config.services.syncthing.declarative.folders;
             };
 
-            networking.hostName = host;
+            networking.hostName = name;
 
             system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
           })
         ];
-      };
-    };
-
-    nixosModules = importDir { dir = ./modules; };
-
-    #nixosProfiles = importDir { dir = ./profiles; _import = name: path:
-    #  with lib; let
-    #    profile = import path;
-    #    profileF = if isFunction profile then profile else const profile;
-    #  in setFunctionArgs (args@{ config, lib, ... }: {
-    #    options.profiles.${name}.enable = lib.mkEnableOption name;
-    #    config = lib.mkIf config.profiles.${name}.enable (profileF args);
-    #  }) (functionArgs profileF);
-    #};
+      }
+    ) (lib.importDir ./machines);
   };
 }
