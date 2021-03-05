@@ -31,7 +31,7 @@
   outputs = inputs: let
     lib = inputs.nixos.lib.extend (import ./lib.nix);
   in {
-    nixosModules = lib.importDir ./profiles;
+    nixosModules = lib.importDir ./modules;
 
     nixosConfigurations = lib.mapAttrs (name: localConfig:
       lib.nixosSystem {
