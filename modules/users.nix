@@ -1,4 +1,4 @@
-{ inputs, config, lib, utils, me, my, ... }: {
+{ inputs, config, lib, utils, domain, me, my, ... }: {
   imports = [ (lib.mkAliasOptionModule [ "my" ] [ "users" "users" me ]) ];
 
   options.users.users = lib.mkOption {
@@ -26,8 +26,8 @@
             "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXcKmcpfziEqVXmhYIJyZ03DOb5x7wcf+FxYUWewWeBS5g1MfWKw/FH1H0EQeJf6z0epc/0oN50AViqe1zBnUChGGF2xjNzGEpDPjHg0MuEDMboXBHDBbBRjb31S4T7pkZ72cCV06+bilWdYnXc0E7ND81BakmuBJHFH3DvjYXudFdhwLEtmXAVIOdLBlIStY6ZMkHojPOjnfYrREa7PfllrH0dqwQI/v1dU7E6ZHV5OK631HhcAFhySlu4jdo890czsEqwTkMSrPrgVXiiQipvFAavZvqB53d9J36BkSeVO3meqz2x9N6puXL1A/f+a2Suc5mfMUayFm35lE3sw1h tsu"
           ];
           realName = "Naïm Favier";
-          email = "${me}@${config.mailserver.fqdn}";
-          emailFor = what: "${what}@${config.mailserver.fqdn}";
+          email = "${me}@${domain}";
+          emailFor = what: "${what}@${domain}";
           pgpFingerprint = "D10BD70AF981C671C8EE4D288F23BAE560675CA3";
           shellPath = utils.toShellPath my.shell;
           mutableConfig = "${my.home}/git/config";
