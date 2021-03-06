@@ -3,6 +3,12 @@
     systemPackages = with pkgs; [
       manpages
       ripgrep
+      tree
+      ncdu
+      file
+      gnumake
+      jq
+      python3
     ];
 
     variables = rec {
@@ -12,15 +18,9 @@
       MANPAGER = "less -+F";
       NIX_SHELL_PRESERVE_PROMPT = "1";
     };
+
+    etc.topdefaultrc.source = ./toprc;
   };
-
-  # TODO automatically add channel
-  # programs.command-not-found = {
-  #   enable = true;
-  #   dbPath = "${fetchTarball "channel:nixos-unstable"}/programs.sqlite";
-  # };
-
-  # TODO top
 
   myHm = {
     programs.htop = {

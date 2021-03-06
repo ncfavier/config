@@ -8,8 +8,6 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
-
     trustedUsers = [ "root" "@wheel" ];
 
     nixPath = [ "nixpkgs=${inputs.nixos}" ];
@@ -31,7 +29,20 @@
     '';
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [
+      (self: super: {
+        nix = super.nixFlakes;
+      })
+    ];
+  };
+
+  environment.systemPackages = [ pkgs.nix-index ];
+  programs.command-not-found.enable = false;
+  programs.bash.interactiveShellInit = ''
+    . ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+  '';
 
   myHm.home.file.".nix-defexpr/default.nix".text = ''
     { mutable ? false }: let

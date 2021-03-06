@@ -14,7 +14,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixos";
     };
-    dns = {
+    nix-dns = {
       url = "github:kirelagin/nix-dns";
       inputs.nixpkgs.follows = "nixos";
     };
@@ -29,13 +29,14 @@
   };
 
   outputs = inputs@{ self, ... }: let
+    system = "x86_64-linux";
     lib = inputs.nixos.lib.extend (import ./lib.nix);
   in {
     nixosModules = lib.importDir ./modules;
 
     nixosConfigurations = lib.mapAttrs (hostName: localConfig:
       lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         specialArgs = {
           inherit inputs hostName;
           me = "n";

@@ -8,7 +8,6 @@
       nerdcommenter
       vim-surround
       vim-easy-align
-      colorizer
       vim-markdown
       haskell-vim
       vim-nix

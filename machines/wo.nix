@@ -20,7 +20,7 @@
 
   swapDevices = [ {
     device = "/swap";
-    size = 2048;
+    size = 6144;
   } ];
 
   networking.interfaces.ens3.useDHCP = true;

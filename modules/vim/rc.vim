@@ -63,19 +63,21 @@ set wildignorecase
 set visualbell
 set t_vb=
 
-if $TERM =~ '^rxvt-unicode'
+if &term =~ '^rxvt-unicode'
     set ttymouse=urxvt
 endif
 
-" work around ctrl+arrow bug
-if $TERM == 'alacritty'
-    set term=xterm-256color
+if &term == 'alacritty'
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
 endif
 
 " cursor shapes
-let &t_SI = "\<Esc>[5 q"
-let &t_EI = "\<Esc>[0 q"
-let &t_SR = "\<Esc>[3 q"
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[0 q"
+let &t_SR = "\e[3 q"
 
 colorscheme peachpuff
 

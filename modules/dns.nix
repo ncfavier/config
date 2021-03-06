@@ -1,6 +1,6 @@
 { inputs, config, lib, domain, here, my, ... }: let
-  dns = inputs.dns.lib;
-  ipv4 = "199.247.15.22";
+  dns = inputs.nix-dns.lib;
+  ipv4 = "199.247.15.22"; # TODO abstract
   ipv6 = "2001:19f0:6801:413:5400:2ff:feff:23e0";
 in {
   config = lib.mkIf here.isServer {
@@ -56,7 +56,7 @@ in {
       enable = true;
       interfaces = [ "127.0.0.1" "::1" here.wireguard.ipv4 here.wireguard.ipv6 ];
       allowedAccess = [ "127.0.0.0/8" "::1/128" "10.42.0.0/16" "fd42::/16" ];
-      forwardAddresses = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+      forwardAddresses = config.networking.nameservers;
       extraConfig = ''
         private-address: fd42::/16
         private-address: 10.42.0.0/16
