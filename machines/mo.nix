@@ -49,8 +49,7 @@
     };
   };
 
-  my.hashedPassword = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
   my.home = "/home/n2";
 
-  system.stateVersion = "21.03";
+  system.stateVersion = "21.05";
 }

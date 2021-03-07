@@ -20,8 +20,6 @@
   };
 
   config = {
-    _module.args.here = my.machines.${hostname};
-
     networking = {
       hostName = hostname;
 

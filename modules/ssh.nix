@@ -24,7 +24,7 @@ in {
         forwardX11 = true;
         forwardX11Trusted = true;
       };
-    }) config.machines // {
+    }) my.machines // {
       "ens sas sas.eleves.ens.fr" = {
         hostname = "sas.eleves.ens.fr";
         user = "nfavier";

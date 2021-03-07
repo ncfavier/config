@@ -63,7 +63,7 @@ in {
           local-data: "v4.${n}. A ${m.wireguard.ipv4}"
           local-data-ptr: "${m.wireguard.ipv6} ${n}."
           local-data-ptr: "${m.wireguard.ipv4} v4.${n}."
-        '') config.machines)}
+        '') my.machines)}
       '';
     };
 

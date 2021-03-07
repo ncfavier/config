@@ -1,4 +1,3 @@
-# TODO merge to environment/shell/bash
 { pkgs, ... }: {
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "clip" ''

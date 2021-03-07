@@ -2,7 +2,7 @@
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
 
   sops.secrets.syncthing = {
-    format = "json";
+    format = "yaml";
     key = hostname;
   };
 
@@ -16,13 +16,14 @@
     openDefaultPorts = true;
 
     declarative = { # TODO insecureAdminAccess
+      cert = builtins.toFile "syncthing-cert" here.syncthing.cert;
       key = secrets.syncthing.path;
 
       overrideDevices = true;
       devices = lib.mapAttrs (_: m: {
         inherit (m.syncthing) id;
         introducer = true;
-      }) config.machines;
+      }) my.machines;
 
       overrideFolders = true;
       folders = let
@@ -30,10 +31,12 @@
           type = "trashcan";
           params.cleanoutDays = "0";
         };
+        allDevices = builtins.attrNames my.machines;
+        allDevicesExceptPhone = builtins.attrNames (lib.filterAttrs (_: m: !m.isPhone) my.machines);
       in {
         my = {
           path = "${config.my.home}/my";
-          devices = [ "wo" "fu" "mo" ];
+          devices = allDevicesExceptPhone;
           versioning = {
             type = "simple";
             params = {
@@ -44,33 +47,33 @@
         };
         pictures = {
           path = "${config.my.home}/pictures";
-          devices = [ "wo" "fu" "mo" "tsu" ];
+          devices = allDevices;
           versioning = trashcan;
         };
         music = {
           path = "${config.my.home}/music";
-          devices = [ "wo" "fu" "mo" "tsu" ];
+          devices = allDevices;
           versioning = trashcan;
         };
         camera = {
           path = "${config.my.home}/camera";
-          devices = [ "wo" "fu" "mo" "tsu" ];
+          devices = allDevices;
           versioning = trashcan;
         };
         saves = {
           path = "${config.my.home}/saves";
-          devices = [ "wo" "fu" "mo" ];
+          devices = allDevicesExceptPhone;
           versioning = trashcan;
         };
         irc-logs = {
           path = "${config.my.home}/irc-logs";
-          devices = [ "wo" "fu" "mo" ];
+          devices = allDevicesExceptPhone;
           watch = false;
           versioning = trashcan;
         };
         uploads = {
           path = "${config.my.home}/uploads";
-          devices = [ "wo" "fu" "mo" ];
+          devices = allDevicesExceptPhone;
           versioning = trashcan;
         };
       };

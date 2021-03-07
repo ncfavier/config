@@ -32,7 +32,7 @@
     system = "x86_64-linux";
     pkgs = inputs.nixos.legacyPackages.${system};
     lib = inputs.nixos.lib.extend (import ./lib.nix);
-    my = import ./my.nix;
+    my = import ./my.nix lib;
   in {
     nixosModules = lib.importDir ./modules;
 
@@ -41,6 +41,7 @@
         inherit system;
         specialArgs = {
           inherit inputs hostname my;
+          here = my.machines.${hostname};
           hardware = inputs.nixos-hardware.nixosModules;
         };
         modules = builtins.attrValues self.nixosModules ++ [

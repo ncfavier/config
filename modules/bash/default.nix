@@ -1,12 +1,26 @@
 { config, pkgs, lib, ... }: {
-  environment.systemPackages = [ (lib.hiPrio pkgs.bashInteractive_5) ];
+  environment.systemPackages = [
+    (lib.hiPrio pkgs.bashInteractive_5)
+
+    (pkgs.writeShellScriptBin "config" ''
+      case $1 in
+        repl)
+          shift
+          exec nix repl ~/.nix-defexpr "$@";;
+        update)
+          shift
+          (( $# )) || set -- --recreate-lock-file
+          exec nix flake update ${lib.escapeShellArg config.my.mutableConfig} "$@";;
+        *) exec sudo nixos-rebuild --flake ${lib.escapeShellArg config.my.mutableConfig} -v "$@";;
+      esac
+    '')
+  ];
 
   my.shell = pkgs.bashInteractive_5;
 
   programs.bash.shellAliases = {
     C = "LC_ALL=C ";
     comm = "comm --output-delimiter=$'\\t\\t'";
-    config = "sudo nixos-rebuild --flake ${config.my.mutableConfig} -v";
     cp = "cp -i";
     cxa = "clip | xargs";
     cxan = "clip | xargs -d'\\n'";
@@ -39,6 +53,7 @@
       historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
       historyIgnore = [ "ls" "l" "ll" "la" ];
       shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
+      sessionVariables._ZL_CD = "cd";
       initExtra = ''
         ${builtins.readFile ./functions.bash}
 
