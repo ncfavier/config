@@ -1,14 +1,13 @@
-{ config, lib, hostName, domain, here, secrets, ... }: let
+{ config, lib, hostname, here, secrets, my, ... }: let
   interface = "wg42";
   port = 500;
-  server = config.machines.wo; # TODO abstract
 in {
   sops.secrets.wireguard = {
     format = "json";
-    key = hostName;
+    key = hostname;
   };
 
-  networking = lib.mkMerge [
+  networking = lib.mkMerge [ # TODO if
     (lib.mkIf here.isServer {
       wireguard = {
         enable = true;
@@ -41,7 +40,7 @@ in {
       nat = {
         enable = true;
         enableIPv6 = true;
-        externalInterface = "ens3"; # TODO abstract
+        externalInterface = config.networking.wan.interface;
         internalIPs = [ "10.42.0.0/16" ];
         internalIPv6s = [ "fd42::/16" ];
       };
@@ -51,11 +50,11 @@ in {
       wg-quick.interfaces.${interface} = {
         privateKeyFile = secrets.wireguard.path;
         address = [ "${here.wireguard.ipv4}/16" "${here.wireguard.ipv6}/16" ];
-        dns = [ server.wireguard.ipv4 server.wireguard.ipv6 ];
+        dns = [ my.server.wireguard.ipv4 my.server.wireguard.ipv6 ];
         peers = [
           {
-            endpoint = "${domain}:${toString port}";
-            inherit (server.wireguard) publicKey;
+            endpoint = "${my.domain}:${toString port}";
+            inherit (my.server.wireguard) publicKey;
             allowedIPs = [ "0.0.0.0/0" "::/0" ];
             persistentKeepalive = 21;
           }

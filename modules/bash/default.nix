@@ -1,4 +1,4 @@
-{ pkgs, lib, my, ... }: {
+{ config, pkgs, lib, ... }: {
   environment.systemPackages = [ (lib.hiPrio pkgs.bashInteractive_5) ];
 
   my.shell = pkgs.bashInteractive_5;
@@ -6,7 +6,7 @@
   programs.bash.shellAliases = {
     C = "LC_ALL=C ";
     comm = "comm --output-delimiter=$'\\t\\t'";
-    config = "sudo nixos-rebuild --flake ${my.mutableConfig} -v";
+    config = "sudo nixos-rebuild --flake ${config.my.mutableConfig} -v";
     cp = "cp -i";
     cxa = "clip | xargs";
     cxan = "clip | xargs -d'\\n'";

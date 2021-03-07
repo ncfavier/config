@@ -1,22 +1,20 @@
-{ inputs, config, lib, domain, here, my, ... }: let
+{ inputs, config, lib, here, my, ... }: let
   dns = inputs.nix-dns.lib;
-  ipv4 = "199.247.15.22"; # TODO abstract
-  ipv6 = "2001:19f0:6801:413:5400:2ff:feff:23e0";
 in {
   config = lib.mkIf here.isServer {
     services.nsd = {
       enable = true;
-      interfaces = [ ipv4 ipv6 ];
+      interfaces = [ config.networking.wan.ipv4 config.networking.wan.ipv6 ];
       ipTransparent = true;
       ratelimit.enable = true;
 
-      zones.${domain}.data = with dns.combinators; let
+      zones.${my.domain}.data = with dns.combinators; let
         base = {
-          A = [ (a ipv4) ];
-          AAAA = [ (aaaa ipv6) ];
+          A = [ (a config.networking.wan.ipv4) ];
+          AAAA = [ (aaaa config.networking.wan.ipv6) ];
         };
-        github.CNAME = [ "ncfavier.github.io." ];
-      in dns.toString domain (base // {
+        github.CNAME = [ "${my.githubUsername}.github.io." ];
+      in dns.toString my.domain (base // {
         SOA = {
           nameServer = "@";
           adminEmail = my.emailFor "dns";

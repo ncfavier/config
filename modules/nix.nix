@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, my, ... }: {
+{ inputs, config, pkgs, lib, ... }: {
   _module.args = let
     importNixpkgs = nixpkgs: import nixpkgs {
       inherit (config.nixpkgs) localSystem crossSystem config overlays;
@@ -49,7 +49,7 @@
       nixos = import (builtins.getFlake "nixos") {};
       nixpkgs = import (builtins.getFlake "nixpkgs") {};
       self = builtins.getFlake "self";
-      mutableSelf = builtins.getFlake ${lib.strings.escapeNixString my.mutableConfig};
+      mutableSelf = builtins.getFlake ${lib.strings.escapeNixString config.my.mutableConfig};
       inherit (nixos) lib;
       machines = (if mutable then mutableSelf else self).nixosConfigurations;
       local = machines.''${lib.fileContents /etc/hostname};

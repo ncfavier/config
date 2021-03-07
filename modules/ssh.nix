@@ -1,4 +1,4 @@
-{ config, lib, domain, ... }: let
+{ config, lib, my, ... }: let
   port = 2242;
 in {
   services.openssh = {
@@ -18,7 +18,7 @@ in {
       name = lib.concatStringsSep " " ([
         m.wireguard.ipv6 m.wireguard.ipv4
         n "v4.${n}"
-      ] ++ lib.optionals m.isServer [ domain "*.${domain}" ]);
+      ] ++ lib.optionals m.isServer [ my.domain "*.${my.domain}" ]);
       value = {
         inherit port;
         forwardX11 = true;

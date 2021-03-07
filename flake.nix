@@ -4,10 +4,10 @@
   inputs = {
     nixos.url          = "flake:nixpkgs/nixos-unstable";
     nixos-stable.url   = "flake:nixpkgs/nixos-20.09";
-    nixpkgs-mine.url   = "github:ncfavier/nixpkgs";
+    my-nixpkgs.url     = "github:ncfavier/nixpkgs";
     nixos-hardware.url = "flake:nixos-hardware";
     sops-nix = {
-      url = "github:ncfavier/sops-nix";
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixos";
     };
     home-manager = {
@@ -30,26 +30,29 @@
 
   outputs = inputs@{ self, ... }: let
     system = "x86_64-linux";
+    pkgs = inputs.nixos.legacyPackages.${system};
     lib = inputs.nixos.lib.extend (import ./lib.nix);
+    my = import ./my.nix;
   in {
     nixosModules = lib.importDir ./modules;
 
-    nixosConfigurations = lib.mapAttrs (hostName: localConfig:
+    nixosConfigurations = lib.mapAttrs (hostname: localConfig:
       lib.nixosSystem {
         inherit system;
         specialArgs = {
-          inherit inputs hostName;
-          me = "n";
-          domain = "monade.li";
+          inherit inputs hostname my;
           hardware = inputs.nixos-hardware.nixosModules;
         };
         modules = builtins.attrValues self.nixosModules ++ [
+          { system.configurationRevision = self.rev or "dirty-${self.lastModifiedDate}"; }
           localConfig
-          {
-            system.configurationRevision = self.rev or "dirty-${self.lastModifiedDate}";
-          }
         ];
       }
     ) (lib.importDir ./machines);
+
+    devShell.${system} = pkgs.mkShell {
+      buildInputs = [ pkgs.sops ];
+      SOPS_PGP_FP = my.pgpFingerprint;
+    };
   };
 }

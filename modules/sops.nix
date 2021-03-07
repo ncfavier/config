@@ -1,5 +1,5 @@
 { inputs, config, pkgs, lib, my, ... }: {
-  imports = [ inputs.sops-nix.nixosModules.sops ];
+  imports = [ inputs.sops-nix.nixosModule ];
 
   options.sops.secrets = lib.mkOption {
     type = with lib.types; attrsOf (submodule ({ config, name, ... }: {
@@ -12,14 +12,13 @@
     _module.args.secrets = config.sops.secrets;
 
     sops = {
-      gnupgHome = "${my.home}/.gnupg";
+      gnupgHome = "${config.my.home}/.gnupg";
       sshKeyPaths = [];
       defaultSopsFormat = "binary";
     };
 
-    environment = { # TODO move this to devShell
-      systemPackages = [ pkgs.sops ];
-      variables.SOPS_PGP_FP = my.pgpFingerprint;
-    };
+    system.activationScripts.secrets-permissions = lib.stringAfter [ "setup-secrets" ] ''
+      chmod o+x /run/secrets /run/secrets.d
+    '';
   };
 }

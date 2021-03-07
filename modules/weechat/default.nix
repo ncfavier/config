@@ -1,4 +1,4 @@
-{ config, pkgs, lib, here, secrets, me, my, syncedFolders, ... }: let
+{ config, pkgs, lib, here, secrets, my, syncedFolders, ... }: let
   relayPort = 6600;
   scripts = [
     "color_popup.pl"
@@ -27,20 +27,20 @@
 in {
   config = lib.mkIf here.isServer {
     sops.secrets.weechat-sec = {
-      owner = me;
-      inherit (my) group;
+      owner = my.username;
+      inherit (config.my) group;
     };
 
-    systemd.services."tmux-weechat-${me}" = {
+    systemd.services."tmux-weechat-${my.username}" = {
       description = "WeeChat in a tmux session";
       wants = [ "network-online.target" ];
       after = [ "network-online.target" "nss-lookup.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        User = me;
-        Group = my.group;
+        User = my.username;
+        Group = config.my.group;
         Type = "forking";
-        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
+        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
         ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
       };
       restartIfChanged = false;
@@ -48,7 +48,7 @@ in {
 
     myHm.home.file = lib.listToAttrs (map (name: {
       name = ".weechat/${name}.conf";
-      value.source = my.mkMutableSymlink (./config + "/${name}.conf");
+      value.source = config.my.mkMutableSymlink (./config + "/${name}.conf");
     }) [
       "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
       "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"

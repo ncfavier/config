@@ -40,10 +40,6 @@ in {
     systemd.services.lambdabot = {
       wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
-
-      serviceConfig.SupplementaryGroups = [
-        config.users.groups.keys.name
-      ];
     };
 
     services.stunnel = {

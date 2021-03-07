@@ -36,6 +36,21 @@
         "type": "github"
       }
     },
+    "my-nixpkgs": {
+      "locked": {
+        "lastModified": 1614341824,
+        "narHash": "sha256-AuMu2KAATLApi7n4WpvrK8hJJ6uIpcvMc0uNdnMZwBs=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "302fcc4674803169af9efdb247fd529e65853459",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nix-dns": {
       "inputs": {
         "nixpkgs": [
@@ -100,30 +115,15 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-mine": {
-      "locked": {
-        "lastModified": 1614341824,
-        "narHash": "sha256-AuMu2KAATLApi7n4WpvrK8hJJ6uIpcvMc0uNdnMZwBs=",
-        "owner": "ncfavier",
-        "repo": "nixpkgs",
-        "rev": "302fcc4674803169af9efdb247fd529e65853459",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ncfavier",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "monade.li": "monade.li",
+        "my-nixpkgs": "my-nixpkgs",
         "nix-dns": "nix-dns",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nixos-stable": "nixos-stable",
-        "nixpkgs-mine": "nixpkgs-mine",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix"
       }
@@ -156,15 +156,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1614786688,
-        "narHash": "sha256-inkR/ABghhpdwBEThUjeJAQ3AmS30pHGMTL6YwJGAZU=",
-        "owner": "ncfavier",
+        "lastModified": 1615031779,
+        "narHash": "sha256-uCdrsI0poKOAt0BxxjbLMNY6bOZNrDxOTAx4DQQTAEM=",
+        "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "9ce29ee6b20ac9f8575d7c10dc50da1ad61188c9",
+        "rev": "137d387e784783eac52dfd9d1b35227eb0c211f1",
         "type": "github"
       },
       "original": {
-        "owner": "ncfavier",
+        "owner": "Mic92",
         "repo": "sops-nix",
         "type": "github"
       }

@@ -23,6 +23,12 @@
     size = 6144;
   } ];
 
+  networking.wan = {
+    interface = "ens3";
+    ipv4 = "199.247.15.22";
+    ipv6 = "2001:19f0:6801:413:5400:2ff:feff:23e0";
+  };
+
   networking.interfaces.ens3.useDHCP = true;
 
   environment.systemPackages = with pkgs; [

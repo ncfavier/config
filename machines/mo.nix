@@ -35,16 +35,11 @@
     };
   };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-partlabel/swap";
-    }
-  ];
+  swapDevices = [ {
+    device = "/dev/disk/by-partlabel/swap";
+  } ];
 
-  networking.interfaces.enp0s25 = {
-    useDHCP = true;
-    tempAddress = "disabled";
-  };
+  networking.interfaces.enp0s25.useDHCP = true;
 
   services.xserver.libinput = {
     enable = true;

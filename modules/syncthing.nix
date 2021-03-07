@@ -1,16 +1,16 @@
-{ config, lib, hostName, here, secrets, me, my, syncedFolders, ... }: {
+{ config, lib, hostname, here, secrets, my, ... }: {
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
 
   sops.secrets.syncthing = {
     format = "json";
-    key = hostName;
+    key = hostname;
   };
 
   services.syncthing = {
     enable = true;
-    user = me;
-    inherit (my) group;
-    dataDir = my.home;
+    user = my.username;
+    inherit (config.my) group;
+    dataDir = config.my.home;
 
     guiAddress = "[${here.wireguard.ipv6}]:8384";
     openDefaultPorts = true;
@@ -32,7 +32,7 @@
         };
       in {
         my = {
-          path = "${my.home}/my";
+          path = "${config.my.home}/my";
           devices = [ "wo" "fu" "mo" ];
           versioning = {
             type = "simple";
@@ -43,33 +43,33 @@
           };
         };
         pictures = {
-          path = "${my.home}/pictures";
+          path = "${config.my.home}/pictures";
           devices = [ "wo" "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         music = {
-          path = "${my.home}/music";
+          path = "${config.my.home}/music";
           devices = [ "wo" "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         camera = {
-          path = "${my.home}/camera";
+          path = "${config.my.home}/camera";
           devices = [ "wo" "fu" "mo" "tsu" ];
           versioning = trashcan;
         };
         saves = {
-          path = "${my.home}/saves";
+          path = "${config.my.home}/saves";
           devices = [ "wo" "fu" "mo" ];
           versioning = trashcan;
         };
         irc-logs = {
-          path = "${my.home}/irc-logs";
+          path = "${config.my.home}/irc-logs";
           devices = [ "wo" "fu" "mo" ];
           watch = false;
           versioning = trashcan;
         };
         uploads = {
-          path = "${my.home}/uploads";
+          path = "${config.my.home}/uploads";
           devices = [ "wo" "fu" "mo" ];
           versioning = trashcan;
         };

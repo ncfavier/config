@@ -1,13 +1,29 @@
-{ pkgs, lib, hostName, ... }: {
-  options.networking.interfaces = lib.mkOption {
-    type = with lib.types; attrsOf (submodule {
-      tempAddress = "disabled";
-    });
+{ pkgs, lib, hostname, my, ... }: {
+  options.networking = with lib.types; {
+    interfaces = lib.mkOption {
+      type = attrsOf (submodule {
+        tempAddress = "disabled";
+      });
+    };
+
+    wan = {
+      interface = lib.mkOption {
+        type = str;
+      };
+      ipv4 = lib.mkOption {
+        type = str;
+      };
+      ipv6 = lib.mkOption {
+        type = str;
+      };
+    };
   };
 
   config = {
+    _module.args.here = my.machines.${hostname};
+
     networking = {
-      inherit hostName;
+      hostName = hostname;
 
       nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
 
