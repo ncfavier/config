@@ -45,7 +45,6 @@
           hardware = inputs.nixos-hardware.nixosModules;
         };
         modules = builtins.attrValues self.nixosModules ++ [
-          { system.configurationRevision = self.rev or "dirty-${self.lastModifiedDate}"; }
           localConfig
         ];
       }
@@ -55,5 +54,11 @@
       buildInputs = [ pkgs.sops ];
       SOPS_PGP_FP = my.pgpFingerprint;
     };
+
+    packages.${system}.iso = (lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit inputs; };
+      modules = [ ./iso.nix ];
+    }).config.system.build.isoImage;
   };
 }

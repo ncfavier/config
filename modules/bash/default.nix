@@ -1,19 +1,6 @@
-{ config, pkgs, lib, ... }: {
+{ pkgs, lib, ... }: {
   environment.systemPackages = [
     (lib.hiPrio pkgs.bashInteractive_5)
-
-    (pkgs.writeShellScriptBin "config" ''
-      case $1 in
-        repl)
-          shift
-          exec nix repl ~/.nix-defexpr "$@";;
-        update)
-          shift
-          (( $# )) || set -- --recreate-lock-file
-          exec nix flake update ${lib.escapeShellArg config.my.mutableConfig} "$@";;
-        *) exec sudo nixos-rebuild --flake ${lib.escapeShellArg config.my.mutableConfig} -v "$@";;
-      esac
-    '')
   ];
 
   my.shell = pkgs.bashInteractive_5;

@@ -49,7 +49,7 @@
       nixos = import (builtins.getFlake "nixos") {};
       nixpkgs = import (builtins.getFlake "nixpkgs") {};
       self = builtins.getFlake "self";
-      mutableSelf = builtins.getFlake ${lib.strings.escapeNixString config.my.mutableConfig};
+      mutableSelf = builtins.getFlake ${lib.strings.escapeNixString config.lib.meta.mutableConfig};
       inherit (nixos) lib;
       machines = (if mutable then mutableSelf else self).nixosConfigurations;
       local = machines.''${lib.fileContents /etc/hostname};

@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, my, ... }: {
+{ inputs, config, lib, ... }@args: {
   imports = [ inputs.sops-nix.nixosModule ];
 
   options.sops.secrets = lib.mkOption {
