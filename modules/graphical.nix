@@ -167,17 +167,6 @@ in {
 
       programs.alacritty = {
         enable = true;
-        package = pkgs.alacritty.overrideAttrs ({ patches ? [], ... }: {
-          patches = patches ++ [
-            (builtins.toFile "alacritty-patch" ''
-              Fix https://github.com/alacritty/alacritty/issues/4862
-              --- a/alacritty/src/input.rs
-              +++ b/alacritty/src/input.rs
-              @@ -891 +890,0 @@ impl<'a, T: EventListener, A: ActionContext<T>> Processor<'a, T, A> {
-              -            && utf8_len == 1
-            '')
-          ];
-        });
         settings = {
           window = {
             dimensions = {
@@ -222,6 +211,12 @@ in {
           };
           selection.save_to_clipboard = true;
           cursor.style.blinking = "Always";
+          key_bindings = [
+            { key =  3; mods = "Alt"; chars = "\\eé"; }
+            { key =  8; mods = "Alt"; chars = "\\eè"; }
+            { key = 10; mods = "Alt"; chars = "\\eç"; }
+            { key = 11; mods = "Alt"; chars = "\\eà"; }
+          ];
         };
       };
 

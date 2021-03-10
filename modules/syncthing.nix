@@ -6,6 +6,7 @@
     key = hostname;
   };
 
+  # TODO insecureAdminAccess, default Sync folder, anonymous usage reporting
   services.syncthing = {
     enable = true;
     user = my.username;
@@ -15,7 +16,7 @@
     guiAddress = "[${here.wireguard.ipv6}]:8384";
     openDefaultPorts = true;
 
-    declarative = { # TODO insecureAdminAccess
+    declarative = {
       cert = builtins.toFile "syncthing-cert" here.syncthing.cert;
       key = secrets.syncthing.path;
 
