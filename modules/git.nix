@@ -2,7 +2,7 @@
   myHm = {
     programs.git = {
       enable = true;
-      package = pkgs.gitAndTools.gitFull;
+      package = pkgs.git;
 
       userName = my.realName;
       userEmail = my.email;

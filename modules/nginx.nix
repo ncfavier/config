@@ -1,5 +1,5 @@
 { inputs, config, lib, here, my, syncedFolders, ... }: let
-  uploadsRoot = "/srv/uploads";
+  uploadsRoot = "/run/nginx/uploads";
 in {
   config = lib.mkIf here.isServer {
     services.nginx = {

@@ -12,8 +12,11 @@
 
     nixPath = [ "nixpkgs=${inputs.nixos}" ];
 
-    registry = lib.genAttrs [ "self" "nixos" "nixos-stable" ] (flake:
-      { flake = inputs.${flake}; });
+    registry = lib.genAttrs [ "self" "nixos" "nixos-stable" ] (flake: {
+      flake = inputs.${flake};
+    }) // {
+      nixpkgs.flake = inputs.nixos;
+    };
 
     gc = {
       automatic = true;

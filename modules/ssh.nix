@@ -1,4 +1,4 @@
-{ config, lib, my, ... }: let
+{ config, lib, here, my, ... }: let
   port = 2242;
 in {
   services.openssh = {
@@ -14,6 +14,7 @@ in {
 
   myHm.programs.ssh = {
     enable = true;
+    # TODO unlock.wo
     matchBlocks = lib.mapAttrs' (n: m: {
       name = lib.concatStringsSep " " ([
         m.wireguard.ipv6 m.wireguard.ipv4
@@ -21,6 +22,7 @@ in {
       ] ++ lib.optionals m.isServer [ my.domain "*.${my.domain}" ]);
       value = {
         inherit port;
+      } // lib.optionalAttrs here.isStation {
         forwardX11 = true;
         forwardX11Trusted = true;
       };
@@ -44,6 +46,7 @@ in {
   };
 
   programs.mosh.enable = true;
+  programs.bash.shellAliases.mosh = "MOSH_TITLE_NOPREFIX=y mosh";
 
   nixpkgs.overlays = [
     (self: super: {

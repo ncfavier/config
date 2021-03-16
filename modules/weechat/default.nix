@@ -1,5 +1,5 @@
 { config, pkgs, lib, here, secrets, my, syncedFolders, ... }: let
-  relayPort = 6600;
+  relayPort = 6642;
   scripts = [
     "color_popup.pl"
     "highmon.pl"
@@ -16,7 +16,7 @@
     configure = { availablePlugins, ... }: {
       plugins = with availablePlugins; [ python perl ];
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
-        /set sec.crypt.passphrase_file ${secrets.weechat-sec.path}
+        /set sec.crypt.passphrase_command "cat ${secrets.weechat-sec.path}"
         /set relay.network.bind_address ${here.wireguard.ipv6}
         /set relay.port.weechat ${toString relayPort}
         /set logger.file.path ${syncedFolders.irc-logs.path}
@@ -31,29 +31,35 @@ in {
       inherit (config.my) group;
     };
 
-    systemd.services."tmux-weechat-${my.username}" = {
-      description = "WeeChat in a tmux session";
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" "nss-lookup.target" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        User = my.username;
-        Group = config.my.group;
-        Type = "forking";
-        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
-        ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
-      };
-      restartIfChanged = false;
-    };
+    # TODO linger module
+    system.activationScripts."linger-${my.username}" = lib.stringAfter [ "users" ] ''
+      /run/current-system/systemd/bin/loginctl enable-linger ${my.username}
+    '';
 
-    myHm.home.file = lib.listToAttrs (map (name: {
-      name = ".weechat/${name}.conf";
-      value.source = config.lib.meta.mkMutableSymlink (./config + "/${name}.conf");
-    }) [
-      "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
-      "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
-      "script" "sec" "spell" "trigger" "weechat" "xfer"
-    ]);
+    myHm = {
+      systemd.user.services.tmux-weechat = {
+        Unit = {
+          Description = "WeeChat in a tmux session";
+          Wants = [ "network-online.target" ];
+          After = [ "network-online.target" "nss-lookup.target" ];
+        };
+        Service = {
+          Type = "forking";
+          ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
+          ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
+        };
+        Install.WantedBy = [ "default.target" ];
+      };
+
+      home.file = lib.listToAttrs (map (name: {
+        name = ".weechat/${name}.conf";
+        value.source = config.lib.meta.mkMutableSymlink (./config + "/${name}.conf");
+      }) [
+        "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
+        "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
+        "script" "sec" "spell" "trigger" "weechat" "xfer"
+      ]);
+    };
 
     networking.firewall.allowedTCPPorts = [ relayPort ];
 

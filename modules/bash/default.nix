@@ -5,33 +5,37 @@
 
   my.shell = pkgs.bashInteractive_5;
 
-  programs.bash.shellAliases = {
-    C = "LC_ALL=C ";
-    comm = "comm --output-delimiter=$'\\t\\t'";
-    cp = "cp -i";
-    cxa = "clip | xargs";
-    cxan = "clip | xargs -d'\\n'";
-    df = "df -h";
-    dp = "declare -p";
-    du = "du -h";
-    exec = "exec ";
-    fc-grep = "fc-list | rg -i";
-    free = "free -h";
-    j = "jobs";
-    ls = "ls --color=auto --group-directories-first";
-    l = "ls -lh";
-    ll = "ls -lah";
-    lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
-    mosh = "MOSH_TITLE_NOPREFIX=y mosh";
-    mv = "mv -i";
-    o = "xdg-open";
-    ocaml = "rlwrap ocaml";
-    rlwrap = "rlwrap ";
-    sl = "sudo systemctl";
-    ul = "systemctl --user";
-    sudo = "sudo ";
-    tail = "tail -f -n +1";
-    watch = "watch ";
+  programs.bash = {
+    promptInit = builtins.readFile ./prompt.bash;
+    shellAliases = {
+      # Default flags
+      comm = "comm --output-delimiter=$'\\t\\t'";
+      cp = "cp -i";
+      df = "df -h";
+      du = "du -h";
+      free = "free -h";
+      ls = "ls --color=auto --group-directories-first";
+      lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
+      mv = "mv -i";
+
+      # Shorthands
+      C = "LC_ALL=C ";
+      dp = "declare -p";
+      fc-grep = "fc-list | rg -i";
+      j = "jobs";
+      l = "ls -lh";
+      ll = "ls -lah";
+      o = "xdg-open";
+      tall = "tail -f -n +1";
+      sd = "sudo systemctl";
+      ud = "systemctl --user";
+
+      # Force alias expansion after these commands
+      exec = "exec ";
+      rlwrap = "rlwrap ";
+      sudo = "sudo ";
+      watch = "watch ";
+    };
   };
 
   myHm.programs = {
@@ -44,7 +48,14 @@
       initExtra = ''
         ${builtins.readFile ./functions.bash}
 
-        ${builtins.readFile ./init.bash}
+        complete -v dp
+        complete -F _command C
+        complete_alias sd _systemctl systemctl
+        complete_alias ud _systemctl systemctl --user
+
+        stty -ixon
+        set -b +H
+        [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
       '';
     };
 
@@ -55,6 +66,7 @@
         completion-display-width = 0;
         mark-symlinked-directories = true;
         show-all-if-ambiguous = true;
+        page-completions = false;
       };
       bindings = {
         "\\ef"  = "shell-forward-word";

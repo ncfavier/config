@@ -11,7 +11,7 @@
       python3
     ];
 
-    variables = rec {
+    sessionVariables = rec {
       LESS = "ij3FRMK --mouse --wheel-lines=4";
       SYSTEMD_LESS = LESS;
       MANOPT = "--no-hyphenation";

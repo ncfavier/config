@@ -1,51 +1,4 @@
-# Prompt
-
-pwd_short() {
-    set +x
-    local pwd=$PWD user home component i prefix
-    if [[ $pwd == "$HOME"?(/*) ]]; then
-        printf '~'
-        pwd=${pwd#"$HOME"}
-    else
-        while IFS= read -r user; do
-            eval "home=~$user"
-            if [[ $home == @(/home/*|/root|/var/*|/srv/*) && $pwd == "$home"?(/*) ]]; then
-                printf '~%s' "$user"
-                pwd=${pwd#"$home"}
-                break
-            fi
-        done < <(compgen -u)
-    fi
-    while [[ $pwd == */* ]]; do
-        component=${pwd%%/*}
-        i=0
-        while
-            prefix=${component::++i}
-            [[ $prefix == +(.) ]]
-        do :; done
-        printf %s/ "$prefix"
-        pwd=${pwd#*/}
-    done
-    printf '%s\n' "$pwd"
-}
-
-prompt_char() {
-    if [[ -v IN_NIX_SHELL || -v DIRENV_DIR ]]; then
-        printf '\1%s\2$\1%s\2' "$(tput setaf 4)" "$(tput sgr0)"
-    else
-        printf '$'
-    fi
-}
-
-hostname_pretty() {
-    local -A kana=([wo]=ヲ [mo]=モ [fu]=フ [tsu]=ツ)
-    if [[ $TERM != *linux* && -v 'kana[$HOSTNAME]' ]]; then
-        echo "${kana[$HOSTNAME]}"
-    else
-        echo "$HOSTNAME"
-    fi
-}
-
+# TODO clean up functions
 # Files
 
 cd() {
@@ -165,7 +118,8 @@ clipcmd_helper () {
         printf '$ %s\n' "$cmd"
         printf %s "${lines[@]}"
     } | clip
-}; alias clipcmd='clipcmd_helper # '
+}
+alias clipcmd='clipcmd_helper # '
 
 ix() {
     if (( $# )); then
@@ -231,7 +185,7 @@ myip6() {
 }
 
 wg-toggle() {
-    local interface=wg0
+    local interface=wg42
     if systemctl -q is-active wg-quick@"$interface"; then
         sudo systemctl stop wg-quick@"$interface"
     else
@@ -398,4 +352,21 @@ vultr() {
         args+=("$arg")
     done
     command vultr "${args[@]}"
+}
+
+# Completion
+
+complete_alias() {
+    local alias_name=$1
+    local base_function=$2
+    local function_name=_alias_$alias_name
+    shift 2
+    eval "
+    $function_name() {
+        ((COMP_CWORD += $# - 1))
+        COMP_WORDS=( $* \${COMP_WORDS[@]:1} )
+        _completion_loader $1
+        $base_function
+    }
+    complete -F $function_name $alias_name"
 }

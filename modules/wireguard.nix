@@ -24,8 +24,8 @@ in {
       };
 
       firewall = {
-        trustedInterfaces = [ interface ];
         allowedUDPPorts = [ port ];
+        trustedInterfaces = [ interface ];
         extraCommands = ''
           ip46tables -P FORWARD DROP
           ip46tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
