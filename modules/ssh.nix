@@ -14,8 +14,7 @@ in {
 
   myHm.programs.ssh = {
     enable = true;
-    # TODO unlock.wo
-    matchBlocks = lib.mapAttrs' (n: m: {
+    matchBlocks = lib.listToAttrs (lib.concatLists (lib.mapAttrsToList (n: m: [ {
       name = lib.concatStringsSep " " ([
         m.wireguard.ipv6 m.wireguard.ipv4
         n "v4.${n}"
@@ -26,7 +25,18 @@ in {
         forwardX11 = true;
         forwardX11Trusted = true;
       };
-    }) my.machines // {
+    } ] ++ lib.optionals m.isServer [ {
+      name = "unlock.${n}";
+      value = {
+        hostname = my.domain;
+        inherit port;
+        user = "root";
+        extraOptions = {
+          RemoteCommand = "cryptsetup-askpass";
+          RequestTTY = "yes";
+        };
+      };
+    } ]) my.machines)) // {
       "ens sas sas.eleves.ens.fr" = {
         hostname = "sas.eleves.ens.fr";
         user = "nfavier";

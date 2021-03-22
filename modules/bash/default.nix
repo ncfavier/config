@@ -13,6 +13,9 @@
       cp = "cp -i";
       df = "df -h";
       du = "du -h";
+      ffmpeg = "ffmpeg -hide_banner";
+      ffplay = "ffplay -hide_banner";
+      ffprobe = "ffprobe -hide_banner";
       free = "free -h";
       ls = "ls --color=auto --group-directories-first";
       lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";

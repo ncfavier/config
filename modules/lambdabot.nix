@@ -38,8 +38,8 @@ in {
     };
 
     systemd.services.lambdabot = {
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      wants = [ "nss-lookup.target" ];
+      after = [ "nss-lookup.target" ];
     };
 
     services.stunnel = {

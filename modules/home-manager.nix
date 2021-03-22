@@ -1,6 +1,6 @@
 { inputs, config, lib, my, ... }: {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
+    inputs.home-manager.nixosModule
     (lib.mkAliasOptionModule [ "myHm" ] [ "home-manager" "users" my.username ])
   ];
 

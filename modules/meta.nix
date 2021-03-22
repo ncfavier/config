@@ -17,7 +17,8 @@
           shift
           (( $# )) || set -- --recreate-lock-file
           exec nix flake update ${lib.escapeShellArg config.lib.meta.mutableConfig} "$@";;
-        *) exec sudo nixos-rebuild --flake ${lib.escapeShellArg config.lib.meta.mutableConfig} -v "$@";;
+        *)
+          exec sudo nixos-rebuild --flake ${lib.escapeShellArg config.lib.meta.mutableConfig} -v "$@";;
       esac
     '')
   ];
