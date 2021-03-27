@@ -15,7 +15,8 @@
       inputs.nixpkgs.follows = "nixos";
     };
     nix-dns = {
-      url = "github:kirelagin/nix-dns";
+      # url = "github:kirelagin/nix-dns";
+      url = "github:ncfavier/nix-dns/global-ttl";
       inputs.nixpkgs.follows = "nixos";
     };
     simple-nixos-mailserver = {

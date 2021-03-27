@@ -17,6 +17,7 @@
       ffplay = "ffplay -hide_banner";
       ffprobe = "ffprobe -hide_banner";
       free = "free -h";
+      ip = "ip --color=auto";
       ls = "ls --color=auto --group-directories-first";
       lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
       mv = "mv -i";

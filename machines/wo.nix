@@ -44,7 +44,7 @@
   networking.wan = {
     interface = "ens3";
     ipv4 = "202.61.245.252";
-    ipv6 = "2a03:4000:53:fb4:1869:15ff:fe71:8ab";
+    ipv6 = "2a03:4000:53:fb4::1";
   };
 
   networking.interfaces.ens3 = {
@@ -53,7 +53,7 @@
       prefixLength = 22;
     } ];
     ipv6.addresses = [ {
-      address = "2a03:4000:53:fb4:1869:15ff:fe71:8ab";
+      address = "2a03:4000:53:fb4::1";
       prefixLength = 64;
     } ];
   };

@@ -9,42 +9,37 @@ in {
       ratelimit.enable = true;
 
       zones.${my.domain}.data = with dns.combinators; let
-        base = {
+        ips = {
           A = [ (a config.networking.wan.ipv4) ];
           AAAA = [ (aaaa config.networking.wan.ipv6) ];
         };
-        github.CNAME = [ "${my.githubUsername}.github.io." ];
-      in dns.toString my.domain (base // {
+      in dns.toString my.domain (ips // {
+        TTL = 60 * 60;
+
         SOA = {
           nameServer = "@";
           adminEmail = my.emailFor "dns";
-          serial = 2020120600;
+          serial = 0;
         };
-
         NS = [ "@" ];
 
         MX = [ (mx.mx 10 "@") ];
-        DKIM = [
-          {
-            selector = "mail";
-            p = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/MUKMp4lOoDhaeyIh5hzVNkr5eJ7GMekGRCvVMpSx2DWgUPg8UR68VT1ObmEAQZVDd696XdRNFgFJZuaGSTqcjPfGVq7e+DFVZcRZbISat8mlvOyuDe7J2EwZQxn3gup9hwbesfFPCY6V+ZMwLylT0j974xqJPxEvkebZ+DylUwIDAQAB";
-          }
-        ];
-        DMARC = [
-          {
-            p = "quarantine";
-            sp = "quarantine";
-            rua = "mailto:${my.emailFor "dmarc"}";
-          }
-        ];
-
+        DKIM = [ {
+          selector = "mail";
+          p = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/MUKMp4lOoDhaeyIh5hzVNkr5eJ7GMekGRCvVMpSx2DWgUPg8UR68VT1ObmEAQZVDd696XdRNFgFJZuaGSTqcjPfGVq7e+DFVZcRZbISat8mlvOyuDe7J2EwZQxn3gup9hwbesfFPCY6V+ZMwLylT0j974xqJPxEvkebZ+DylUwIDAQAB"; # TODO move dkim pk to mailserver.nix
+        } ];
+        DMARC = [ {
+          p = "quarantine";
+          sp = "quarantine";
+          rua = "mailto:${my.emailFor "dmarc"}";
+        } ];
         TXT = [ (spf.strict [ "mx" ]) ];
 
         CAA = letsEncrypt (my.emailFor "dns+caa");
 
-        subdomains = {
-          "*" = base;
-          inherit github;
+        subdomains = rec {
+          "*" = ips;
+          github.CNAME = [ "${my.githubUsername}.github.io." ];
           glam = github;
         };
       });

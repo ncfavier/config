@@ -30,7 +30,7 @@ in {
         ];
       };
       script = ''
-        irc-connect ulminfo localhost ${toString tunnelPort} lambdabot lambdabot
+        irc-persist-connect ulminfo localhost ${toString tunnelPort} lambdabot lambdabot
         rc ${secrets.ulminfo-lambdabot.path}
         admin + ulminfo:nf
         join ulminfo:#haskell
@@ -38,8 +38,8 @@ in {
     };
 
     systemd.services.lambdabot = {
-      wants = [ "nss-lookup.target" ];
-      after = [ "nss-lookup.target" ];
+      wants = [ "nss-lookup.target" "stunnel.service" ];
+      after = [ "nss-lookup.target" "stunnel.service" ];
     };
 
     services.stunnel = {

@@ -18,7 +18,7 @@ in {
       name = lib.concatStringsSep " " ([
         m.wireguard.ipv6 m.wireguard.ipv4
         n "v4.${n}"
-      ] ++ lib.optionals m.isServer [ my.domain "*.${my.domain}" ]);
+      ] ++ lib.optionals m.isServer [ my.domain "*.${my.domain}" ]); # TODO add wan ips
       value = {
         inherit port;
       } // lib.optionalAttrs here.isStation {
@@ -29,6 +29,7 @@ in {
       name = "unlock.${n}";
       value = {
         hostname = my.domain;
+        addressFamily = "inet";
         inherit port;
         user = "root";
         extraOptions = {

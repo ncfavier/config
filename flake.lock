@@ -58,15 +58,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1606918933,
-        "narHash": "sha256-nkayeLpTvkj1IbwwUKZtz8Nxqxyl7UOuyDvSx5Y0WVY=",
-        "owner": "kirelagin",
+        "lastModified": 1616772912,
+        "narHash": "sha256-BkI4n7vtXXOmAgqkexjp52dzisn9d8KY9mKXvISapqw=",
+        "owner": "ncfavier",
         "repo": "nix-dns",
-        "rev": "985797066ffaf8fb05693169c7c2c3222c704365",
+        "rev": "8df64657f550fa64e55a5c397782e6e91966d392",
         "type": "github"
       },
       "original": {
-        "owner": "kirelagin",
+        "owner": "ncfavier",
+        "ref": "global-ttl",
         "repo": "nix-dns",
         "type": "github"
       }
