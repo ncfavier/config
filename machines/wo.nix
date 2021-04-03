@@ -1,7 +1,9 @@
-{ config, pkgs, modulesPath, ... }: {
+{ inputs, config, pkgs, modulesPath, ... }: {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
+    "${inputs.nixos-luks-bypass-workqueue}/nixos/modules/system/boot/luksroot.nix"
   ];
+  disabledModules = [ "system/boot/luksroot.nix" ];
 
   boot = {
     loader.grub = {
@@ -12,7 +14,11 @@
     kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
 
-    initrd.luks.devices.nixos.device = "/dev/sda2";
+    initrd.luks.devices.nixos = {
+      device = "/dev/sda2";
+      allowDiscards = true;
+      bypassWorkqueues = true;
+    };
 
     kernelParams = [ "ip=202.61.245.252::202.61.244.1:255.255.252.0::ens3:none" ];
     initrd.network = {

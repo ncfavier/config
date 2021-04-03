@@ -2,10 +2,11 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixos.url          = "flake:nixpkgs/nixos-unstable";
-    nixos-stable.url   = "flake:nixpkgs/nixos-20.09";
-    my-nixpkgs.url     = "github:ncfavier/nixpkgs";
-    nixos-hardware.url = "flake:nixos-hardware";
+    nixos.url                       = "flake:nixpkgs/nixos-unstable";
+    nixos-stable.url                = "flake:nixpkgs/nixos-20.09";
+    nixos-getty-args.url            = "github:ncfavier/nixpkgs/master";
+    nixos-luks-bypass-workqueue.url = "github:ncfavier/nixpkgs/luks-bypass-workqueue";
+    nixos-hardware.url              = "flake:nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixos";
@@ -15,8 +16,7 @@
       inputs.nixpkgs.follows = "nixos";
     };
     nix-dns = {
-      # url = "github:kirelagin/nix-dns";
-      url = "github:ncfavier/nix-dns/global-ttl";
+      url = "github:kirelagin/nix-dns";
       inputs.nixpkgs.follows = "nixos";
     };
     simple-nixos-mailserver = {

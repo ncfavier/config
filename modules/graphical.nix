@@ -212,10 +212,10 @@ in {
           selection.save_to_clipboard = true;
           cursor.style.blinking = "Always";
           key_bindings = [
-            { key =  3; mods = "Alt"; chars = "\\eé"; }
-            { key =  8; mods = "Alt"; chars = "\\eè"; }
-            { key = 10; mods = "Alt"; chars = "\\eç"; }
-            { key = 11; mods = "Alt"; chars = "\\eà"; }
+            { key =  3; mods = "Alt"; chars = "\\e2"; }
+            { key =  8; mods = "Alt"; chars = "\\e7"; }
+            { key = 10; mods = "Alt"; chars = "\\e9"; }
+            { key = 11; mods = "Alt"; chars = "\\e0"; }
           ];
         };
       };

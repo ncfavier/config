@@ -8,6 +8,8 @@
   };
 
   nix = {
+    package = pkgs.nixFlakes;
+
     trustedUsers = [ "root" "@wheel" ];
 
     nixPath = [ "nixpkgs=${inputs.nixos}" ];
@@ -32,14 +34,7 @@
     '';
   };
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [
-      (self: super: {
-        nix = super.nixFlakes;
-      })
-    ];
-  };
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [ pkgs.nix-index ];
   programs.command-not-found.enable = false;
