@@ -33,7 +33,11 @@ in {
           sp = "quarantine";
           rua = "mailto:${my.emailFor "dmarc"}";
         } ];
-        TXT = [ (spf.strict [ "mx" ]) ];
+
+        TXT = [
+          (spf.strict [ "mx" ])
+          "google-site-verification=yIwF9ILuYq54P151RraAs06TuJQMLZXKPRXSdn8FJWc"
+        ];
 
         CAA = letsEncrypt (my.emailFor "dns+caa");
 
@@ -47,19 +51,33 @@ in {
 
     services.unbound = {
       enable = true;
-      interfaces = [ "127.0.0.1" "::1" here.wireguard.ipv4 here.wireguard.ipv6 ];
-      allowedAccess = [ "127.0.0.0/8" "::1/128" "10.42.0.0/16" "fd42::/16" ];
-      forwardAddresses = config.networking.nameservers;
-      extraConfig = ''
-        private-address: fd42::/16
-        private-address: 10.42.0.0/16
-        ${lib.concatStrings (lib.mapAttrsToList (n: m: ''
-          local-data: "${n}. AAAA ${m.wireguard.ipv6}"
-          local-data: "v4.${n}. A ${m.wireguard.ipv4}"
-          local-data-ptr: "${m.wireguard.ipv6} ${n}."
-          local-data-ptr: "${m.wireguard.ipv4} v4.${n}."
-        '') my.machines)}
-      '';
+      settings = {
+        server = {
+          interface = [
+            "127.0.0.1" "::1"
+            here.wireguard.ipv4 here.wireguard.ipv6
+          ];
+          access-control = [
+            "127.0.0.0/8 allow" "::1/128 allow"
+            "10.42.0.0/16 allow" "fd42::/16 allow"
+          ];
+          private-address = [
+            "fd42::/16" "10.42.0.0/16"
+          ];
+          local-data = lib.concatLists (lib.mapAttrsToList (n: m: [
+            ''"${n}. A ${m.wireguard.ipv4}"''
+            ''"${n}. AAAA ${m.wireguard.ipv6}"''
+          ]) my.machines);
+          local-data-ptr = lib.concatLists (lib.mapAttrsToList (n: m: [
+            ''"${m.wireguard.ipv4} ${n}."''
+            ''"${m.wireguard.ipv6} ${n}."''
+          ]) my.machines);
+        };
+        forward-zone = [ {
+          name = ".";
+          forward-addr = config.networking.nameservers;
+        } ];
+      };
     };
 
     networking.firewall = rec {

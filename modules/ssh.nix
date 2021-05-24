@@ -14,10 +14,10 @@ in {
 
   myHm.programs.ssh = {
     enable = true;
-    matchBlocks = lib.listToAttrs (lib.concatLists (lib.mapAttrsToList (n: m: [ {
+    matchBlocks = lib.listToAttrs (lib.concatLists (lib.mapAttrsToList (n: m: [ { # TODO make this more readable
       name = lib.concatStringsSep " " ([
         m.wireguard.ipv6 m.wireguard.ipv4
-        n "v4.${n}"
+        n
       ] ++ lib.optionals m.isServer [ my.domain "*.${my.domain}" ]); # TODO add wan ips
       value = {
         inherit port;

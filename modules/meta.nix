@@ -15,8 +15,13 @@
           exec nix repl ~/.nix-defexpr "$@";;
         update)
           shift
-          (( $# )) || set -- --recreate-lock-file
-          exec nix flake update ${lib.escapeShellArg config.lib.meta.mutableConfig} "$@";;
+          if (( $# )); then
+            exec nix flake update ${lib.escapeShellArg config.lib.meta.mutableConfig} "$@"
+          else
+            exec "$0" switch --recreate-lock-file
+          fi;;
+        untest)
+          exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@";;
         *)
           exec sudo nixos-rebuild --flake ${lib.escapeShellArg config.lib.meta.mutableConfig} -v "$@";;
       esac

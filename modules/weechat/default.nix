@@ -17,7 +17,7 @@
       plugins = with availablePlugins; [ python perl ];
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
         /set sec.crypt.passphrase_command "cat ${secrets.weechat-sec.path}"
-        /set relay.network.bind_address ${here.wireguard.ipv6}
+        /set relay.network.bind_address ${here.wireguard.ipv4}
         /set relay.port.weechat ${toString relayPort}
         /set logger.file.path ${syncedFolders.irc-logs.path}
         /script install ${builtins.concatStringsSep " " scripts}

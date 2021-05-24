@@ -4,8 +4,8 @@
   inputs = {
     nixos.url                       = "flake:nixpkgs/nixos-unstable";
     nixos-stable.url                = "flake:nixpkgs/nixos-20.09";
-    nixos-getty-args.url            = "github:ncfavier/nixpkgs/master";
     nixos-luks-bypass-workqueue.url = "github:ncfavier/nixpkgs/luks-bypass-workqueue";
+    nixos-nginx-reject-ssl.url      = "github:ncfavier/nixpkgs/nginx-reject-ssl";
     nixos-hardware.url              = "flake:nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";

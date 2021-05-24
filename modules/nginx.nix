@@ -1,9 +1,13 @@
-{ inputs, config, lib, here, my, syncedFolders, ... }: let
+{ inputs, config, pkgs, lib, here, my, syncedFolders, ... }: let
   uploadsRoot = "/run/nginx/uploads";
 in {
+  imports = [ "${inputs.nixos-nginx-reject-ssl}/nixos/modules/services/web-servers/nginx" ];
+  disabledModules = [ "services/web-servers/nginx/default.nix" ];
+
   config = lib.mkIf here.isServer {
     services.nginx = {
       enable = true;
+      package = pkgs.nginxMainline;
       recommendedTlsSettings = true;
       commonHttpConfig = ''
         charset utf-8;
@@ -14,13 +18,13 @@ in {
 
       virtualHosts = let
         ssl = {
-          enableACME = true;
           forceSSL = true;
+          enableACME = true;
         };
       in {
         ${my.domain} = ssl // {
           serverAliases = [ "www.${my.domain}" ];
-          locations."/".root = inputs.${my.domain};
+          root = inputs.${my.domain};
         };
 
         "up.${my.domain}" = ssl // {
@@ -32,14 +36,12 @@ in {
         };
 
         "git.${my.domain}" = ssl // {
-          locations."/".return = "301 https://github.com/${my.githubUsername}$request_uri";
+          globalRedirect = "github.com/${my.githubUsername}";
         };
 
         default = {
           default = true;
-          serverName = "_";
-          useACMEHost = my.domain;
-          addSSL = true;
+          rejectSSL = true;
           extraConfig = "return 444;";
         };
       };

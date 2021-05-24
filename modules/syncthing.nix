@@ -37,7 +37,7 @@
       in {
         my = {
           path = "${config.my.home}/my";
-          devices = allDevicesExceptPhone;
+          devices = allDevices;
           versioning = {
             type = "simple";
             params = {
