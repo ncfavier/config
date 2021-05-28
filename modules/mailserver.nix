@@ -18,7 +18,7 @@ in {
       enableImapSsl = true;
       enableSubmission = false;
       enableSubmissionSsl = true;
-      localDnsResolver = !config.networking.resolvconf.useLocalResolver;
+      localDnsResolver = false;
       fqdn = my.domain;
       domains = [ my.domain ];
       certificateScheme = 1;

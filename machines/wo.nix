@@ -1,9 +1,7 @@
-{ inputs, config, pkgs, modulesPath, ... }: {
+{ config, pkgs, modulesPath, ... }: {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
-    "${inputs.nixos-luks-bypass-workqueue}/nixos/modules/system/boot/luksroot.nix"
   ];
-  disabledModules = [ "system/boot/luksroot.nix" ];
 
   boot = {
     loader.grub = {

@@ -15,6 +15,7 @@
   weechat = pkgs.weechat.override {
     configure = { availablePlugins, ... }: {
       plugins = with availablePlugins; [ python perl ];
+      scripts = with pkgs.weechatScripts; [ weechat-matrix ];
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
         /set sec.crypt.passphrase_command "cat ${secrets.weechat-sec.path}"
         /set relay.network.bind_address ${here.wireguard.ipv4}
@@ -57,7 +58,7 @@ in {
       }) [
         "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
         "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
-        "script" "sec" "spell" "trigger" "weechat" "xfer"
+        "script" "sec" "spell" "trigger" "weechat" "xfer" "matrix"
       ]);
     };
 

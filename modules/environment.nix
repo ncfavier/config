@@ -25,8 +25,10 @@
   myHm = {
     programs.htop = {
       enable = true;
-      colorScheme = 1;
-      treeView = true;
+      settings = {
+        color_scheme = 1;
+        tree_view = true;
+      };
     };
 
     home.file.".hushlogin".text = "";

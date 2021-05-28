@@ -1,9 +1,6 @@
 { inputs, config, pkgs, lib, here, my, syncedFolders, ... }: let
   uploadsRoot = "/run/nginx/uploads";
 in {
-  imports = [ "${inputs.nixos-nginx-reject-ssl}/nixos/modules/services/web-servers/nginx" ];
-  disabledModules = [ "services/web-servers/nginx/default.nix" ];
-
   config = lib.mkIf here.isServer {
     services.nginx = {
       enable = true;
