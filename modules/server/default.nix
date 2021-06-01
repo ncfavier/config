@@ -1,3 +1,3 @@
 { lib, here, ... }: {
-  imports = if here.isServer then builtins.attrValues (lib.importDir ./.) else [ ];
+  imports = lib.optionals here.isServer (builtins.attrValues (lib.importDir ./.));
 }
