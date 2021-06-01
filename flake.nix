@@ -35,7 +35,7 @@
   in {
     nixosModules = lib.importDir ./modules;
 
-    nixosConfigurations = lib.mapAttrs (hostname: localConfig:
+    nixosConfigurations = lib.mapAttrs (hostname: local:
       lib.nixosSystem {
         inherit system;
         specialArgs = {
@@ -43,9 +43,7 @@
           here = my.machines.${hostname};
           hardware = inputs.nixos-hardware.nixosModules;
         };
-        modules = builtins.attrValues self.nixosModules ++ [
-          localConfig
-        ];
+        modules = builtins.attrValues (lib.importDir ./modules) ++ [ local ];
       }
     ) (lib.importDir ./machines);
 

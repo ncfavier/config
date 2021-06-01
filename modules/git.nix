@@ -41,6 +41,7 @@
 
       extraConfig = {
         credential.helper = "store";
+        advice.detachedHead = false;
         init.defaultBranch = "master";
         pull.rebase = true;
         rebase = {

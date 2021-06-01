@@ -1,4 +1,4 @@
-{ config, lib, hostname, here, secrets, my, ... }: {
+{ config, lib, hostname, here, secrets, my, syncedFolders, ... }: {
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
 
   sops.secrets.syncthing = {
@@ -80,4 +80,8 @@
       };
     };
   };
+
+  myHm.home.file."${syncedFolders.my.path}/.stignore".text = ''
+    .git
+  '';
 }

@@ -52,14 +52,10 @@ in {
         Install.WantedBy = [ "default.target" ];
       };
 
-      home.file = lib.listToAttrs (map (name: {
-        name = ".weechat/${name}.conf";
-        value.source = config.lib.meta.mkMutableSymlink (./config + "/${name}.conf");
-      }) [
-        "alias" "autosort" "buffer_autoset" "buflist" "charset" "colorize_nicks"
-        "exec" "fifo" "fset" "irc" "logger" "perl" "plugins" "python" "relay"
-        "script" "sec" "spell" "trigger" "weechat" "xfer" "matrix"
-      ]);
+      home.file = lib.mapAttrs' (name: _: {
+        name = ".weechat/${name}";
+        value.source = config.lib.meta.mkMutableSymlink (./. + "/${name}");
+      }) (lib.filterAttrs (name: _: lib.hasSuffix ".conf" name) (builtins.readDir ./.));
     };
 
     networking.firewall.allowedTCPPorts = [ relayPort ];
