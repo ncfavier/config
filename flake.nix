@@ -37,7 +37,7 @@
 
     nixosConfigurations = lib.mapAttrs (hostname: local:
       lib.nixosSystem {
-        inherit system;
+        inherit system lib;
         specialArgs = {
           inherit inputs hostname my;
           here = my.machines.${hostname};

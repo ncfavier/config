@@ -1,9 +1,9 @@
-{ inputs, config, lib, here, secrets, my, ... }: let
+{ inputs, config, my, ... }: let
   cert = config.security.acme.certs.${my.domain};
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
 
-  config = lib.mkIf here.isServer {
+  config = {
     sops.secrets.dkim = {
       path = "/etc/dkim/${my.domain}.${config.mailserver.dkimSelector}.key";
       owner = config.services.opendkim.user;
