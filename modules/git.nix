@@ -26,7 +26,7 @@
         c = "!git commit --allow-empty-message -m \"$*\" #";
         ca = "!git commit --allow-empty-message -am \"$*\" #";
         ce = "commit --edit";
-        cf = "!git commit -m \"$(${pkgs.fortune}/bin/fortune -sn 60 | tr -s '[:space:]' '[ *]')\"";
+        cf = "!git commit -m \"$(${pkgs.fortune}/bin/fortune -sn 80 computers debian definitions disclaimer education fortunes goedel humorists linuxcookie magic miscellaneous perl pets platitudes science songs-poems translate-me wisdom zippy | tr -s '[:space:]' '[ *]')\"";
         co = "checkout";
         r = "reset";
         p = "push";
