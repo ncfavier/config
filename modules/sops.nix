@@ -16,9 +16,5 @@
       sshKeyPaths = [];
       defaultSopsFormat = "binary";
     };
-
-    system.activationScripts.secrets-permissions = lib.stringAfter [ "setup-secrets" ] ''
-      chmod o+x /run/secrets /run/secrets.d
-    '';
   };
 }
