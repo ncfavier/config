@@ -12,7 +12,6 @@
     tree
     ncdu
     gptfdisk
-    xxd
     zip
     unzip
     binutils

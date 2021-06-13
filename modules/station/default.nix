@@ -1,5 +1,5 @@
 { config, pkgs, lib, here, ... }: lib.optionalAttrs here.isStation {
-  imports = builtins.attrValues (builtins.removeAttrs (lib.importDir ./.) [ "theme" ]);
+  imports = builtins.attrValues (lib.importDir ./.);
 
   config = {
     environment.systemPackages = with pkgs; [
