@@ -2,7 +2,7 @@
   config = lib.mkMerge [
     ({
       nixpkgs.overlays = [ (pkgs: super: with pkgs; {
-        efont-unicode = stdenv.mkDerivation rec { # https://github.com/NixOS/nixpkgs/pull/126593
+        efont-unicode = stdenv.mkDerivation rec { # TODO https://nixpk.gs/pr-tracker.html?pr=126593
           pname = "efont-unicode";
           version = "0.4.2";
           src = builtins.fetchTarball {

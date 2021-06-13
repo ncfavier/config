@@ -39,7 +39,7 @@
 
     nixosConfigurations = lib.mapAttrs (hostname: local:
       lib.nixosSystem {
-        inherit system lib; # TODO i shouldn't have to inherit lib here
+        inherit system lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
         specialArgs = {
           inherit inputs;
           inherit (lib) my;

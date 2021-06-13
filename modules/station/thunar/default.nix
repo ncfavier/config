@@ -30,9 +30,12 @@
     ];
 
     xdg.configFile = {
-      "xfce4/xfconf/xfce-perchannel-xml/thunar.xml".source = config.lib.meta.mkMutableSymlink ./thunar.xml;
-      "Thunar/uca.xml".source                              = config.lib.meta.mkMutableSymlink ./uca.xml;
-      "tumbler/tumbler.rc".source                          = ./tumbler.rc;
+      "xfce4/xfconf/xfce-perchannel-xml/thunar.xml" = {
+        source = config.lib.meta.mkMutableSymlink ./thunar.xml;
+        force = true;
+      };
+      "Thunar/uca.xml".source = config.lib.meta.mkMutableSymlink ./uca.xml;
+      "tumbler/tumbler.rc".source = ./tumbler.rc;
     };
   };
 }

@@ -43,6 +43,7 @@
   environment.systemPackages = with pkgs; [
     nix-prefetch-github
     nix-index
+    nix-diff
     nixpkgs-fmt
     nixpkgs-review
     nixfmt

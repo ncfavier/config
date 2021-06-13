@@ -11,7 +11,8 @@
         ];
       };
 
-      inherit borderWidth padding;
+      inherit padding;
+      borderWidth = 1;
       font = pangoFont;
 
       colors = let

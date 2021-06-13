@@ -8,7 +8,7 @@
         shrink = true;
         inherit padding;
         horizontal_padding = padding;
-        frame_width = borderWidth;
+        frame_width = 1;
         frame_color = borderColor;
         separator_color = "frame";
         font = pangoFont;
