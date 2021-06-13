@@ -9,6 +9,7 @@ in {
         key = here.hostname;
       };
     })
+
     (lib.mkIf here.isServer {
       networking = {
         wireguard = {
@@ -48,6 +49,7 @@ in {
         };
       };
     })
+
     (lib.mkIf here.isStation {
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = secrets.wireguard.path;
