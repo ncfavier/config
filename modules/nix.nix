@@ -41,16 +41,14 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nixfmt
     nix-prefetch-github
+    nix-index
     nixpkgs-fmt
     nixpkgs-review
+    nixfmt
   ];
 
   environment.sessionVariables.NIX_SHELL_PRESERVE_PROMPT = "1";
-
-  programs.command-not-found.enable = false;
-  hm.programs.nix-index.enable = true; # TODO nix-index
 
   hm.home.file.".nix-defexpr/default.nix".text = ''
     { wip ? false }: let

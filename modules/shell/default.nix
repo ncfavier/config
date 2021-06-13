@@ -40,6 +40,8 @@
     man.generateCaches = true;
   };
 
+  programs.command-not-found.enable = false;
+
   programs.bash = {
     promptInit = builtins.readFile ./prompt.bash;
     shellAliases = {

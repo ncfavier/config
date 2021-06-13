@@ -207,8 +207,28 @@ what() { # prints the real path of a command
     realpath "$(type -P "$1")"
 }
 
-# Nix
-
 pkgs() {
     nix-build '<nixpkgs>' --no-out-link -A "$@"
+}
+
+command_not_found_handle() {
+    if [[ ! -t 1 ]]; then
+        printf '%s: command not found\n' "$1" >&2
+        return 127
+    fi
+    local attrs IFS=$' \t\n'
+    readarray -t attrs < <(nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1")
+    for (( i = 0; i < ${#attrs[@]}; i++ )); do
+        attrs[i]=${attrs[i]%.out}
+    done
+    if (( ${#attrs[@]} )); then
+        printf '%s: command not found\n' "$1"
+        echo "It is provided by the following attributes:"
+        for attr in "${attrs[@]}"; do
+            echo "  $attr"
+        done
+    else
+        printf '%s: command not found\n' "$1" >&2
+        return 127
+    fi
 }
