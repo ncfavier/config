@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  myHm.home.packages = [
+  hm.home.packages = [
     (pkgs.vscode-with-extensions.override {
       vscode = pkgs.vscodium;
       vscodeExtensions = with pkgs.vscode-extensions; [

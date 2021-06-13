@@ -6,7 +6,7 @@
     autoRepeatDelay = 250;
   };
 
-  myHm = {
+  hm = {
     xsession = {
       enable = true;
       scriptPath = ".xinitrc";

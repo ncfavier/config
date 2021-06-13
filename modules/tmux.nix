@@ -1,5 +1,5 @@
 {
-  myHm.programs.tmux = {
+  hm.programs.tmux = {
     enable = true;
     secureSocket = false;
 

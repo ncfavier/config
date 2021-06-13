@@ -34,6 +34,6 @@
       };
     };
 
-    myHm.home.file.".hushlogin".text = "";
+    hm.home.file.".hushlogin".text = "";
   };
 }

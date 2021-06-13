@@ -1,5 +1,5 @@
 {
-  myHm.home.file = {
+  hm.home.file = {
     ".ghci".text = ''
       :set prompt      "> "
       :set prompt-cont "| "

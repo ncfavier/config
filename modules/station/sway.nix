@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: lib.optionalAttrs false {
-  myHm = {
+  hm = {
     wayland.windowManager.sway = {
       enable = true;
       config = {
@@ -32,7 +32,7 @@
         };
         bindkeysToCode = true;
         keybindings = let
-          mod = config.myHm.wayland.windowManager.sway.config.modifier;
+          mod = config.hm.wayland.windowManager.sway.config.modifier;
         in {
           "${mod}+q" = "kill";
           "Alt+Tab" = "focus next";

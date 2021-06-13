@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: {
-  config.myHm = {
+  config.hm = {
     programs.feh = {
       enable = true;
 

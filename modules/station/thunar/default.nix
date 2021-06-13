@@ -2,7 +2,7 @@
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
-  myHm = {
+  hm = {
     home.packages = with pkgs; [
       (xfce.thunar.override {
         thunarPlugins = with xfce; [ thunar-volman thunar-archive-plugin ];

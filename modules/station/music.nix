@@ -1,5 +1,5 @@
 { pkgs, syncedFolders, ... }: {
-  myHm = {
+  hm = {
     services.mpd = {
       enable = true;
       musicDirectory = syncedFolders.music.path;

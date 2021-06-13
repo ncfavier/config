@@ -1,5 +1,5 @@
 {
-  myHm = {
+  hm = {
     programs.direnv = {
       enable = true;
       enableNixDirenvIntegration = true;

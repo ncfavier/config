@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: {
-  myHm = {
+  hm = {
     programs.rofi = with lib.theme; {
       enable = true;
       package = with pkgs; rofi.override {

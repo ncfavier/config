@@ -50,9 +50,9 @@
   environment.sessionVariables.NIX_SHELL_PRESERVE_PROMPT = "1";
 
   programs.command-not-found.enable = false;
-  myHm.programs.nix-index.enable = true; # TODO nix-index
+  hm.programs.nix-index.enable = true; # TODO nix-index
 
-  myHm.home.file.".nix-defexpr/default.nix".text = ''
+  hm.home.file.".nix-defexpr/default.nix".text = ''
     { wip ? false }: let
       self = builtins.getFlake (if wip then ${lib.strings.escapeNixString config.lib.meta.configPath} else "config");
       machines = self.nixosConfigurations;

@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  myHm = {
+  hm = {
     programs.mpv = {
       enable = true;
       package = pkgs.mpv-with-scripts.override {

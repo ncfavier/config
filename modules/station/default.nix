@@ -6,7 +6,7 @@
       gparted
     ];
 
-    myHm.home.packages = with pkgs; [
+    hm.home.packages = with pkgs; [
       texlive.combined.scheme-full
       thunderbird
       audacity

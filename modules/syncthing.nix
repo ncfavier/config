@@ -81,7 +81,7 @@
     };
   };
 
-  myHm.home.file = {
+  hm.home.file = {
     "${syncedFolders.my.path}/.stignore".text = ''
       .git
     '';

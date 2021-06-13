@@ -1,7 +1,7 @@
 { my, pkgs, ... }: {
   environment.systemPackages = [ pkgs.git ];
 
-  myHm = {
+  hm = {
     programs.git = {
       enable = true;
       package = pkgs.gitFull;

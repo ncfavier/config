@@ -1,13 +1,13 @@
 { config, pkgs, syncedFolders, ... }: {
   services.dbus.packages = [ pkgs.dconf ];
 
-  myHm = {
+  hm = {
     home.packages = [ pkgs.lxappearance ];
 
     gtk = {
       enable = true;
       gtk2 = {
-        configLocation = "${config.myHm.xdg.configHome}/gtk-2.0/gtkrc";
+        configLocation = "${config.hm.xdg.configHome}/gtk-2.0/gtkrc";
       };
       gtk3 = {
         bookmarks = [

@@ -21,7 +21,7 @@
     iotop
   ];
 
-  myHm.programs.htop = {
+  hm.programs.htop = {
     enable = true;
     settings = {
       color_scheme = 1;

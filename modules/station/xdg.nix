@@ -1,5 +1,5 @@
 { config, pkgs, syncedFolders, ... }: {
-  myHm = {
+  hm = {
     home.packages = with pkgs; [ xdg-user-dirs ];
 
     xdg = {

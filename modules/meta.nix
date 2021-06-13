@@ -3,7 +3,7 @@
 
   lib.meta = rec {
     configPath = "${config.my.home}/git/config";
-    mkMutableSymlink = path: config.myHm.lib.file.mkOutOfStoreSymlink
+    mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
       (configPath + lib.removePrefix (toString inputs.self) (toString path));
   };
 
@@ -42,7 +42,7 @@
           untest)
               exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@";;
           home)
-              attr=nixosConfigurations.${here.hostname}.config.myHm.home.activationPackage
+              attr=nixosConfigurations.${here.hostname}.config.hm.home.activationPackage
               exec nix shell "$config#$attr" -u DBUS_SESSION_BUS_ADDRESS -c home-manager-generation;;
           *)
               exec sudo nixos-rebuild --flake "$config" -v "$@";;

@@ -14,7 +14,7 @@ in {
 
   environment.systemPackages = [ pkgs.autossh ];
 
-  myHm.programs.ssh = {
+  hm.programs.ssh = {
     enable = true;
     matchBlocks = lib.listToAttrs (lib.concatLists (lib.mapAttrsToList (n: m: [ { # TODO make this more readable
       name = lib.concatStringsSep " " ([

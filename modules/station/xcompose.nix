@@ -1,5 +1,5 @@
 {
-  myHm.home.file.".XCompose".text = ''
+  hm.home.file.".XCompose".text = ''
     include "%L"
 
     <Multi_key> <space> <space> : "␣"

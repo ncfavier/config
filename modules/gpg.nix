@@ -1,5 +1,5 @@
 { my, ... }: {
-  myHm = {
+  hm = {
     programs.gpg.enable = true;
 
     services.gpg-agent = {

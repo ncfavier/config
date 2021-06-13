@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  myHm.services.dunst = {
+  hm.services.dunst = {
     enable = true;
 
     settings = with lib.theme; rec {

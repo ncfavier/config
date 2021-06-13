@@ -36,7 +36,7 @@ in {
     /run/current-system/systemd/bin/loginctl enable-linger ${my.username}
   '';
 
-  myHm = {
+  hm = {
     systemd.user.services.tmux-weechat = {
       Unit = {
         Description = "WeeChat in a tmux session";

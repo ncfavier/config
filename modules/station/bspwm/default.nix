@@ -3,7 +3,7 @@
     lemonbar-xft xdo xtitle xkb-switch
   ];
 in {
-  myHm = {
+  hm = {
     xsession.windowManager.bspwm = {
       enable = true;
       monitors.focused = [ "1" "2" "3" "4" "5" "6" "web" "mail" "chat" "files" ];
@@ -69,7 +69,7 @@ in {
       extraOptions = [ "-m 1" ];
       keybindings = {
         "super + r" =
-          "${config.myHm.xdg.configHome}/bspwm/bspwmrc";
+          "${config.hm.xdg.configHome}/bspwm/bspwmrc";
         "super + {_,shift} + {ampersand,eacute,quotedbl,apostrophe,parenleft,minus,egrave,underscore,ccedilla}" =
           "wm {focus-workspace,move-window-to-workspace} ^{1-9}";
         "super + {_,shift} + {button4,button5,Left,Right}" =

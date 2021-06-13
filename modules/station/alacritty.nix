@@ -1,5 +1,5 @@
 { lib, ... }: {
-  myHm.programs.alacritty = {
+  hm.programs.alacritty = {
     enable = true;
     settings = with lib.theme; {
       window = {

@@ -1,7 +1,7 @@
 { inputs, config, lib, my, ... }: {
   imports = [
     inputs.home-manager.nixosModule
-    (lib.mkAliasOptionModule [ "myHm" ] [ "home-manager" "users" my.username ])
+    (lib.mkAliasOptionModule [ "hm" ] [ "home-manager" "users" my.username ])
   ];
 
   home-manager = {
@@ -11,7 +11,7 @@
     extraSpecialArgs = { inherit inputs; };
   };
 
-  myHm = {
+  hm = {
     home.stateVersion = config.system.stateVersion;
 
     systemd.user.startServices = true;
