@@ -37,7 +37,7 @@
 
   documentation = {
     dev.enable = true;
-    # man.generateCaches = true; # TODO
+    man.generateCaches = true;
   };
 
   programs.bash = {
