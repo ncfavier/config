@@ -18,7 +18,7 @@
         publicShare = "${config.my.home}/public";
       };
 
-      # TODO mimeapps
+      configFile."mimeapps.list".source = config.lib.meta.mkMutableSymlink ./mimeapps.list;
     };
   };
 }

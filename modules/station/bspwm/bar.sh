@@ -17,7 +17,7 @@ desktop_label() case $1 in
     mail) printf ;;
     chat) printf ;;
     files) printf ;;
-    *) printf '>';;
+    *) printf '∙';;
 esac
 
 escape() {

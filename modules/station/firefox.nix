@@ -58,8 +58,8 @@
             }
 
             ::selection {
-              background-color: var(--fg);
-              color: var(--bg);
+              background-color: var(--blue);
+              color: var(--fg);
             }
 
             toolbar {
