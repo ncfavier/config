@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }: {
+{ inputs, config, pkgs, lib, here, ... }: {
   _module.args = let
     importNixpkgs = nixpkgs: import nixpkgs {
       inherit (config.nixpkgs) localSystem crossSystem config overlays;
@@ -14,10 +14,11 @@
 
     nixPath = [ "nixpkgs=${inputs.nixos}" ];
 
-    registry = lib.genAttrs [ "self" "nixos" "nixos-stable" ] (flake: {
-      flake = inputs.${flake};
-    }) // {
+    registry = {
+      config.flake = inputs.self;
+      nixos.flake = inputs.nixos;
       nixpkgs.flake = inputs.nixos;
+      nixos-stable.flake = inputs.nixos-stable;
     };
 
     gc = {
@@ -34,25 +35,31 @@
     '';
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    overlays = [ inputs.nur.overlay ];
+    config.allowUnfree = true; # :(
+  };
 
-  environment.systemPackages = [ pkgs.nix-index ];
+  environment.systemPackages = with pkgs; [
+    nixfmt
+    nix-prefetch-github
+    nixpkgs-fmt
+    nixpkgs-review
+  ];
+
+  environment.sessionVariables.NIX_SHELL_PRESERVE_PROMPT = "1";
+
   programs.command-not-found.enable = false;
-  programs.bash.interactiveShellInit = ''
-    . ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  '';
+  myHm.programs.nix-index.enable = true; # TODO nix-index
 
   myHm.home.file.".nix-defexpr/default.nix".text = ''
-    { mutable ? false }: let
-      nixos = import (builtins.getFlake "nixos") {};
-      nixpkgs = import (builtins.getFlake "nixpkgs") {};
-      self = builtins.getFlake "self";
-      mutableSelf = builtins.getFlake ${lib.strings.escapeNixString config.lib.meta.mutableConfig};
-      inherit (nixos) lib;
-      machines = (if mutable then mutableSelf else self).nixosConfigurations;
-      local = machines.''${lib.fileContents /etc/hostname};
+    { wip ? false }: let
+      self = builtins.getFlake (if wip then ${lib.strings.escapeNixString config.lib.meta.configPath} else "config");
+      machines = self.nixosConfigurations;
+      local = machines.${lib.strings.escapeNixIdentifier here.hostname};
     in {
-      inherit nixos nixpkgs self mutableSelf lib local;
+      inherit self local;
+      inherit (self) lib;
       inherit (local) config;
     } // machines // local._module.args
   '';

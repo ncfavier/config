@@ -1,9 +1,45 @@
-{ pkgs, lib, ... }: {
-  environment.systemPackages = [
-    (lib.hiPrio pkgs.bashInteractive_5)
+{ pkgs, lib, config, my, here, ... }: {
+  my.shell = pkgs.bashInteractive_5;
+
+  environment.systemPackages = with pkgs; [
+    (lib.hiPrio config.my.shell)
+    man-pages
+    man-pages-posix
+    rlwrap
+    ripgrep
+    file
+    fd
+    tree
+    ncdu
+    gptfdisk
+    xxd
+    zip
+    unzip
+    binutils
+    gcc
+    gnumake
+    openssl
+    imagemagick
+    ffmpeg-full
+    youtube-dl
+    jq
+    python3
+    neofetch
+    lesspass-cli
+    (shellScriptWithDeps "upload" ../upload.sh [])
   ];
 
-  my.shell = pkgs.bashInteractive_5;
+  environment.sessionVariables = rec {
+    LESS = "ij3FRMK --mouse --wheel-lines=4";
+    SYSTEMD_LESS = LESS;
+    MANOPT = "--no-hyphenation";
+    MANPAGER = "less -+F";
+  };
+
+  documentation = {
+    dev.enable = true;
+    # man.generateCaches = true; # TODO
+  };
 
   programs.bash = {
     promptInit = builtins.readFile ./prompt.bash;
@@ -26,13 +62,13 @@
       C = "LC_ALL=C ";
       dp = "declare -p";
       fc-grep = "fc-list | rg -i";
-      j = "jobs";
       l = "ls -lh";
       ll = "ls -lah";
       o = "xdg-open";
       tall = "tail -f -n +1";
-      sd = "sudo systemctl";
-      ud = "systemctl --user";
+      s = "sudo systemctl";
+      u = "systemctl --user";
+      j = "journalctl";
 
       # Force alias expansion after these commands
       exec = "exec ";
@@ -49,13 +85,15 @@
       historyIgnore = [ "ls" "l" "ll" "la" ];
       shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
       sessionVariables._ZL_CD = "cd";
+      shellAliases = lib.mapAttrs (n: _: "ssh -qt ${n}") my.machines;
       initExtra = ''
         ${builtins.readFile ./functions.bash}
 
         complete -v dp
         complete -F _command C
-        complete_alias sd _systemctl systemctl
-        complete_alias ud _systemctl systemctl --user
+        complete_alias s _systemctl systemctl
+        complete_alias u _systemctl systemctl --user
+        complete_alias j _journalctl journalctl
 
         stty -ixon
         set -b +H

@@ -1,9 +1,9 @@
-{ config, lib, hostname, here, secrets, my, syncedFolders, ... }: {
+{ config, lib, here, secrets, my, syncedFolders, ... }: {
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
 
   sops.secrets.syncthing = {
     format = "yaml";
-    key = hostname;
+    key = here.hostname;
   };
 
   # TODO insecureAdminAccess, default Sync folder, anonymous usage reporting
@@ -81,7 +81,12 @@
     };
   };
 
-  myHm.home.file."${syncedFolders.my.path}/.stignore".text = ''
-    .git
-  '';
+  myHm.home.file = {
+    "${syncedFolders.my.path}/.stignore".text = ''
+      .git
+    '';
+    "${syncedFolders.saves.path}/.stignore".text = ''
+      df/current
+    '';
+  };
 }

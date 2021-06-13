@@ -1,0 +1,89 @@
+###
+# Image Thumbnailers
+###
+# Jpeg thumbnailer (from exif data if possible)
+      [JPEGThumbnailer]
+      Disabled=false
+      Priority=3
+      Locations=
+      Excludes=
+      MaxFileSize=209715200
+# Supports all type GdkPixbuf supports
+      [PixbufThumbnailer]
+      Disabled=false
+      Priority=2
+      Locations=
+      Excludes=
+      MaxFileSize=209715200
+# RAW image files using libopenraw
+      [RawThumbnailer]
+      Disabled=false
+      Priority=1
+      Locations=
+      Excludes=
+      MaxFileSize=209715200
+###
+# Video Thumbnailers
+###
+# Download cover from omdbapi.com or themoviedb.org if an
+# API key is given. This plugin is disabled because it
+# sends your (private) movie names over the internet.
+      [CoverThumbnailer]
+      Disabled=true
+      Priority=3
+      Locations=~/movies
+      Excludes=
+      MaxFileSize=0
+#APIKey=your-api-key-from-themoviedb.org
+# ffmpegthumbnailer plugin
+      [FfmpegThumbnailer]
+      Disabled=true
+      Priority=2
+      Locations=
+      Excludes=
+      MaxFileSize=2147483648
+# GStreamer plugin
+      [GstThumbnailer]
+      Disabled=true
+      Priority=1
+      Locations=
+      Excludes=
+      MaxFileSize=2147483648
+###
+# Other Thumbnailers
+###
+# FreeType thumbnailer
+      [FontThumbnailer]
+      Disabled=false
+      Priority=1
+      Locations=
+      Excludes=
+      MaxFileSize=209715200
+# PDF/PS thumbnailer
+      [PopplerThumbnailer]
+      Disabled=false
+      Priority=1
+      Locations=
+      Excludes=
+      MaxFileSize=209715200
+# Open document thumbnailer (ODF)
+      [OdfThumbnailer]
+      Disabled=false
+      Priority=1
+      Locations=
+      Excludes=
+      MaxFileSize=209715200
+# thumbnailers provided by .thumbnailer desktop files
+      [DesktopThumbnailer]
+      Disabled=false
+      Priority=1
+      Locations=
+      Excludes=
+      MaxFileSize=0
+# Epub thumbnailer
+      [EpubThumbnailer]
+      Disabled=false
+      Priority=1
+      Locations=
+      Excludes=
+      MaxFileSize=209715200

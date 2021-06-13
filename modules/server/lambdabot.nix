@@ -50,9 +50,9 @@ in {
   };
 
   nixpkgs.overlays = [
-    (final: prev: {
-      lambdabot = prev.lambdabot.overrideAttrs (drv: {
-        src = "${final.fetchFromGitHub {
+    (self: super: {
+      lambdabot = super.lambdabot.overrideAttrs (drv: {
+        src = "${self.fetchFromGitHub {
           owner = "lambdabot";
           repo = "lambdabot";
           rev = "e63f9f28e0ce1be080a17bb37764ff2a4f84294d";

@@ -2,17 +2,18 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixos.url          = "flake:nixpkgs/nixos-unstable";
-    nixos-stable.url   = "flake:nixpkgs/nixos-20.09";
-    nixos-hardware.url = "flake:nixos-hardware";
+    nixos.url = "nixpkgs/nixos-unstable";
+    nixos-stable.url = "nixpkgs/nixos-21.05";
+    nixos-hardware.url = "nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixos";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:ncfavier/home-manager";
       inputs.nixpkgs.follows = "nixos";
     };
+    nur.url = "nur";
     nix-dns = {
       url = "github:kirelagin/nix-dns";
       inputs.nixpkgs.follows = "nixos";
@@ -27,29 +28,31 @@
     };
   };
 
-  outputs = inputs@{ self, ... }: let
+  outputs = inputs@{ self, nixos, ... }: let
     system = "x86_64-linux";
-    pkgs = inputs.nixos.legacyPackages.${system};
-    lib = inputs.nixos.lib.extend (import ./lib.nix);
-    my = import ./my.nix lib;
+    pkgs = nixos.legacyPackages.${system};
+    lib = nixos.lib.extend (import ./lib.nix);
   in {
+    inherit lib;
+
     nixosModules = lib.importDir ./modules;
 
     nixosConfigurations = lib.mapAttrs (hostname: local:
       lib.nixosSystem {
-        inherit system lib;
+        inherit system lib; # TODO i shouldn't have to inherit lib here
         specialArgs = {
-          inherit inputs hostname my;
-          here = my.machines.${hostname};
+          inherit inputs;
+          inherit (lib) my;
           hardware = inputs.nixos-hardware.nixosModules;
+          here = lib.my.machines.${hostname} or {};
         };
-        modules = builtins.attrValues (lib.importDir ./modules) ++ [ local ];
+        modules = builtins.attrValues self.nixosModules ++ [ local ];
       }
     ) (lib.importDir ./machines);
 
     devShell.${system} = pkgs.mkShell {
       buildInputs = [ pkgs.sops ];
-      SOPS_PGP_FP = my.pgpFingerprint;
+      SOPS_PGP_FP = lib.my.pgpFingerprint;
     };
 
     packages.${system}.iso = (lib.nixosSystem {

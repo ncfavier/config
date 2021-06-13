@@ -25,7 +25,7 @@ in {
       MX = [ (mx.mx 10 "@") ];
       DKIM = [ {
         selector = "mail";
-        p = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/MUKMp4lOoDhaeyIh5hzVNkr5eJ7GMekGRCvVMpSx2DWgUPg8UR68VT1ObmEAQZVDd696XdRNFgFJZuaGSTqcjPfGVq7e+DFVZcRZbISat8mlvOyuDe7J2EwZQxn3gup9hwbesfFPCY6V+ZMwLylT0j974xqJPxEvkebZ+DylUwIDAQAB"; # TODO move dkim pk to mailserver.nix
+        p = config.lib.dkim.pk;
       } ];
       DMARC = [ {
         p = "quarantine";

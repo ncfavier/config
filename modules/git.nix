@@ -1,8 +1,10 @@
-{ pkgs, my, ... }: {
+{ my, pkgs, ... }: {
+  environment.systemPackages = [ pkgs.git ];
+
   myHm = {
     programs.git = {
       enable = true;
-      package = pkgs.git;
+      package = pkgs.gitFull;
 
       userName = my.realName;
       userEmail = my.email;

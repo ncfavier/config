@@ -16,6 +16,12 @@
     kernelPackages = pkgs.linuxPackages_latest;
     kernelModules = [ "kvm-intel" ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "firewire_ohci" "sdhci_pci" ];
+
+    initrd.luks.devices.home = {
+      device = "/dev/disk/by-partlabel/home";
+      allowDiscards = true;
+      bypassWorkqueues = true;
+    };
   };
 
   fileSystems = {
@@ -30,26 +36,44 @@
     };
 
     "/home" = {
-      device = "/dev/disk/by-partlabel/home";
+      device = "LABEL=home";
       fsType = "ext4";
+      neededForBoot = true;
     };
   };
 
   swapDevices = [ {
-    device = "/dev/disk/by-partlabel/swap";
+    device = "/swap";
+    size = 4096;
   } ];
 
-  networking.interfaces.enp0s25.useDHCP = true;
-
-  services.xserver.libinput = {
-    enable = true;
-    touchpad = {
-      accelSpeed = "0.6";
-      tapping = false;
+  networking = {
+    interfaces.enp0s25.useDHCP = true;
+    interfaces.wlp3s0.useDHCP = true;
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+      allowAuxiliaryImperativeNetworks = true;
     };
   };
 
-  my.home = "/home/n2";
+  environment.systemPackages = with pkgs; [
+    efibootmgr
+    wpa_supplicant_gui
+    v4l-utils
+  ];
+
+  services.xserver = {
+    videoDrivers = [ "intel" ];
+
+    libinput = {
+      enable = true;
+      touchpad = {
+        accelSpeed = "0.6";
+        tapping = false;
+      };
+    };
+  };
 
   system.stateVersion = "21.05";
 }

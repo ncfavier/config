@@ -9,8 +9,13 @@
     useUserPackages = true;
     verbose = true;
     extraSpecialArgs = { inherit inputs; };
-    sharedModules = [
-      { home.stateVersion = config.system.stateVersion; }
-    ];
+  };
+
+  myHm = {
+    home.stateVersion = config.system.stateVersion;
+
+    systemd.user.startServices = true;
+
+    manual.html.enable = true;
   };
 }

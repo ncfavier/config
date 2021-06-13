@@ -1,4 +1,4 @@
-{ config, lib, here, my, ... }: let
+{ config, pkgs, lib, here, my, ... }: let
   port = 2242;
 in {
   services.openssh = {
@@ -11,6 +11,8 @@ in {
   programs.ssh.extraConfig = ''
     StrictHostKeyChecking accept-new
   '';
+
+  environment.systemPackages = [ pkgs.autossh ];
 
   myHm.programs.ssh = {
     enable = true;
@@ -55,24 +57,4 @@ in {
       };
     };
   };
-
-  # programs.mosh.enable = true;
-  # programs.bash.shellAliases.mosh = "MOSH_TITLE_NOPREFIX=y mosh";
-  #
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     mosh = super.mosh.overrideAttrs ({ patches ? [], ... }: {
-  #       patches = patches ++ [
-  #         (builtins.toFile "mosh-patch" ''
-  #           Fix https://github.com/mobile-shell/mosh/issues/1130
-  #           --- a/src/terminal/terminaldisplayinit.cc
-  #           +++ b/src/terminal/terminaldisplayinit.cc
-  #           @@ -127 +127 @@ Display::Display( bool use_environment )
-  #           -      "xterm", "rxvt", "kterm", "Eterm", "screen"
-  #           +      "xterm", "rxvt", "kterm", "Eterm", "alacritty", "screen", "tmux"
-  #         '')
-  #       ];
-  #     });
-  #   })
-  # ];
 }
