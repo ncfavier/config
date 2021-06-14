@@ -12,7 +12,7 @@
 
     trustedUsers = [ "root" "@wheel" ];
 
-    nixPath = [ "nixpkgs=${inputs.nixos}" ];
+    nixPath = [ "nixpkgs=${inputs.nixos}" ]; # TODO this should be updated on rebuild
 
     registry = {
       config.flake = inputs.self;

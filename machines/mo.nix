@@ -9,7 +9,8 @@
       efi.canTouchEfiVariables = true;
       systemd-boot = {
         enable = true;
-        configurationLimit = 20;
+        configurationLimit = 25;
+        consoleMode = "max";
       };
     };
 
@@ -52,6 +53,7 @@
     interfaces.wlp3s0.useDHCP = true;
     wireless = {
       enable = true;
+      interfaces = [ "wlp3s0" ];
       userControlled.enable = true;
       allowAuxiliaryImperativeNetworks = true;
     };

@@ -1,8 +1,8 @@
 { lib, here, pkgs, ... }: {
   config = lib.mkMerge [
     ({
-      nixpkgs.overlays = [ (pkgs: super: with pkgs; {
-        efont-unicode = stdenv.mkDerivation rec { # TODO https://nixpk.gs/pr-tracker.html?pr=126593
+      nixpkgs.overlays = [ (self: super: {
+        efont-unicode = with self; stdenv.mkDerivation rec { # TODO https://nixpk.gs/pr-tracker.html?pr=126593
           pname = "efont-unicode";
           version = "0.4.2";
           src = builtins.fetchTarball {
@@ -38,20 +38,18 @@
             platforms = platforms.all;
           };
         };
-        dina-font = stdenv.mkDerivation {
-          pname = "dina-font";
-          version = "2.92";
-
-          src = fetchurl {
-            url = "http://www.donationcoder.com/Software/Jibz/Dina/downloads/Dina.zip";
-            sha256 = "1kq86lbxxgik82aywwhawmj80vsbz3hfhdyhicnlv9km7yjvnl8z";
-          };
-
-          nativeBuildInputs = with xorg;
-            [ unzip bdftopcf mkfontscale fonttosfnt fontforge ];
-
-          patchPhase = "sed -i 's/microsoft-cp1252/ISO8859-1/' *.bdf";
-
+        xorg = super.xorg // {
+          fonttosfnt = super.xorg.fonttosfnt.overrideAttrs (o: {
+            # https://gitlab.freedesktop.org/xorg/app/fonttosfnt/-/merge_requests/11
+            patches = o.patches or [] ++ [
+              (self.fetchurl {
+                url = "https://gitlab.freedesktop.org/madroach/fonttosfnt/-/commit/50f8c91c56334a29c18cd8c77c9431c5ff0df5a9.diff";
+                sha256 = "1mjx62svg2lxlgfnmmm3mqbzpvkm3g4ig40lxi3dys0bnvgccj6s";
+              })
+            ];
+          });
+        };
+        dina-font = super.dina-font.overrideAttrs (o: {
           buildPhase = ''
             newName() {
               test "''${1:5:1}" = i && _it=Italic || _it=
@@ -70,20 +68,10 @@
             gzip -n -9 *.pcf
             # convert bdf fonts to otb
             for i in *.bdf; do
-              fonttosfnt -o "$(newName "$i").otb" "$i"
-              # fontforge -lang=ff -c "New(); Import(\"$i\"); Generate(\"$(newName $i).otb\")"
+              ${self.xorg.fonttosfnt}/bin/fonttosfnt -o "$(newName "$i").otb" "$i"
             done
           '';
-
-          installPhase = ''
-            install -D -m 644 -t "$out/share/fonts/misc" *.pcf.gz *.otb
-            install -D -m 644 -t "$bdf/share/fonts/misc" *.bdf
-            mkfontdir "$out/share/fonts/misc"
-            mkfontdir "$bdf/share/fonts/misc"
-          '';
-
-          outputs = [ "out" "bdf" ];
-        };
+        });
       }) ];
 
       # TODO remove "${}" https://nixpk.gs/pr-tracker.html?pr=126658

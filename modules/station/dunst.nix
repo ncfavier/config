@@ -4,7 +4,7 @@
 
     settings = with lib.theme; rec {
       global = {
-        geometry = "800x5-32+58";
+        geometry = "800x5-32+64";
         shrink = true;
         inherit padding;
         horizontal_padding = padding;
@@ -17,7 +17,7 @@
         word_wrap = true;
         icon_position = "right";
         min_icon_size = 64;
-        max_icon_size = 128;
+        max_icon_size = 200;
         dmenu = "rofi -dmenu -p dunst";
         browser = "xdg-open";
         mouse_right_click = "context";

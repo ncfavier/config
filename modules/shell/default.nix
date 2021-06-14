@@ -11,9 +11,12 @@
     fd
     tree
     ncdu
+    lsof
     gptfdisk
+    pciutils
     zip
     unzip
+    config.boot.kernelPackages.bcc
     binutils
     gcc
     gnumake
@@ -21,6 +24,7 @@
     imagemagick
     ffmpeg-full
     youtube-dl
+    amfora
     jq
     python3
     neofetch

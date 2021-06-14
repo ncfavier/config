@@ -24,6 +24,11 @@
       (shellScriptWithDeps "music-add" ./music-add.sh [
         libxml2Python imagemagick ffmpeg-full youtube-dl audacity mpc_cli
       ])
+      (songrec.overrideAttrs (o: { # https://github.com/NixOS/nixpkgs/pull/126891
+        postInstall = ''
+          mv packaging/rootfs/usr/share "$out"/share
+        '';
+      }))
     ];
   };
 }

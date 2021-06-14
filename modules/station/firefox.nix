@@ -42,12 +42,13 @@
           @-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml) {
             :root {
               --bg: ${background};
+              --bg-alt: ${backgroundAlt};
               --bg-hover: hsla(0, 100%, 100%, .1);
               --bg-active: hsla(0, 100%, 100%, .15);
               --fg: ${foreground};
-              --fg-inactive: ${foregroundAlt};
-              --green: ${cold};
-              --blue: ${cold};
+              --fg-alt: ${foregroundAlt};
+              --cold: ${cold};
+              --hot: ${hot};
               --font: ${font};
               --font-size: 10px;
 
@@ -55,11 +56,14 @@
               --toolbar-non-lwt-bgimage: none !important;
               --toolbar-non-lwt-textcolor: var(--fg) !important;
               --tabs-border-color: transparent !important;
+              --toolbar-field-focus-border-color: var(--cold) !important;
+              --autocomplete-popup-highlight-background: var(--cold) !important;
+              --autocomplete-popup-highlight-color: var(--bg) !important;
             }
 
             ::selection {
-              background-color: var(--blue);
-              color: var(--fg);
+              background-color: var(--cold) !important;
+              color: var(--bg) !important;
             }
 
             toolbar {
@@ -78,7 +82,7 @@
             }
 
             .tabbrowser-tab {
-              color: var(--fg-inactive) !important;
+              color: var(--fg-alt) !important;
               font-family: var(--font) !important;
               font-size: var(--font-size) !important;
             }
@@ -97,7 +101,7 @@
             }
 
             .tab-throbber[progress]::before {
-              fill: var(--blue) !important;
+              fill: var(--cold) !important;
             }
 
             .tab-icon-image {
@@ -127,7 +131,7 @@
             }
 
             #identity-box #connection-icon {
-              fill: var(--green) !important;
+              fill: var(--cold) !important;
             }
 
             #urlbar[pageproxystate="valid"] > #identity-box.verifiedIdentity,
@@ -139,7 +143,7 @@
 
             #identity-box.verifiedIdentity #identity-icon-labels {
               margin-left: 5px !important;
-              color: var(--green) !important;
+              color: var(--cold) !important;
             }
 
             #tracking-protection-icon-container {
@@ -156,8 +160,8 @@
             }
 
             #urlbar[focused="true"] {
-              border-color: var(--blue) !important;
-              transition: border-color 0.1s ease-in-out;
+              /*border-color: var(--cold) !important;
+              transition: border-color 0.1s ease-in-out;*/
             }
 
             #urlbar:not(:-moz-lwtheme):not([focused="true"]) > #urlbar-background, #searchbar:not(:-moz-lwtheme):not(:focus-within) {
@@ -200,7 +204,7 @@
             .ac-separator,
             .ac-url,
             .ac-action {
-              color: var(--blue) !important;
+              color: var(--cold) !important;
             }
 
             .search-one-offs {
@@ -215,12 +219,12 @@
         userContent = ''
           :root {
             --bg: ${background};
+            --bg-alt: ${backgroundAlt};
             --bg-hover: hsla(0, 100%, 100%, .1);
             --bg-active: hsla(0, 100%, 100%, .15);
             --fg: ${foreground};
-            --fg-inactive: ${foregroundAlt};
-            --green: ${cold};
-            --blue: ${cold};
+            --fg-alt: ${foregroundAlt};
+            --cold: ${cold};
           }
 
           @-moz-document media-document(all) {

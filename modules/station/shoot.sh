@@ -60,6 +60,7 @@ fi
 
 # Shoot
 
+thumbnail_size=300
 thumbnail=$(mktemp --suffix .png) || exit 1
 trap 'rm -f "$thumbnail"' exit
 
@@ -86,13 +87,13 @@ if (( video )); then
     rm -f "$tmpvideo"
 
     # Thumbnail
-    ffmpegthumbnailer -i "$target" -o "$thumbnail" -s 300
+    ffmpegthumbnailer -i "$target" -o "$thumbnail" -s "$thumbnail_size"
 else
     # Screenshot
     import -silent -window root ${geometry:+-crop "$geometry"} "$target"
 
     # Thumbnail
-    convert "$target" -resize '300x300>' "$thumbnail"
+    convert "$target" -resize "${thumbnail_size}x${thumbnail_size}>" "$thumbnail"
 fi
 
 # Notify

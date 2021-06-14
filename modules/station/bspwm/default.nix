@@ -53,7 +53,6 @@ in {
         bspc desktop mail -l monocle
       '';
       startupPrograms = [
-        "[[ -f ~/.fehbg ]] && ~/.fehbg"
         "${bar}/bin/bar" # ensure bspwmrc changes if bar.sh changes
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
       ];

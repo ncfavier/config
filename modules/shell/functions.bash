@@ -222,8 +222,7 @@ command_not_found_handle() {
         attrs[i]=${attrs[i]%.out}
     done
     if (( ${#attrs[@]} )); then
-        printf '%s: command not found\n' "$1"
-        echo "It is provided by the following attributes:"
+        printf '%s\n' "$1: command not found. It is provided by the following attributes:"
         for attr in "${attrs[@]}"; do
             echo "  $attr"
         done

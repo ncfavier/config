@@ -1,5 +1,6 @@
 { inputs, config, pkgs, lib, here, ... }: {
-  system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
+  # sadly this makes the man page cache rebuild too often
+  # system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 
   lib.meta = rec {
     configPath = "${config.my.home}/git/config";

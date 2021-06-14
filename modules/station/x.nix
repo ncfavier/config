@@ -14,6 +14,7 @@
       importedVariables = [ "PATH" ];
       numlock.enable = true;
       initExtra = with pkgs.xorg; ''
+        [[ -f ~/.fehbg ]] && ~/.fehbg &
         ${xset}/bin/xset -b
         ${xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'
       '';
@@ -32,6 +33,8 @@
     '';
 
     home.packages = with pkgs; [
+      arandr
+      hsetroot
       xlibs.xev
     ];
 

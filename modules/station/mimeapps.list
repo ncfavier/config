@@ -18,6 +18,7 @@ audio/mpeg=mpv.desktop;
 text/plain=vim.desktop;
 application/x-shellscript=vim.desktop;
 text/x-csrc=vim.desktop;
+image/jpeg=gimp.desktop;
 
 [Default Applications]
 x-scheme-handler/http=firefox.desktop
@@ -37,3 +38,4 @@ application/x-shellscript=vim.desktop
 text/x-csrc=vim.desktop
 inode/directory=thunar.desktop
 x-scheme-handler/magnet=transmission-gtk.desktop
+x-scheme-handler/gemini=amfora.desktop

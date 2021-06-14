@@ -7,10 +7,15 @@
     ];
 
     hm.home.packages = with pkgs; [
-      texlive.combined.scheme-full
+      chromium
       thunderbird
+      libreoffice
+      texlive.combined.scheme-full
+      pandoc
       audacity
+      gimp
       transmission-gtk
+      qemu
       (writeShellScriptBin "power" ''
         printf '%s\n' shutdown reboot suspend logout |
         case $(rofi -dmenu -p action -lines 4 -width 200) in
