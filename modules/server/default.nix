@@ -1,4 +1,4 @@
-{ pkgs, lib, here, ... }: lib.optionalAttrs here.isServer {
+{ lib, here, pkgs, ... }: lib.optionalAttrs here.isServer {
   imports = builtins.attrValues (lib.importDir ./.);
 
   environment.systemPackages = [

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, here, ... }: lib.optionalAttrs here.isStation {
+{ lib, here, config, pkgs, ... }: lib.optionalAttrs here.isStation {
   imports = builtins.attrValues (lib.importDir ./.);
 
   config = {

@@ -58,6 +58,7 @@
       "*background" = background;
       "*foreground" = foreground;
       "*cursorColor" = foreground;
+      "*font" = "xft:bitmap:pixelsize=10,xft:tewi:pixelsize=10,xft:Biwidth:pixelsize=12,xft:Twitter Color Emoji:size=10";
     };
 
     services.picom = {
@@ -66,7 +67,7 @@
     };
 
     services.redshift = {
-      enable = true;
+      # enable = true;
       latitude = 48.0;
       longitude = 2.0;
     };

@@ -1,4 +1,4 @@
-{ config, lib, hardware, pkgs, modulesPath, ... }: {
+{ hardware, lib, config, modulesPath, pkgs, ... }: {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
     hardware.lenovo-thinkpad-t420

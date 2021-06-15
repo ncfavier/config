@@ -1,10 +1,11 @@
-{ inputs, config, pkgs, lib, here, ... }: {
-  _module.args = let
-    importNixpkgs = nixpkgs: import nixpkgs {
-      inherit (config.nixpkgs) localSystem crossSystem config overlays;
+{ inputs, lib, here, config, utils, pkgs, ... }: {
+  _module.args = {
+    utils.importNixpkgs = nixpkgs: import nixpkgs {
+      inherit (config.nixpkgs) localSystem crossSystem config;
     };
-  in {
-    pkgsStable = importNixpkgs inputs.nixos-stable;
+
+    pkgsStable = utils.importNixpkgs inputs.nixos-stable;
+    pkgsWip = utils.importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
   };
 
   nix = {
@@ -12,14 +13,16 @@
 
     trustedUsers = [ "root" "@wheel" ];
 
-    nixPath = [ "nixpkgs=${inputs.nixos}" ]; # TODO this should be updated on rebuild
-
     registry = {
       config.flake = inputs.self;
       nixos.flake = inputs.nixos;
       nixpkgs.flake = inputs.nixos;
       nixos-stable.flake = inputs.nixos-stable;
     };
+
+    nixPath = [ "nixpkgs=${pkgs.writeText "nixpkgs.nix" ''
+      import (builtins.getFlake "nixos")
+    ''}" ];
 
     gc = {
       automatic = true;
@@ -41,24 +44,27 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nix-prefetch-github
     nix-index
     nix-diff
+    nix-prefetch-github
     nixpkgs-fmt
     nixpkgs-review
     nixfmt
+    hydra-check
   ];
 
   environment.sessionVariables.NIX_SHELL_PRESERVE_PROMPT = "1";
 
   hm.home.file.".nix-defexpr/default.nix".text = ''
     { wip ? false }: let
-      self = builtins.getFlake (if wip then ${lib.strings.escapeNixString config.lib.meta.configPath} else "config");
+      self = builtins.getFlake (if wip then ${lib.strings.escapeNixString utils.configPath} else "config");
       machines = self.nixosConfigurations;
       local = machines.${lib.strings.escapeNixIdentifier here.hostname};
-    in {
-      inherit self local;
-      inherit (self) lib;
+    in rec {
+      inherit self;
+      inherit (self) inputs lib;
+      inherit (lib) my;
+      here = my.machines.${lib.strings.escapeNixIdentifier here.hostname} or {};
       inherit (local) config;
     } // machines // local._module.args
   '';

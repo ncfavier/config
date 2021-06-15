@@ -1,4 +1,4 @@
-{ inputs, config, lib, utils, here, my, ... }: {
+{ inputs, lib, my, here, config, utils, ... }: {
   imports = [ (lib.mkAliasOptionModule [ "my" ] [ "users" "users" my.username ]) ];
 
   options.users.users = lib.mkOption {

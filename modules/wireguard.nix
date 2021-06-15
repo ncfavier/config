@@ -1,4 +1,4 @@
-{ config, pkgs, lib, here, secrets, my, ... }: let
+{ lib, my, here, config, secrets, pkgs, ... }: let
   interface = "wg42";
   port = 500;
 in {

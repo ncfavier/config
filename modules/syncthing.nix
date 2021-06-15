@@ -1,4 +1,4 @@
-{ config, lib, here, secrets, my, syncedFolders, ... }: {
+{ lib, my, here, config, secrets, syncedFolders, ... }: {
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
 
   sops.secrets.syncthing = {

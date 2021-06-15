@@ -1,18 +1,25 @@
 shopt -s lastpipe
-IFS=
 
 mpc current -f $'%file%\n%artist%\n%album%\n%title%' | {
-    read -r file
-    read -r artist
-    read -r album
-    read -r title
+    IFS= read -r file
+    IFS= read -r artist
+    IFS= read -r album
+    IFS= read -r title
 }
 [[ $file ]] || exit
 
-thumbnail=$(mktemp --suffix .png) || exit
-trap 'rm -f "$thumbnail"' exit
+# too slow
+# thumbnail=$(dbus-make-thumbnails -s large "$(xdg-user-dir MUSIC)/$file"
 
-# TODO dbus-get-thumbnail
-ffmpegthumbnailer -i "$(xdg-user-dir MUSIC)/$file" -o "$thumbnail" -s 180 -m
+file=$(xdg-user-dir MUSIC)/$file
+read -r hash _ < <(gio info "$file" | awk '$1 == "uri:" { printf("%s", $2) }' | md5sum)
+thumbnail=$XDG_CACHE_HOME/thumbnails/large/$hash.png
 
-dunstify -I "$thumbnail" -r 173952 "$artist" "<i>$album</i>\n$title"
+if [[ ! -r $thumbnail ]]; then
+    thumbnail=$(mktemp --suffix .png) || exit
+    trap 'rm -f "$thumbnail"' exit
+    ffmpegthumbnailer -i "$file" -o "$thumbnail" -s 256 -m
+fi
+
+id=0x$(printf '%s' 🎵 | iconv -f utf-8 -t utf-32be | xxd -p) # what do you mean 'overengineered'?
+dunstify -I "$thumbnail" -r "$id" "$artist" "<i>$album</i>\n$title"

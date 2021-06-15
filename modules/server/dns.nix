@@ -1,4 +1,4 @@
-{ inputs, config, lib, here, my, ... }: let
+{ inputs, lib, my, here, config, ... }: let
   dns = inputs.nix-dns.lib;
 in {
   services.nsd = {

@@ -1,4 +1,4 @@
-{ pkgs, lib, here, my, ... }: {
+{ lib, my, here, pkgs, ... }: {
   options.networking = with lib.types; {
     interfaces = lib.mkOption {
       type = attrsOf (submodule {

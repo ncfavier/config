@@ -1,4 +1,4 @@
-{ config, pkgs, syncedFolders, ... }: {
+{ config, syncedFolders, pkgs, ... }: {
   hm = {
     home.packages = with pkgs; [
       teeworlds

@@ -42,8 +42,8 @@
         inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
         specialArgs = {
           inherit inputs;
-          inherit (lib) my;
           hardware = inputs.nixos-hardware.nixosModules;
+          inherit (lib) my;
           here = lib.my.machines.${hostname} or {};
         };
         modules = builtins.attrValues self.nixosModules ++ [ local ];
@@ -51,7 +51,7 @@
     ) (lib.importDir ./machines);
 
     devShell.${system} = pkgs.mkShell {
-      buildInputs = [ pkgs.sops ];
+      packages = with pkgs; [ sops ];
       SOPS_PGP_FP = lib.my.pgpFingerprint;
     };
 

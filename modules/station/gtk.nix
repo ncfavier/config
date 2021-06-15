@@ -1,6 +1,4 @@
-{ config, pkgs, syncedFolders, ... }: {
-  services.dbus.packages = [ pkgs.dconf ];
-
+{ config, syncedFolders, pkgs, ... }: {
   hm = {
     home.packages = [ pkgs.lxappearance ];
 

@@ -1,4 +1,4 @@
-{ inputs, pkgs, modulesPath, ... }: {
+{ inputs, modulesPath, pkgs, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     inputs.self.nixosModules.localisation

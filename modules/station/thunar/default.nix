@@ -1,10 +1,11 @@
-{ lib, config, pkgs, ... }: {
+{ lib, config, utils, pkgs, ... }: {
+  programs.dconf.enable = true;
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
   # https://github.com/NixOS/nixpkgs/pull/126832
-  environment.sessionVariables.GIO_EXTRA_MODULES = "${config.services.gvfs.package}/lib/gio/modules";
-  environment.variables.GIO_EXTRA_MODULES = lib.mkForce config.environment.sessionVariables.GIO_EXTRA_MODULES;
+  # environment.sessionVariables.GIO_EXTRA_MODULES = [ "${config.services.gvfs.package}/lib/gio/modules" "${pkgs.dconf.lib}/lib/gio/modules" ];
+  # environment.variables.GIO_EXTRA_MODULES = lib.mkForce config.environment.sessionVariables.GIO_EXTRA_MODULES;
 
   hm = {
     home.packages = with pkgs; let
@@ -23,10 +24,10 @@
       xfce.xfconf
       gnome.zenity
       gnome.file-roller
-      (pkgs.linkFarm "glib-default-terminal" [ {
+      (linkFarm "glib-default-terminal" [ {
         # Stupid workaround for https://gitlab.gnome.org/GNOME/glib/-/issues/338
         name = "bin/tilix";
-        path = "${pkgs.alacritty}/bin/alacritty";
+        path = "${alacritty}/bin/alacritty";
       } ])
       (writeTextDir "share/thumbnailers/ffmpegthumbnailer.thumbnailer" ''
         [Thumbnailer Entry]
@@ -52,10 +53,10 @@
 
     xdg.configFile = {
       "xfce4/xfconf/xfce-perchannel-xml/thunar.xml" = {
-        source = config.lib.meta.mkMutableSymlink ./thunar.xml;
+        source = utils.mkMutableSymlink ./thunar.xml;
         force = true;
       };
-      "Thunar/uca.xml".source = config.lib.meta.mkMutableSymlink ./uca.xml;
+      "Thunar/uca.xml".source = utils.mkMutableSymlink ./uca.xml;
       "tumbler/tumbler.rc".source = ./tumbler.rc;
     };
   };

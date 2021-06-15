@@ -1,4 +1,4 @@
-{ inputs, pkgs, my, syncedFolders, ... }: let
+{ inputs, my, syncedFolders, pkgs, ... }: let
   uploadsRoot = "/run/nginx/uploads";
 in {
   services.nginx = {

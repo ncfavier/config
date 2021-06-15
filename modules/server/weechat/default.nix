@@ -1,4 +1,4 @@
-{ config, pkgs, lib, here, secrets, my, syncedFolders, ... }: let
+{ lib, my, here, config, secrets, syncedFolders, utils, pkgs, ... }: let
   relayPort = 6642;
   scripts = [
     "color_popup.pl"
@@ -53,7 +53,7 @@ in {
 
     home.file = lib.mapAttrs' (name: _: {
       name = ".weechat/${name}";
-      value.source = config.lib.meta.mkMutableSymlink (./. + "/${name}");
+      value.source = utils.mkMutableSymlink (./. + "/${name}");
     }) (lib.filterAttrs (name: _: lib.hasSuffix ".conf" name) (builtins.readDir ./.));
   };
 

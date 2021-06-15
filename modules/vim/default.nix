@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ lib, pkgs, ... }: {
   programs.vim = {
     defaultEditor = true;
     package = pkgs.vim_configurable.customize {
@@ -14,7 +14,7 @@
           vim-markdown
           haskell-vim
           vim-nix
-          # TODO vim-bracketed-paste https://nixpk.gs/pr-tracker.html?pr=126610
+          vim-bracketed-paste
         ];
       };
     };

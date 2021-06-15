@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: lib.optionalAttrs false {
+{ lib, config, pkgs, ... }: lib.optionalAttrs false {
   hm = {
     wayland.windowManager.sway = {
       enable = true;

@@ -1,4 +1,4 @@
-{ config, pkgs, secrets, ... }: let
+{ config, secrets, pkgs, ... }: let
   tunnelPort = 6642;
 in {
   sops.secrets.ulminfo-lambdabot = {

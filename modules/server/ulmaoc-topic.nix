@@ -1,4 +1,4 @@
-{ config, secrets, my, ... }: {
+{ my, config, secrets, ... }: {
   sops.secrets.ulmaoc-leaderboard = {
     owner = my.username;
     inherit (config.my) group;

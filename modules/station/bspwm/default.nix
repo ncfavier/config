@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: let
+{ lib, config, pkgs, ... }: let
   bar = with pkgs; shellScriptWithDeps "bar" ./bar.sh [
     lemonbar-xft xdo xtitle xkb-switch
   ];

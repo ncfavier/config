@@ -39,6 +39,8 @@
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         };
         userChrome = ''
+          /* TODO remove the unnecessary cruft */
+
           @-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml) {
             :root {
               --bg: ${background};
@@ -248,7 +250,7 @@
               display: none !important;
             }
 
-            .prefs-button {
+            .personalize-button {
               display: none !important;
             }
           }

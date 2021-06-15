@@ -39,8 +39,7 @@
           };
         };
         xorg = super.xorg // {
-          fonttosfnt = super.xorg.fonttosfnt.overrideAttrs (o: {
-            # https://gitlab.freedesktop.org/xorg/app/fonttosfnt/-/merge_requests/11
+          fonttosfnt = super.xorg.fonttosfnt.overrideAttrs (o: { # https://nixpk.gs/pr-tracker.html?pr=126906
             patches = o.patches or [] ++ [
               (self.fetchurl {
                 url = "https://gitlab.freedesktop.org/madroach/fonttosfnt/-/commit/50f8c91c56334a29c18cd8c77c9431c5ff0df5a9.diff";
@@ -49,7 +48,7 @@
             ];
           });
         };
-        dina-font = super.dina-font.overrideAttrs (o: {
+        dina-font = super.dina-font.overrideAttrs (o: { # https://github.com/NixOS/nixpkgs/pull/126955
           buildPhase = ''
             newName() {
               test "''${1:5:1}" = i && _it=Italic || _it=
@@ -74,12 +73,11 @@
         });
       }) ];
 
-      # TODO remove "${}" https://nixpk.gs/pr-tracker.html?pr=126658
-      console.font = "${pkgs.runCommandLocal "dina.psf" {} ''
+      console.font = pkgs.runCommandLocal "dina.psf" {} ''
         cd ${pkgs.bdf2psf}/share/bdf2psf
         sed 's/POINT_SIZE/AVERAGE_WIDTH/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-8.bdf |
         ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 512 "$out"
-      ''}";
+      '';
     })
 
     (lib.mkIf here.isStation {
@@ -119,6 +117,18 @@
                   <family>Biwidth</family>
                   <family>Twitter Color Emoji</family>
                   <family>Symbola</family>
+                </prefer>
+              </alias>
+              <alias binding="same">
+                <family>Helvetica</family>
+                <prefer>
+                  <family>sans-serif</family>
+                </prefer>
+              </alias>
+              <alias binding="same">
+                <family>Arial</family>
+                <prefer>
+                  <family>sans-serif</family>
                 </prefer>
               </alias>
               <selectfont>

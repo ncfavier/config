@@ -1,4 +1,4 @@
-{ pkgs, lib, config, my, here, ... }: {
+{ lib, my, here, config, pkgs, ... }: {
   my.shell = pkgs.bashInteractive_5;
 
   environment.systemPackages = with pkgs; [

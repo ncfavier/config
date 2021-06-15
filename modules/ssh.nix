@@ -1,4 +1,4 @@
-{ config, pkgs, lib, here, my, ... }: let
+{ lib, my, here, config, pkgs, ... }: let
   port = 2242;
 in {
   services.openssh = {

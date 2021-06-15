@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ lib, config, pkgs, ... }: {
   hm.services.dunst = {
     enable = true;
 

@@ -43,7 +43,10 @@
 
       extraConfig = {
         credential.helper = "store";
-        advice.detachedHead = false;
+        advice = {
+          detachedHead = false;
+          pushNonFFCurrent = false;
+        };
         init.defaultBranch = "master";
         pull.rebase = true;
         rebase = {

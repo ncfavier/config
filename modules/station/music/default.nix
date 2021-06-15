@@ -1,4 +1,4 @@
-{ pkgs, syncedFolders, ... }: {
+{ syncedFolders, pkgs, ... }: {
   hm = {
     services.mpd = {
       enable = true;
@@ -19,12 +19,12 @@
       mpc_cli
       (shellScriptWithDeps "music" ./music.sh [])
       (shellScriptWithDeps "music-notify" ./music-notify.sh [
-        ffmpegthumbnailer
+        ffmpegthumbnailer xxd glib.bin
       ])
       (shellScriptWithDeps "music-add" ./music-add.sh [
         libxml2Python imagemagick ffmpeg-full youtube-dl audacity mpc_cli
       ])
-      (songrec.overrideAttrs (o: { # https://github.com/NixOS/nixpkgs/pull/126891
+      (songrec.overrideAttrs (o: { # TODO https://nixpk.gs/pr-tracker.html?pr=126891
         postInstall = ''
           mv packaging/rootfs/usr/share "$out"/share
         '';

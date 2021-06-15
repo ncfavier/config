@@ -2,7 +2,10 @@
   hm = {
     programs.direnv = {
       enable = true;
-      enableNixDirenvIntegration = true;
+      nix-direnv = {
+        enable = true;
+        enableFlakes = true;
+      };
       config = {
         global.warn_timeout = "999h";
       };

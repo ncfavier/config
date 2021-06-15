@@ -1,4 +1,4 @@
-{ config, pkgs, syncedFolders, ... }: {
+{ config, syncedFolders, utils, pkgs, ... }: {
   hm = {
     home.packages = with pkgs; [ xdg-user-dirs ];
 
@@ -18,7 +18,7 @@
         publicShare = "${config.my.home}/public";
       };
 
-      configFile."mimeapps.list".source = config.lib.meta.mkMutableSymlink ./mimeapps.list;
+      configFile."mimeapps.list".source = utils.mkMutableSymlink ./mimeapps.list;
     };
   };
 }
