@@ -39,7 +39,7 @@
           };
         };
         xorg = super.xorg // {
-          fonttosfnt = super.xorg.fonttosfnt.overrideAttrs (o: { # https://nixpk.gs/pr-tracker.html?pr=126906
+          fonttosfnt = super.xorg.fonttosfnt.overrideAttrs (o: { # TODO https://nixpk.gs/pr-tracker.html?pr=126906
             patches = o.patches or [] ++ [
               (self.fetchurl {
                 url = "https://gitlab.freedesktop.org/madroach/fonttosfnt/-/commit/50f8c91c56334a29c18cd8c77c9431c5ff0df5a9.diff";
@@ -48,7 +48,7 @@
             ];
           });
         };
-        dina-font = super.dina-font.overrideAttrs (o: { # https://github.com/NixOS/nixpkgs/pull/126955
+        dina-font = super.dina-font.overrideAttrs (o: { # TODO https://nixpk.gs/pr-tracker.html?pr=126955
           buildPhase = ''
             newName() {
               test "''${1:5:1}" = i && _it=Italic || _it=

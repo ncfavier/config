@@ -4,8 +4,8 @@
   services.tumbler.enable = true;
 
   # https://github.com/NixOS/nixpkgs/pull/126832
-  # environment.sessionVariables.GIO_EXTRA_MODULES = [ "${config.services.gvfs.package}/lib/gio/modules" "${pkgs.dconf.lib}/lib/gio/modules" ];
-  # environment.variables.GIO_EXTRA_MODULES = lib.mkForce config.environment.sessionVariables.GIO_EXTRA_MODULES;
+  environment.sessionVariables.GIO_EXTRA_MODULES = "${config.services.gvfs.package}/lib/gio/modules";
+  environment.variables.GIO_EXTRA_MODULES = lib.mkForce config.environment.sessionVariables.GIO_EXTRA_MODULES;
 
   hm = {
     home.packages = with pkgs; let

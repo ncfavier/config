@@ -81,6 +81,10 @@ unfold() { # collapse whitespace
     tr -s '[:space:]' '[ *]'
 }
 
+zton() {
+    tr '\0' '\n'
+}
+
 # copy a command and its output to the clipboard
 alias clipcmd='clipcmd_helper # '
 clipcmd_helper() {
