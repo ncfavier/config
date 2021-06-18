@@ -1,9 +1,39 @@
 shopt -s lastpipe
 
+. config env
+
+focus-window() {
+    local node wm_data=$(bspc wm -d)
+    local -A nodes=()
+    jq <<< "$wm_data" -r --arg class "$class" --arg instance "$instance" '
+        (
+            .monitors[].desktops[].root//empty |
+            recurse(.firstChild//empty, .secondChild//empty) |
+            select(.client != null) |
+            select($class == "" or (.client.className | test($class; "i"))) |
+            select($instance == "" or (.client.instanceName | test($instance; "i"))) |
+            .id
+        ),
+        "",
+        (.focusHistory | reverse[].nodeId)
+    ' | {
+        while read -r node && [[ $node ]]; do
+            [[ ! $title || $(xtitle "$node") =~ $title ]] && nodes[$node]=
+        done
+        (( ${#nodes[@]} )) || return
+        while (( ${#nodes[@]} > 1 )) && read -r node; do
+            unset 'nodes[$node]'
+        done
+        node=("${!nodes[@]}")
+        bspc node "$node" -f
+    }
+}
+
 terminal() {
     local instance title focus_title columns lines hold
-    [[ $instance ]] && class=alacritty instance="$instance" focus-window && return
-    [[ $focus_title ]] && class=alacritty title="$focus_title" focus-window && return
+    if [[ $instance || $focus_title ]]; then
+        class=alacritty instance="$instance" title="$focus_title" focus-window && return
+    fi
     exec alacritty \
         ${instance:+--class "$instance"} \
         ${title:+--title "$title"} \
@@ -22,8 +52,7 @@ go() {
         term|terminal)
             terminal &;;
         chat|irc)
-            server=$(nix eval --raw config#lib.my.server.hostname)
-            instance=irc terminal autossh -M 0 -- -qt "$server" tmux -L weechat attach &;;
+            instance=irc terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach &;;
         editor)
             focus_title='- VIM$' terminal vim &;;
         web|browser)
@@ -41,33 +70,6 @@ go() {
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
     esac
-}
-
-focus-window() {
-    wm_data=$(bspc wm -d)
-    nodes=()
-    jq <<< "$wm_data" -r --arg class "$class" --arg instance "$instance" '
-        .monitors[].desktops[].root//empty |
-        recurse(.firstChild//empty, .secondChild//empty) |
-        select(.client != null) |
-        select($class == "" or (.client.className | test($class; "i"))) |
-        select($instance == "" or (.client.instanceName | test($instance; "i"))) |
-        .id
-    ' |
-    while read -r node; do
-        [[ ! $title || $(xtitle "$node") =~ $title ]] && nodes+=("$node")
-    done
-    (( ${#nodes[@]} )) || return
-
-    jq <<< "$wm_data" -r '
-        .focusHistory |
-        reduce to_entries[] as {$key, value: {$nodeId}} (
-            $ARGS.positional | map({key: ., value: -1}) | from_entries;
-            (.[$nodeId | tostring]//empty) = $key
-        ) | to_entries | min_by(.value).key
-    ' --args "${nodes[@]}" |
-    read -r node
-    bspc node "$node" -f
 }
 
 cmd=$1

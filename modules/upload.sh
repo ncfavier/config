@@ -19,8 +19,10 @@ extension() {
     [[ ${1#.} =~ (\.([[:alpha:]][[:alnum:]]{,9}|7z))+$ ]] && printf '%s\n' "${BASH_REMATCH[0]}"
 }
 
-host=up.$(nix eval --raw 'config#lib.my.domain')
-uploads_dir=~/uploads # TODO syncedFolders.uploads.path
+. config env
+
+host=up.$domain
+uploads_dir=${syncedFolders[uploads]}
 hash_length=6
 
 # Parse command line arguments
@@ -75,8 +77,8 @@ fi
 rsync_opts=(--progress --protect-args --chmod=D755,F644)
 (( remove )) && rsync_opts+=(--remove-source-files)
 (( ! force )) && rsync_opts+=(--ignore-existing)
-[[ $(nix eval "config#lib.my.machines.$HOSTNAME.isServer") == true ]] && rsync_host= || rsync_host=$host:
-rsync "${rsync_opts[@]}" "$source" "$rsync_host$uploads_dir/$destination" || exit
+(( isServer )) && rsync_host= || rsync_host=$host:
+rsync "${rsync_opts[@]}" "$source" "$rsync_host$uploads_dir/$destination" || exit # TODO use the uploads_dir of the server
 
 # Report
 

@@ -1,4 +1,4 @@
-{ lib, config, utils, pkgs, ... }: {
+{ lib, config, utils, pkgs, pkgsWip, ... }: {
   programs.dconf.enable = true;
   services.gvfs.enable = true;
   services.tumbler.enable = true;
@@ -19,7 +19,11 @@
       '';
     in [
       (xfce.thunar.override {
-        thunarPlugins = with xfce; [ thunar-volman thunar-archive-plugin ];
+        thunarPlugins = with xfce; [
+          thunar-volman
+          thunar-archive-plugin
+          # pkgsWip.xfce.thunar-media-tags-plugin
+        ];
       })
       xfce.xfconf
       gnome.zenity

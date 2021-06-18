@@ -116,12 +116,12 @@ ix() { # upload to ix.io
 }
 
 weechat_fifo() {
-    local host=$(nix eval --raw config#lib.my.server.hostname)
-    ssh "$host" 'cat > ~/.weechat/weechat_fifo'
+    . config env
+    ssh "$server_hostname" 'cat > ~/.weechat/weechat_fifo'
 }
 
 irc() {
-    local host=$(nix eval --raw config#lib.my.server.hostname)
+    . config env
     local cmd=$1
     shift
     case $cmd in
@@ -131,7 +131,8 @@ irc() {
             local where=$1
             [[ $where == */* ]] || where="$where/*"
             shift
-            ssh "$host" "cd ~/irc-logs && rg -Np --color always ${*@Q} $where.weechatlog" | less -FR;; # TODO syncedFolders.irc-logs.path
+            ssh -n "$server_hostname" ". config env; cd \"\${syncedFolders[irc-logs]}\" &&
+                                       rg -Np --color always ${*@Q} $where.weechatlog" | less -FR;;
     esac
 }
 

@@ -1,5 +1,5 @@
 # arguments order: { inputs, hardware, lib, my, here, config, modulesPath, secrets, syncedFolders, utils, pkgsWip, pkgs, pkgsStable }
-{ inputs, lib, here, config, utils, pkgs, ... }: {
+{ inputs, lib, my, here, config, utils, pkgs, ... }: {
   # sadly this makes the man page cache rebuild too often
   # system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 
@@ -7,6 +7,13 @@
     configPath = "${config.my.home}/git/config";
     mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
       (configPath + lib.removePrefix (toString inputs.self) (toString path));
+  };
+
+  lib.shellEnv = {
+    inherit (my) domain;
+    server_hostname = my.server.hostname;
+    inherit (here) isServer;
+    inherit (lib) theme;
   };
 
   nixpkgs.overlays = [ (self: super: {
@@ -29,25 +36,28 @@
 
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "config" ''
-      config=${lib.escapeShellArg utils.configPath}
-      case $1 in
+      configPath=${lib.escapeShellArg utils.configPath}
+      cmd=$1
+      shift
+      case $cmd in
           repl)
-              shift
               exec nix repl ~/.nix-defexpr "$@";;
           update)
-              shift
               if (( $# )); then
-                  exec nix flake update "$config" "$@"
+                  exec nix flake update "$configPath" "$@"
               else
                   exec "$0" switch --recreate-lock-file
               fi;;
           untest)
               exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@";;
           home)
-              attr=nixosConfigurations.${here.hostname}.config.hm.home.activationPackage
-              exec nix shell "$config#$attr" -u DBUS_SESSION_BUS_ADDRESS -c home-manager-generation;;
+              attr=nixosConfigurations.${lib.escapeShellArg here.hostname}.config.hm.home.activationPackage
+              exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation;;
+          env) # meant to be sourced
+              ${lib.exportToShell config.lib.shellEnv}
+              ;;
           *)
-              exec sudo nixos-rebuild --flake "$config" -v "$@";;
+              exec sudo nixos-rebuild --flake "$configPath" -v "$cmd" "$@";;
       esac
     '')
   ];

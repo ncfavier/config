@@ -1,3 +1,4 @@
+# TODO make this an actual rofi script
 shopt -s lastpipe nocasematch
 
 dmenu() {

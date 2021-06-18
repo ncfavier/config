@@ -4,9 +4,7 @@ pidfile=$XDG_RUNTIME_DIR/bar.pid
 [[ -e $pidfile ]] && kill "$(< $pidfile)" 2> /dev/null
 echo "$$" > "$pidfile"
 
-. <(nix eval --json 'config#lib.theme' |
-    jq -r '("background", "foreground", "backgroundAlt", "foregroundAlt", "hot", "cold") as $var |
-           @sh "declare \($var)=\(.[$var])"')
+. config env
 
 xft_fonts=("siji:pixelsize=10" "Dina:pixelsize=10" "Dina:bold:pixelsize=10" "tewi:pixelsize=10" "Biwidth:pixelsize=12")
 
@@ -35,7 +33,12 @@ trunc() {
 
 pad() {
     local -n var=$1
-    var=$padding$var$padding
+    var="  $var  "
+}
+
+pad_right() {
+    local -n var=$1
+    var="$var   "
 }
 
 icon_ramp() {
@@ -78,9 +81,7 @@ debounce() {
 # Variables
 
 battery=(/sys/class/power_supply/BAT*)
-default_layout=fr
-
-padding='  '
+default_layout=fr # TODO
 bold=3
 
 font_args=()
@@ -93,7 +94,7 @@ for f in "${xft_fonts[@]}"; do
 done
 
 # Set lemonbar to be just above the root window to prevent displaying over other windows
-xdo above -t "$(xdo id -n root)" "$(xdo id -m -n lemonbar)" &
+xdo above -t "$(xdo id -n root)" "$(sleep 0.1; xdo id -m -n lemonbar)" &
 
 trap 'kill $(jobs -p)' EXIT
 
@@ -222,9 +223,10 @@ while read -rn 1 event; do
                         item="%{A3:wm focus-workspace $desktop;wm go terminal:}$item%{A}"
                     fi
                     case $type in
-                        F|O|U) item="%{B$backgroundAlt}$item%{B-}";;&
-                        f|F) item="%{F$foregroundAlt}$item%{F-}";;&
-                        u|U) item="%{F$hot}$item%{F-}";;&
+                        # F|O|U) item="%{B${theme[backgroundAlt]}}$item%{B-}";;&
+                        F|O|U) item="%{B${theme[foreground]}}%{F${theme[background]}}$item%{F-}%{B-}";;&
+                        f|F) item="%{F${theme[foregroundAlt]}}$item%{F-}";;&
+                        u|U) item="%{F${theme[hot]}}$item%{F-}";;&
                     esac
                     wm+=$item
                 fi
@@ -253,7 +255,7 @@ while read -rn 1 event; do
                 time_format="%H:%M"
             fi
             printf -v clock " %($date_format %%{T$bold}$time_format%%{T-})T" -1
-            pad clock
+            pad_right clock
             clock="%{A:pkill -USR1 -P $$ -f $0 -o:}%{A3:wm go calendar:}$clock%{A}%{A}"
             ;;
         P) # power
@@ -284,9 +286,9 @@ while read -rn 1 event; do
                     fi
                     (( seconds_left )) && power+=" $(print_time "$seconds_left")"
                 fi
-                (( percentage <= 10 )) && [[ $status != Charging ]] && power="%{F$hot}$power%{F-}"
+                (( percentage <= 10 )) && [[ $status != Charging ]] && power="%{F${theme[hot]}}$power%{F-}"
             fi
-            pad power
+            pad_right power
             power="%{A:pkill -USR2 -P $$ -f $0 -o:}%{A3:power:}$power%{A}%{A}"
             ;;
         K) # keyboard
@@ -296,7 +298,7 @@ while read -rn 1 event; do
             else
                 escape layout
                 keyboard=" $layout"
-                pad keyboard
+                pad_right keyboard
             fi
             ;;
         B) # backlight
@@ -304,7 +306,7 @@ while read -rn 1 event; do
             percentage=$(backlight)
             percentage=${percentage%.*}
             brightness="$(icon_ramp "$percentage"  10  50 ) $percentage%%"
-            pad brightness
+            pad_right brightness
             brightness="%{A:light -S 100:}%{A3:light -S 0.8:}%{A4:backlight +:}%{A5:backlight -:}$brightness%{A}%{A}%{A}%{A}"
             ;;
         S) # sound
@@ -314,7 +316,7 @@ while read -rn 1 event; do
             else
                 sound="$(icon_ramp "$percentage"  10  50 ) $percentage%%"
             fi
-            pad sound
+            pad_right sound
             sound="%{A:wm go volume:}%{A3:volume toggle:}%{A4:volume +2:}%{A5:volume -2:}$sound%{A}%{A}%{A}%{A}"
             ;;
         N) # network
@@ -338,13 +340,13 @@ while read -rn 1 event; do
                         outDev4=$(ip -j route get 1.1.1.1 | jq -r '.[0].dev')
                         outDev6=$(ip -j route get 2606:4700:4700::1111 | jq -r '.[0].dev')
                         if [[ $outDev4 != "$interface" || $outDev6 != "$interface" ]]; then
-                            wg="%{F$hot}$wg%{F-}"
+                            wg="%{F${theme[hot]}}$wg%{F-}"
                         fi
                         wg="%{A3:wg-toggle:}$wg%{A}"
                         network+=$wg
                         ;;
                 esac done <<< "$parts:"
-                pad network
+                pad_right network
             fi
             ;;
         M) # music
@@ -378,7 +380,7 @@ while read -rn 1 event; do
                     fi
                 fi
                 song=" $song"
-                pad song
+                pad_right song
                 song="%{A:music:}%{A2:music-notify:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}$song%{A}%{A}%{A}%{A}%{A}"
             fi
             ;;
@@ -397,8 +399,8 @@ done |
 
 lemonbar -g x32 \
          -a 255 \
-         -B "$background" \
-         -F "$foreground" \
+         -B "${theme[background]}" \
+         -F "${theme[foreground]}" \
          "${font_args[@]}" |
 
 #

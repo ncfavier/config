@@ -59,7 +59,7 @@ in {
     };
 
     home.packages = with pkgs; [
-      (shellScriptWithDeps "wm" ./wm.sh [])
+      (shellScriptWithDeps "wm" ./wm.sh [ xtitle ])
       bar
     ];
 

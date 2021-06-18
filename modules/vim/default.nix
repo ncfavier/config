@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, pkgsWip, ... }: {
   programs.vim = {
     defaultEditor = true;
     package = pkgs.vim_configurable.customize {

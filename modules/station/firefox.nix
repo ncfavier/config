@@ -268,6 +268,12 @@
               vertical-align: middle !important;
             }
           }
+
+          @-moz-document url-prefix(https://github.com/ncfavier) {
+            .user-status-container {
+              display: none;
+            }
+          }
         '';
       };
     };

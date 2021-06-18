@@ -11,6 +11,7 @@
     };
     home-manager = {
       url = "github:ncfavier/home-manager";
+      # url = "/home/n/git/home-manager";
       inputs.nixpkgs.follows = "nixos";
     };
     nur.url = "nur";
@@ -31,7 +32,7 @@
   outputs = inputs@{ self, nixos, ... }: let
     system = "x86_64-linux";
     pkgs = nixos.legacyPackages.${system};
-    lib = nixos.lib.extend (import ./lib.nix);
+    lib = nixos.lib.extend (import ./lib);
   in {
     inherit lib;
 

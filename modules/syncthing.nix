@@ -1,5 +1,6 @@
 { lib, my, here, config, secrets, syncedFolders, ... }: {
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
+  lib.shellEnv.syncedFolders = lib.mapAttrs (_: v: v.path) syncedFolders;
 
   sops.secrets.syncthing = {
     format = "yaml";
