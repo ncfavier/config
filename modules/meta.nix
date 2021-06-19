@@ -1,7 +1,6 @@
 # arguments order: { inputs, hardware, lib, my, here, config, modulesPath, secrets, syncedFolders, utils, pkgsWip, pkgs, pkgsStable }
 { inputs, lib, my, here, config, utils, pkgs, ... }: {
-  # sadly this makes the man page cache rebuild too often
-  # system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
+  system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 
   _module.args.utils = rec {
     configPath = "${config.my.home}/git/config";

@@ -41,7 +41,6 @@
 
   documentation = {
     dev.enable = true;
-    man.generateCaches = true;
   };
 
   programs.command-not-found.enable = false;
@@ -74,6 +73,7 @@
       s = "sudo systemctl";
       u = "systemctl --user";
       j = "journalctl";
+      what = "_realcommand ";
 
       # Force alias expansion after these commands
       exec = "exec ";
@@ -93,12 +93,7 @@
       shellAliases = lib.mapAttrs (n: _: "ssh -qt ${n}") my.machines;
       initExtra = ''
         ${builtins.readFile ./functions.bash}
-
-        complete -v dp
-        complete -F _command C
-        complete_alias s _systemctl systemctl
-        complete_alias u _systemctl systemctl --user
-        complete_alias j _journalctl journalctl
+        ${builtins.readFile ./completion.bash}
 
         stty -ixon
         set -b +H

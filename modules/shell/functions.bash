@@ -51,13 +51,16 @@ writeiso() { # write an ISO file to a block device
 }
 
 grep() {
-    local color
-    if [[ -t 1 ]]; then
-        color=always
-    else
-        color=never
-    fi
-    command grep --color="$color" "$@" | less -FR
+    local args=()
+    [[ -t 1 ]] && args+=(--color=always)
+    command grep "${args[@]}" "$@" | less
+    return "${PIPESTATUS[0]}"
+}
+
+rg() {
+    local args=()
+    [[ -t 1 ]] && args+=(-p)
+    command rg "${args[@]}" "$@" | less
     return "${PIPESTATUS[0]}"
 }
 
@@ -120,21 +123,22 @@ weechat_fifo() {
     ssh "$server_hostname" 'cat > ~/.weechat/weechat_fifo'
 }
 
-irc() {
+irg() {
     . config env
-    local cmd=$1
-    shift
-    case $cmd in
-        np)
-            mpc current -f $'*/me is now playing \x02%title%\x0f by \x02%artist%\x0f' | weechat_fifo;;
-        grep)
-            local where=$1
-            [[ $where == */* ]] || where="$where/*"
-            shift
-            ssh -n "$server_hostname" ". config env; cd \"\${syncedFolders[irc-logs]}\" &&
-                                       rg -Np --color always ${*@Q} $where.weechatlog" | less -FR;;
-    esac
+    rg -N "${@:2}" "${syncedFolders[irc-logs]}/$1"
 }
+_irg() {
+    if (( COMP_CWORD == 1 )); then
+        . config env
+        readarray -t COMPREPLY < <(compgen -f "${syncedFolders[irc-logs]}/$2")
+        if (( ${#COMPREPLY[@]} == 1 )) && [[ -d ${COMPREPLY[0]} ]]; then
+            COMPREPLY[0]+=/
+            compopt -o nospace
+        fi
+        COMPREPLY=("${COMPREPLY[@]#"${syncedFolders[irc-logs]}"/}")
+    fi
+}
+complete -F _irg irg
 
 myipv4() {
     dig -4 +short @resolver1.opendns.com myip.opendns.com A
@@ -160,21 +164,6 @@ rfc() {
     local n=$1
     [[ -v 'numbers[$n]' ]] && n=${numbers[$n]}
     curl -fsSL https://www.ietf.org/rfc/rfc"$n".txt | sponge | less
-}
-
-complete_alias() {
-    local alias_name=$1
-    local base_function=$2
-    local function_name=_alias_$alias_name
-    shift 2
-    eval "
-    $function_name() {
-        ((COMP_CWORD += $# - 1))
-        COMP_WORDS=( $* \${COMP_WORDS[@]:1} )
-        _completion_loader $1
-        $base_function
-    }
-    complete -F $function_name $alias_name"
 }
 
 args() {
@@ -208,13 +197,16 @@ mk() ( # runs make using the closest makefile in the hierarchy
     make -f "${files[0]}" "$@"
 )
 
-what() { # prints the real path of a command
-    realpath "$(type -P "$1")"
-}
-
 pkgs() {
     nix-build '<nixpkgs>' --no-out-link -A "$@"
 }
+_pkgs() {
+    local cur prev words cword
+    _completion_loader nix-build
+    _init_completion -n =:
+    _nix_attr_paths 'import <nixpkgs>'
+}
+complete -F _pkgs pkgs
 
 command_not_found_handle() {
     if [[ ! -t 1 ]]; then

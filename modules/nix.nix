@@ -44,6 +44,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    (lib.lowPrio nix-bash-completions)
     nix-index
     nix-diff
     nix-prefetch-github

@@ -39,7 +39,7 @@
     <icon>media-play</icon>
     <name>Play</name>
     <unique-id>1623285145974202-1</unique-id>
-    <command>music %F</command>
+    <command>music-play %F</command>
     <description></description>
     <patterns>*</patterns>
     <audio-files/>

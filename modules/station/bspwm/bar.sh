@@ -379,9 +379,8 @@ while read -rn 1 event; do
                         song="$song (repeat)"
                     fi
                 fi
-                song=" $song"
                 pad_right song
-                song="%{A:music:}%{A2:music-notify:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}$song%{A}%{A}%{A}%{A}%{A}"
+                song="%{A2:mpc -q clear:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
             fi
             ;;
     esac

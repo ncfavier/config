@@ -55,6 +55,7 @@ in {
       startupPrograms = [
         "${bar}/bin/bar" # ensure bspwmrc changes if bar.sh changes
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+        # "ibus-daemon -drxR"
       ];
     };
 
@@ -128,10 +129,8 @@ in {
           "rofi -show file-browser";
         "super + {_,shift} + {Return,f,w,c,e,v}" =
           "wm go {_,-n} {terminal,files,web,chat,editor,video}";
-        "super + m" =
-          "music";
-        "super + shift + m" =
-          "wm go mail";
+        "super + {_,shift} + m" =
+          "wm go {music,mail}";
         "super + ctrl + w" =
           "wm go wifi";
       };

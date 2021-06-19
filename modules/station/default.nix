@@ -1,7 +1,9 @@
-{ lib, here, config, pkgs, ... }: lib.optionalAttrs here.isStation {
+{ lib, here, pkgs, ... }: lib.optionalAttrs here.isStation {
   imports = builtins.attrValues (lib.importDir ./.);
 
   config = {
+    services.logind.killUserProcesses = true;
+
     environment.systemPackages = with pkgs; [
       gparted
     ];

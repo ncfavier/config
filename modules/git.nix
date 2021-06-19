@@ -26,7 +26,7 @@
         au = "add -u";
         track = "add -N";
         c = "!git commit --allow-empty-message -m \"$*\" #";
-        ca = "!git commit --allow-empty-message -am \"$*\" #";
+        ca = "commit --amend";
         ce = "commit --edit";
         cf = "!git commit -m \"$(${pkgs.fortune}/bin/fortune -sn 80 computers debian definitions disclaimer education fortunes goedel humorists linuxcookie magic miscellaneous perl pets platitudes science songs-poems translate-me wisdom zippy | tr -s '[:space:]' '[ *]')\"";
         co = "checkout";

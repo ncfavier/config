@@ -61,6 +61,8 @@ go() {
             class=thunderbird focus-window || exec thunderbird &;;
         files)
             class=thunar focus-window || exec thunar &;;
+        music)
+            exec rofi -show music;;
         video)
             class=mpv focus-window;;
         volume)

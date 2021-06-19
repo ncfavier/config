@@ -15,9 +15,13 @@
       enable = true;
     };
 
+    programs.rofi.extraConfig.modi = "music:${
+      pkgs.shellScriptWithDeps "music-rofi" ./music-rofi.sh []
+    }/bin/music-rofi";
+
     home.packages = with pkgs; [
       mpc_cli
-      (shellScriptWithDeps "music" ./music.sh [])
+      (shellScriptWithDeps "music-play" ./music-play.sh [])
       (shellScriptWithDeps "music-notify" ./music-notify.sh [
         ffmpegthumbnailer xxd glib.bin
       ])
