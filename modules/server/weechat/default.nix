@@ -43,6 +43,7 @@ in {
         Description = "WeeChat in a tmux session";
         Wants = [ "network-online.target" ];
         After = [ "network-online.target" "nss-lookup.target" ];
+        X-RestartIfChanged = false;
       };
       Service = {
         Type = "forking";
