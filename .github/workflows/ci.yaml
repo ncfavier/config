@@ -23,6 +23,11 @@ jobs:
         with:
           nix_version: 2.4pre20201205_a5d85d0
           nix_conf: experimental-features = nix-command flakes
+      - name: Set up Cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: ncfavier
+          signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build ISO
@@ -32,3 +37,4 @@ jobs:
         with:
           name: ISO
           path: iso/iso/*.iso
+          if-no-files-found: error
