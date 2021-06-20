@@ -5,7 +5,7 @@
     };
 
     pkgsStable = utils.importNixpkgs inputs.nixos-stable;
-    pkgsWip = utils.importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
+    pkgsLocal = utils.importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
   };
 
   nix = {

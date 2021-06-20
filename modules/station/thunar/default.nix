@@ -22,7 +22,7 @@
         thunarPlugins = with xfce; [
           thunar-volman
           thunar-archive-plugin
-          # thunar-media-tags-plugin
+          # TODO thunar-media-tags-plugin https://nixpk.gs/pr-tracker.html?pr=127283
         ];
       })
       xfce.xfconf

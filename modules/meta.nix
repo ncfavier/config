@@ -1,4 +1,4 @@
-# arguments order: { inputs, hardware, lib, here, config, modulesPath, secrets, syncedFolders, utils, pkgsWip, pkgs, pkgsStable }
+# arguments order: inputs, hardware, lib, here, config, modulesPath, secrets, syncedFolders, utils, pkgs*
 { inputs, lib, here, config, utils, pkgs, ... }: with lib; {
   system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 

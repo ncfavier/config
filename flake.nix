@@ -37,17 +37,15 @@
 
     nixosModules = importDir ./modules;
 
-    nixosConfigurations = mapAttrs (hostname: local:
-      nixosSystem {
-        inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
-        specialArgs = {
-          inherit inputs;
-          hardware = inputs.nixos-hardware.nixosModules;
-          here = my.machines.${hostname} or {};
-        };
-        modules = attrValues self.nixosModules ++ [ local ];
-      }
-    ) (importDir ./machines);
+    nixosConfigurations = mapAttrs (hostname: local: nixosSystem {
+      inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
+      specialArgs = {
+        inherit inputs;
+        hardware = inputs.nixos-hardware.nixosModules;
+        here = my.machines.${hostname};
+      };
+      modules = attrValues self.nixosModules ++ [ local ];
+    }) (importDir ./machines);
 
     devShell.${system} = pkgs.mkShell {
       packages = with pkgs; [ sops ];
