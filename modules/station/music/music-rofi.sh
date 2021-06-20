@@ -1,3 +1,5 @@
+shopt -s lastpipe
+
 mpc() {
     command mpc -q "$@"
 }
@@ -34,9 +36,12 @@ elif [[ ! -v album ]]; then
         escape artist
         opt message "<b>$artist_esc</b>"
     fi
-    album=; row '*'
     mpc list album ${artist:+artist "$artist"} |
-    while IFS= read -r album; do
+    readarray -t albums
+    if (( ${#albums[@]} != 1 )); then
+        album=; row '*'
+    fi
+    for album in "${albums[@]}"; do
         escape album
         row "<i>$album_esc</i>"
     done
