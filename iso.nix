@@ -12,7 +12,6 @@
     '';
   };
 
-
   environment.systemPackages = with pkgs; [ git ];
 
   programs.gnupg.agent = {
