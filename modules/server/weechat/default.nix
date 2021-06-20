@@ -4,7 +4,6 @@
     "color_popup.pl"
     "highmon.pl"
     "perlexec.pl"
-    "autojoin.py"
     "autosort.py"
     "buffer_autoset.py"
     "colorize_nicks.py"
@@ -17,11 +16,12 @@
       plugins = with availablePlugins; [ python perl ];
       scripts = with pkgs.weechatScripts; [ weechat-matrix ];
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
+        /script install ${builtins.concatStringsSep " " scripts}
+        /script load ${./autojoin.py}
         /set sec.crypt.passphrase_command "cat ${secrets.weechat-sec.path}"
         /set relay.network.bind_address ${here.wireguard.ipv4}
         /set relay.port.weechat ${toString relayPort}
         /set logger.file.path ${syncedFolders.irc-logs.path}
-        /script install ${builtins.concatStringsSep " " scripts}
       ''}";
     };
   };
