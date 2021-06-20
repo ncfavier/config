@@ -1,4 +1,4 @@
-{ lib, config, utils, pkgs, pkgsWip, ... }: {
+{ lib, config, utils, pkgs, ... }: {
   programs.dconf.enable = true;
   services.gvfs.enable = true;
   services.tumbler.enable = true;
@@ -22,7 +22,7 @@
         thunarPlugins = with xfce; [
           thunar-volman
           thunar-archive-plugin
-          # pkgsWip.xfce.thunar-media-tags-plugin
+          # thunar-media-tags-plugin
         ];
       })
       xfce.xfconf

@@ -5,18 +5,6 @@
         tempAddress = "disabled";
       });
     };
-
-    wan = {
-      interface = lib.mkOption {
-        type = str;
-      };
-      ipv4 = lib.mkOption {
-        type = str;
-      };
-      ipv6 = lib.mkOption {
-        type = str;
-      };
-    };
   };
 
   config = {
@@ -25,7 +13,7 @@
 
       useDHCP = false;
       nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
-      hosts = lib.mkForce {}; # remove default hostname -> localhost mapping
+      hosts = lib.mkForce {}; # TODO remove $HOSTNAME → localhost mapping
 
       firewall = {
         enable = true;

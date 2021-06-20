@@ -1,4 +1,3 @@
-# TODO localhost
 { lib, my, here, config, pkgs, ... }: let
   port = 2242;
 in {
@@ -17,45 +16,53 @@ in {
 
   hm.programs.ssh = {
     enable = true;
-    matchBlocks = lib.listToAttrs (lib.concatLists (lib.mapAttrsToList (n: m: [ { # TODO make this more readable
-      name = lib.concatStringsSep " " ([
-        m.wireguard.ipv6 m.wireguard.ipv4
-        n
-      ] ++ lib.optionals m.isServer [ my.domain "*.${my.domain}" ]); # TODO add wan ips
-      value = {
-        inherit port;
-      } // lib.optionalAttrs here.isStation {
-        forwardX11 = true;
-        forwardX11Trusted = true;
-      };
-    } ] ++ lib.optionals m.isServer [ {
-      name = "unlock.${n}";
-      value = {
-        hostname = my.domain;
-        addressFamily = "inet";
-        inherit port;
-        user = "root";
-        extraOptions = {
-          RemoteCommand = "cryptsetup-askpass";
-          RequestTTY = "yes";
+    matchBlocks = lib.mkMerge (
+      lib.mapAttrsToList (_: m: let
+        hosts = lib.concatStringsSep " " (
+          [
+            m.hostname
+            m.wireguard.ipv4 m.wireguard.ipv6
+          ] ++ lib.optionals m.isServer [
+            my.domain "*.${my.domain}"
+          ] ++ lib.optionals (m.hostname == here.hostname) [
+            "localhost" "127.0.0.1" "::1"
+          ] ++ m.ipv4 ++ m.ipv6
+        );
+      in {
+        ${hosts} = {
+          inherit port;
+        } // lib.optionalAttrs here.isStation {
+          forwardX11 = true;
+          forwardX11Trusted = true;
         };
-      };
-    } ]) my.machines)) // {
-      "ens sas sas.eleves.ens.fr" = {
-        hostname = "sas.eleves.ens.fr";
-        user = "nfavier";
-      };
 
-      "phare phare.normalesup.org" = {
-        hostname = "phare.normalesup.org";
-        user = "nfavier";
-      };
+        "unlock.${m.hostname}" = lib.mkIf m.isServer {
+          hostname = my.domain;
+          addressFamily = "inet";
+          inherit port;
+          user = "root";
+          extraOptions = {
+            RemoteCommand = "cryptsetup-askpass";
+            RequestTTY = "yes";
+          };
+        };
+      }) my.machines ++ [ {
+        "ens sas sas.eleves.ens.fr" = {
+          hostname = "sas.eleves.ens.fr";
+          user = "nfavier";
+        };
 
-      "zeus zeus.ens.wtf" = {
-        hostname = "zeus.ens.wtf";
-        port = 4022;
-        user = "nf";
-      };
-    };
+        "phare phare.normalesup.org" = {
+          hostname = "phare.normalesup.org";
+          user = "nfavier";
+        };
+
+        "zeus zeus.ens.wtf" = {
+          hostname = "zeus.ens.wtf";
+          port = 4022;
+          user = "nf";
+        };
+      } ]
+    );
   };
 }

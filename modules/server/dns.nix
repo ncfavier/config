@@ -3,14 +3,14 @@
 in {
   services.nsd = {
     enable = true;
-    interfaces = [ config.networking.wan.ipv4 config.networking.wan.ipv6 ];
+    interfaces = here.ipv4 ++ here.ipv6;
     ipTransparent = true;
     ratelimit.enable = true;
 
     zones.${my.domain}.data = with dns.combinators; let
       ips = {
-        A = [ (a config.networking.wan.ipv4) ];
-        AAAA = [ (aaaa config.networking.wan.ipv6) ];
+        A = map a here.ipv4;
+        AAAA = map aaaa here.ipv6;
       };
     in dns.toString my.domain (ips // {
       TTL = 60 * 60;

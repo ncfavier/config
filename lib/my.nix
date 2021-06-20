@@ -3,24 +3,34 @@ lib: let
     (lib.mkAliasOptionModule [ "server" ] [ "machines" "wo" ])
     {
       options.machines = lib.mkOption {
-        description = "My machines.";
+        description = "My machines";
         type = with lib.types; attrsOf (submodule ({ name, ... }: {
           freeformType = attrs;
           options = let
             mkMachineTypeOption = type: lib.mkOption {
-              description = "Whether this machine is a ${type}.";
+              description = "Whether the machine is a ${type}";
               type = bool;
               default = false;
             };
           in {
             hostname = lib.mkOption {
-              description = "This machine's hostname.";
+              description = "The machine's hostname";
               type = str;
               default = name;
             };
             isServer  = mkMachineTypeOption "server";
             isStation = mkMachineTypeOption "station";
             isPhone   = mkMachineTypeOption "phone";
+            ipv4 = lib.mkOption {
+              description = "The machine's public IPv4 addresses";
+              type = listOf str;
+              default = [];
+            };
+            ipv6 = lib.mkOption {
+              description = "The machine's public IPv6 addresses";
+              type = listOf str;
+              default = [];
+            };
           };
         }));
         default = {};
@@ -41,6 +51,8 @@ lib: let
         machines = {
           wo = {
             isServer = true;
+            ipv4 = [ "202.61.245.252" ];
+            ipv6 = [ "2a03:4000:53:fb4::1" ];
             hashedPassword = "$6$jvQ36QMw6kyzUjx$ApZlmPkvPyNAf2t51KpnocvMDo/1BubqCMR3q5jZD5OcM1awyAnTIgIeyaVl2XpAiNZPTouyuM1AOzBIGBu4m.";
             wireguard = {
               ipv4 = "10.42.0.1";

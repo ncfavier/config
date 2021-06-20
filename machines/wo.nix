@@ -1,4 +1,6 @@
-{ config, modulesPath, pkgs, ... }: {
+{ config, modulesPath, pkgs, ... }: let
+  interface = "ens3";
+in {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
   ];
@@ -18,7 +20,7 @@
       bypassWorkqueues = true;
     };
 
-    kernelParams = [ "ip=202.61.245.252::202.61.244.1:255.255.252.0::ens3:none" ];
+    kernelParams = [ "ip=202.61.245.252::202.61.244.1:255.255.252.0::${interface}:none" ];
     initrd.network = {
       enable = true;
       ssh = {
@@ -45,13 +47,7 @@
     size = 2048;
   } ];
 
-  networking.wan = {
-    interface = "ens3";
-    ipv4 = "202.61.245.252";
-    ipv6 = "2a03:4000:53:fb4::1";
-  };
-
-  networking.interfaces.ens3 = {
+  networking.interfaces.${interface} = {
     ipv4.addresses = [ {
       address = "202.61.245.252";
       prefixLength = 22;
@@ -64,17 +60,15 @@
 
   networking.defaultGateway = {
     address = "202.61.244.1";
-    interface = "ens3";
+    inherit interface;
   };
 
   networking.defaultGateway6 = {
     address = "fe80::1";
-    interface = "ens3";
+    inherit interface;
   };
 
-  environment.systemPackages = with pkgs; [
-    alacritty.terminfo
-  ];
+  networking.nat.externalInterface = interface;
 
   fonts.fontconfig.enable = false;
 

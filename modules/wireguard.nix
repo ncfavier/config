@@ -43,7 +43,6 @@ in {
         nat = {
           enable = true;
           enableIPv6 = true;
-          externalInterface = config.networking.wan.interface;
           internalIPs = [ "10.42.0.0/16" ];
           internalIPv6s = [ "fd42::/16" ];
         };
