@@ -1,4 +1,3 @@
-# TODO https://nixpk.gs/pr-tracker.html?pr=126732
 { lib, my, here, config, secrets, syncedFolders, utils, pkgs, ... }: let
   relayPort = 6642;
   scripts = [
@@ -60,21 +59,4 @@ in {
   };
 
   networking.firewall.allowedTCPPorts = [ relayPort ];
-
-  nixpkgs.overlays = [
-    (self: super: {
-      weechat-unwrapped = super.weechat-unwrapped.overrideAttrs ({ patches ? [], ... }: {
-        patches = patches ++ [
-          (builtins.toFile "weechat-patch" ''
-            Avoid reloading configuration on SIGHUP (https://github.com/weechat/weechat/issues/1595)
-            --- a/src/core/weechat.c
-            +++ b/src/core/weechat.c
-            @@ -698 +698 @@ weechat_sighup ()
-            -    weechat_reload_signal = SIGHUP;
-            +    weechat_quit_signal = SIGHUP;
-          '')
-        ];
-      });
-    })
-  ];
 }

@@ -189,6 +189,7 @@ trap 'kill $(jobs -p)' EXIT
     do :; done &
 
     # Music
+    # while mpc idleloop; (( $? == 1 )); do sleep 1; done |
     mpc idleloop |
     while
         printf 'M\n'
