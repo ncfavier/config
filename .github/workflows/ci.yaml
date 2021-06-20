@@ -1,4 +1,4 @@
-name: Flake check
+name: CI
 on: [push, pull_request]
 jobs:
   check:
@@ -12,5 +12,5 @@ jobs:
           nix_conf: experimental-features = nix-command flakes
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Check the flake
+      - name: Flake check
         run: nix -vL flake check
