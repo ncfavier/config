@@ -1,4 +1,4 @@
-{ my, pkgs, ... }: {
+{ lib, pkgs, ... }: with lib; {
   environment.systemPackages = [ pkgs.git ];
 
   hm = {

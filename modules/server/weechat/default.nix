@@ -1,4 +1,4 @@
-{ lib, my, here, config, secrets, syncedFolders, utils, pkgs, ... }: let
+{ lib, here, config, secrets, syncedFolders, utils, pkgs, ... }: with lib; let
   relayPort = 6642;
   scripts = [
     "color_popup.pl"
@@ -16,7 +16,7 @@
       plugins = with availablePlugins; [ python perl ];
       scripts = with pkgs.weechatScripts; [ weechat-matrix ];
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
-        /script install ${builtins.concatStringsSep " " scripts}
+        /script install ${concatStringsSep " " scripts}
         /script load ${./autojoin.py}
         /set sec.crypt.passphrase_command "cat ${secrets.weechat-sec.path}"
         /set relay.network.bind_address ${here.wireguard.ipv4}
@@ -32,7 +32,7 @@ in {
   };
 
   # TODO linger module
-  system.activationScripts."linger-${my.username}" = lib.stringAfter [ "users" ] ''
+  system.activationScripts."linger-${my.username}" = stringAfter [ "users" ] ''
     /run/current-system/systemd/bin/loginctl enable-linger ${my.username}
   '';
 
@@ -52,10 +52,10 @@ in {
       Install.WantedBy = [ "default.target" ];
     };
 
-    home.file = lib.mapAttrs' (name: _: {
+    home.file = mapAttrs' (name: _: {
       name = ".weechat/${name}";
       value.source = utils.mkMutableSymlink (./. + "/${name}");
-    }) (lib.filterAttrs (name: _: lib.hasSuffix ".conf" name) (builtins.readDir ./.));
+    }) (filterAttrs (name: _: hasSuffix ".conf" name) (builtins.readDir ./.));
   };
 
   networking.firewall.allowedTCPPorts = [ relayPort ];

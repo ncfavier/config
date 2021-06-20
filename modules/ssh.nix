@@ -1,4 +1,4 @@
-{ lib, my, here, config, pkgs, ... }: let
+{ lib, here, config, pkgs, ... }: with lib; let
   port = 2242;
 in {
   services.openssh = {
@@ -16,27 +16,27 @@ in {
 
   hm.programs.ssh = {
     enable = true;
-    matchBlocks = lib.mkMerge (
-      lib.mapAttrsToList (_: m: let
-        hosts = lib.concatStringsSep " " (
+    matchBlocks = mkMerge (
+      mapAttrsToList (_: m: let
+        hosts = concatStringsSep " " (
           [
             m.hostname
             m.wireguard.ipv4 m.wireguard.ipv6
-          ] ++ lib.optionals m.isServer [
+          ] ++ optionals m.isServer [
             my.domain "*.${my.domain}"
-          ] ++ lib.optionals (m.hostname == here.hostname) [
+          ] ++ optionals (m.hostname == here.hostname) [
             "localhost" "127.0.0.1" "::1"
           ] ++ m.ipv4 ++ m.ipv6
         );
       in {
         ${hosts} = {
           inherit port;
-        } // lib.optionalAttrs here.isStation {
+        } // optionalAttrs here.isStation {
           forwardX11 = true;
           forwardX11Trusted = true;
         };
 
-        "unlock.${m.hostname}" = lib.mkIf m.isServer {
+        "unlock.${m.hostname}" = mkIf m.isServer {
           hostname = my.domain;
           addressFamily = "inet";
           inherit port;

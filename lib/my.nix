@@ -1,19 +1,19 @@
-lib: let
+lib: with lib; let
   modules = [
-    (lib.mkAliasOptionModule [ "server" ] [ "machines" "wo" ])
+    (mkAliasOptionModule [ "server" ] [ "machines" "wo" ])
     {
-      options.machines = lib.mkOption {
+      options.machines = mkOption {
         description = "My machines";
-        type = with lib.types; attrsOf (submodule ({ name, ... }: {
+        type = with types; attrsOf (submodule ({ name, ... }: {
           freeformType = attrs;
           options = let
-            mkMachineTypeOption = type: lib.mkOption {
+            mkMachineTypeOption = type: mkOption {
               description = "Whether the machine is a ${type}";
               type = bool;
               default = false;
             };
           in {
-            hostname = lib.mkOption {
+            hostname = mkOption {
               description = "The machine's hostname";
               type = str;
               default = name;
@@ -21,12 +21,12 @@ lib: let
             isServer  = mkMachineTypeOption "server";
             isStation = mkMachineTypeOption "station";
             isPhone   = mkMachineTypeOption "phone";
-            ipv4 = lib.mkOption {
+            ipv4 = mkOption {
               description = "The machine's public IPv4 addresses";
               type = listOf str;
               default = [];
             };
-            ipv6 = lib.mkOption {
+            ipv6 = mkOption {
               description = "The machine's public IPv6 addresses";
               type = listOf str;
               default = [];
@@ -37,7 +37,7 @@ lib: let
       };
 
       config = rec {
-        _module.freeformType = with lib.types; attrs;
+        _module.freeformType = with types; attrs;
 
         username = "n";
         githubUsername = "ncfavier";
@@ -123,4 +123,4 @@ lib: let
       };
     }
   ];
-in (lib.evalModules { inherit modules; }).config
+in (evalModules { inherit modules; }).config

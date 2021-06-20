@@ -1,6 +1,6 @@
-{ lib, my, here, config, secrets, syncedFolders, ... }: {
+{ lib, here, config, secrets, syncedFolders, ... }: with lib; {
   _module.args.syncedFolders = config.services.syncthing.declarative.folders;
-  lib.shellEnv.syncedFolders = lib.mapAttrs (_: v: v.path) syncedFolders;
+  lib.shellEnv.syncedFolders = mapAttrs (_: v: v.path) syncedFolders;
 
   sops.secrets.syncthing = {
     format = "yaml";
@@ -22,7 +22,7 @@
       key = secrets.syncthing.path;
 
       overrideDevices = true;
-      devices = lib.mapAttrs (_: m: {
+      devices = mapAttrs (_: m: {
         inherit (m.syncthing) id;
         introducer = true;
       }) my.machines;
@@ -33,8 +33,8 @@
           type = "trashcan";
           params.cleanoutDays = "0";
         };
-        allDevices = builtins.attrNames my.machines;
-        allDevicesExceptPhone = builtins.attrNames (lib.filterAttrs (_: m: !m.isPhone) my.machines);
+        allDevices = attrNames my.machines;
+        allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) my.machines);
       in {
         my = {
           path = "${config.my.home}/my";

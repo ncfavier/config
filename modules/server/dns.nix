@@ -1,4 +1,4 @@
-{ inputs, lib, my, here, config, ... }: let
+{ inputs, lib, here, config, ... }: with lib; let
   dns = inputs.nix-dns.lib;
 in {
   services.nsd = {
@@ -63,11 +63,11 @@ in {
         private-address = [
           "fd42::/16" "10.42.0.0/16"
         ];
-        local-data = lib.concatLists (lib.mapAttrsToList (n: m: [
+        local-data = concatLists (mapAttrsToList (n: m: [
           ''"${n}. A ${m.wireguard.ipv4}"''
           ''"${n}. AAAA ${m.wireguard.ipv6}"''
         ]) my.machines);
-        local-data-ptr = lib.concatLists (lib.mapAttrsToList (n: m: [
+        local-data-ptr = concatLists (mapAttrsToList (n: m: [
           ''"${m.wireguard.ipv4} ${n}."''
           ''"${m.wireguard.ipv6} ${n}."''
         ]) my.machines);

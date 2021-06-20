@@ -1,8 +1,8 @@
-{ lib, my, here, config, pkgs, ... }: {
+{ lib, here, config, pkgs, ... }: with lib; {
   my.shell = pkgs.bashInteractive_5;
 
   environment.systemPackages = with pkgs; [
-    (lib.hiPrio config.my.shell)
+    (hiPrio config.my.shell)
     man-pages
     man-pages-posix
     rlwrap
@@ -46,7 +46,7 @@
   programs.command-not-found.enable = false;
 
   programs.bash = {
-    promptInit = builtins.readFile ./prompt.bash;
+    promptInit = readFile ./prompt.bash;
     shellAliases = {
       # Default flags
       comm = "comm --output-delimiter=$'\\t\\t'";
@@ -90,10 +90,10 @@
       historyIgnore = [ "ls" "l" "ll" "la" ];
       shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
       sessionVariables._ZL_CD = "cd";
-      shellAliases = lib.mapAttrs (n: _: "ssh -qt ${n}") my.machines;
+      shellAliases = mapAttrs (n: _: "ssh -qt ${n}") my.machines;
       initExtra = ''
-        ${builtins.readFile ./functions.bash}
-        ${builtins.readFile ./completion.bash}
+        ${readFile ./functions.bash}
+        ${readFile ./completion.bash}
 
         stty -ixon
         set -b +H

@@ -32,30 +32,29 @@
     system = "x86_64-linux";
     pkgs = nixos.legacyPackages.${system};
     lib = nixos.lib.extend (import ./lib);
-  in {
+  in with lib; {
     inherit lib;
 
-    nixosModules = lib.importDir ./modules;
+    nixosModules = importDir ./modules;
 
-    nixosConfigurations = lib.mapAttrs (hostname: local:
-      lib.nixosSystem {
+    nixosConfigurations = mapAttrs (hostname: local:
+      nixosSystem {
         inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
         specialArgs = {
           inherit inputs;
           hardware = inputs.nixos-hardware.nixosModules;
-          inherit (lib) my;
-          here = lib.my.machines.${hostname} or {};
+          here = my.machines.${hostname} or {};
         };
-        modules = builtins.attrValues self.nixosModules ++ [ local ];
+        modules = attrValues self.nixosModules ++ [ local ];
       }
-    ) (lib.importDir ./machines);
+    ) (importDir ./machines);
 
     devShell.${system} = pkgs.mkShell {
       packages = with pkgs; [ sops ];
-      SOPS_PGP_FP = lib.my.pgpFingerprint;
+      SOPS_PGP_FP = my.pgpFingerprint;
     };
 
-    packages.${system}.iso = (lib.nixosSystem {
+    packages.${system}.iso = (nixosSystem {
       inherit system;
       specialArgs = { inherit inputs; };
       modules = [ ./iso.nix ];

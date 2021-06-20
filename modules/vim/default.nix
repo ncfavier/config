@@ -1,11 +1,11 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }: with lib; {
   programs.vim = {
     defaultEditor = true;
     package = pkgs.vim_configurable.customize {
       name = "vim";
       wrapGui = true;
       vimrcConfig = {
-        customRC = builtins.readFile ./rc.vim;
+        customRC = readFile ./rc.vim;
         packages.default.start = with pkgs.vimPlugins; [
           nerdtree
           nerdcommenter
@@ -20,5 +20,5 @@
     };
   };
 
-  environment.systemPackages = [ (lib.lowPrio pkgs.vim_configurable) ];
+  environment.systemPackages = [ (lowPrio pkgs.vim_configurable) ];
 }

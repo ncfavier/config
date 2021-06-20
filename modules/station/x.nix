@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }: with lib; {
   services.xserver = {
     enable = true;
     displayManager.startx.enable = true;
@@ -38,7 +38,7 @@
       xlibs.xev
     ];
 
-    xresources.properties = with lib.theme; {
+    xresources.properties = with theme; {
       "*color0" = black;
       "*color1" = hot;
       "*color2" = cold;

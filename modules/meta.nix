@@ -1,11 +1,11 @@
-# arguments order: { inputs, hardware, lib, my, here, config, modulesPath, secrets, syncedFolders, utils, pkgsWip, pkgs, pkgsStable }
-{ inputs, lib, my, here, config, utils, pkgs, ... }: {
+# arguments order: { inputs, hardware, lib, here, config, modulesPath, secrets, syncedFolders, utils, pkgsWip, pkgs, pkgsStable }
+{ inputs, lib, here, config, utils, pkgs, ... }: with lib; {
   system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 
   _module.args.utils = rec {
     configPath = "${config.my.home}/git/config";
     mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
-      (configPath + lib.removePrefix (toString inputs.self) (toString path));
+      (configPath + removePrefix (toString inputs.self) (toString path));
   };
 
   lib.shellEnv = {
@@ -19,8 +19,8 @@
     shellScriptWithDeps = name: src: deps:
       self.writeScriptBin name ''
         #!${config.my.shellPath}
-        PATH=${lib.makeBinPath deps}''${PATH:+:$PATH}
-        ${builtins.readFile src}
+        PATH=${makeBinPath deps}''${PATH:+:$PATH}
+        ${readFile src}
       '';
     python3ScriptWithDeps = name: src: deps:
       self.stdenv.mkDerivation {
@@ -35,7 +35,7 @@
 
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "config" ''
-      configPath=${lib.escapeShellArg utils.configPath}
+      configPath=${escapeShellArg utils.configPath}
       cmd=$1
       shift
       case $cmd in
@@ -50,10 +50,10 @@
           untest)
               exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@";;
           home)
-              attr=nixosConfigurations.${lib.escapeShellArg here.hostname}.config.hm.home.activationPackage
+              attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
               exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation;;
           env) # meant to be sourced
-              ${lib.exportToShell config.lib.shellEnv}
+              ${exportToShell config.lib.shellEnv}
               ;;
           *)
               exec sudo nixos-rebuild --flake "$configPath" -v "$cmd" "$@";;

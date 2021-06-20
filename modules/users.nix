@@ -1,9 +1,9 @@
-{ inputs, lib, my, here, config, utils, ... }: {
-  imports = [ (lib.mkAliasOptionModule [ "my" ] [ "users" "users" my.username ]) ];
+{ inputs, lib, here, config, utils, ... }: with lib; {
+  imports = [ (mkAliasOptionModule [ "my" ] [ "users" "users" my.username ]) ];
 
-  options.users.users = lib.mkOption {
-    type = with lib.types; attrsOf (submodule ({ config, ... }: {
-      options.shellPath = lib.mkOption {
+  options.users.users = mkOption {
+    type = with types; attrsOf (submodule ({ config, ... }: {
+      options.shellPath = mkOption {
         type = str;
         default = utils.toShellPath config.shell;
         readOnly = true;

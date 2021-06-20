@@ -1,4 +1,4 @@
-{ inputs, lib, here, config, utils, pkgs, ... }: {
+{ inputs, lib, here, config, utils, pkgs, ... }: with lib; {
   _module.args = {
     utils.importNixpkgs = nixpkgs: import nixpkgs {
       inherit (config.nixpkgs) localSystem crossSystem config;
@@ -44,7 +44,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (lib.lowPrio nix-bash-completions)
+    (lowPrio nix-bash-completions)
     nix-index
     nix-diff
     nix-prefetch-github
@@ -58,14 +58,14 @@
 
   hm.home.file.".nix-defexpr/default.nix".text = ''
     { wip ? false }: let
-      self = builtins.getFlake (if wip then ${lib.strings.escapeNixString utils.configPath} else "config");
+      self = builtins.getFlake (if wip then ${strings.escapeNixString utils.configPath} else "config");
       machines = self.nixosConfigurations;
-      local = machines.${lib.strings.escapeNixIdentifier here.hostname};
+      local = machines.${strings.escapeNixIdentifier here.hostname};
     in rec {
       inherit self;
       inherit (self) inputs lib;
       inherit (lib) my;
-      here = my.machines.${lib.strings.escapeNixIdentifier here.hostname} or {};
+      here = my.machines.${strings.escapeNixIdentifier here.hostname} or {};
       inherit (local) config;
     } // machines // local._module.args
   '';

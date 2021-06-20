@@ -1,6 +1,6 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }: with lib; {
   hm = {
-    programs.rofi = with lib.theme; {
+    programs.rofi = with theme; {
       enable = true;
       package = with pkgs; rofi.override {
         symlink-dmenu = true;
@@ -31,11 +31,11 @@
             highlight.background = white;
             highlight.foreground = black;
           };
-          active = lib.recursiveUpdate normal {
+          active = recursiveUpdate normal {
             foreground = cold;
             highlight.background = cold;
           };
-          urgent = lib.recursiveUpdate normal {
+          urgent = recursiveUpdate normal {
             foreground = hot;
             highlight.background = hot;
           };

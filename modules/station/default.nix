@@ -1,5 +1,5 @@
-{ lib, here, pkgs, ... }: lib.optionalAttrs here.isStation {
-  imports = builtins.attrValues (lib.importDir ./.);
+{ lib, here, pkgs, ... }: with lib; optionalAttrs here.isStation {
+  imports = attrValues (importDir ./.);
 
   config = {
     services.logind.killUserProcesses = true;

@@ -1,4 +1,4 @@
-{ inputs, my, config, ... }: let
+{ inputs, lib, config, ... }: with lib; let
   cert = config.security.acme.certs.${my.domain};
 in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];

@@ -1,16 +1,16 @@
-{ lib, my, here, config, secrets, pkgs, ... }: let
+{ lib, here, config, secrets, pkgs, ... }: with lib; let
   interface = "wg42";
   port = 500;
 in {
-  config = lib.mkMerge [
-    (lib.mkIf (here.isServer || here.isStation) {
+  config = mkMerge [
+    (mkIf (here.isServer || here.isStation) {
       sops.secrets.wireguard = {
         format = "yaml";
         key = here.hostname;
       };
     })
 
-    (lib.mkIf here.isServer {
+    (mkIf here.isServer {
       networking = {
         wireguard = {
           enable = true;
@@ -19,10 +19,10 @@ in {
             ips = [ "${here.wireguard.ipv4}/16" "${here.wireguard.ipv6}/16" ];
             listenPort = port;
             allowedIPsAsRoutes = false;
-            peers = lib.mapAttrsToList (_: m: {
+            peers = mapAttrsToList (_: m: {
               inherit (m.wireguard) publicKey;
               allowedIPs = [ "${m.wireguard.ipv4}/32" "${m.wireguard.ipv6}/128" ];
-            }) (lib.filterAttrs (_: m: !m.isServer) my.machines);
+            }) (filterAttrs (_: m: !m.isServer) my.machines);
           };
         };
 
@@ -49,7 +49,7 @@ in {
       };
     })
 
-    (lib.mkIf here.isStation {
+    (mkIf here.isStation {
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = secrets.wireguard.path;
         address = [ "${here.wireguard.ipv4}/16" "${here.wireguard.ipv6}/16" ];

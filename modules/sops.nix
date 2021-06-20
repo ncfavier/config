@@ -1,10 +1,10 @@
-{ inputs, lib, config, ... }: {
+{ inputs, lib, config, ... }: with lib; {
   imports = [ inputs.sops-nix.nixosModule ];
 
-  options.sops.secrets = lib.mkOption {
-    type = with lib.types; attrsOf (submodule ({ config, name, ... }: {
+  options.sops.secrets = mkOption {
+    type = with types; attrsOf (submodule ({ config, name, ... }: {
       sopsFile = "${inputs.self}/secrets/${name}" +
-        lib.optionalString (config.format != "binary") ".${config.format}";
+        optionalString (config.format != "binary") ".${config.format}";
     }));
   };
 

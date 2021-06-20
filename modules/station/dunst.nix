@@ -1,8 +1,8 @@
-{ lib, config, pkgs, ... }: {
+{ lib, config, pkgs, ... }: with lib; {
   hm.services.dunst = {
     enable = true;
 
-    settings = with lib.theme; rec {
+    settings = with theme; rec {
       global = {
         geometry = "800x5-32+64";
         shrink = true;
@@ -22,7 +22,7 @@
         browser = "xdg-open";
         mouse_right_click = "context";
         show_indicators = false;
-        icon_path = lib.concatMapStringsSep ":" (p: "/etc/profiles/per-user/n/share/icons/Flat-Remix-Blue-Dark/${p}") [
+        icon_path = concatMapStringsSep ":" (p: "/etc/profiles/per-user/n/share/icons/Flat-Remix-Blue-Dark/${p}") [
           "actions/scalable"
           "actions/symbolic"
           "animations"

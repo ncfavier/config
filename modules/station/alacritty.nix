@@ -1,7 +1,7 @@
-{ lib, ... }: {
+{ lib, ... }: with lib; {
   hm.programs.alacritty = {
     enable = true;
-    settings = with lib.theme; {
+    settings = with theme; {
       window = {
         dimensions = {
           columns = 80;

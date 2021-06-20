@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }: with lib; {
   hm = {
     programs.firefox = {
       enable = true;
@@ -6,7 +6,7 @@
         ublock-origin
         darkreader
       ];
-      profiles.default = with lib.theme; {
+      profiles.default = with theme; {
         settings = {
           "browser.fixup.alternate.enabled" = false;
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;

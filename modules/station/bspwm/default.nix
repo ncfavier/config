@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }: let
+{ lib, config, pkgs, ... }: with lib; let
   bar = with pkgs; shellScriptWithDeps "bar" ./bar.sh [
     lemonbar-xft xdo xtitle xkb-switch
   ];
@@ -7,7 +7,7 @@ in {
     xsession.windowManager.bspwm = {
       enable = true;
       monitors.focused = [ "1" "2" "3" "4" "5" "6" "web" "mail" "chat" "files" ];
-      settings = with lib.theme; {
+      settings = with theme; {
         focused_border_color = foreground;
         normal_border_color = foregroundAlt;
         presel_feedback_color = hot;
@@ -37,7 +37,7 @@ in {
           desktop = "files";
           follow = true;
         };
-      } // lib.genAttrs [
+      } // genAttrs [
         "feh"
         "mpv"
         ".file-roller-wrapped_"

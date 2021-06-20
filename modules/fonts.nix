@@ -1,5 +1,5 @@
-{ lib, here, pkgs, ... }: {
-  config = lib.mkMerge [
+{ lib, here, pkgs, ... }: with lib; {
+  config = mkMerge [
     {
       console.font = pkgs.runCommandLocal "dina.psf" {} ''
         cd ${pkgs.bdf2psf}/share/bdf2psf
@@ -8,7 +8,7 @@
       '';
     }
 
-    (lib.mkIf here.isStation {
+    (mkIf here.isStation {
       fonts = {
         fonts = with pkgs; [
           source-serif-pro

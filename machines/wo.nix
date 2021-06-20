@@ -1,4 +1,4 @@
-{ config, modulesPath, pkgs, ... }: let
+{ lib, config, modulesPath, pkgs, ... }: with lib; let
   interface = "ens3";
 in {
   imports = [
@@ -25,7 +25,7 @@ in {
       enable = true;
       ssh = {
         enable = true;
-        port = builtins.head config.services.openssh.ports;
+        port = head config.services.openssh.ports;
         hostKeys = map (k: k.path) config.services.openssh.hostKeys;
       };
     };

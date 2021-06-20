@@ -1,6 +1,6 @@
-{ lib, my, here, pkgs, ... }: {
-  options.networking = with lib.types; {
-    interfaces = lib.mkOption {
+{ lib, here, pkgs, ... }: with lib; {
+  options.networking = with types; {
+    interfaces = mkOption {
       type = attrsOf (submodule {
         tempAddress = "disabled";
       });
@@ -13,7 +13,7 @@
 
       useDHCP = false;
       nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
-      hosts = lib.mkForce {}; # TODO remove $HOSTNAME → localhost mapping
+      hosts = mkForce {}; # TODO remove $HOSTNAME → localhost mapping
 
       firewall = {
         enable = true;

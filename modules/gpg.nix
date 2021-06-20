@@ -1,4 +1,4 @@
-{ my, ... }: {
+{ lib, ... }: with lib; {
   hm = {
     programs.gpg.enable = true;
 

@@ -1,5 +1,5 @@
-{ lib, here, pkgs, ... }: lib.optionalAttrs here.isServer {
-  imports = builtins.attrValues (lib.importDir ./.);
+{ lib, here, pkgs, ... }: with lib; optionalAttrs here.isServer {
+  imports = attrValues (importDir ./.);
 
   environment.systemPackages = [
     pkgs.alacritty.terminfo
