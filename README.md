@@ -2,7 +2,7 @@
 
 This repository defines almost<sup id=top-almost>[†](#almost)</sup> all of the
 configuration for my machines running the [NixOS](https://nixos.org/) Linux
-distribution, including installed programs, configuration files, and running
+distribution, including installed programs, configuration files and running
 services, in a declarative and reproducible way.
 
 NixOS is built on top of [Nix](https://nixos.org/manual/nix/stable/#chap-introduction),
