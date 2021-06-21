@@ -2,15 +2,17 @@ name: CI
 on: [push, pull_request]
 jobs:
   check:
-    name: Flake check
+    name: Checks
     runs-on: ubuntu-latest
     steps:
-      - name: Install Nix
+      - name: Install flakes-enabled Nix
         uses: nixbuild/nix-quick-install-action@v5
         with:
           nix_version: 2.4pre20201205_a5d85d0
           nix_conf: experimental-features = nix-command flakes
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Flake check
+      - name: Check Markdown links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - name: Check flake
         run: nix -vL flake check
