@@ -18,7 +18,6 @@
     openDefaultPorts = true;
 
     declarative = {
-      cert = builtins.toFile "syncthing-cert" here.syncthing.cert;
       key = secrets.syncthing.path;
 
       overrideDevices = true;

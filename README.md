@@ -60,8 +60,9 @@ using my GPG private key (see the [`sops`](https://github.com/ncfavier/config/bl
 - `exportToBash`, a function to export an attribute set of Nix values to Bash
   code that defines corresponding variables. Supports arrays and attribute sets
   (implemented as associative arrays) at depth 1.
-- `my`, a collection of variables used in all the modules, such as my username,
-  domain name and email addresses.
+- [`my`](https://github.com/ncfavier/config/blob/main/lib/my.nix), a collection
+  of variables used in all the modules, such as my username, domain name and
+  email addresses.
 
   `my.machines` contains basic information about all my machines, including those
   not (yet) running NixOS, such as WireGuard public keys and Syncthing IDs.
