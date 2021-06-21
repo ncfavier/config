@@ -1,8 +1,4 @@
 lib: prev: with lib; {
-  my = import ./my.nix lib;
-
-  theme = import ./theme.nix;
-
   importDir = dir: pipe dir [
     builtins.readDir
     (mapAttrsToList (name: type:
@@ -17,7 +13,7 @@ lib: prev: with lib; {
     listToAttrs
   ];
 
-  exportToShell = vars: concatStringsSep "\n" (mapAttrsToList (name: value:
+  exportToBash = vars: concatStringsSep "\n" (mapAttrsToList (name: value:
     if isAttrs value then
       "declare -A ${name}=(${
         concatStringsSep " " (mapAttrsToList (n: v:
@@ -29,4 +25,7 @@ lib: prev: with lib; {
     else
       "declare -- ${name}=${escapeShellArg value}"
   ) vars);
+
+  my = import ./my.nix lib;
+  theme = import ./theme.nix;
 }

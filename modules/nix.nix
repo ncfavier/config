@@ -65,7 +65,7 @@
       inherit self;
       inherit (self) inputs lib;
       inherit (lib) my;
-      here = my.machines.${strings.escapeNixIdentifier here.hostname} or {};
+      here = my.machines.${strings.escapeNixIdentifier here.hostname};
       inherit (local) config;
     } // machines // local._module.args
   '';

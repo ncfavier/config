@@ -53,7 +53,7 @@
               attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
               exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation;;
           env) # meant to be sourced
-              ${exportToShell config.lib.shellEnv}
+              ${exportToBash config.lib.shellEnv}
               ;;
           *)
               exec sudo nixos-rebuild --flake "$configPath" -v "$cmd" "$@";;
