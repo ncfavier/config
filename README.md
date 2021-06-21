@@ -22,8 +22,9 @@ Of course, this is a perpetual work in progress.
 #### [`modules`](https://github.com/ncfavier/config/tree/main/modules) is where most of the configuration is defined.
 
 The top-level modules are imported for every machine and may then define their
-own conditions; for example, the `server` module imports every module in the
-`server` directory if the current machine is a server. Similarly, the `station`
+own conditions; for example, the [`server`](https://github.com/ncfavier/config/blob/main/modules/server/default.nix)
+module imports every module in the `server` directory if the current machine is
+a server. Similarly, the [`station`](https://github.com/ncfavier/config/blob/main/modules/station/default.nix)
 module groups modules to be used in physical machines (desktops and laptops).
 
 Configuration for my home directory is managed using [Home Manager](https://github.com/nix-community/home-manager)
@@ -95,7 +96,7 @@ following subcommands:
 - `home` builds and activates my Home Manager configuration without building the whole
   system. This is useful for quickly testing a change to my home.
 - `env` is meant to be *sourced* (as in `. config env`) by Bash scripts and exports
-  a few common variables using my `lib.exportToBash` function.
+  a few common variables using `lib.exportToBash`.
 - every other command (`switch`, `test`, `build`, …) is passed on to `nixos-rebuild`.
 
 ---------------
