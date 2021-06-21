@@ -18,7 +18,7 @@
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
         /script install ${concatStringsSep " " scripts}
         /script load ${./autojoin.py}
-        /set sec.crypt.passphrase_command "cat ${secrets.weechat-sec.path}"
+        /set sec.crypt.passphrase_command "cat ${secrets.weechat.path}"
         /set relay.network.bind_address ${here.wireguard.ipv4}
         /set relay.port.weechat ${toString relayPort}
         /set logger.file.path ${syncedFolders.irc-logs.path}
@@ -26,7 +26,7 @@
     };
   };
 in {
-  sops.secrets.weechat-sec = {
+  sops.secrets.weechat = {
     owner = my.username;
     inherit (config.my) group;
   };
