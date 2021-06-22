@@ -35,6 +35,7 @@
   environment.sessionVariables = rec {
     LESS = "ij3FRMK --mouse --wheel-lines=4";
     SYSTEMD_LESS = LESS;
+    LESSHISTFILE = "-";
     MANOPT = "--no-hyphenation";
     MANPAGER = "less -+F";
   };
