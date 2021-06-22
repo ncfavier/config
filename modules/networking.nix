@@ -13,7 +13,10 @@
 
       useDHCP = false;
       nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
-      hosts = mkForce {}; # TODO remove $HOSTNAME → localhost mapping
+      hosts = { # remove default hostname mappings
+        "127.0.0.2" = mkForce [];
+        "::1" = mkForce [];
+      };
 
       firewall = {
         enable = true;

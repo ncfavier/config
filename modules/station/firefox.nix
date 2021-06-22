@@ -24,7 +24,9 @@
           "browser.urlbar.maxRichResults" = "5";
           "browser.urlbar.suggest.openpage" = false;
           "browser.urlbar.suggest.searches" = false;
+          "devtools.chrome.enabled" = true;
           "devtools.debugger.prompt-connection" = false;
+          "devtools.debugger.remote-enabled" = true;
           "extensions.pocket.enabled" = false;
           "full-screen-api.warning.timeout" = "0";
           "general.autoScroll" = true;
