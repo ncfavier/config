@@ -32,8 +32,10 @@
       };
       iconTheme = {
         package = pkgs.flat-remix-icon-theme;
-        name = "Flat-Remix-Blue-Dark";
+        name = "Flat-Remix-Blue";
       };
     };
+
+    xdg.configFile."gtk-3.0/settings.ini".force = true;
   };
 }

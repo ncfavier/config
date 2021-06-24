@@ -123,11 +123,6 @@
       };
     };
 
-    z-lua = {
-      enable = true;
-      enableAliases = true;
-    };
-
     dircolors = {
       enable = true;
       settings = {
