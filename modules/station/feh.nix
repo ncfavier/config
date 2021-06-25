@@ -4,10 +4,11 @@
       enable = true;
 
       buttons = {
+        zoom = null;
+        pan = 2;
         prev_img = null;
-        next_img = null;
-        pan = 1;
         zoom_in = 4;
+        next_img = null;
         zoom_out = 5;
       };
 

@@ -19,6 +19,8 @@ text/plain=vim.desktop;
 application/x-shellscript=vim.desktop;
 text/x-csrc=vim.desktop;
 image/jpeg=feh.desktop;gimp.desktop;
+image/png=gimp.desktop;feh.desktop;
+image/webp=feh.desktop;
 
 [Default Applications]
 x-scheme-handler/http=firefox.desktop
@@ -39,3 +41,5 @@ text/x-csrc=vim.desktop
 inode/directory=thunar.desktop
 x-scheme-handler/magnet=transmission-gtk.desktop
 x-scheme-handler/gemini=amfora.desktop
+image/png=feh.desktop
+image/webp=feh.desktop
