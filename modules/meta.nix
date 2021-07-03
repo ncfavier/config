@@ -36,23 +36,33 @@
       shift
       case $cmd in
           repl)
-              exec nix repl ~/.nix-defexpr "$@";;
+              exec nix repl ~/.nix-defexpr "$@"
+              ;;
           update)
               if (( $# )); then
                   exec nix flake update "$configPath" "$@"
               else
                   exec "$0" switch --recreate-lock-file
-              fi;;
-          untest)
-              exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@";;
+              fi
+              ;;
+          specialise)
+              name=$1
+              shift
+              exec sudo /run/current-system/specialisation/"$name"/bin/switch-to-configuration switch "$@"
+              ;;
+          revert)
+              exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@"
+              ;;
           home)
               attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
-              VERBOSE=1 exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation;;
+              VERBOSE=1 exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation
+              ;;
           env) # meant to be sourced
               ${exportToBash config.lib.shellEnv}
               ;;
           *)
-              exec sudo nixos-rebuild --flake "$configPath" -v "$cmd" "$@";;
+              exec sudo nixos-rebuild --flake "$configPath" -v "$cmd" "$@"
+              ;;
       esac
     '';
   }) ];

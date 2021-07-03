@@ -93,7 +93,7 @@ following subcommands:
 
 - `repl` runs `nix repl ~/.nix-defexpr`.
 - `update` runs `nix flake update` on this flake.
-- `untest` is meant to be used after `config test` to revert to the latest generation.
+- `revert` is meant to be used after `config test` to revert to the latest generation.
 - `home` builds and activates my Home Manager configuration without building the whole
   system. This is useful for quickly testing a change to my home.
 - `env` is meant to be *sourced* (as in `. config env`) by Bash scripts and exports
