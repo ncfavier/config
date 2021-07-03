@@ -22,11 +22,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1624181700,
-        "narHash": "sha256-i4fME871qwsxO9M1AnenL3y0SCyLrGOuHMrbizurqgk=",
+        "lastModified": 1625226786,
+        "narHash": "sha256-uHl7DFUKgHT5vDpUqsAZIV39lw/oA8MZ7EWHWnM7oj0=",
         "owner": "ncfavier",
         "repo": "home-manager",
-        "rev": "5eb8ede08a5e138af9fa7d4e46a06061ab216361",
+        "rev": "9000026c330de5a4a2c7f989138e00504e12d916",
         "type": "github"
       },
       "original": {

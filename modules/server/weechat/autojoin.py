@@ -43,8 +43,8 @@ if w.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT
                    "autojoin_cb",
                    "")
 
-    w.hook_signal('*,irc_in2_join', 'autosave_channels_on_activity', '')
-    w.hook_signal('*,irc_in2_part', 'autosave_channels_on_activity', '')
+    #  w.hook_signal('*,irc_in2_join', 'autosave_channels_on_activity', '')
+    #  w.hook_signal('*,irc_in2_part', 'autosave_channels_on_activity', '')
     w.hook_signal('quit',           'autosave_channels_on_quit', '')
 
 # Init everything

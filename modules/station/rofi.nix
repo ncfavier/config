@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: with lib; {
+{ lib, theme, pkgs, ... }: with lib; {
   hm = {
     programs.rofi = with theme; {
       enable = true;
@@ -19,18 +19,20 @@
         transparent = "#00000000";
       in {
         window = {
-          background = black;
+          inherit background;
           border = borderColor;
           separator = transparent;
         };
-        rows = rec {
+        rows = let
           normal = {
             background = transparent;
-            foreground = white;
+            inherit foreground;
             backgroundAlt = transparent;
-            highlight.background = white;
-            highlight.foreground = black;
+            highlight.background = foreground;
+            highlight.foreground = background;
           };
+        in {
+          inherit normal;
           active = recursiveUpdate normal {
             foreground = cold;
             highlight.background = cold;

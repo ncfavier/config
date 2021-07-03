@@ -1,6 +1,6 @@
-{ lib, config, pkgs, ... }: with lib; let
+{ lib, config, theme, pkgs, ... }: with lib; let
   bar = with pkgs; shellScriptWithDeps "bar" ./bar.sh [
-    lemonbar-xft xdo xtitle xkb-switch
+    config-cli lemonbar-xft xdo xtitle xkb-switch
   ];
 in {
   hm = {
@@ -33,14 +33,18 @@ in {
           desktop = "chat";
           follow = true;
         };
-        ".thunar-wrapped_" = {
+        "Thunar" = {
+          desktop = "files";
+          follow = true;
+        };
+        ".thunar-wrapped_" = { # ugh
           desktop = "files";
           follow = true;
         };
       } // genAttrs [
         "feh"
         "mpv"
-        ".file-roller-wrapped_"
+        ".file-roller-wrapped_" # ugh
         "Lxappearance"
         "Pavucontrol"
         "Alacritty:calendar"

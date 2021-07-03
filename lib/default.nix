@@ -27,5 +27,4 @@ lib: prev: with lib; {
   ) vars);
 
   my = import ./my.nix lib;
-  theme = import ./theme.nix;
 }

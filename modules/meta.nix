@@ -1,4 +1,4 @@
-# arguments order: inputs, hardware, lib, here, config, modulesPath, secrets, syncedFolders, utils, pkgs*
+# arguments order: inputs, hardware, lib, here, config, modulesPath, secrets, syncedFolders, utils, theme, pkgs*
 { inputs, lib, here, config, utils, pkgs, ... }: with lib; {
   system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 
@@ -12,7 +12,6 @@
     inherit (my) domain;
     server_hostname = my.server.hostname;
     inherit (here) isServer;
-    inherit (lib) theme;
   };
 
   nixpkgs.overlays = [ (self: super: {
@@ -31,10 +30,7 @@
           install -D -m555 ${src} "$out/bin/${name}"
         '';
       };
-  }) ];
-
-  environment.systemPackages = [
-    (pkgs.writeShellScriptBin "config" ''
+    config-cli = self.writeShellScriptBin "config" ''
       configPath=${escapeShellArg utils.configPath}
       cmd=$1
       shift
@@ -51,13 +47,15 @@
               exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@";;
           home)
               attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
-              exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation;;
+              VERBOSE=1 exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation;;
           env) # meant to be sourced
               ${exportToBash config.lib.shellEnv}
               ;;
           *)
               exec sudo nixos-rebuild --flake "$configPath" -v "$cmd" "$@";;
       esac
-    '')
-  ];
+    '';
+  }) ];
+
+  environment.systemPackages = with pkgs; [ config-cli ];
 }

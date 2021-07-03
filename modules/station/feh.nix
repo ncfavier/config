@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: with lib; {
+{ lib, theme, pkgs, ... }: with lib; {
   config.hm = {
     programs.feh = {
       enable = true;

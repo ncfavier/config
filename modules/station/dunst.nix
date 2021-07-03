@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, theme, pkgs, ... }: with lib; {
   hm.services.dunst = {
     enable = true;
 
@@ -22,7 +22,7 @@
         browser = "xdg-open";
         mouse_right_click = "context";
         show_indicators = false;
-        icon_path = concatMapStringsSep ":" (p: "/etc/profiles/per-user/n/share/icons/Flat-Remix-Blue-Dark/${p}") [
+        icon_path = concatMapStringsSep ":" (p: "${config.hm.gtk.iconTheme.package}/share/icons/${config.hm.gtk.iconTheme.name}/${p}") [
           "actions/scalable"
           "actions/symbolic"
           "animations"

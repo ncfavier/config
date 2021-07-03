@@ -29,7 +29,10 @@
     python3
     neofetch
     lesspass-cli
-    (shellScriptWithDeps "upload" ../upload.sh [])
+    pass
+    tmsu
+    (shellScriptWithDeps "upload" ./upload.sh [])
+    (shellScriptWithDeps "order" ./order.sh [])
   ];
 
   environment.sessionVariables = rec {

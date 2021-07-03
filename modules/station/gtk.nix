@@ -1,4 +1,4 @@
-{ config, syncedFolders, pkgs, ... }: {
+{ lib, config, syncedFolders, theme, pkgs, ... }: with lib; {
   hm = {
     home.packages = [ pkgs.lxappearance ];
 
@@ -28,14 +28,27 @@
       };
       theme = {
         package = pkgs.flat-remix-gtk;
-        name = "Flat-Remix-GTK-Blue-Darkest";
+        name = theme.gtkTheme;
       };
       iconTheme = {
         package = pkgs.flat-remix-icon-theme;
-        name = "Flat-Remix-Blue";
+        name = theme.iconTheme;
       };
     };
 
-    xdg.configFile."gtk-3.0/settings.ini".force = true;
+    xdg.configFile = {
+      "gtk-3.0/settings.ini".force = true;
+
+      # live reloading
+      "xsettingsd/xsettingsd.conf" = {
+        text = ''
+          Net/ThemeName "${config.hm.gtk.theme.name}"
+          Net/IconThemeName "${config.hm.gtk.iconTheme.name}"
+        '';
+        onChange = ''
+          timeout 1s ${pkgs.xsettingsd}/bin/xsettingsd &
+        '';
+      };
+    };
   };
 }

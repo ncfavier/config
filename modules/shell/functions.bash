@@ -32,6 +32,15 @@ unbck() { # restore
     done
 }
 
+readlinks() { # print a chain of symlinks
+    local f=$1
+    while [[ -L $f ]]; do
+        printf '%s -> ' "$f"
+        f=$(readlink "$f")
+    done
+    printf '%s\n' "$f"
+}
+
 flast() { # find the most recently modified files in a tree
     local print_time=0 n=+1 o OPTIND OPTARG
     while getopts :tn: o; do case $o in

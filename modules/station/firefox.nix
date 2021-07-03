@@ -1,4 +1,6 @@
-{ lib, pkgs, ... }: with lib; {
+{ lib, theme, pkgs, ... }: with lib; let
+  profile = "default";
+in {
   hm = {
     programs.firefox = {
       enable = true;
@@ -6,7 +8,7 @@
         ublock-origin
         darkreader
       ];
-      profiles.default = with theme; {
+      profiles.${profile} = with theme; {
         settings = {
           "browser.fixup.alternate.enabled" = false;
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
@@ -281,5 +283,34 @@
     };
 
     home.sessionVariables.MOZ_USE_XINPUT2 = "1";
+
+    home.file.".mozilla/firefox/${profile}/chrome/userChrome.css".onChange = ''
+      if cd ~/.mozilla/firefox/${profile} && [[ -L lock ]]; then
+          echo "Reloading Firefox"
+          shopt -s lastpipe
+          port=6001
+          firefox --start-debugger-server "$port" || exit
+          exec {ff}<>/dev/tcp/localhost/"$port"
+          while read -u "$ff" -rd : len && IFS= read -u "$ff" -rd "" -n "$len" json; do
+              printf '%s\n' "$json"
+          done |
+          jq -cn --unbuffered --arg text "$(< chrome/userChrome.css)" \
+              '{to: "root", type: "getProcess", id: 0}, (
+               limit(1; inputs | .processDescriptor.actor//empty) as $processDescriptor |
+               {to: $processDescriptor, type: "getTarget"}, (
+               limit(1; inputs | .process.styleSheetsActor//empty) as $styleSheetsActor |
+               {to: $styleSheetsActor, type: "getStyleSheets"}, (
+               limit(1; inputs | .styleSheets[]? | select(.href//empty | endswith("userChrome.css")).actor) as $userChromeActor |
+               {to: $styleSheetsActor, type: "update", resourceId: $userChromeActor, $text, transition: true}, (
+               inputs | select(.type == "styleApplied") | halt
+               ))))' |
+          {
+              while IFS= read -r json; do
+                  printf '%s:%s' "''${#json}" "$json"
+              done >& "$ff"
+              kill $(jobs -p)
+          }
+      fi &
+    '';
   };
 }

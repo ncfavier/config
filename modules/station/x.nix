@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: with lib; {
+{ lib, theme, pkgs, ... }: with lib; {
   services.xserver = {
     enable = true;
     displayManager.startx.enable = true;
