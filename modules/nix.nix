@@ -9,7 +9,7 @@
     pkgsPR = pr: sha256: utils.importNixpkgs (pkgs.fetchFromGitHub {
       owner = "NixOS";
       repo = "nixpkgs";
-      rev = "pull/${toString pr}/head";
+      rev = "refs/pull/${toString pr}/head";
       inherit sha256;
     });
   };

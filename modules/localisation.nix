@@ -3,8 +3,8 @@
 
   services.xserver = {
     layout = "fr,us,ru,gr";
-    xkbVariant = "oss,,,";
-    xkbOptions = "grp:shifts_toggle,compose:menu,caps:escape_shifted_capslock";
+    xkbVariant = "oss,,phonetic_fr,";
+    xkbOptions = "grp:ctrls_toggle,compose:menu,caps:escape_shifted_capslock";
   };
 
   time.timeZone = "Europe/Paris";

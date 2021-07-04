@@ -1,4 +1,4 @@
-{ lib, theme, pkgs, ... }: with lib; {
+{ lib, config, theme, pkgs, ... }: with lib; {
   services.xserver = {
     enable = true;
     displayManager.startx.enable = true;
@@ -31,6 +31,12 @@
           exec systemd-cat -t xsession startx
       fi
     '';
+
+    home.keyboard = with config.services.xserver; {
+      inherit layout;
+      variant = xkbVariant;
+      options = splitString "," xkbOptions;
+    };
 
     home.packages = with pkgs; [
       arandr

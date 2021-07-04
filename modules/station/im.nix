@@ -10,7 +10,6 @@
     ibus.engines = with pkgs.ibus-engines; [
       mozc
       hangul
-      uniemoji
     ];
   };
 
@@ -30,7 +29,7 @@
     dconf.settings = {
       "desktop/ibus/general" = {
         use-system-keyboard-layout = true;
-        preload-engines = [ "xkb:fr:oss:fra" "xkb:us::eng" "xkb:ru::rus" "xkb:gr::ell" "mozc-jp" "hangul" "uniemoji" ];
+        preload-engines = [ "xkb:fr:oss:fra" "mozc-jp" "hangul" ];
       };
       "desktop/ibus/general/hotkey".triggers = [ "<Super>i" ];
       "desktop/ibus/panel" = {
