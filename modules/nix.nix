@@ -6,6 +6,12 @@
 
     pkgsStable = utils.importNixpkgs inputs.nixos-stable;
     pkgsLocal = utils.importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
+    pkgsPR = pr: sha256: utils.importNixpkgs (pkgs.fetchFromGitHub {
+      owner = "NixOS";
+      repo = "nixpkgs";
+      rev = "pull/${toString pr}/head";
+      inherit sha256;
+    });
   };
 
   nix = {

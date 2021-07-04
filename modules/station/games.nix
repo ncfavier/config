@@ -6,7 +6,7 @@
       owner = "jxsl13";
       repo = "zcatch";
       rev = "v${version}";
-      sha256 = "sha256-XwoGf4Se3Yfxmi7uNzRrHp1VMkGIwWnRkWTjXlePsMM=";
+      sha256 = "XwoGf4Se3Yfxmi7uNzRrHp1VMkGIwWnRkWTjXlePsMM=";
       fetchSubmodules = true;
     };
     postPatch = ''
