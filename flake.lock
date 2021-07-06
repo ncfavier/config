@@ -35,22 +35,6 @@
         "type": "github"
       }
     },
-    "monade.li": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1605220504,
-        "narHash": "sha256-QbcZxrhYMN+UvjOpb1Ofc9bm0LNq36P8l1kPnB7pCrU=",
-        "owner": "ncfavier",
-        "repo": "monade.li",
-        "rev": "cd734482e257b1a0f57bc1e8c6772a6c93e93e89",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ncfavier",
-        "repo": "monade.li",
-        "type": "github"
-      }
-    },
     "nix-dns": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -133,14 +117,14 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "monade.li": "monade.li",
         "nix-dns": "nix-dns",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nixos-stable": "nixos-stable",
         "nur": "nur",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "www": "www"
       }
     },
     "simple-nixos-mailserver": {
@@ -196,6 +180,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "www": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1625573575,
+        "narHash": "sha256-9DUJ2YfkclV8VokmaE+zBi9J3m4uJew0Zwo5/ny0IVI=",
+        "owner": "ncfavier",
+        "repo": "monade.li",
+        "rev": "8897d5e3bd3739c9fd81750725e7b738dafb2c37",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "repo": "monade.li",
         "type": "github"
       }
     }

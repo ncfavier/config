@@ -20,7 +20,7 @@ in {
     in {
       ${my.domain} = ssl // {
         serverAliases = [ "www.${my.domain}" ];
-        root = inputs.${my.domain};
+        root = inputs.www;
       };
 
       "up.${my.domain}" = ssl // {

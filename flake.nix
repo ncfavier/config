@@ -22,7 +22,7 @@
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixos";
     };
-    "monade.li" = {
+    www = {
       url = "github:ncfavier/monade.li";
       flake = false;
     };
