@@ -1,10 +1,4 @@
 { theme, pkgs, pkgsPR, ... }: {
-  nixpkgs.overlays = [ (self: super: {
-    ibus-engines = super.ibus-engines // {
-      mozc = (pkgsPR 129249 "XvdMHwgKO0TwUeaFLkaK1c6/HOc5ytnA6bNIREbZYWY=").ibus-engines.mozc;
-    };
-  }) ];
-
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [

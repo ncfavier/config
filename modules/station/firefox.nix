@@ -310,6 +310,7 @@ in {
               done >& "$ff"
               kill $(jobs -p)
           }
+          exec {ff}>&-
       fi &
     '';
   };

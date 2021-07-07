@@ -8,6 +8,8 @@ in {
         format = "yaml";
         key = here.hostname;
       };
+
+      networking.firewall.trustedInterfaces = [ interface ];
     })
 
     (mkIf here.isServer {
@@ -28,7 +30,6 @@ in {
 
         firewall = {
           allowedUDPPorts = [ port ];
-          trustedInterfaces = [ interface ];
           extraCommands = ''
             ip46tables -P FORWARD DROP
             ip46tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT

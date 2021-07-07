@@ -20,8 +20,8 @@
     trustedUsers = [ "root" "@wheel" ];
 
     binaryCaches = [
-      "https://nix-community.cachix.org"
-      "https://ncfavier.cachix.org"
+      "https://nix-community.cachix.org?priority=100"
+      "https://ncfavier.cachix.org?priority=100"
     ];
     binaryCachePublicKeys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -63,7 +63,6 @@
     (lowPrio nix-bash-completions)
     nix-index
     nix-diff
-    nix-du
     nix-top
     nix-tree
     nix-prefetch-github

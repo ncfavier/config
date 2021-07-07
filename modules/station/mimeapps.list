@@ -18,7 +18,7 @@ audio/mpeg=mpv.desktop;
 text/plain=vim.desktop;
 application/x-shellscript=vim.desktop;
 text/x-csrc=vim.desktop;
-image/jpeg=feh.desktop;gimp.desktop;
+image/jpeg=gimp.desktop;feh.desktop;
 image/png=gimp.desktop;feh.desktop;
 image/webp=feh.desktop;
 
