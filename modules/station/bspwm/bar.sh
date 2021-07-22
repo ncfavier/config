@@ -1,7 +1,8 @@
 shopt -s nullglob lastpipe
 
 pidfile=$XDG_RUNTIME_DIR/bar.pid
-[[ -e $pidfile ]] && kill "$(< $pidfile)" 2> /dev/null
+[[ -e $pidfile ]] && kill "$(< "$pidfile")" 2> /dev/null
+pkill -x lemonbar
 echo "$$" > "$pidfile"
 
 . config env
@@ -93,10 +94,7 @@ for f in "${xft_fonts[@]}"; do
     font_args+=(-o "$offset" -f "$f")
 done
 
-# Set lemonbar to be just above the root window to prevent displaying over other windows
-xdo above -t "$(xdo id -n root)" "$(sleep 0.1; xdo id -m -n lemonbar)" &
-
-trap 'kill $(jobs -p)' EXIT
+trap 'kill $(jobs -p) 2> /dev/null' EXIT
 
 #
 # Data feed
@@ -117,7 +115,7 @@ trap 'kill $(jobs -p)' EXIT
     trap 'echo Ptoggle' USR2
 
     # Kill all child processes on exit
-    trap 'kill $(jobs -p)' EXIT
+    trap 'kill $(jobs -p) 2> /dev/null' EXIT
 
     # WM info
     bspc subscribe report &
@@ -410,5 +408,9 @@ lemonbar -g x32 \
 while IFS= read -r command; do
     eval "$command" & disown
 done &
+
+# Set lemonbar to be just above the root window to prevent displaying over other windows
+sleep 0.1s
+xdo above -t "$(xdo id -n root)" -m -n lemonbar 2> /dev/null &
 
 wait

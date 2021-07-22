@@ -12,8 +12,7 @@
       uriToPath = writeShellScript "uri-to-path" ''
         uri=$1
         [[ $uri == trash:* ]] &&
-            uri=$(${glib.bin}/bin/gio info -a standard::target-uri "$uri" |
-                  ${gawk}/bin/awk '$1 == "standard::target-uri:" { print $2 }')
+            uri=file://''${XDG_DATA_HOME:-~/.local/share}/Trash/files''${uri#trash://}
         uri=''${uri#file://}
         printf '%b' "''${uri//%/'\x'}"
       '';

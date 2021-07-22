@@ -25,6 +25,8 @@
     sv_inactivekick_time 0
   '';
 in {
+  programs.steam.enable = true;
+
   hm = {
     home.packages = with pkgs; [
       teeworlds

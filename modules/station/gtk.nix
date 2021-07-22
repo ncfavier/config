@@ -46,7 +46,8 @@
           Net/IconThemeName "${config.hm.gtk.iconTheme.name}"
         '';
         onChange = ''
-          timeout 1s ${pkgs.xsettingsd}/bin/xsettingsd &
+          echo Reloading XSETTINGS
+          timeout 3s ${pkgs.xsettingsd}/bin/xsettingsd 2> /dev/null &
         '';
       };
     };

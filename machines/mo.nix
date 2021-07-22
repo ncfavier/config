@@ -77,6 +77,28 @@
     };
   };
 
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.epson-escpr ];
+  };
+
+  hardware.sane = {
+    enable = true;
+    extraBackends = [
+      pkgs.epkowa
+      (pkgs.writeTextFile {
+        name = "epkowa.conf";
+        destination = "/etc/sane.d/epkowa.conf";
+        text = ''
+          usb
+          net 192.168.1.63
+        '';
+      })
+    ];
+  };
+
+  services.avahi.enable = true;
+
   my.hashedPassword = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
 
   services.syncthing.declarative.cert = builtins.toFile "syncthing-cert" ''

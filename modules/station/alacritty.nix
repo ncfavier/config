@@ -4,12 +4,12 @@
       rustPlatform = super.rustPlatform // {
         buildRustPackage = o:
           super.rustPlatform.buildRustPackage (removeAttrs o [ "cargoSha256" ] // {
-            cargoHash = "sha256-m8O88vYFstDfP/59uFzET5ODyAO4pBj0lOceJ9Ml8dI=";
+            cargoHash = "sha256-g2IHSEwLKtsygzgDOCd8alzYO9EYc6oxvj94g8oe7RI=";
             src = self.fetchFromGitHub {
               owner = "ncfavier";
               repo = "alacritty";
               rev = "reload-on-usr1";
-              sha256 = "sha256-XueRjS+JzWbtvvJ5puK1AA8Xr6kDCs9R/H5Ws5PQDjQ=";
+              sha256 = "YCCJEiG33zKr6qUU0zFhl3856TP7gvPHeGTyrgCTqAw=";
             };
           });
       };

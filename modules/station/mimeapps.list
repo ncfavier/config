@@ -43,3 +43,4 @@ x-scheme-handler/magnet=transmission-gtk.desktop
 x-scheme-handler/gemini=amfora.desktop
 image/png=feh.desktop
 image/webp=feh.desktop
+image/jpeg=feh.desktop

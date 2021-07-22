@@ -69,11 +69,12 @@ in {
         (writeShellScriptBin "wg-toggle" ''
           ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }
           fwmark=$(sudo wg show ${interface} fwmark) || exit
-          cond=(not from all fwmark "$fwmark")
-          if ip -j rule list "''${cond[@]}" | jq -e 'length > 0' > /dev/null; then
-              ip46 rule del "''${cond[@]}"
+          if ip -j rule list lookup "$fwmark" | jq -e 'length > 0' > /dev/null; then
+              ip46 rule del lookup main suppress_prefixlength 0
+              ip46 rule del lookup "$fwmark"
           else
-              ip46 rule add "''${cond[@]}" table "$fwmark"
+              ip46 rule add not fwmark "$fwmark" lookup "$fwmark"
+              ip46 rule add lookup main suppress_prefixlength 0
           fi
         '')
         (writeShellScriptBin "wg-exempt" ''
