@@ -218,22 +218,23 @@ _pkgs() {
 complete -F _pkgs pkgs
 
 command_not_found_handle() {
-    if [[ ! -t 1 ]]; then
-        printf '%s: command not found\n' "$1" >&2
-        return 127
-    fi
     local attrs IFS=$' \t\n'
-    readarray -t attrs < <(nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1")
-    for (( i = 0; i < ${#attrs[@]}; i++ )); do
-        attrs[i]=${attrs[i]%.out}
-    done
-    if (( ${#attrs[@]} )); then
-        printf '%s\n' "$1: command not found. It is provided by the following attributes:"
-        for attr in "${attrs[@]}"; do
-            echo "  $attr"
-        done
+    if [[ $1 == *@* ]]; then
+        ssh -qt "${1#@}" "${@:2}"
     else
-        printf '%s: command not found\n' "$1" >&2
+        printf '%s\n' "$1: command not found" >&2
+        if [[ -t 1 ]] && {
+            readarray -t attrs < <(nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1")
+            for (( i = 0; i < ${#attrs[@]}; i++ )); do
+                attrs[i]=${attrs[i]%.out}
+            done
+            (( ${#attrs[@]} ))
+        }; then
+            echo "It is provided by the following attributes:"
+            for attr in "${attrs[@]}"; do
+                echo "  $attr"
+            done
+        fi
         return 127
     fi
 }

@@ -94,7 +94,6 @@
       historyIgnore = [ "ls" "l" "ll" "la" ];
       shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
       sessionVariables._ZL_CD = "cd";
-      shellAliases = mapAttrs (n: _: "ssh -qt ${n}") my.machines;
       initExtra = ''
         ${readFile ./functions.bash}
         ${readFile ./completion.bash}

@@ -21,6 +21,7 @@ in {
         hosts = concatStringsSep " " (
           [
             m.hostname
+            "${m.hostname}.home"
             m.wireguard.ipv4 m.wireguard.ipv6
           ] ++ optionals m.isServer [
             my.domain "*.${my.domain}"
