@@ -1,4 +1,4 @@
-{ inputs, lib, config, ... }: with lib; {
+{ inputs, lib, config, pkgs, ... }: with lib; {
   imports = [ inputs.sops-nix.nixosModule ];
 
   options.sops.secrets = mkOption {
@@ -15,6 +15,11 @@
       gnupgHome = "${config.my.home}/.gnupg";
       sshKeyPaths = [];
       defaultSopsFormat = "binary";
+    };
+
+    environment = {
+      systemPackages = [ pkgs.sops ];
+      sessionVariables.SOPS_PGP_FP = my.pgpFingerprint;
     };
   };
 }

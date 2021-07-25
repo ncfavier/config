@@ -47,11 +47,6 @@
       modules = attrValues self.nixosModules ++ [ local ];
     }) (importDir ./machines);
 
-    devShell.${system} = pkgs.mkShell {
-      packages = with pkgs; [ sops ];
-      SOPS_PGP_FP = my.pgpFingerprint;
-    };
-
     packages.${system}.iso = (nixosSystem {
       inherit system;
       specialArgs = { inherit inputs; };
