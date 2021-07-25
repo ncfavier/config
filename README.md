@@ -47,6 +47,8 @@ replicates as much as possible of the environment available in module files:
   and a central node for my WireGuard network and for Syncthing.
 - [`mo`](https://github.com/ncfavier/config/blob/main/machines/mo.nix) is my
   laptop, a Lenovo ThinkPad T420.
+- [`fu`](https://github.com/ncfavier/config/blob/main/machines/fu.nix) is my
+  desktop computer, a HP Pavilion p6-2030.
 
 #### [`secrets`](https://github.com/ncfavier/config/tree/main/secrets) contains [sops](https://github.com/mozilla/sops)-encrypted secrets.
 
