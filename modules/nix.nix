@@ -61,7 +61,7 @@
   environment.systemPackages = with pkgs; [
     cachix
     (lowPrio nix-bash-completions)
-    nix-index
+    (pkgs.nix-index.override { nix = nixFlakes; })
     nix-diff
     nix-top
     nix-tree
