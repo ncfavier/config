@@ -31,32 +31,25 @@ in {
     inherit (config.my) group;
   };
 
-  # TODO linger module
-  system.activationScripts."linger-${my.username}" = stringAfter [ "users" ] ''
-    /run/current-system/systemd/bin/loginctl enable-linger ${my.username}
-  '';
-
-  hm = {
-    systemd.user.services.tmux-weechat = {
-      Unit = {
-        Description = "WeeChat in a tmux session";
-        Wants = [ "network-online.target" ];
-        After = [ "network-online.target" "nss-lookup.target" ];
-        X-RestartIfChanged = false;
-      };
-      Service = {
-        Type = "forking";
-        ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
-        ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
-      };
-      Install.WantedBy = [ "default.target" ];
+  systemd.services."tmux-weechat-${my.username}" = {
+    description = "WeeChat in a tmux session";
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" "nss-lookup.target" ];
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      User = my.username;
+      Group = config.my.group;
+      Type = "forking";
+      ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
+      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
     };
-
-    xdg.configFile = mapAttrs' (name: _: {
-      name = "weechat/${name}";
-      value.source = utils.mkMutableSymlink (./. + "/${name}");
-    }) (filterAttrs (name: _: hasSuffix ".conf" name) (builtins.readDir ./.));
+    restartIfChanged = false;
   };
+
+  hm.xdg.configFile = mapAttrs' (name: _: {
+    name = "weechat/${name}";
+    value.source = utils.mkMutableSymlink (./. + "/${name}");
+  }) (filterAttrs (name: _: hasSuffix ".conf" name) (builtins.readDir ./.));
 
   networking.firewall.allowedTCPPorts = [ relayPort ];
 }
