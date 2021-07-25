@@ -9,7 +9,7 @@
               owner = "ncfavier";
               repo = "alacritty";
               rev = "reload-on-usr1";
-              sha256 = "YCCJEiG33zKr6qUU0zFhl3856TP7gvPHeGTyrgCTqAw=";
+              sha256 = "szPB8A8CGqU5Sf7evPOP/2xgWN5IFal4z95Yt44bNsM=";
             };
           });
       };
