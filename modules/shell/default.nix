@@ -29,7 +29,6 @@
     python3
     neofetch
     lesspass-cli
-    pass
     tmsu
     (shellScriptWithDeps "upload" ./upload.sh [])
     (shellScriptWithDeps "order" ./order.sh [])
@@ -41,6 +40,10 @@
     LESSHISTFILE = "-";
     MANOPT = "--no-hyphenation";
     MANPAGER = "less -+F";
+    GROFF_SGR = "1";
+    GROFF_BIN_PATH = "${pkgs.writeShellScriptBin "grotty" ''
+      exec ${pkgs.groff}/bin/grotty -i "$@"
+    ''}/bin";
   };
 
   documentation = {
@@ -62,7 +65,7 @@
       ffprobe = "ffprobe -hide_banner";
       free = "free -h";
       ip = "ip --color=auto";
-      ls = "ls --color=auto --group-directories-first";
+      ls = "ls -h --color=auto --group-directories-first";
       lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
       mv = "mv -i";
 
@@ -70,8 +73,8 @@
       C = "LC_ALL=C ";
       dp = "declare -p";
       fc-grep = "fc-list | rg -i";
-      l = "ls -lh";
-      ll = "ls -lah";
+      l = "ls -l";
+      ll = "ls -la";
       o = "xdg-open";
       tall = "tail -f -n +1";
       s = "sudo systemctl";

@@ -37,6 +37,7 @@ in {
           "gfx.e10s.font-list.shared" = false; # workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1714282
           "layers.acceleration.force-enabled" = true;
           "network.trr.mode" = "5";
+          "places.history.expiration.max_pages" = "9999999";
           "security.dialog_enable_delay" = "0";
           "security.fileuri.strict_origin_policy" = false;
           "security.mixed_content.block_active_content" = false;
