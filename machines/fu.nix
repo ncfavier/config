@@ -1,7 +1,7 @@
-{ hardware, config, modulesPath, pkgs, ... }: {
-  imports = [
-    "${modulesPath}/installer/scan/not-detected.nix"
-    hardware.common-cpu-intel-sandy-bridge
+{ hardware, config, pkgs, ... }: {
+  imports = with hardware; [
+    notDetected
+    common-cpu-intel-sandy-bridge
   ];
 
   boot = {

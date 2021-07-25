@@ -206,17 +206,6 @@ mk() ( # runs make using the closest makefile in the hierarchy
     make -f "${files[0]}" "$@"
 )
 
-nb() {
-    nix-build ~/.nix-defexpr --no-out-link -A "$@"
-}
-_nb() {
-    local cur prev words cword
-    _completion_loader nix-build
-    _init_completion -n =:
-    _nix_attr_paths "import $HOME/nix-defexpr"
-}
-complete -F _nb nb
-
 command_not_found_handle() {
     local attrs IFS=$' \t\n'
     if [[ $1 == *@* ]]; then

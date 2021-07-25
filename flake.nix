@@ -41,7 +41,7 @@
       inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
       specialArgs = {
         inherit inputs;
-        hardware = inputs.nixos-hardware.nixosModules;
+        hardware = nixos.nixosModules // inputs.nixos-hardware.nixosModules;
         here = my.machines.${hostname};
       };
       modules = attrValues self.nixosModules ++ [ local ];

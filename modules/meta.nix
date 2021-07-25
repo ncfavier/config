@@ -57,6 +57,9 @@
               attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
               VERBOSE=1 exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation
               ;;
+          eval)
+              exec nix eval --json -f ~/.nix-defexpr "$@" | jq -r .
+              ;;
           env) # meant to be sourced
               ${exportToBash config.lib.shellEnv}
               ;;
