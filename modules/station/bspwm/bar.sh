@@ -82,7 +82,7 @@ debounce() {
 # Variables
 
 battery=(/sys/class/power_supply/BAT*)
-default_layout=fr # TODO
+read -r default_layout < <(xkb-switch -l)
 bold=3
 
 font_args=()
@@ -124,7 +124,7 @@ trap 'kill $(jobs -p) 2> /dev/null' EXIT
     xtitle -sf 'T%s\n' | debounce 0.1 &
 
     # X keyboard layout
-    xkb-switch -W | sed -u 's/^/K/;s/(.*//' &
+    { xkb-switch -p; xkb-switch -W; } | sed -u 's/^/K/' &
 
     while true; do
         # Clock
@@ -295,6 +295,7 @@ while read -rn 1 event; do
             if [[ $layout == "$default_layout" ]]; then
                 keyboard=
             else
+                layout=${layout%%(*}
                 escape layout
                 keyboard=" $layout"
                 pad_right keyboard
