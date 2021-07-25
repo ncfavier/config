@@ -63,8 +63,13 @@
           env) # meant to be sourced
               ${exportToBash config.lib.shellEnv}
               ;;
+          @*)
+              host=''${cmd#@}
+              hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
+              exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@"
+              ;;
           *)
-              exec sudo nixos-rebuild --flake "$configPath" -v "$cmd" "$@"
+              exec sudo nixos-rebuild -v --flake "$configPath" "$cmd" "$@"
               ;;
       esac
     '';
