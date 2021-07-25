@@ -77,6 +77,11 @@
           devices = allDevicesExceptPhone;
           versioning = trashcan;
         };
+        password-store = {
+          path = config.hm.programs.password-store.settings.PASSWORD_STORE_DIR;
+          devices = allDevices;
+          versioning = trashcan;
+        };
       };
     };
   };
