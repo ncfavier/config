@@ -98,8 +98,8 @@
       shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
       sessionVariables._ZL_CD = "cd";
       initExtra = ''
-        ${readFile ./functions.bash}
         ${readFile ./completion.bash}
+        ${readFile ./functions.bash}
 
         stty -ixon
         set -b +H

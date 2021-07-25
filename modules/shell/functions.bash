@@ -206,6 +206,14 @@ mk() ( # runs make using the closest makefile in the hierarchy
     make -f "${files[0]}" "$@"
 )
 
+hm() {
+    if (( ! $# )); then
+        set -- status
+    fi
+    sudo systemctl "$@" home-manager-$USER.service
+}
+complete_alias hm _systemctl systemctl
+
 command_not_found_handle() {
     local attrs IFS=$' \t\n'
     if [[ $1 == *@* ]]; then
