@@ -42,11 +42,6 @@ in {
     };
   };
 
-  swapDevices = [ {
-    device = "/swap";
-    size = 2048;
-  } ];
-
   networking.interfaces.${interface} = {
     ipv4.addresses = [ {
       address = "202.61.245.252";
