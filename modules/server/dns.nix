@@ -70,6 +70,7 @@ in {
           ''"fu.home. A 192.168.1.2"''
           ''"mo.home. A 192.168.1.3"''
           ''"tsu.home. A 192.168.1.4"''
+          ''"printer.home. A 192.168.1.63"''
         ];
         local-data-ptr = concatLists (mapAttrsToList (n: m: [
           ''"${m.wireguard.ipv4} ${n}."''
