@@ -19,15 +19,6 @@
 
     trustedUsers = [ "root" "@wheel" ];
 
-    binaryCaches = [
-      "https://nix-community.cachix.org?priority=100"
-      "https://ncfavier.cachix.org?priority=100"
-    ];
-    binaryCachePublicKeys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "ncfavier.cachix.org-1:RpBMt+EIZOwVwU1CW71cWZAVJ9DCNbCMsX8VOGSf3ME="
-    ];
-
     registry = {
       config.flake = inputs.self;
       nixos.flake = inputs.nixos;
@@ -59,7 +50,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    cachix
     (lowPrio nix-bash-completions)
     (pkgs.nix-index.override { nix = nixFlakes; })
     nix-diff
