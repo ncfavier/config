@@ -21,9 +21,10 @@ escape() {
 
 [[ $ROFI_INFO ]] && eval "$ROFI_INFO"
 
-if [[ ! -v artist ]]; then
+if (( ROFI_RETV == 0 )); then
     opt prompt artist
     opt markup-rows true
+    opt no-custom true
     artist=; row '*'
     mpc list artist |
     while IFS= read -r artist; do
