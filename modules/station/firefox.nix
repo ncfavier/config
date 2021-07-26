@@ -44,8 +44,6 @@ in {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         };
         userChrome = ''
-          /* TODO remove the unnecessary cruft */
-
           @-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml) {
             :root {
               --bg: ${background};
@@ -66,14 +64,6 @@ in {
               --toolbar-field-focus-border-color: var(--cold) !important;
               --autocomplete-popup-highlight-background: var(--cold) !important;
               --autocomplete-popup-highlight-color: var(--bg) !important;
-            }
-
-            ::selection {
-              background-color: var(--cold) !important;
-              color: var(--bg) !important;
-            }
-
-            toolbar {
               --tab-min-height: 28px !important;
               --tabs-border-color: transparent !important;
               --tabs-top-border-width: 0px !important;
@@ -84,8 +74,9 @@ in {
               --backbutton-border-color: transparent !important;
             }
 
-            #tabbrowser-tabs {
-              background: var(--toolbar-bgcolor) !important;
+            ::selection {
+              background-color: var(--cold) !important;
+              color: var(--bg) !important;
             }
 
             .tabbrowser-tab {
@@ -191,15 +182,6 @@ in {
               font-size: var(--font-size) !important;
             }
 
-            #pageActionButton,
-            #pageActionSeparator {
-              display: none;
-            }
-
-            #PanelUI-button {
-              border: none !important;
-            }
-
             .bookmark-item {
               padding: 4px !important;
             }
@@ -274,7 +256,7 @@ in {
             }
           }
 
-          @-moz-document url-prefix(https://github.com/ncfavier) {
+          @-moz-document url-prefix(https://github.com/${my.githubUsername}) {
             .user-status-container {
               display: none;
             }

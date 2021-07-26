@@ -86,6 +86,8 @@
     };
   };
 
+  environment.systemPackages = [ config.services.syncthing.package ];
+
   hm.home.file = {
     "${syncedFolders.my.path}/.stignore".text = ''
       .git

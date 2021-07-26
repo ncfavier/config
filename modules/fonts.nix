@@ -17,6 +17,7 @@
           source-han-serif
           source-han-sans
           source-han-mono
+          roboto
           twitter-color-emoji
           noto-fonts-emoji
           symbola

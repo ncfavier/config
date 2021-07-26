@@ -19,6 +19,10 @@
     ];
   };
 
+  environment.systemPackages = with pkgs; [
+    simple-scan
+  ];
+
   services.avahi = {
     enable = true;
     nssmdns = true;

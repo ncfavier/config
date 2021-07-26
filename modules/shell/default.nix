@@ -6,6 +6,7 @@
     man-pages
     man-pages-posix
     rlwrap
+    bat
     ripgrep
     file
     fd
