@@ -53,7 +53,7 @@ replicates as much as possible of the environment available in module files:
 #### [`secrets`](https://github.com/ncfavier/config/tree/main/secrets) contains [sops](https://github.com/mozilla/sops)-encrypted secrets.
 
 They are decrypted on system activation by [sops-nix](https://github.com/Mic92/sops-nix)
-using my GPG private key (see the [`sops`](https://github.com/ncfavier/config/blob/main/modules/sops.nix) module).
+using my GPG private key (see the [`secrets`](https://github.com/ncfavier/config/blob/main/modules/secrets.nix) module).
 
 #### [`lib`](https://github.com/ncfavier/config/blob/main/lib/default.nix) defines an extension of the Nixpkgs lib with
 
