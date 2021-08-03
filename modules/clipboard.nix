@@ -1,47 +1,63 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    xsel
-    (writeShellScriptBin "clip" ''
-      clipin()  { xsel -bi; }
-      clipout() { xsel -bo 2> /dev/null; }
+{ lib, here, pkgs, ... }: with lib; {
+  config = mkMerge [
+    {
+      environment.systemPackages = with pkgs; [
+        xsel
+        (writeShellScriptBin "clip" ''
+          clipin()  { xsel -bi; }
+          clipout() { xsel -bo 2> /dev/null; }
 
-      newline=0 edit=0 unfold=0
-      while getopts :neu o; do case $o in
-          n) newline=1;;
-          e) edit=1;;
-          u) unfold=1;;
-      esac done
-      shift "$(( OPTIND - 1 ))"
+          newline=0 edit=0 unfold=0
+          while getopts :neu o; do case $o in
+              n) newline=1;;
+              e) edit=1;;
+              u) unfold=1;;
+          esac done
+          shift "$(( OPTIND - 1 ))"
 
-      if (( edit )); then
-          tmpfile=$(mktemp) || exit
-          clipout > "$tmpfile"
-          ''${EDITOR:-vim} "$tmpfile"
-          clipin < "$tmpfile"
-          rm -f -- "$tmpfile"
-      elif (( unfold )); then
-          clipout | tr -s '[:space:]' '[ *]' | clipin
-      else
-          if [[ -t 0 ]] && (( ! $# )); then
-              clipout | awk 1
+          if (( edit )); then
+              tmpfile=$(mktemp) || exit
+              clipout > "$tmpfile"
+              ''${EDITOR:-vim} "$tmpfile"
+              clipin < "$tmpfile"
+              rm -f -- "$tmpfile"
+          elif (( unfold )); then
+              clipout | tr -s '[:space:]' '[ *]' | clipin
           else
-              if (( $# )); then
-                  data=$*
+              if [[ -t 0 ]] && (( ! $# )); then
+                  clipout | awk 1
               else
-                  data=$(< /dev/stdin)
+                  if (( $# )); then
+                      data=$*
+                  else
+                      data=$(< /dev/stdin)
+                  fi
+                  if (( newline )); then
+                      printf '%s\n' "$data"
+                  else
+                      printf '%s' "$data"
+                  fi | clipin
               fi
-              if (( newline )); then
-                  printf '%s\n' "$data"
-              else
-                  printf '%s' "$data"
-              fi | clipin
           fi
-      fi
-    '')
-  ];
+        '')
+      ];
 
-  programs.bash.shellAliases = {
-    cxa = "clip | xargs";
-    cxan = "clip | xargs -d'\\n'";
-  };
+      programs.bash.shellAliases = {
+        cxa = "clip | xargs";
+        cxan = "clip | xargs -d'\\n'";
+      };
+    }
+
+    (mkIf here.isStation {
+      hm = {
+        home.packages = [ pkgs.clipster ];
+        xdg.configFile."clipster/clipster.ini".text = ''
+          [clipster]
+          default_selection = CLIPBOARD
+          history_size = 0
+        '';
+        xsession.windowManager.bspwm.startupPrograms = [ "clipster -d" ];
+      };
+    })
+  ];
 }

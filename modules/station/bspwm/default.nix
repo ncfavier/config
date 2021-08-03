@@ -1,4 +1,4 @@
-{ lib, config, theme, pkgs, ... }: with lib; let
+{ lib, config, pkgs, ... }: with lib; let
   bar = with pkgs; shellScriptWithDeps "bar" ./bar.sh [
     config-cli lemonbar-xft xdo xtitle xkb-switch
   ];
@@ -7,7 +7,7 @@ in {
     xsession.windowManager.bspwm = {
       enable = true;
       monitors.focused = [ "1" "2" "3" "4" "5" "6" "web" "mail" "chat" "files" ];
-      settings = with theme; {
+      settings = with config.theme; {
         focused_border_color = foreground;
         normal_border_color = foregroundAlt;
         presel_feedback_color = hot;
@@ -59,9 +59,12 @@ in {
       startupPrograms = [
         "${bar}/bin/bar" # ensure bspwmrc changes if bar.sh changes
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-        "ibus-daemon --daemonize --replace --xim"
       ];
     };
+
+    xdg.configFile."bspwm/bspwmrc".onChange = ''
+      "$XDG_CONFIG_HOME"/bspwm/bspwmrc
+    '';
 
     home.packages = with pkgs; [
       (shellScriptWithDeps "wm" ./wm.sh [ xtitle ])
@@ -141,7 +144,7 @@ in {
     };
 
     xdg.configFile."sxhkd/sxhkdrc".onChange = ''
-      ${pkgs.procps}/bin/pkill -USR1 -x sxhkd || true
+      ${pkgs.procps}/bin/pkill ''${VERBOSE+-e} -USR1 -x sxhkd || true
     '';
   };
 

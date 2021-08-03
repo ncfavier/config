@@ -1,5 +1,8 @@
 { inputs, lib, config, pkgs, ... }: with lib; {
-  imports = [ inputs.sops-nix.nixosModule ];
+  imports = [
+    inputs.sops-nix.nixosModule
+    (mkAliasOptionModule [ "secrets" ] [ "sops" "secrets" ])
+  ];
 
   options.sops.secrets = mkOption {
     type = with types; attrsOf (submodule ({ config, name, ... }: {
@@ -9,8 +12,6 @@
   };
 
   config = {
-    _module.args.secrets = config.sops.secrets;
-
     sops = {
       gnupgHome = "${config.my.home}/.gnupg";
       sshKeyPaths = [];

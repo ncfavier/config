@@ -79,7 +79,7 @@
 
   my.hashedPassword = "$6$rkmgv7prXu83oZqj$ydHDcvrUrd43Cvj38xDf6A2vQEAFIATX1O9XSRdUQbyHV/w6pc6qmAEmxZ4xAl3b3zgmVVyY5jg9QIaLndoAK/";
 
-  services.syncthing.declarative.cert = builtins.toFile "syncthing-cert" ''
+  services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----
     MIIBmjCCASCgAwIBAgIIRaL8rxe74e0wCgYIKoZIzj0EAwMwFDESMBAGA1UEAxMJ
     c3luY3RoaW5nMB4XDTE4MDcwMzIwMTExM1oXDTQ5MTIzMTIzNTk1OVowFDESMBAG

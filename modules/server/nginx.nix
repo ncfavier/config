@@ -1,4 +1,4 @@
-{ inputs, lib, syncedFolders, pkgs, ... }: with lib; let
+{ inputs, lib, config, pkgs, ... }: with lib; let
   uploadsRoot = "/run/nginx/uploads";
 in {
   services.nginx = {
@@ -43,7 +43,7 @@ in {
     };
   };
 
-  systemd.services.nginx.serviceConfig.BindReadOnlyPaths = "${syncedFolders.uploads.path}:${uploadsRoot}";
+  systemd.services.nginx.serviceConfig.BindReadOnlyPaths = "${config.synced.uploads.path}:${uploadsRoot}";
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

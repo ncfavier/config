@@ -1,4 +1,4 @@
-{ lib, config, theme, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   services.xserver = {
     enable = true;
     displayManager.startx.enable = true;
@@ -13,10 +13,9 @@
 
       importedVariables = [ "PATH" ];
       numlock.enable = true;
-      initExtra = with pkgs.xorg; ''
+      initExtra = ''
         [[ -f ~/.fehbg ]] && ~/.fehbg &
-        ${xset}/bin/xset -b
-        ${xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'
+        ${pkgs.xorg.xset}/bin/xset -b
       '';
 
       pointerCursor = {
@@ -25,6 +24,9 @@
         size = 16;
       };
     };
+
+    systemd.user.services.setxkbmap.Service.ExecStartPost =
+      "${pkgs.xorg.xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'";
 
     programs.bash.profileExtra = ''
       if [[ ! $DISPLAY && $XDG_VTNR == 1 ]]; then
@@ -44,7 +46,7 @@
       xlibs.xev
     ];
 
-    xresources.properties = with theme; {
+    xresources.properties = with config.theme; {
       "*color0" = black;
       "*color1" = hot;
       "*color2" = cold;
@@ -70,13 +72,6 @@
     services.picom = {
       enable = true;
       vSync = true;
-    };
-
-    services.redshift = {
-      enable = true;
-      latitude = 48.0;
-      longitude = 2.0;
-      settings.redshift.fade = false;
     };
   };
 }

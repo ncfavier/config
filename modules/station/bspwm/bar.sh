@@ -79,6 +79,10 @@ debounce() {
     done
 }
 
+cleanup_on_exit() {
+    trap 'kill $(jobs -p) 2> /dev/null' EXIT
+}
+
 # Variables
 
 battery=(/sys/class/power_supply/BAT*)
@@ -94,11 +98,11 @@ for f in "${xft_fonts[@]}"; do
     font_args+=(-o "$offset" -f "$f")
 done
 
-trap 'kill $(jobs -p) 2> /dev/null' EXIT
-
 #
 # Data feed
 #
+
+cleanup_on_exit
 
 {
 
@@ -114,8 +118,7 @@ trap 'kill $(jobs -p) 2> /dev/null' EXIT
     # Toggle the battery display format on USR2
     trap 'echo Ptoggle' USR2
 
-    # Kill all child processes on exit
-    trap 'kill $(jobs -p) 2> /dev/null' EXIT
+    cleanup_on_exit
 
     # WM info
     bspc subscribe report &
@@ -124,7 +127,11 @@ trap 'kill $(jobs -p) 2> /dev/null' EXIT
     xtitle -sf 'T%s\n' | debounce 0.1 &
 
     # X keyboard layout
-    { xkb-switch -p; xkb-switch -W; } | sed -u 's/^/K/' &
+    {
+        cleanup_on_exit
+        xkb-switch -p
+        xkb-switch -W
+    } | sed -u 's/^/K/' &
 
     while true; do
         # Clock

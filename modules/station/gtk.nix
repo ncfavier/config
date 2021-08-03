@@ -1,4 +1,4 @@
-{ lib, config, syncedFolders, theme, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   hm = {
     home.packages = [ pkgs.lxappearance ];
 
@@ -10,16 +10,16 @@
       gtk3 = {
         bookmarks = [
           "file://${config.my.home}/git"
-          "file://${syncedFolders.my.path}"
-          "file://${syncedFolders.pictures.path}"
-          "file://${syncedFolders.music.path}"
+          "file://${config.synced.my.path}"
+          "file://${config.synced.pictures.path}"
+          "file://${config.synced.music.path}"
           "file://${config.my.home}/videos"
         ];
         extraConfig = {
           gtk-button-images = true;
           gtk-menu-images = true;
-          gtk-xft-antialias = true;
-          gtk-xft-hinting = true;
+          gtk-xft-antialias = 1;
+          gtk-xft-hinting = 1;
         };
       };
       font = {
@@ -28,11 +28,11 @@
       };
       theme = {
         package = pkgs.flat-remix-gtk;
-        name = theme.gtkTheme;
+        name = config.theme.gtkTheme;
       };
       iconTheme = {
         package = pkgs.flat-remix-icon-theme;
-        name = theme.iconTheme;
+        name = config.theme.iconTheme;
       };
     };
 
@@ -46,7 +46,6 @@
           Net/IconThemeName "${config.hm.gtk.iconTheme.name}"
         '';
         onChange = ''
-          echo Reloading XSETTINGS
           timeout 3s ${pkgs.xsettingsd}/bin/xsettingsd 2> /dev/null &
         '';
       };

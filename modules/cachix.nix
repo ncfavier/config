@@ -1,5 +1,5 @@
 { lib, config, pkgs, ... }: with lib; {
-  sops.secrets.cachix = {
+  secrets.cachix = {
     owner = my.username;
     inherit (config.my) group;
     path = "${config.hm.xdg.configHome}/cachix/cachix.dhall";
@@ -9,8 +9,8 @@
 
   nix = {
     binaryCaches = [
-      "https://nix-community.cachix.org?priority=100"
-      "https://ncfavier.cachix.org?priority=100"
+      "https://nix-community.cachix.org"
+      "https://ncfavier.cachix.org"
     ];
 
     binaryCachePublicKeys = [

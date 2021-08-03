@@ -1,4 +1,4 @@
-{ lib, config, syncedFolders, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   hm = {
     home.packages = with pkgs; [ xdg-user-dirs ];
 
@@ -12,8 +12,8 @@
         download    = config.my.home;
         documents   = config.my.home;
         templates   = config.my.home;
-        music       = syncedFolders.music.path;
-        pictures    = syncedFolders.pictures.path;
+        music       = config.synced.music.path;
+        pictures    = config.synced.pictures.path;
         videos      = "${config.my.home}/videos";
         publicShare = "${config.my.home}/public";
       };

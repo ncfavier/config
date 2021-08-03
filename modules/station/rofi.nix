@@ -1,6 +1,6 @@
-{ lib, theme, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   hm = {
-    programs.rofi = with theme; {
+    programs.rofi = with config.theme; {
       enable = true;
       package = with pkgs; rofi.override {
         symlink-dmenu = true;

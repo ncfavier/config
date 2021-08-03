@@ -134,17 +134,17 @@ weechat_fifo() {
 
 irg() {
     . config env
-    rg -N "${@:2}" "${syncedFolders[irc-logs]}/$1"
+    rg -N "${@:2}" "${synced[irc-logs]}/${1%.weechatlog}.weechatlog"
 }
 _irg() {
     if (( COMP_CWORD == 1 )); then
         . config env
-        readarray -t COMPREPLY < <(compgen -f "${syncedFolders[irc-logs]}/$2")
+        readarray -t COMPREPLY < <(compgen -f "${synced[irc-logs]}/$2")
         if (( ${#COMPREPLY[@]} == 1 )) && [[ -d ${COMPREPLY[0]} ]]; then
             COMPREPLY[0]+=/
             compopt -o nospace
         fi
-        COMPREPLY=("${COMPREPLY[@]#"${syncedFolders[irc-logs]}"/}")
+        COMPREPLY=("${COMPREPLY[@]#"${synced[irc-logs]}"/}")
     fi
 }
 complete -F _irg irg
@@ -205,6 +205,15 @@ mk() ( # runs make using the closest makefile in the hierarchy
     done
     make -f "${files[0]}" "$@"
 )
+
+nix-build-delete() { # useful for running NixOS tests
+    nix-store --delete "$(nix-build --no-out-link "$@")"
+}
+complete_alias nix-build-delete _nix_completion nix-build
+
+fdnp() {
+    fd -L "$@" $NIX_PROFILES
+}
 
 hm() {
     if (( ! $# )); then

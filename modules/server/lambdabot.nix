@@ -1,7 +1,7 @@
-{ config, secrets, pkgs, ... }: let
+{ config, pkgs, ... }: let
   tunnelPort = 6642;
 in {
-  sops.secrets.lambdabot-ulminfo = {
+  secrets.lambdabot-ulminfo = {
     owner = config.users.users.lambdabot.name;
     group = config.users.users.lambdabot.group;
   };
@@ -30,7 +30,7 @@ in {
     };
     script = ''
       irc-persist-connect ulminfo localhost ${toString tunnelPort} lambdabot lambdabot
-      rc ${secrets.lambdabot-ulminfo.path}
+      rc ${config.secrets.lambdabot-ulminfo.path}
       admin + ulminfo:nf
       join ulminfo:#haskell
     '';

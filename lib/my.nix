@@ -1,4 +1,4 @@
-lib: with lib; let
+inputs: lib: with lib; let
   modules = [
     (mkAliasOptionModule [ "server" ] [ "machines" "wo" ])
     {
@@ -17,6 +17,7 @@ lib: with lib; let
               description = "The machine's hostname";
               type = str;
               default = name;
+              readOnly = true;
             };
             isServer  = mkMachineTypeOption "server";
             isStation = mkMachineTypeOption "station";
@@ -31,6 +32,9 @@ lib: with lib; let
               type = listOf str;
               default = [];
             };
+          };
+          config = {
+            inherit (inputs.self.nixosConfigurations.${name}) config options;
           };
         }));
         default = {};

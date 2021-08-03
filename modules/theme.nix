@@ -1,16 +1,16 @@
-{ lib, config, theme, ... }: with lib; {
+{ lib, config, ... }: with lib; {
   options.theme = mkOption {
     type = with types; submodule {
+      freeformType = attrs;
       options.dark = mkOption {
         type = bool;
         default = true;
       };
-      freeformType = attrs;
     };
   };
 
   config = {
-    theme = with theme; {
+    theme = with config.theme; {
       black         = "#000000";
       darkGrey      = if dark then "#444444" else "#aaaaaa";
       lightGrey     = if dark then "#666666" else "#cccccc";
@@ -30,9 +30,7 @@
       pangoFont = "${font} 8";
     };
 
-    _module.args = { inherit (config) theme; };
-
-    lib.shellEnv = { inherit theme; };
+    lib.shellEnv.theme = config.theme;
 
     # specialisation.light.configuration = {
     #   theme.dark = false;

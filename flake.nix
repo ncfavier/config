@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixos";
     };
     home-manager = {
-      url = "github:ncfavier/home-manager";
+      url = "github:ncfavier/home-manager/live";
       inputs.nixpkgs.follows = "nixos";
     };
     nur.url = "nur";
@@ -31,7 +31,7 @@
   outputs = inputs@{ self, nixos, ... }: let
     system = "x86_64-linux";
     pkgs = nixos.legacyPackages.${system};
-    lib = nixos.lib.extend (import ./lib);
+    lib = nixos.lib.extend (import ./lib inputs);
   in with lib; {
     inherit lib;
 

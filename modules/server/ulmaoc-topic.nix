@@ -1,5 +1,5 @@
-{ lib, config, secrets, ... }: with lib; {
-  sops.secrets.ulmaoc-leaderboard = {
+{ lib, config, ... }: with lib; {
+  secrets.ulmaoc-leaderboard = {
     owner = my.username;
     inherit (config.my) group;
   };
@@ -9,7 +9,7 @@
     script = ''
       fifo=~/.weechat/weechat_fifo
       (( day = $(TZ=America/New_York date +%j) - $(date -d "december 1" +%j) + 1 ))
-      board=$(< ${secrets.ulmaoc-leaderboard.path})
+      board=$(< ${config.secrets.ulmaoc-leaderboard.path})
 
       topic="Advent of Code $(date +%Y) https://adventofcode.com | Jour $day | Leaderboard $board | Spoilers -> #adventofcode-spoilers"
 

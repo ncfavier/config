@@ -1,4 +1,4 @@
-{ lib, here, config, secrets, syncedFolders, utils, pkgs, ... }: with lib; let
+{ lib, here, config, utils, pkgs, ... }: with lib; let
   relayPort = 6642;
   scripts = [
     "color_popup.pl"
@@ -18,15 +18,15 @@
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
         /script install ${concatStringsSep " " scripts}
         /script load ${./autojoin.py}
-        /set sec.crypt.passphrase_command "cat ${secrets.weechat.path}"
+        /set sec.crypt.passphrase_command "cat ${config.secrets.weechat.path}"
         /set relay.network.bind_address ${here.wireguard.ipv4}
         /set relay.port.weechat ${toString relayPort}
-        /set logger.file.path ${syncedFolders.irc-logs.path}
+        /set logger.file.path ${config.synced.irc-logs.path}
       ''}";
     };
   };
 in {
-  sops.secrets.weechat = {
+  secrets.weechat = {
     owner = my.username;
     inherit (config.my) group;
   };
@@ -41,7 +41,7 @@ in {
       Group = config.my.group;
       Type = "forking";
       ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
-      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
+      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off \\; set-hook client-active attach";
     };
     restartIfChanged = false;
   };

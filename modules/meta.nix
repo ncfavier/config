@@ -1,4 +1,4 @@
-# arguments order: inputs, hardware, lib, here, config, modulesPath, secrets, syncedFolders, utils, theme, pkgs*
+# arguments order: inputs, hardware, lib, here, config, modulesPath, utils, pkgs*
 { inputs, lib, here, config, utils, pkgs, ... }: with lib; {
   system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 
@@ -55,7 +55,8 @@
               ;;
           home)
               attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
-              VERBOSE=1 exec nix shell "$configPath#$attr" -u DBUS_SESSION_BUS_ADDRESS "$@" -c home-manager-generation
+              export VERBOSE=1
+              exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation
               ;;
           eval)
               exec nix eval --json -f ~/.nix-defexpr "$@" | jq -r .

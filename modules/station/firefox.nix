@@ -1,4 +1,4 @@
-{ lib, theme, pkgs, ... }: with lib; let
+{ lib, config, pkgs, ... }: with lib; let
   profile = "default";
 in {
   hm = {
@@ -8,7 +8,7 @@ in {
         ublock-origin
         darkreader
       ];
-      profiles.${profile} = with theme; {
+      profiles.${profile} = with config.theme; {
         settings = {
           "browser.fixup.alternate.enabled" = false;
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
@@ -148,6 +148,10 @@ in {
               border-inline-end: none !important;
             }
 
+            #remote-control-icon {
+              display: none !important;
+            }
+
             #urlbar {
               background: var(--bg) !important;
               color: var(--fg) !important;
@@ -174,8 +178,8 @@ in {
               background-color: var(--bg-hover) !important;
             }
 
-            #urlbar-background, #searchbar {
-              background-color: var(--bg) !important;
+            #urlbar-background {
+              background: transparent !important;
             }
 
             .urlbarView-tags, .urlbarView-url, .urlbarView-title:not(:empty) ~ .urlbarView-action {
@@ -268,8 +272,7 @@ in {
     home.sessionVariables.MOZ_USE_XINPUT2 = "1";
 
     home.file.".mozilla/firefox/${profile}/chrome/userChrome.css".onChange = ''
-      if cd ~/.mozilla/firefox/${profile} && [[ -L lock ]]; then
-          echo "Reloading Firefox"
+      if cd ~/.mozilla/firefox/${profile} && pgrep firefox > /dev/null; then
           shopt -s lastpipe
           port=6001
           firefox --start-debugger-server "$port" || exit
@@ -293,7 +296,6 @@ in {
               done >& "$ff"
               kill $(jobs -p)
           }
-          exec {ff}>&-
       fi &
     '';
   };

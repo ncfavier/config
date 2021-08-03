@@ -1,4 +1,4 @@
-{ lib, theme, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   config.hm = {
     programs.feh = {
       enable = true;
@@ -28,7 +28,7 @@
     };
 
     xdg.configFile."feh/themes".text = ''
-      feh -B ${theme.background} -g 800x500 -. --action9 ';bspc node -t ~fullscreen'
+      feh -B ${config.theme.background} -g 800x500 -. --action9 ';bspc node -t ~fullscreen'
     '';
 
     home.packages = with pkgs; [

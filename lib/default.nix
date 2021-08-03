@@ -1,4 +1,4 @@
-lib: prev: with lib; {
+inputs: lib: prev: with lib; {
   importDir = dir: pipe dir [
     builtins.readDir
     (mapAttrsToList (name: type:
@@ -26,5 +26,5 @@ lib: prev: with lib; {
       "declare -- ${name}=${escapeShellArg value}"
   ) vars);
 
-  my = import ./my.nix lib;
+  my = import ./my.nix inputs lib;
 }

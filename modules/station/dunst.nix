@@ -1,8 +1,8 @@
-{ lib, config, theme, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   hm.services.dunst = {
     enable = true;
 
-    settings = with theme; rec {
+    settings = with config.theme; rec {
       global = {
         geometry = "800x5-32+64";
         shrink = true;

@@ -1,4 +1,4 @@
-{ theme, pkgs, pkgsPR, ... }: {
+{ config, pkgs, pkgsPR, ... }: {
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [
@@ -8,6 +8,10 @@
   };
 
   hm = {
+    xsession.windowManager.bspwm.startupPrograms = [
+      "ibus restart || ibus-daemon --daemonize --replace --xim"
+    ];
+
     xdg.configFile."mozc/ibus_config.textproto".text = ''
       engines {
         name: "mozc-jp"
@@ -30,7 +34,7 @@
         show = 0;
         lookup-table-orientation = 1;
         use-custom-font = true;
-        custom-font = theme.pangoFont;
+        custom-font = config.theme.pangoFont;
       };
       "org/freedesktop/ibus/engine/hangul" = {
         initial-input-mode = "hangul";

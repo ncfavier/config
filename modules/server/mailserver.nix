@@ -4,7 +4,7 @@ in {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
 
   config = {
-    sops.secrets.dkim = {
+    secrets.dkim = {
       path = "/etc/dkim/${my.domain}.${config.mailserver.dkimSelector}.key";
       owner = config.services.opendkim.user;
       group = config.services.opendkim.group;

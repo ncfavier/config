@@ -4,7 +4,7 @@
       vscode = pkgs.vscodium;
       vscodeExtensions = with pkgs.vscode-extensions; [
         vscodevim.vim
-        bbenoist.Nix
+        bbenoist.nix
         haskell.haskell
         james-yu.latex-workshop
         yzhang.markdown-all-in-one

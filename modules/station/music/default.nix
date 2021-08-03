@@ -1,8 +1,8 @@
-{ syncedFolders, pkgs, ... }: {
+{ config, pkgs, ... }: {
   hm = {
     services.mpd = {
       enable = true;
-      musicDirectory = syncedFolders.music.path;
+      musicDirectory = config.synced.music.path;
       extraConfig = ''
         audio_output {
           type "pulse"

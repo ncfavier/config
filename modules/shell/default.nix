@@ -77,6 +77,7 @@
       l = "ls -l";
       ll = "ls -la";
       o = "xdg-open";
+      rgs = "rg --sort path";
       tall = "tail -f -n +1";
       s = "sudo systemctl";
       u = "systemctl --user";

@@ -22,16 +22,18 @@ extension() {
 . config env
 
 host=up.$domain
-uploads_dir=${syncedFolders[uploads]}
+uploads_dir=${serverSynced[uploads]}
 hash_length=6
 
 # Parse command line arguments
 
 remove=0 force=0 interactive=0
 while getopts :l:rf o; do case $o in
+    :) OPTARG=1 ;&
     l)
-        n=${OPTARG:-1}
-        find "$uploads_dir" -type f -printf '%T@/%P\0' | sort -znst / -k 1,1 | tail -zn "$n" |
+        n=$OPTARG
+        ssh -q "$host" "find ${uploads_dir@Q} -type f -printf '%T@/%P\0'" |
+        sort -znst / -k 1,1 | tail -zn "$n" |
         while IFS=/ read -rd '' time path; do
             build_url "$path"
         done
@@ -78,7 +80,7 @@ rsync_opts=(--progress --protect-args --chmod=D755,F644)
 (( remove )) && rsync_opts+=(--remove-source-files)
 (( ! force )) && rsync_opts+=(--ignore-existing)
 (( isServer )) && rsync_host= || rsync_host=$host:
-rsync "${rsync_opts[@]}" "$source" "$rsync_host$uploads_dir/$destination" || exit # TODO use the uploads_dir of the server
+rsync "${rsync_opts[@]}" "$source" "$rsync_host$uploads_dir/$destination" || exit
 
 # Report
 
