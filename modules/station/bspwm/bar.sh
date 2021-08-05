@@ -137,6 +137,9 @@ cleanup_on_exit
         # Clock
         printf 'C\n'
 
+        # systemd
+        printf 'Y\n'
+
         sleep 1
     done &
 
@@ -390,12 +393,21 @@ while read -rn 1 event; do
                 song="%{A2:mpc -q clear:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
             fi
             ;;
+        Y) # systemd
+            read -r
+            systemd=
+            if [[ $(systemctl is-system-running) == degraded ]] ||
+               [[ $(systemctl --user is-system-running) == degraded ]]; then
+                systemd="%{F${theme[hot]}}degraded%{F-}"
+                pad_right systemd
+            fi
+            ;;
     esac
 
     # Rendering
 
     left=$wm$title
-    right=$song$mail$network$sound$brightness$im$keyboard$power$clock
+    right=$song$mail$network$sound$brightness$im$keyboard$systemd$power$clock
     echo "%{l}$left%{r}$right"
 done |
 
