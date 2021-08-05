@@ -8,7 +8,7 @@ jobs:
       - name: Install flakes-enabled Nix
         uses: cachix/install-nix-action@v13
         with:
-          install_url: https://nixos-nix-install-tests.cachix.org/serve/i6laym9jw3wg9mw6ncyrk6gjx4l34vvx/install
+          install_url: https://nixos-nix-install-tests.cachix.org/serve/2psv5qcm18vw45c7ram38bbrk37pbmsd/install
           install_options: '--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve'
           extra_nix_config: experimental-features = nix-command flakes
       - name: Checkout code
