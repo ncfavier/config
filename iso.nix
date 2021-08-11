@@ -4,6 +4,7 @@
     inputs.self.nixosModules.home-manager
     inputs.self.nixosModules.users
     inputs.self.nixosModules.localisation
+    inputs.self.nixosModules.console
     inputs.self.nixosModules.gpg
     inputs.self.nixosModules.git
     inputs.self.nixosModules.cachix
