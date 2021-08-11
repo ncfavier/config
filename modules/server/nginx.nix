@@ -26,7 +26,8 @@ in {
       "f.${my.domain}" = ssl // {
         root = uploadsRoot;
         locations."/rice/".extraConfig = "autoindex on;";
-        locations."/iso/".root = "${inputs.self.packages.x86_64-linux.iso}/iso";
+        locations."=/config.iso".alias =
+          "${inputs.self.packages.x86_64-linux.iso}/iso/${inputs.self.nixosConfigurations.iso.config.isoImage.isoName}";
         extraConfig = ''
           default_type text/plain;
         '';

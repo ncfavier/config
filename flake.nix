@@ -46,12 +46,14 @@
         here = my.machines.${hostname};
       };
       modules = attrValues self.nixosModules ++ [ local ];
-    }) (importDir ./machines);
+    }) (importDir ./machines) // {
+      iso = nixosSystem {
+        inherit system lib;
+        specialArgs = { inherit inputs; };
+        modules = [ ./iso.nix ];
+      };
+    };
 
-    packages.${system}.iso = (nixosSystem {
-      inherit system lib;
-      specialArgs = { inherit inputs; };
-      modules = [ ./iso.nix ];
-    }).config.system.build.isoImage;
+    packages.${system}.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
   };
 }
