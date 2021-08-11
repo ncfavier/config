@@ -27,4 +27,6 @@
     enable = true;
     nssmdns = true;
   };
+
+  my.extraGroups = [ "lp" "scanner" ];
 }

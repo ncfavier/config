@@ -2,10 +2,10 @@
 { inputs, lib, here, config, utils, pkgs, ... }: with lib; {
   system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
 
-  _module.args.utils = rec {
+  _module.args.utils = {
     configPath = "${config.my.home}/git/config";
     mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
-      (configPath + removePrefix (toString inputs.self) (toString path));
+      (utils.configPath + removePrefix (toString inputs.self) (toString path));
   };
 
   lib.shellEnv = {

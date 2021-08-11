@@ -5,7 +5,7 @@
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      sshKeys = [ my.pgpKeygrip ];
+      sshKeys = [ my.gpgKeygrip ];
     };
   };
 }
