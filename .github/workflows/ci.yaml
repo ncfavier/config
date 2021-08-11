@@ -1,6 +1,7 @@
+name: CI
 on: [push, pull_request]
 jobs:
-  ci:
+  main:
     runs-on: ubuntu-latest
     steps:
       - name: Install flakes-enabled Nix
@@ -22,3 +23,8 @@ jobs:
         run: nix -vL flake check
       - name: Build ISO image
         run: nix -vL build .#iso
+      - name: Upload ISO image
+        uses: actions/upload-artifact@v2
+        with:
+          name: iso
+          path: result/iso/*.iso
