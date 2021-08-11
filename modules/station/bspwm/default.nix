@@ -67,7 +67,7 @@ in {
     '';
 
     home.packages = with pkgs; [
-      (shellScriptWithDeps "wm" ./wm.sh [ xtitle ])
+      (shellScriptWithDeps "wm" ./wm.sh [ xtitle autossh ])
       bar
     ];
 
@@ -110,8 +110,8 @@ in {
           "power";
         "super + {_,alt} + question" =
           "{nixos,home-manager}-help";
-        "super + {_,shift} + d" =
-          "dunstctl {close,close-all}";
+        "super + {_,shift,ctrl} + d" =
+          "dunstctl {close,close-all,set-paused toggle}";
         "super + grave" =
           "dunstctl history-pop";
         "super + alt + {space,Left,Right,Down,Up,r,z,y,c,b,f,u}" =

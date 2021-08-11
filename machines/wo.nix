@@ -83,5 +83,13 @@ in {
     -----END CERTIFICATE-----
   '';
 
+  services.terraria = {
+    enable = true;
+    openFirewall = true;
+    noUPnP = true;
+    maxPlayers = 10;
+  };
+  my.extraGroups = [ "terraria" ];
+
   system.stateVersion = "21.05";
 }

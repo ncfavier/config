@@ -12,8 +12,6 @@ in {
     StrictHostKeyChecking accept-new
   '';
 
-  environment.systemPackages = [ pkgs.autossh ];
-
   hm.programs.ssh = {
     enable = true;
     matchBlocks = mkMerge (

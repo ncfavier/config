@@ -1,8 +1,6 @@
-name: CI
 on: [push, pull_request]
 jobs:
-  check:
-    name: Checks
+  ci:
     runs-on: ubuntu-latest
     steps:
       - name: Install flakes-enabled Nix
@@ -11,9 +9,16 @@ jobs:
           install_url: https://nixos-nix-install-tests.cachix.org/serve/2psv5qcm18vw45c7ram38bbrk37pbmsd/install
           install_options: '--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve'
           extra_nix_config: experimental-features = nix-command flakes
+      - name: Set up Cachix
+        uses: cachix/cachix-action@v10
+        with:
+          name: ${{ github.actor }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Check Markdown links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
       - name: Check flake
         run: nix -vL flake check
+      - name: Build ISO image
+        run: nix -vL build .#iso

@@ -33,6 +33,7 @@
       nethogs
       socat
       rsync
+      iperf
     ];
   };
 }

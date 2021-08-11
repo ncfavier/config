@@ -38,12 +38,22 @@
           repl)
               exec nix repl ~/.nix-defexpr "$@"
               ;;
+          compare)
+              input=$1
+              . <(nix flake metadata config --json | jq -r --arg input "$input" '
+                def browse($url): @sh "xdg-open \($url)";
+                .locks.nodes[$input] |
+                if .locked.type == "github" then
+                  browse("https://github.com/\(.locked.owner)/\(.locked.repo)/compare/\(.locked.rev)...\(.original.ref // "master")")
+                elif .locked.type == "gitlab" then
+                  browse("https://gitlab.com/\(.locked.owner)/\(.locked.repo)/-/compare/\(.locked.rev)...\(.original.ref // "master")")
+                else
+                  "echo unsupported input type"
+                end
+              ')
+              ;;
           update)
-              if (( $# )); then
-                  exec nix flake update "$configPath" "$@"
-              else
-                  exec "$0" switch --recreate-lock-file
-              fi
+              exec nix flake update "$configPath" "$@"
               ;;
           specialise)
               name=$1

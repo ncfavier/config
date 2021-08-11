@@ -64,7 +64,7 @@
               owner = "ncfavier";
               repo = "alacritty";
               rev = "live";
-              sha256 = "Ulw13K0P2MP8td2nHu2fSGechiVAfc6+igwH4tmkOE8=";
+              sha256 = "3aQER2yL2DIrCLLIL0e/S8VM9UEZL3QotM1M/Dq8Aoo=";
             };
           });
       };

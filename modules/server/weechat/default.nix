@@ -41,7 +41,7 @@ in {
       Group = config.my.group;
       Type = "forking";
       ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
-      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off \\; set-hook client-active attach";
+      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
     };
     restartIfChanged = false;
   };

@@ -140,6 +140,9 @@ cleanup_on_exit
         # systemd
         printf 'Y\n'
 
+        # dunst
+        printf 'D\n'
+
         sleep 1
     done &
 
@@ -398,16 +401,23 @@ while read -rn 1 event; do
             systemd=
             if [[ $(systemctl is-system-running) == degraded ]] ||
                [[ $(systemctl --user is-system-running) == degraded ]]; then
-                systemd="%{F${theme[hot]}}degraded%{F-}"
-                pad_right systemd
+                systemd="%{F${theme[hot]}}%{F-}"
+            fi
+            ;;
+        D) # dunst
+            read -r
+            dunst=
+            if [[ $(dunstctl is-paused) == true ]]; then
+                dunst="%{F${theme[hot]}}%{F-}"
             fi
             ;;
     esac
 
-    # Rendering
+    alerts=$dunst$systemd
+    [[ $alerts ]] && pad_right alerts
 
     left=$wm$title
-    right=$song$mail$network$sound$brightness$im$keyboard$systemd$power$clock
+    right=$song$mail$network$sound$brightness$im$keyboard$alerts$power$clock
     echo "%{l}$left%{r}$right"
 done |
 

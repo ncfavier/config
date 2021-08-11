@@ -1,21 +1,32 @@
-{ inputs, modulesPath, pkgs, ... }: {
+{ inputs, lib, modulesPath, pkgs, ... }: with lib; {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+    inputs.self.nixosModules.home-manager
+    inputs.self.nixosModules.users
     inputs.self.nixosModules.localisation
+    inputs.self.nixosModules.gpg
+    inputs.self.nixosModules.git
+    inputs.self.nixosModules.cachix
   ];
 
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      warn-dirty = false
-    '';
+  options.secrets = mkOption {
+    type = types.attrs;
   };
 
-  environment.systemPackages = with pkgs; [ git ];
+  config = {
+    services.getty = {
+      helpLine = mkForce "";
+      autologinUser = mkForce my.username;
+    };
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+    nix = {
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes ca-references
+        warn-dirty = false
+      '';
+    };
+
+    system.stateVersion = "21.05";
   };
 }

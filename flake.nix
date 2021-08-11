@@ -21,6 +21,7 @@
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixos";
+      inputs.nixpkgs-21_05.follows = "nixos-stable";
     };
     www = {
       url = "github:ncfavier/monade.li";
@@ -48,7 +49,7 @@
     }) (importDir ./machines);
 
     packages.${system}.iso = (nixosSystem {
-      inherit system;
+      inherit system lib;
       specialArgs = { inherit inputs; };
       modules = [ ./iso.nix ];
     }).config.system.build.isoImage;
