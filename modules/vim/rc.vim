@@ -109,7 +109,7 @@ nnoremap          P                ]P
 vnoremap          //               y/\V<C-r>=escape(@",'/\')<Return><Return>
 vnoremap          ??               y?\V<C-r>=escape(@",'?\')<Return><Return>
 noremap  <silent> <C-l>            :set number!<Return>
-noremap  <silent> <C-c>            :call NERDComment(0, 'toggle')<Return>
+noremap  <silent> <C-c>            :call nerdcommenter#Comment(0, 'toggle')<Return>
 noremap  <silent> <C-n>            :NERDTreeToggle<Return>
 noremap           <C-p>            :find<Space>
 cnoremap          <C-p>            <C-u>vert sfind<Space>
