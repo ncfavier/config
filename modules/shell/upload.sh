@@ -21,7 +21,7 @@ extension() {
 
 . config env
 
-host=up.$domain
+host=f.$domain
 uploads_dir=${serverSynced[uploads]}
 hash_length=6
 

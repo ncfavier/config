@@ -23,12 +23,17 @@ in {
         root = inputs.www;
       };
 
-      "up.${my.domain}" = ssl // {
+      "f.${my.domain}" = ssl // {
         root = uploadsRoot;
         locations."/rice/".extraConfig = "autoindex on;";
+        locations."/iso/".root = "${inputs.self.packages.x86_64-linux.iso}/iso";
         extraConfig = ''
           default_type text/plain;
         '';
+      };
+
+      "up.${my.domain}" = ssl // {
+        globalRedirect = "f.${my.domain}";
       };
 
       "git.${my.domain}" = ssl // {
