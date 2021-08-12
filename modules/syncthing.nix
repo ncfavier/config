@@ -106,7 +106,10 @@
       .git
     '';
     "${config.synced.saves.path}/.stignore".text = ''
-      df/current
+      /df/current
+    '';
+    "${config.synced.uploads.path}/.stignore".text = ''
+      /local
     '';
   };
 }
