@@ -13,6 +13,7 @@
     hm.home.packages = with pkgs; [
       chromium
       thunderbird
+      amfora
       libreoffice
       texlive.combined.scheme-full
       pandoc

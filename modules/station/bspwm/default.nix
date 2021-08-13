@@ -144,7 +144,7 @@ in {
     };
 
     xdg.configFile."sxhkd/sxhkdrc".onChange = ''
-      ${pkgs.procps}/bin/pkill ''${VERBOSE+-e} -USR1 -x sxhkd || true
+      pkill ''${VERBOSE+-e} -USR1 -x sxhkd || true
     '';
   };
 

@@ -3,36 +3,7 @@
 
   environment.systemPackages = with pkgs; [
     (hiPrio config.my.shell)
-    man-pages
-    man-pages-posix
-    rlwrap
-    bat
-    ripgrep
-    file
-    fd
-    tree
-    ncdu
-    lsof
-    gptfdisk
-    pciutils
-    zip
-    unzip
-    config.boot.kernelPackages.bcc
-    binutils
-    gcc
-    gnumake
-    openssl
-    imagemagick
-    ffmpeg-full
-    youtube-dl
-    amfora
     jq
-    python3
-    neofetch
-    lesspass-cli
-    tmsu
-    (shellScriptWithDeps "upload" ./upload.sh [])
-    (shellScriptWithDeps "order" ./order.sh [])
   ];
 
   environment.sessionVariables = rec {
@@ -45,10 +16,6 @@
     GROFF_BIN_PATH = "${pkgs.writeShellScriptBin "grotty" ''
       exec ${pkgs.groff}/bin/grotty -i "$@"
     ''}/bin";
-  };
-
-  documentation = {
-    dev.enable = true;
   };
 
   programs.command-not-found.enable = false;
@@ -98,7 +65,6 @@
       historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
       historyIgnore = [ "ls" "l" "ll" "la" ];
       shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
-      sessionVariables._ZL_CD = "cd";
       initExtra = ''
         ${readFile ./completion.bash}
         ${readFile ./functions.bash}

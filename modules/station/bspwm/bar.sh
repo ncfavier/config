@@ -408,7 +408,7 @@ while read -rn 1 event; do
             read -r
             dunst=
             if [[ $(dunstctl is-paused) == true ]]; then
-                dunst="%{F${theme[hot]}}%{F-}"
+                dunst="%{F${theme[hot]}}%{F-}"
             fi
             ;;
     esac

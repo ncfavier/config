@@ -72,6 +72,6 @@
   }) ];
 
   # hm.xdg.configFile."alacritty/alacritty.yml".onChange = ''
-  #   ${pkgs.procps}/bin/pkill ''${VERBOSE+-e} -USR1 -x alacritty
+  #   pkill ''${VERBOSE+-e} -USR1 -x alacritty
   # '';
 }

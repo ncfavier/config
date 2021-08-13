@@ -38,12 +38,12 @@
       (writeTextDir "share/thumbnailers/ffmpegthumbnailer.thumbnailer" ''
         [Thumbnailer Entry]
         MimeType=video/jpeg;video/mp4;video/mpeg;video/quicktime;video/x-ms-asf;video/x-ms-wm;video/x-ms-wmv;video/x-ms-asx;video/x-ms-wmx;video/x-ms-wvx;video/x-msvideo;video/x-flv;video/x-matroska;application/mxf;video/3gp;video/3gpp;video/dv;video/divx;video/fli;video/flv;video/mp2t;video/mp4v-es;video/msvideo;video/ogg;video/vivo;video/vnd.divx;video/vnd.mpegurl;video/vnd.rn-realvideo;application/vnd.rn-realmedia;video/vnd.vivo;video/webm;video/x-anim;video/x-avi;video/x-flc;video/x-fli;video/x-flic;video/x-m4v;video/x-mpeg;video/x-mpeg2;video/x-nsv;video/x-ogm+ogg;video/x-theora+ogg;audio/mpeg
-        Exec=${thumbnailerScript "ffmpeg" '' ${ffmpegthumbnailer}/bin/ffmpegthumbnailer -i "$i" -o "$o" -s "$s" -m ''}
+        Exec=${thumbnailerScript "ffmpeg" ''${ffmpegthumbnailer}/bin/ffmpegthumbnailer -i "$i" -o "$o" -s "$s" -m''}
       '')
       (writeTextDir "share/thumbnailers/webp.thumbnailer" ''
         [Thumbnailer Entry]
         MimeType=image/webp
-        Exec=${thumbnailerScript "webp" '' ${imagemagick}/bin/convert -thumbnail "$s" "$i" "$o" ''}
+        Exec=${thumbnailerScript "webp" ''${imagemagick}/bin/convert -thumbnail "$s" "$i" "$o"''}
       '')
       (python3ScriptWithDeps "dbus-make-thumbnails" ./dbus-make-thumbnails.py (ps:
         with ps; [ dbus-python pygobject3 pyxdg ]))

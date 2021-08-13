@@ -7,6 +7,10 @@ mpc current -f $'%file%\n%artist%\n%album%\n%title%' | {
     IFS= read -r title
 }
 [[ $file ]] || exit
+mpc status | {
+    read -r _
+    read -r progress
+}
 
 # too slow
 # thumbnail=$(dbus-make-thumbnails -s large "$(xdg-user-dir MUSIC)/$file"
@@ -21,5 +25,5 @@ if [[ ! -r $thumbnail ]]; then
     ffmpegthumbnailer -i "$file" -o "$thumbnail" -s 256 -m
 fi
 
-id=0x$(printf '%s' 🎵 | iconv -f utf-8 -t utf-32be | xxd -p) # what do you mean 'overengineered'?
-dunstify -I "$thumbnail" -r "$id" "$artist" "<i>$album</i>\n$title"
+id=0x1F3B5 # 🎵
+dunstify -I "$thumbnail" -r "$id" "$artist" "<i>$album</i>\n$title\n$progress"
