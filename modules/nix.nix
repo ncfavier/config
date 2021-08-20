@@ -37,7 +37,7 @@
     optimise.automatic = true;
 
     extraOptions = ''
-      experimental-features = nix-command flakes ca-references
+      experimental-features = nix-command flakes ca-derivations ca-references
       warn-dirty = false
       keep-outputs = true
       keep-derivations = true
