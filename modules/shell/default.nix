@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     (hiPrio config.my.shell)
     jq
+    alacritty.terminfo
   ];
 
   environment.sessionVariables = rec {

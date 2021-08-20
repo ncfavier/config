@@ -12,16 +12,17 @@
     sensibleOnTop = false;
 
     extraConfig = ''
+      set -g history-limit 100000
       set -g mouse on
+      set -g renumber-windows on
       set -g set-titles on
       set -g set-titles-string '#T'
-      set -g renumber-windows on
       set -g status-left ""
       set -g status-right "#S"
       set -g status-style ""
-      set -g window-status-format "#W"
       set -g window-status-current-format "#W"
       set -g window-status-current-style "bold fg=terminal"
+      set -g window-status-format "#W"
       set -g window-status-separator "  "
 
       bind r source $XDG_DATA_HOME/tmux/tmux.conf

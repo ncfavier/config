@@ -49,7 +49,7 @@ in {
     };
   };
 
-  nixpkgs.overlays = [
+  nixpkgs.overlays = [ # TODO update
     (self: super: {
       lambdabot = super.lambdabot.overrideAttrs (drv: {
         src = "${self.fetchFromGitHub {
