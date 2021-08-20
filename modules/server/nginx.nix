@@ -4,6 +4,7 @@ in {
   services.nginx = {
     enable = true;
     package = pkgs.nginxMainline;
+    enableReload = true;
     recommendedTlsSettings = true;
     commonHttpConfig = ''
       charset utf-8;
