@@ -18,8 +18,10 @@
     MANPATH_MAP /run/current-system/sw/bin /run/current-system/sw/share/man
     MANPATH_MAP /run/wrappers/bin          /run/current-system/sw/share/man
 
+    ${optionalString config.documentation.man.generateCaches ''
     # Generated manual pages cache for NixOS (immutable)
     MANDB_MAP /run/current-system/sw/share/man ${manualCache}
+    ''}
     # Manual pages caches for NixOS
     MANDB_MAP /run/current-system/sw/share/man /var/cache/man/nixos
   '';
