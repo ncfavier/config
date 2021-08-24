@@ -19,11 +19,9 @@
 
     trustedUsers = [ "root" "@wheel" ];
 
-    registry = {
+    registry = mapAttrs (_: flake: { inherit flake; }) (removeAttrs inputs [ "self" ]) // {
       config.flake = inputs.self;
-      nixos.flake = inputs.nixos;
       nixpkgs.flake = inputs.nixos;
-      nixos-stable.flake = inputs.nixos-stable;
     };
 
     nixPath = [ "nixpkgs=${pkgs.writeText "nixpkgs.nix" ''

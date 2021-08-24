@@ -13,7 +13,7 @@ mpc status | {
 }
 
 # too slow
-# thumbnail=$(dbus-make-thumbnails -s large "$(xdg-user-dir MUSIC)/$file"
+# thumbnail=$(dbus-gen-thumbnails -s large "$(xdg-user-dir MUSIC)/$file"
 
 file=$(xdg-user-dir MUSIC)/$file
 read -r hash _ < <(gio info "$file" | awk '$1 == "uri:" { printf("%s", $2) }' | md5sum)

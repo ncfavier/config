@@ -45,7 +45,7 @@
         MimeType=image/webp
         Exec=${thumbnailerScript "webp" ''${imagemagick}/bin/convert -thumbnail "$s" "$i" "$o"''}
       '')
-      (python3ScriptWithDeps "dbus-make-thumbnails" ./dbus-make-thumbnails.py (ps:
+      (python3ScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
         with ps; [ dbus-python pygobject3 pyxdg ]))
     ];
 
