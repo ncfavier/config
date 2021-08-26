@@ -2,6 +2,7 @@
   imports = attrValues (importDir ./.);
 
   config = {
+    boot.kernelParams = [ "mitigations=off" ];
     boot.kernel.sysctl."kernel.sysrq" = 1;
 
     services.logind.killUserProcesses = true;
