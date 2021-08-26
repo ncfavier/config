@@ -43,6 +43,7 @@
     ncdu
     lsof
     iotop
+    lm_sensors
     gptfdisk
     pciutils
     zip

@@ -103,6 +103,14 @@ in {
           '' bspc node -l "$(bspc query -T -n | jq -r 'if .client.layer == "below" then "normal" else "above" end')" '';
         "super + {_,shift} + q" =
           "bspc node -{c,k}";
+        "super + ctrl + {Left,Down,Up,Right}" =
+          "bspc node -p \\~{west,south,north,east}";
+        "super + ctrl + BackSpace" =
+          "bspc node -p cancel";
+        "super + ctrl + {b,e}" =
+          "bspc node -{B,E}";
+        "super + ctrl + {_,shift} + r" =
+          "bspc node -R {90,270}";
 
         "super + shift + l" =
           "${pkgs.i3lock}/bin/i3lock -c 000000";
