@@ -58,20 +58,17 @@
       rustPlatform = super.rustPlatform // {
         buildRustPackage = o:
           super.rustPlatform.buildRustPackage (removeAttrs o [ "cargoSha256" ] // {
-            cargoHash = "sha256-25nE/cYh5Q7tZtH74w5eY14aLjXWNA+V3E2F0sldIQ8=";
+            cargoHash = "sha256-LtPn99KJ45sTsGBcTKCOsyAfEdwrtmWUAi9eP+jQgCs=";
             version = "0.9.0";
             src = self.fetchFromGitHub {
-              owner = "ncfavier";
+              owner = "alacritty";
               repo = "alacritty";
-              rev = "live";
-              sha256 = "3aQER2yL2DIrCLLIL0e/S8VM9UEZL3QotM1M/Dq8Aoo=";
+              rev = "cf35a2019162c6055e4a4c152976a424ba10869d";
+              sha256 = "dX/m+RAN/wkAY8fwJwAnPCxvfxAlOVFuU/W1YkP94io=";
             };
+            doCheck = false;
           });
       };
     };
   }) ];
-
-  # hm.xdg.configFile."alacritty/alacritty.yml".onChange = ''
-  #   pkill ''${VERBOSE+-e} -USR1 -x alacritty
-  # '';
 }

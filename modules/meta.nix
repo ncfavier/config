@@ -18,7 +18,9 @@
     shellScriptWithDeps = name: src: deps:
       self.writeScriptBin name ''
         #!${config.my.shellPath}
-        PATH=${makeBinPath deps}''${PATH:+:$PATH}
+        ${optionalString (deps != []) ''
+        PATH=${makeBinPath deps}''${PATH+:$PATH}
+        ''}
         ${readFile src}
       '';
     python3ScriptWithDeps = name: src: deps:

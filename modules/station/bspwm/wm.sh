@@ -52,7 +52,7 @@ go() {
         term|terminal)
             terminal &;;
         chat|irc)
-            instance=irc terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
+            instance=irc title=weechat terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
         editor)
             focus_title='- VIM$' terminal vim &;;
         web|browser)
@@ -85,6 +85,8 @@ case $cmd in
         bspc desktop -f "$@";;
     move-window-to-workspace)
         bspc node -d "$@" -f;;
+    lock)
+        i3lock -c 000000;;
     quit)
         kill "$(< "$XDG_RUNTIME_DIR/bar.pid")" 2> /dev/null
         bspc quit;;

@@ -44,6 +44,8 @@
     lsof
     iotop
     lm_sensors
+    dosfstools
+    mtools
     gptfdisk
     pciutils
     zip
@@ -53,6 +55,7 @@
     gcc
     gnumake
     openssl
+    fortune
     imagemagick
     ffmpeg-full
     youtube-dl

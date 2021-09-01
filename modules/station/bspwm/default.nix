@@ -67,7 +67,9 @@ in {
     '';
 
     home.packages = with pkgs; [
-      (shellScriptWithDeps "wm" ./wm.sh [ xtitle autossh ])
+      xtitle
+      i3lock
+      (shellScriptWithDeps "wm" ./wm.sh [])
       bar
     ];
 
@@ -113,7 +115,7 @@ in {
           "bspc node -R {90,270}";
 
         "super + shift + l" =
-          "${pkgs.i3lock}/bin/i3lock -c 000000";
+          "wm lock";
         "{super + Escape,XF86PowerOff}" =
           "power";
         "super + {_,alt} + question" =

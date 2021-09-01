@@ -12,6 +12,10 @@ in {
     StrictHostKeyChecking accept-new
   '';
 
+  programs.mosh.enable = true;
+
+  environment.systemPackages = with pkgs; [ autossh ];
+
   hm.programs.ssh = {
     enable = true;
     matchBlocks = mkMerge (

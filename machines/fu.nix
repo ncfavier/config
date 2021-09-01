@@ -15,7 +15,6 @@
     };
 
     kernelModules = [ "kvm-intel" ];
-
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   };
 

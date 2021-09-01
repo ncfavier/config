@@ -23,11 +23,13 @@
       transmission-gtk
       qemu
       (writeShellScriptBin "power" ''
-        printf '%s\n' shutdown reboot suspend logout |
-        case $(rofi -dmenu -p action -lines 4 -width 200) in
+        actions=(shutdown reboot suspend "lock and suspend" logout)
+        printf '%s\n' "''${actions[@]}" |
+        case $(rofi -dmenu -p action -lines "''${#actions[@]}" -width 200) in
             shutdown) sudo poweroff;;
             reboot) sudo reboot;;
             suspend) sudo systemctl suspend;;
+            "lock and suspend") wm lock && sudo systemctl suspend;;
             logout) wm quit;;
         esac
       '')

@@ -65,15 +65,15 @@
     v4l-utils
   ];
 
-  services.xserver = {
-    videoDrivers = [ "intel" ];
+  # services.xserver.useGlamor = true;
 
-    libinput = {
-      enable = true;
-      touchpad = {
-        accelSpeed = "0.6";
-        tapping = false;
-      };
+  # hm.services.picom.experimentalBackends = true;
+
+  services.xserver.libinput = {
+    enable = true;
+    touchpad = {
+      accelSpeed = "0.6";
+      tapping = false;
     };
   };
 

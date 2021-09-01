@@ -25,9 +25,6 @@
       };
     };
 
-    systemd.user.services.setxkbmap.Service.ExecStartPost =
-      "${pkgs.xorg.xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'";
-
     programs.bash.profileExtra = ''
       if [[ ! $DISPLAY && $XDG_VTNR == 1 ]]; then
           exec systemd-cat -t xsession startx
@@ -39,6 +36,9 @@
       variant = xkbVariant;
       options = splitString "," xkbOptions;
     };
+
+    systemd.user.services.setxkbmap.Service.ExecStartPost =
+      "${pkgs.xorg.xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'";
 
     home.packages = with pkgs; [
       arandr

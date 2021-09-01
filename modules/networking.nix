@@ -27,7 +27,6 @@
 
     environment.systemPackages = with pkgs; [
       traceroute
-      mtr
       dnsutils
       whois
       nethogs
@@ -35,5 +34,7 @@
       rsync
       iperf
     ];
+
+    programs.mtr.enable = true;
   };
 }
