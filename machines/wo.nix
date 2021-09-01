@@ -83,5 +83,10 @@ in {
     -----END CERTIFICATE-----
   '';
 
+  synced.saves.watch = false;
+
+  networking.firewall.allowedTCPPorts = [ 7777 ];
+  networking.firewall.allowedUDPPorts = [ 7777 ];
+
   system.stateVersion = "21.05";
 }
