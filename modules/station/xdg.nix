@@ -13,10 +13,10 @@
         download    = config.my.home;
         documents   = config.my.home;
         templates   = config.my.home;
+        publicShare = config.my.home;
         music       = config.synced.music.path;
         pictures    = config.synced.pictures.path;
         videos      = "${config.my.home}/videos";
-        publicShare = "${config.my.home}/public";
       };
 
       mimeApps = let
