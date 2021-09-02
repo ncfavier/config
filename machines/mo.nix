@@ -15,7 +15,7 @@
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" ]; # TODO figure out kernel modules
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "firewire_ohci" "sdhci_pci" ];
 
     initrd.luks.devices.home = {
@@ -65,9 +65,10 @@
     v4l-utils
   ];
 
-  # services.xserver.useGlamor = true;
+  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.useGlamor = true;
 
-  # hm.services.picom.experimentalBackends = true;
+  hm.services.picom.experimentalBackends = true;
 
   services.xserver.libinput = {
     enable = true;

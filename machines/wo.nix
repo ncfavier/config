@@ -1,5 +1,10 @@
 { lib, config, modulesPath, pkgs, ... }: with lib; let
   interface = "ens3";
+  ipv4 = "202.61.245.252";
+  netmask4 = "255.255.252.0";
+  gateway4 = "202.61.244.1";
+  ipv6 = "2a03:4000:53:fb4::1";
+  gateway6 = "fe80::1";
 in {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
@@ -20,12 +25,11 @@ in {
       bypassWorkqueues = true;
     };
 
-    kernelParams = [ "ip=202.61.245.252::202.61.244.1:255.255.252.0::${interface}:none" ];
+    kernelParams = [ "ip=${ipv4}::${gateway4}:${netmask4}::${interface}:none" ];
     initrd.network = {
       enable = true;
       ssh = {
         enable = true;
-        port = head config.services.openssh.ports;
         hostKeys = map (k: k.path) config.services.openssh.hostKeys;
       };
     };
@@ -36,6 +40,7 @@ in {
       device = "LABEL=nixos";
       fsType = "ext4";
     };
+
     "/boot" = {
       device = "LABEL=boot";
       fsType = "ext4";
@@ -44,23 +49,24 @@ in {
 
   networking.interfaces.${interface} = {
     ipv4.addresses = [ {
-      address = "202.61.245.252";
+      address = ipv4;
       prefixLength = 22;
     } ];
+
     ipv6.addresses = [ {
-      address = "2a03:4000:53:fb4::1";
+      address = ipv6;
       prefixLength = 64;
     } ];
   };
 
   networking.defaultGateway = {
-    address = "202.61.244.1";
     inherit interface;
+    address = gateway4;
   };
 
   networking.defaultGateway6 = {
-    address = "fe80::1";
     inherit interface;
+    address = gateway6;
   };
 
   networking.nat.externalInterface = interface;

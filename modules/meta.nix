@@ -76,7 +76,7 @@
           env) # meant to be sourced
               ${exportToBash config.lib.shellEnv}
               ;;
-          @*)
+          @*) # TODO --no-gc-warning
               host=''${cmd#@}
               hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
               exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@"

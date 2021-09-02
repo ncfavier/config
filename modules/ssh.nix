@@ -8,6 +8,7 @@ in {
     forwardX11 = true;
   };
 
+
   programs.ssh.extraConfig = ''
     StrictHostKeyChecking accept-new
   '';
@@ -43,7 +44,6 @@ in {
         "unlock.${m.hostname}" = mkIf m.isServer {
           hostname = my.domain;
           addressFamily = "inet";
-          inherit port;
           user = "root";
           extraOptions = {
             RemoteCommand = "cryptsetup-askpass";
