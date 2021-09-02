@@ -84,7 +84,7 @@ in {
         "super + {_,shift} + {button4,button5,Left,Right}" =
           "wm {focus-workspace,move-window-to-workspace} {prev,next,prev,next}";
         "super + {_,shift} + {a,n,z}" =
-          "wm {focus-workspace,move-window-to-workspace} {any.urgent,any.!occupied,last}";
+          "wm {focus-workspace,move-window-to-workspace} {any.urgent,any.!occupied,last.occupied}";
         "super + {_,shift} + Tab" =
           "bspc desktop -l {next,prev}";
         "super + {Prior,Home}" =
