@@ -7,6 +7,7 @@
 
       userDirs = {
         enable = true;
+        createDirectories = true;
 
         desktop     = config.my.home;
         download    = config.my.home;
