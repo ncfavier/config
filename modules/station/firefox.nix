@@ -6,6 +6,7 @@ in {
       enable = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         ublock-origin
+        i-dont-care-about-cookies
         darkreader
       ];
       profiles.${profile} = with config.theme; {
@@ -20,7 +21,7 @@ in {
           "browser.startup.homepage" = "about:home";
           "browser.tabs.warnOnClose" = false;
           "browser.toolbars.bookmarks.visibility" = "never";
-          "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":["ublock0_raymondhill_net-browser-action","contact_lesspass_com-browser-action","addon_darkreader_org-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","bookmarks-menu-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks","managed-bookmarks"]},"seen":["developer-button","ublock0_raymondhill_net-browser-action","contact_lesspass_com-browser-action","addon_darkreader_org-browser-action"],"dirtyAreaCache":["PersonalToolbar","nav-bar","TabsToolbar","toolbar-menubar","widget-overflow-fixed-list"],"currentVersion":16,"newElementCount":7}'';
+          "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":["ublock0_raymondhill_net-browser-action","addon_darkreader_org-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","save-to-pocket-button","bookmarks-menu-button","downloads-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["addon_darkreader_org-browser-action","jid1-kkzogwgsw3ao4q_jetpack-browser-action","ublock0_raymondhill_net-browser-action","developer-button"],"dirtyAreaCache":["nav-bar","widget-overflow-fixed-list"],"currentVersion":17,"newElementCount":5}'';
           "browser.urlbar.clickSelectsAll" = true;
           "browser.urlbar.doubleClickSelectsAll" = false;
           "browser.urlbar.maxRichResults" = "5";

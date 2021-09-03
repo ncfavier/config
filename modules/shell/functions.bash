@@ -68,7 +68,8 @@ grep() {
 
 rg() {
     local args=()
-    [[ -t 1 ]] && args+=(-p)
+    [[ -t 0 ]] && args+=(--line-number)
+    [[ -t 1 ]] && args+=(--color=always --heading)
     command rg "${args[@]}" "$@" | less
     return "${PIPESTATUS[0]}"
 }

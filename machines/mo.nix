@@ -15,7 +15,7 @@
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "kvm-intel" ]; # TODO figure out kernel modules
+    kernelModules = [ "kvm-intel" ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "firewire_ohci" "sdhci_pci" ];
 
     initrd.luks.devices.home = {

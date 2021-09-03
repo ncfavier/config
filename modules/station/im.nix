@@ -9,7 +9,7 @@
 
   hm = {
     xsession.windowManager.bspwm.startupPrograms = [
-      "ibus restart || ibus-daemon --daemonize --replace --xim"
+      "{ sleep 1; ibus restart || ibus-daemon --daemonize --replace --xim; }"
     ];
 
     xdg.configFile."mozc/ibus_config.textproto".text = ''

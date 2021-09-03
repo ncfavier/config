@@ -8,7 +8,7 @@ opt() {
     printf '\0%s\x1f%s\n' "$1" "$2"
 }
 
-row() {
+row() { # artist, album, index shouldn't be environment variables
     printf '%s\0info\x1f%s\n' "$1" "${artist@A} ${album@A} ${index@A}"
 }
 
@@ -71,9 +71,7 @@ elif [[ ! -v index ]]; then
     else
         format='[%artist% - ]'$format
     fi
-    if [[ ! $album ]]; then
-        index=; row random
-    fi
+    index=; row random
     index=1
     mpc playlist -f "$format" |
     while IFS= read -r track; do

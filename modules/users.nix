@@ -31,5 +31,21 @@
     };
 
     hm.home.file.".hushlogin".text = "";
+
+    security = {
+      sudo = {
+        wheelNeedsPassword = false;
+        extraConfig = ''
+          Defaults env_keep+="SSH_CONNECTION SSH_CLIENT SSH_TTY"
+        '';
+      };
+
+      polkit.extraConfig = ''
+        polkit.addRule(function (action, subject) {
+          if (subject.isInGroup('wheel'))
+            return polkit.Result.YES;
+        });
+      '';
+    };
   };
 }

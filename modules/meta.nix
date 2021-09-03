@@ -1,6 +1,6 @@
 # arguments order: inputs, hardware, lib, here, config, modulesPath, utils, pkgs*
 { inputs, lib, here, config, utils, pkgs, ... }: with lib; {
-  system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}";
+  # system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}"; # TODO
 
   _module.args.utils = {
     configPath = "${config.my.home}/git/config";
