@@ -83,7 +83,7 @@ sponge() {
     rm -f -- "$tmp"
 }
 
-oneline() { # displays a stream on a single line
+oneline() { # displays a stream on a single updating line
     local line el=$(tput el)
     while IFS= read -r line; do
         printf '%s\r' "$el$line"
@@ -150,7 +150,7 @@ weechat_fifo() {
 
 irg() ( # search IRC logs
     . config env
-    local where=$1
+    local where=${1%%+(/)}
     shift
     (( $# )) || return
     builtin cd "${synced[irc-logs]}" &&

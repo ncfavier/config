@@ -25,7 +25,7 @@
     };
 
     nixPath = [ "nixpkgs=${pkgs.writeText "nixpkgs.nix" ''
-      import (builtins.getFlake "nixos")
+      import (builtins.getFlake "nixpkgs")
     ''}" ];
 
     gc = {
