@@ -71,4 +71,5 @@
       };
     };
   }) ];
+  cachix.derivationsToPush = [ pkgs.alacritty ];
 }

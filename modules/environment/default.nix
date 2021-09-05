@@ -1,5 +1,5 @@
 { lib, config, utils, pkgs, ... }: with lib; {
-  environment.etc."man_db.conf".text = let
+  environment.etc."man_db.conf".text = let # TODO
     manualPages = (pkgs.buildEnv {
       name = "man-paths";
       paths = config.environment.systemPackages;

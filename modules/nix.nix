@@ -42,20 +42,27 @@
     '';
   };
 
-  nixpkgs.overlays = [ inputs.nur.overlay ];
+  nixpkgs.overlays = [
+    inputs.nur.overlay
+    (self: super: {
+      nix-index = super.nix-index.override { nix = self.nixFlakes; };
+      nix-bash-completions = super.nix-bash-completions.overrideAttrs (o: {
+        # let nix handle completion for the nix command
+        postPatch = ''
+          substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
+        '';
+      });
+    })
+  ];
+  cachix.derivationsToPush = [ pkgs.nix-index ];
 
   environment.systemPackages = with pkgs; [
-    (nix-bash-completions.overrideAttrs (o: {
-      # let nix handle completion for the nix command
-      postPatch = ''
-        substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
-      '';
-    }))
-    (pkgs.nix-index.override { nix = nixFlakes; })
+    nix-bash-completions
+    nix-index
+    nix-prefetch-github
     nix-diff
     nix-top
     nix-tree
-    nix-prefetch-github
     nixpkgs-fmt
     nixpkgs-review
     nixfmt
