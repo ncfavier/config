@@ -45,7 +45,12 @@
   nixpkgs.overlays = [ inputs.nur.overlay ];
 
   environment.systemPackages = with pkgs; [
-    (lowPrio nix-bash-completions)
+    (nix-bash-completions.overrideAttrs (o: {
+      # let nix handle completion for the nix command
+      postPatch = ''
+        substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
+      '';
+    }))
     (pkgs.nix-index.override { nix = nixFlakes; })
     nix-diff
     nix-top

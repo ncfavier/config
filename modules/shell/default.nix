@@ -50,7 +50,6 @@
       s = "sudo systemctl";
       u = "systemctl --user";
       j = "journalctl";
-      what = "_realcommand ";
 
       # Force alias expansion after these commands
       exec = "exec ";

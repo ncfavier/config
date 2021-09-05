@@ -231,6 +231,11 @@ nix-build-delete() { # useful for running NixOS tests
 }
 complete_alias nix-build-delete _nix_completion nix-build
 
+what() {
+    local p=$(type -P "$1")
+    realpath "${p:-$1}"
+}
+
 fdnp() {
     fd -L "$@" $NIX_PROFILES
 }
