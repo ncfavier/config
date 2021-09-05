@@ -1,0 +1,10 @@
+{
+  "editor.fontFamily": "monospace",
+  "files.trimTrailingWhitespace": true,
+  "keyboard.dispatch": "keyCode",
+  "latex-workshop.latex.recipe.default": "lastUsed",
+  "latex-workshop.view.pdf.viewer": "browser",
+  "update.mode": "none",
+  "window.menuBarVisibility": "toggle",
+  "workbench.colorTheme": "Night Owl Light Bold"
+}

@@ -1,7 +1,5 @@
-# arguments order: inputs, hardware, lib, here, config, modulesPath, utils, pkgs*
+# argument order: inputs, hardware, lib, here, config, modulesPath, utils, pkgs*
 { inputs, lib, here, config, utils, pkgs, ... }: with lib; {
-  # system.configurationRevision = inputs.self.rev or "dirty-${inputs.self.lastModifiedDate}"; # TODO
-
   _module.args.utils = {
     configPath = "${config.my.home}/git/config";
     mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
@@ -71,7 +69,7 @@
               exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation
               ;;
           eval)
-              exec nix eval --json -f ~/.nix-defexpr "$@" | jq -r .
+              nix eval --json -f ~/.nix-defexpr "$@" | jq -r .
               ;;
           env) # meant to be sourced
               ${exportToBash config.lib.shellEnv}

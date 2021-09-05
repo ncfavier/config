@@ -42,10 +42,7 @@
     '';
   };
 
-  nixpkgs = {
-    overlays = [ inputs.nur.overlay ];
-    config.allowUnfree = true; # :(
-  };
+  nixpkgs.overlays = [ inputs.nur.overlay ];
 
   environment.systemPackages = with pkgs; [
     (lowPrio nix-bash-completions)
@@ -57,7 +54,6 @@
     nixpkgs-fmt
     nixpkgs-review
     nixfmt
-    hydra-check
   ];
 
   environment.sessionVariables.NIX_SHELL_PRESERVE_PROMPT = "1";

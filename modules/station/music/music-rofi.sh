@@ -39,7 +39,7 @@ elif [[ ! -v album ]]; then
     fi
     mpc list album ${artist:+artist "$artist"} |
     readarray -t albums
-    if (( ${#albums[@]} != 1 )); then
+    if (( ${#albums[@]} > 1 )); then
         album=; row '*'
     fi
     for album in "${albums[@]}"; do
@@ -71,10 +71,12 @@ elif [[ ! -v index ]]; then
     else
         format='[%artist% - ]'$format
     fi
-    index=; row random
+    mpc playlist -f "$format" | readarray -t tracks
+    if (( ${#tracks[@]} > 1 )); then
+        index=; row random
+    fi
     index=1
-    mpc playlist -f "$format" |
-    while IFS= read -r track; do
+    for track in "${tracks[@]}"; do
         row "$track"
         (( index++ ))
     done

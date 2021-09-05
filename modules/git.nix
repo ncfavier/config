@@ -25,10 +25,11 @@
         aa = "add -A";
         au = "add -u";
         track = "add -N";
-        c = "!git commit --allow-empty-message -m \"$*\" #";
+        c = ''!git commit --allow-empty-message -m "$*" #'';
         ca = "commit --amend";
         ce = "commit --edit";
-        cf = "!git commit -m \"$(${pkgs.fortune}/bin/fortune -sn 80 computers debian definitions disclaimer education fortunes goedel humorists linuxcookie magic miscellaneous perl pets platitudes science songs-poems translate-me wisdom zippy | tr -s '[:space:]' '[ *]')\"";
+        cf = ''!git commit -m "$(git-random-commit-message)"'';
+        caf = ''!git commit --amend -m "$(git-random-commit-message)"'';
         co = "checkout";
         r = "reset";
         p = "push";
@@ -73,5 +74,14 @@
       enable = true;
       gitProtocol = "ssh";
     };
+
+    home.packages = with pkgs; [
+      (writeShellScriptBin "git-random-commit-message" ''
+        ${fortune}/bin/fortune -sn 80 \
+            computers debian definitions disclaimer education fortunes goedel humorists linuxcookie \
+            magic miscellaneous perl pets platitudes science songs-poems translate-me wisdom zippy |
+        tr -s '[:space:]' '[ *]'
+      '')
+    ];
   };
 }

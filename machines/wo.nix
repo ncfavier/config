@@ -71,8 +71,6 @@ in {
 
   networking.nat.externalInterface = interface;
 
-  fonts.fontconfig.enable = false;
-
   my.hashedPassword = "$6$jvQ36QMw6kyzUjx$ApZlmPkvPyNAf2t51KpnocvMDo/1BubqCMR3q5jZD5OcM1awyAnTIgIeyaVl2XpAiNZPTouyuM1AOzBIGBu4m.";
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''

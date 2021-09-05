@@ -100,9 +100,9 @@ in {
         "super + shift + h" =
           "bspc node any.hidden -g hidden=off";
         "super + less" =
-          '' bspc node -l "$(bspc query -T -n | jq -r 'if .client.layer == "above" then "normal" else "below" end')" '';
+          ''bspc node -l "$(bspc query -T -n | jq -r 'if .client.layer == "above" then "normal" else "below" end')"'';
         "super + greater" =
-          '' bspc node -l "$(bspc query -T -n | jq -r 'if .client.layer == "below" then "normal" else "above" end')" '';
+          ''bspc node -l "$(bspc query -T -n | jq -r 'if .client.layer == "below" then "normal" else "above" end')"'';
         "super + {_,shift} + q" =
           "bspc node -{c,k}";
         "super + ctrl + {Left,Down,Up,Right}" =

@@ -1,6 +1,8 @@
 { lib, here, pkgs, ... }: with lib; {
   config = mkMerge [
     {
+      fonts.fontconfig.enable = mkDefault false;
+
       console.font = pkgs.runCommandLocal "dina.psf" {} ''
         cd ${pkgs.bdf2psf}/share/bdf2psf
         sed 's/POINT_SIZE/AVERAGE_WIDTH/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-8.bdf |
@@ -9,6 +11,8 @@
     }
 
     (mkIf here.isStation {
+      nixpkgs.config.allowUnfree = true; # for symbola
+
       fonts = {
         fonts = with pkgs; [
           source-serif-pro

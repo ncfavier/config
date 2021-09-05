@@ -27,6 +27,8 @@
 in {
   imports = attrValues (importDir ./.);
 
+  nixpkgs.config.allowUnfree = true;
+
   programs.steam.enable = true;
 
   hm = {

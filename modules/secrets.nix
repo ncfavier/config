@@ -22,5 +22,7 @@
       systemPackages = [ pkgs.sops ];
       sessionVariables.SOPS_PGP_FP = my.pgpFingerprint;
     };
+
+    hm.programs.password-store.enable = true;
   };
 }

@@ -7,7 +7,8 @@ cat() { # cat directories to list them
 }
 
 cd() { # ls after cd
-    builtin cd "$@" && ls
+    builtin cd "$@" &&
+    if (( ${#FUNCNAME[@]} == 1 )); then ls; fi
 }
 
 mkcd() { # create a directory and move into it
@@ -69,7 +70,7 @@ grep() {
 rg() {
     local args=()
     [[ -t 0 ]] && args+=(--line-number)
-    [[ -t 1 ]] && args+=(--color=always --heading)
+    [[ -t 1 ]] && args+=(--color always --heading)
     command rg "${args[@]}" "$@" | less
     return "${PIPESTATUS[0]}"
 }
@@ -128,15 +129,33 @@ ix() { # upload to ix.io
     fi | tee >(clip)
 }
 
+sshesc() { # ssh opts -- argv...
+    local arg args=()
+    while (( $# )); do
+        arg=$1
+        shift
+        if [[ $arg == -- ]]; then
+            break
+        fi
+        args+=("$arg")
+    done
+    ssh "${args[@]}" -- "${*@Q}"
+}
+complete_alias sshesc _ssh ssh
+
 weechat_fifo() {
     . config env
     ssh "$server_hostname" 'cat > ~/.weechat/weechat_fifo'
 }
 
-irg() {
+irg() ( # search IRC logs
     . config env
-    rg -N "${@:2}" "${synced[irc-logs]}/${1%.weechatlog}.weechatlog"
-}
+    local where=$1
+    shift
+    (( $# )) || return
+    builtin cd "${synced[irc-logs]}" &&
+    rg -N --sort path "$@" ${where:+"$where"?(.weechatlog)}
+)
 _irg() {
     if (( COMP_CWORD == 1 )); then
         . config env
@@ -150,15 +169,15 @@ _irg() {
 }
 complete -F _irg irg
 
+myip() { # print my public IPs
+    myipv4
+    myipv6
+}
 myipv4() {
     dig -4 +short @resolver1.opendns.com myip.opendns.com A
 }
 myipv6() {
     dig -6 +short @resolver1.opendns.com myip.opendns.com AAAA
-}
-myip() { # print my public IPs
-    myipv4
-    myipv6
 }
 
 man() { # man foo -bar
@@ -225,10 +244,17 @@ hm() {
 complete_alias hm _systemctl systemctl
 
 command_not_found_handle() {
-    local attrs IFS=$' \t\n'
+    local IFS=$' \t\n'
     if [[ $1 == *@* ]]; then
-        ssh -qt "${1#@}" "${@:2}"
+        local host=${1#@}
+        shift
+        if (( $# )); then
+            sshesc -qt "$host" -- bash -ilc "${*@Q}"
+        else
+            ssh -q "$host"
+        fi
     else
+        local attrs
         printf '%s\n' "$1: command not found" >&2
         if [[ -t 1 ]] && {
             readarray -t attrs < <(nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1")

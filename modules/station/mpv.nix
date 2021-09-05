@@ -27,7 +27,7 @@
         "Alt+l" = "add video-pan-x -0.01";
         "Alt+k" = "add video-pan-y 0.01";
         "Alt+j" = "add video-pan-y -0.01";
-        "b" = '' cycle-values background "#000000" "#ffffff" '';
+        "b" = ''cycle-values background "#000000" "#ffffff"'';
       };
     };
 
