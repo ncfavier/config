@@ -290,8 +290,6 @@
           ];
         });
       };
-
-      configFile."mimeapps.list".force = true; # TODO remove
     };
   };
 }

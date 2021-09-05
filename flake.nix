@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixos";
     };
     home-manager = {
-      url = "github:ncfavier/home-manager/live";
+      url = "github:ncfavier/home-manager";
       inputs.nixpkgs.follows = "nixos";
     };
     nur.url = "nur";

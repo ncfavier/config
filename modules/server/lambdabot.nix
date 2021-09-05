@@ -48,17 +48,4 @@ in {
       connect = "ulminfo.fr:6666";
     };
   };
-
-  nixpkgs.overlays = [ # TODO update
-    (self: super: {
-      lambdabot = super.lambdabot.overrideAttrs (drv: {
-        src = "${self.fetchFromGitHub {
-          owner = "lambdabot";
-          repo = "lambdabot";
-          rev = "e63f9f28e0ce1be080a17bb37764ff2a4f84294d";
-          sha256 = "5FJAsRJRgFcg/CM3hISp3w/Veupl8Cj2qGd2SPpdjWM=";
-        }}/lambdabot";
-      });
-    })
-  ];
 }
