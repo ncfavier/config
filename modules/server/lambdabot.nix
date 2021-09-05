@@ -48,4 +48,14 @@ in {
       connect = "ulminfo.fr:6666";
     };
   };
+
+  nixpkgs.overlays = [ (self: super: {
+    haskellPackages = super.haskellPackages.override {
+      overrides = hself: hsuper: {
+        lambdabot-social-plugins = hsuper.lambdabot-social-plugins.overrideAttrs (o: {
+          meta.broken = false;
+        });
+      };
+    };
+  }) ];
 }
