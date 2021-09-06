@@ -121,14 +121,18 @@ ask "Use track numbers?" && use_tracks=true
 
 i=0
 for file in "${files[@]}"; do
+    basename=${file##*/}
+    basename=${basename%.*}
     title=
     track=
-    echo "File: ${file##*/} ($(( ++i ))/${#files[@]})"
+    echo "File: $basename ($(( ++i ))/${#files[@]})"
     if [[ $bandcamp_json ]]; then
         jq -r --argjson i "$i" '(if has("track") then .track.itemListElement[] | select(.position == $i).item else . end).name' <<< "$bandcamp_json" |
         read -r title
+    else
+        title=${basename#*' - '}
     fi
-    read -ep "Title? " ${title:+-i "$title"} title
+    read -ep "Title? " -i "$title" title
     [[ $use_tracks ]] && read -ep "Track number? " -i "$i" track
 
     ffprobe -loglevel error -show_entries format_tags -print_format json "$file" |

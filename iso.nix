@@ -11,9 +11,7 @@
     inputs.self.nixosModules.cachix
   ];
 
-  options.secrets = mkOption {
-    type = types.attrs;
-  };
+  options.secrets = mkSinkUndeclaredOptions {};
 
   config = {
     services.getty = {

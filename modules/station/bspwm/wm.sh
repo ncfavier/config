@@ -34,6 +34,7 @@ terminal() {
     if [[ $instance || $focus_title ]]; then
         class=alacritty instance="$instance" title="$focus_title" focus-window && return
     fi
+    . /etc/set-environment # reset PATH
     exec alacritty \
         ${instance:+--class "$instance"} \
         ${title:+--title "$title"} \

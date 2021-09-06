@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }: with lib; let
   bar = with pkgs; shellScriptWithDeps "bar" ./bar.sh [
-    config-cli lemonbar-xft xdo xtitle xkb-switch
+    lemonbar-xft xtitle xkb-switch
   ];
 in {
   hm = {
@@ -67,10 +67,10 @@ in {
     '';
 
     home.packages = with pkgs; [
-      xtitle
+      xdo
       i3lock
-      (shellScriptWithDeps "wm" ./wm.sh [])
       bar
+      (shellScriptWithDeps "wm" ./wm.sh [ xtitle ])
     ];
 
     services.sxhkd = {
