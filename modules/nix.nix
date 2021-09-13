@@ -15,7 +15,7 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixUnstable;
 
     trustedUsers = [ "root" "@wheel" ];
 
@@ -45,7 +45,7 @@
   nixpkgs.overlays = [
     inputs.nur.overlay
     (self: super: {
-      nix-index = super.nix-index.override { nix = self.nixFlakes; };
+      nix-index = super.nix-index.override { nix = config.nix.package; };
       nix-bash-completions = super.nix-bash-completions.overrideAttrs (o: {
         # let nix handle completion for the nix command
         postPatch = ''

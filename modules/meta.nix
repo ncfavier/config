@@ -36,7 +36,7 @@
       shift
       case $cmd in
           repl)
-              exec nix --no-use-registries repl ~/.nix-defexpr "$@"
+              exec nix repl ~/.nix-defexpr "$@"
               ;;
           compare)
               input=$1
@@ -69,7 +69,7 @@
               exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation
               ;;
           eval)
-              nix --no-use-registries eval --json -f ~/.nix-defexpr "$@" | jq -r .
+              nix eval --json -f ~/.nix-defexpr "$@" | jq -r .
               ;;
           env) # meant to be sourced
               ${exportToBash config.lib.shellEnv}

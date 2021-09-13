@@ -290,6 +290,8 @@
           ];
         });
       };
+
+      configFile."mimeapps.list".force = true;
     };
   };
 }

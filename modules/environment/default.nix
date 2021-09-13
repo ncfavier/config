@@ -1,14 +1,4 @@
-{ lib, config, utils, pkgs, pkgsFlake, ... }: with lib; {
-  imports = [
-    "${pkgsFlake.fetchFromGitHub {
-      owner = "ncfavier";
-      repo = "nixpkgs";
-      rev = "manualPages";
-      hash = "sha256-4toYOU4/0ysfSAw9TCJr9j3xomVKseauWezhcXAaXzg=";
-    }}/nixos/modules/misc/documentation.nix"
-  ];
-  disabledModules = [ "misc/documentation.nix" ];
-
+{ lib, config, utils, pkgs, ... }: with lib; {
   documentation = {
     dev.enable = true;
     man.generateCaches = true;
