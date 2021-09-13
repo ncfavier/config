@@ -52,7 +52,7 @@ in {
     };
   };
 
-  systemd.services.nginx.serviceConfig.BindReadOnlyPaths = "${config.synced.uploads.path}:${uploadsRoot}";
+  systemd.services.nginx.serviceConfig.BindReadOnlyPaths = [ "${config.synced.uploads.path}:${uploadsRoot}" ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }
