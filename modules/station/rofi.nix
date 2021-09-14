@@ -11,37 +11,28 @@
         ];
       };
 
-      inherit padding;
-      borderWidth = 1;
       font = pangoFont;
 
-      colors = let
-        transparent = "#00000000";
-      in {
+      theme = with config.hm.lib.formats.rasi; {
+        " @theme" = "default"; # space to make sure it's the first line
+        "*" = {
+          background = mkLiteral background;
+          lightbg = mkLiteral background;
+          foreground = mkLiteral foreground;
+          lightfg = mkLiteral foreground;
+          red = mkLiteral hot;
+          blue = mkLiteral cold;
+          border-color = mkLiteral borderColor;
+        };
         window = {
-          inherit background;
-          border = borderColor;
-          separator = transparent;
+          inherit padding;
+          border = borderWidth;
         };
-        rows = let
-          normal = {
-            background = transparent;
-            inherit foreground;
-            backgroundAlt = transparent;
-            highlight.background = foreground;
-            highlight.foreground = background;
-          };
-        in {
-          inherit normal;
-          active = recursiveUpdate normal {
-            foreground = cold;
-            highlight.background = cold;
-          };
-          urgent = recursiveUpdate normal {
-            foreground = hot;
-            highlight.background = hot;
-          };
-        };
+        element-icon.size = mkLiteral "2em";
+        element-text.vertical-align = mkLiteral "0.5";
+        button.horizontal-align = mkLiteral "0.5";
+        message.border = 0;
+        listview.border = 0;
       };
 
       cycle = true;

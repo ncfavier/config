@@ -136,8 +136,6 @@ in {
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + {_,shift,ctrl} + space" =
           "rofi -sidebar-mode -show-icons -modi drun,run,window -show {drun,run,window}";
-        "super + shift + s" =
-          "rofi -show ssh";
         "super + asterisk" =
           "rofi -show calc";
         "super + o" =
@@ -146,6 +144,8 @@ in {
           "rofi -show file-browser";
         "super + {_,shift} + {Return,f,w,c,e,v}" =
           "wm go {_,-n} {terminal,files,web,chat,editor,video}";
+        "super + ctrl + Return" =
+          "rofi -show ssh";
         "super + {_,shift} + m" =
           "wm go {music,mail}";
         "super + ctrl + w" =

@@ -33,6 +33,12 @@ unbck() { # restore
     done
 }
 
+mutate() { # replace a read-only symlink with a mutable copy
+    local f=$1
+    [[ -L $f ]] && command cp --remove-destination --preserve=mode -- "$(realpath -- "$f")" "$f"
+    chmod u+w -- "$f"
+}
+
 readlinks() { # print a chain of symlinks
     local f=$1
     while [[ -L $f ]]; do
@@ -154,7 +160,7 @@ irg() ( # search IRC logs
     shift
     (( $# )) || return
     builtin cd "${synced[irc-logs]}" &&
-    rg -N --sort path "$@" ${where:+"$where"?(.weechatlog)}
+    rg -N --sort path "$@" ${where:+$where?(.weechatlog)}
 )
 _irg() {
     if (( COMP_CWORD == 1 )); then
@@ -244,7 +250,12 @@ hm() {
     if (( ! $# )); then
         set -- status
     fi
-    sudo systemctl "$@" home-manager-$USER.service
+    if [[ $1 == log ]]; then
+        shift
+        journalctl -u home-manager-"$USER".service "${@--e}"
+    else
+        sudo systemctl "$@" home-manager-"$USER".service
+    fi
 }
 complete_alias hm _systemctl systemctl
 
