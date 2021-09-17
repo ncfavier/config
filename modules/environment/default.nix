@@ -60,4 +60,30 @@
       tree_view = true;
     };
   };
+
+  nixpkgs.overlays = [ (self: super: {
+    tmsu = super.tmsu.overrideAttrs (o: {
+      patches = o.patches or [] ++ [ (self.writeText "tmsu-patch" ''
+        --- a/src/github.com/oniony/TMSU/common/path/path.go
+        +++ b/src/github.com/oniony/TMSU/common/path/path.go
+        @@ -92,14 +92 @@ func Dereference(path string) (string, error) {
+        -	stat, err := os.Lstat(path)
+        -	if err != nil {
+        -		return "", err
+        -	}
+        -	if stat.Mode()&os.ModeSymlink != 0 {
+        -		path, err := os.Readlink(path)
+        -		if err != nil {
+        -			return "", err
+        -		}
+        -
+        -		return Dereference(path)
+        -	}
+        -
+        -	return path, nil
+        +	return filepath.EvalSymlinks(path)
+      '') ];
+    });
+  }) ];
+  cachix.derivationsToPush = [ pkgs.tmsu ];
 }

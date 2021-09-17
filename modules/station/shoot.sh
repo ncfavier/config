@@ -32,7 +32,7 @@ fi
 if (( $# )); then
     target=$1
 elif (( rename )); then
-    target=~/$(rofi -dmenu -p name -lines 0 -width 500)
+    target=~/$(zenity --entry --title shoot --text "Name?") || exit
 else
     n=1
     printf -v date '%(%F-%H%M%S)T' -1

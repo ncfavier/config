@@ -48,7 +48,7 @@
           detachedHead = false;
           pushNonFFCurrent = false;
         };
-        init.defaultBranch = "master";
+        init.defaultBranch = "main";
         pull.rebase = true;
         rebase = {
           autoStash = true;

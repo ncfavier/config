@@ -1,5 +1,6 @@
 { lib, config, utils, pkgs, ... }: with lib; {
   programs.dconf.enable = true;
+  programs.file-roller.enable = true;
   services.gvfs.enable = true;
   services.tumbler.enable = true;
 
@@ -29,9 +30,8 @@
       })
       xfce.xfconf
       gnome.zenity
-      gnome.file-roller
       (linkFarm "glib-default-terminal" [ {
-        # Stupid workaround for https://gitlab.gnome.org/GNOME/glib/-/issues/338
+        # workaround for https://gitlab.gnome.org/GNOME/glib/-/issues/338
         name = "bin/tilix";
         path = "${alacritty}/bin/alacritty";
       } ])

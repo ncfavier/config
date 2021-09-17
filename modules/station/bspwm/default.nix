@@ -20,12 +20,12 @@ in {
         pointer_action2 = "resize_side";
         pointer_action3 = "resize_corner";
       };
-      rules = {
-        "Firefox" = {
+      rules = rec {
+        Firefox = {
           desktop = "web";
           follow = true;
         };
-        "Thunderbird" = {
+        Thunderbird = {
           desktop = "mail";
           follow = true;
         };
@@ -33,18 +33,15 @@ in {
           desktop = "chat";
           follow = true;
         };
-        "Thunar" = {
+        Thunar = {
           desktop = "files";
           follow = true;
         };
-        ".thunar-wrapped_" = { # ugh
-          desktop = "files";
-          follow = true;
-        };
+        ".thunar-wrapped_" = Thunar;
       } // genAttrs [
         "feh"
         "mpv"
-        ".file-roller-wrapped_" # ugh
+        ".file-roller-wrapped_" # TODO
         "Lxappearance"
         "Pavucontrol"
         "Alacritty:calendar"

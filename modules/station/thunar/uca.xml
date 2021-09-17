@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 <action>
-    <icon>utilities-terminal</icon>
-    <name>Open a terminal here</name>
-    <unique-id>1614296264720169-1</unique-id>
-    <command>alacritty --working-directory %f</command>
-    <description></description>
-    <patterns>*</patterns>
-    <directories/>
+	<icon>utilities-terminal</icon>
+	<name>Open a terminal here</name>
+	<unique-id>1614296264720169-1</unique-id>
+	<command>alacritty --working-directory %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
 </action>
 <action>
-    <icon>up</icon>
-    <name>Upload</name>
-    <unique-id>1536344904961360-1</unique-id>
-    <command>name=$(zenity --entry --title upload --text &quot;Name? (leave empty for random)&quot;) &amp;&amp; upload %f &quot;$name&quot;</command>
-    <description></description>
-    <patterns>*</patterns>
-    <audio-files/>
-    <image-files/>
-    <other-files/>
-    <text-files/>
-    <video-files/>
+	<icon>up</icon>
+	<name>Upload</name>
+	<unique-id>1536344904961360-1</unique-id>
+	<command>name=$(zenity --entry --title upload --text &quot;Name? (leave empty for random)&quot;) &amp;&amp; upload %f &quot;$name&quot;</command>
+	<description></description>
+	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
 </action>
 <action>
-    <icon>code-block</icon>
-    <name>Order</name>
-    <unique-id>1546822886812187-1</unique-id>
-    <command>order &quot;$(zenity --file-selection --directory --filename=&quot;$HOME&quot;)&quot; %F</command>
-    <description></description>
-    <patterns>*</patterns>
-    <audio-files/>
-    <image-files/>
-    <other-files/>
-    <text-files/>
-    <video-files/>
+	<icon>code-block</icon>
+	<name>Order</name>
+	<unique-id>1546822886812187-1</unique-id>
+	<command>order &quot;$(zenity --file-selection --directory --filename=&quot;$HOME&quot;)&quot; %F</command>
+	<description></description>
+	<patterns>*</patterns>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
 </action>
 <action>
-    <icon>media-play</icon>
-    <name>Play</name>
-    <unique-id>1623285145974202-1</unique-id>
-    <command>music-play %F</command>
-    <description></description>
-    <patterns>*</patterns>
-    <audio-files/>
+	<icon>media-play</icon>
+	<name>Play</name>
+	<unique-id>1623285145974202-1</unique-id>
+	<command>music-play %F</command>
+	<description></description>
+	<patterns>*</patterns>
+	<audio-files/>
 </action>
 <action>
-    <icon>wallpaper</icon>
-    <name>Set as wallpaper (fill)</name>
-    <unique-id>1548521467613563-1</unique-id>
-    <command>feh --bg-fill %F</command>
-    <description></description>
-    <patterns>*</patterns>
-    <image-files/>
+	<icon>mpv</icon>
+	<name>MPV shuffle</name>
+	<unique-id>1614296264720169-1</unique-id>
+	<command>mpv --shuffle %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
 </action>
 <action>
-    <icon>wallpaper</icon>
-    <name>Set as wallpaper (tile)</name>
-    <unique-id>1548521561824976-2</unique-id>
-    <command>feh --bg-tile %F</command>
-    <description></description>
-    <patterns>*</patterns>
-    <image-files/>
+	<icon>wallpaper</icon>
+	<name>Set as wallpaper (fill)</name>
+	<unique-id>1548521467613563-1</unique-id>
+	<command>feh --bg-fill %F</command>
+	<description></description>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon>wallpaper</icon>
+	<name>Set as wallpaper (tile)</name>
+	<unique-id>1548521561824976-2</unique-id>
+	<command>feh --bg-tile %F</command>
+	<description></description>
+	<patterns>*</patterns>
+	<image-files/>
 </action>
 </actions>

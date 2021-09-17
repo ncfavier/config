@@ -14,7 +14,7 @@
       font = pangoFont;
 
       theme = with config.hm.lib.formats.rasi; {
-        " @theme" = "default"; # space to make sure it's the first line
+        " @theme" = "default"; # space to make sure it's the first line...
         "*" = {
           background = mkLiteral background;
           lightbg = mkLiteral background;
@@ -28,11 +28,13 @@
           inherit padding;
           border = borderWidth;
         };
+        message.border = 0;
+        listview.border = 0;
+        inputbar.children = mkLiteral "[ prompt,textbox-prompt-colon,entry,num-filtered-rows,textbox-num-sep,num-rows ]";
+        entry.placeholder = "";
         element-icon.size = mkLiteral "2em";
         element-text.vertical-align = mkLiteral "0.5";
         button.horizontal-align = mkLiteral "0.5";
-        message.border = 0;
-        listview.border = 0;
       };
 
       cycle = true;

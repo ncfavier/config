@@ -2,9 +2,9 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixos.url = "nixpkgs/nixos-unstable";
-    nixos-stable.url = "nixpkgs/nixos-21.05";
-    nixos-hardware.url = "nixos-hardware";
+    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-21.05";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixos";
@@ -42,7 +42,7 @@
       inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
       specialArgs = {
         inherit inputs;
-        pkgsFlake = pkgs;
+        pkgsFlake = pkgs; # TODO
         hardware = nixos.nixosModules // inputs.nixos-hardware.nixosModules;
         here = my.machines.${hostname};
       };

@@ -18,7 +18,7 @@
         icon_position = "right";
         min_icon_size = 64;
         max_icon_size = 350;
-        dmenu = "rofi -dmenu -p dunst";
+        dmenu = "rofi -dmenu -p dunst -no-fixed-num-lines";
         browser = "xdg-open";
         mouse_right_click = "context";
         show_indicators = false;

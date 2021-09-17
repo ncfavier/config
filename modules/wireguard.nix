@@ -10,6 +10,8 @@ in {
       };
 
       networking.firewall.trustedInterfaces = [ interface ];
+
+      systemd.services."wg-quick-${interface}".after = [ "nss-lookup.target" ];
     })
 
     (mkIf here.isServer {

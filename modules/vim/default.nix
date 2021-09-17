@@ -11,14 +11,14 @@
           nerdcommenter
           vim-surround
           vim-easy-align
+          vim-bracketed-paste
           vim-markdown
           haskell-vim
           vim-nix
-          vim-bracketed-paste
         ];
       };
     };
   };
 
-  environment.systemPackages = [ (lowPrio pkgs.vim_configurable) ];
+  environment.systemPackages = [ (lowPrio pkgs.vim_configurable) ]; # for xxd, view... https://github.com/NixOS/nixpkgs/issues/126386
 }

@@ -23,7 +23,7 @@
       (writeShellScriptBin "power" ''
         actions=(shutdown reboot suspend "lock and suspend" logout)
         printf '%s\n' "''${actions[@]}" |
-        case $(rofi -dmenu -p action -lines "''${#actions[@]}" -width 200) in
+        case $(rofi -dmenu -p action -no-fixed-num-lines -theme-str 'window{width:200;}') in
             shutdown) sudo poweroff;;
             reboot) sudo reboot;;
             suspend) sudo systemctl suspend;;

@@ -187,6 +187,13 @@ in {
               font-size: var(--font-size) !important;
             }
 
+            .urlbarView-row[label="Firefox Suggest"] {
+              margin-block-start: 0 !important;
+            }
+            .urlbarView-row[label="Firefox Suggest"]::before {
+              display: none !important;
+            }
+
             .bookmark-item {
               padding: 4px !important;
             }

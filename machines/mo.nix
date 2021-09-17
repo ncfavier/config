@@ -4,6 +4,12 @@
     lenovo-thinkpad-t420
   ];
 
+  services.tlp.settings = {
+    START_CHARGE_THRESH_BAT0 = 75;
+    STOP_CHARGE_THRESH_BAT0 = 80;
+    RESTORE_THRESHOLDS_ON_BAT = 1;
+  };
+
   boot = {
     loader = {
       efi.canTouchEfiVariables = true;

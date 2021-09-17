@@ -25,9 +25,11 @@ if (( ROFI_RETV == 0 )); then
     opt prompt artist
     opt markup-rows true
     opt no-custom true
-    artist=; row '*'
-    mpc list artist |
-    while IFS= read -r artist; do
+    mpc list artist | readarray -t artists
+    if (( ${#artists[@]} > 1 )); then
+        artist=; row '*'
+    fi
+    for artist in "${artists[@]}"; do
         escape artist
         row "<b>$artist_esc</b>"
     done
@@ -37,8 +39,7 @@ elif [[ ! -v album ]]; then
         escape artist
         opt message "<b>$artist_esc</b>"
     fi
-    mpc list album ${artist:+artist "$artist"} |
-    readarray -t albums
+    mpc list album ${artist:+artist "$artist"} | readarray -t albums
     if (( ${#albums[@]} > 1 )); then
         album=; row '*'
     fi
@@ -72,7 +73,7 @@ elif [[ ! -v index ]]; then
         format='[%artist% - ]'$format
     fi
     mpc playlist -f "$format" | readarray -t tracks
-    if (( ${#tracks[@]} > 1 )); then
+    if [[ ! $album ]] && (( ${#tracks[@]} > 1 )); then
         index=; row random
     fi
     index=1
