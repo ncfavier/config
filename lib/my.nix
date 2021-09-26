@@ -33,9 +33,6 @@ inputs: lib: with lib; let
               default = [];
             };
           };
-          config = {
-            inherit (inputs.self.nixosConfigurations.${name}) config options;
-          };
         }));
         default = {};
       };

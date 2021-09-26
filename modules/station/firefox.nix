@@ -307,4 +307,6 @@ in {
       fi &
     '';
   };
+
+  nix.gcRoots = [ pkgs.nur.repo-sources.rycee ];
 }

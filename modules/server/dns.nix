@@ -88,4 +88,6 @@ in {
     allowedTCPPorts = [ 53 ];
     allowedUDPPorts = allowedTCPPorts;
   };
+
+  nix.gcRoots = [ inputs.nix-dns ];
 }

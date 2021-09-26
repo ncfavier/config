@@ -3,7 +3,7 @@
 <action>
 	<icon>utilities-terminal</icon>
 	<name>Open a terminal here</name>
-	<unique-id>1614296264720169-1</unique-id>
+	<unique-id>1631819606206187-1</unique-id>
 	<command>alacritty --working-directory %f</command>
 	<description></description>
 	<patterns>*</patterns>

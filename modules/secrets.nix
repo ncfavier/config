@@ -24,5 +24,7 @@
     };
 
     hm.programs.password-store.enable = true;
+
+    nix.gcRoots = [ inputs.sops-nix ];
   };
 }

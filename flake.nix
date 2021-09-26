@@ -22,6 +22,7 @@
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixos";
       inputs.nixpkgs-21_05.follows = "nixos-stable";
+      inputs.utils.follows = "nix-dns/flake-utils";
     };
     www = {
       url = "github:ncfavier/monade.li";
@@ -42,7 +43,7 @@
       inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
       specialArgs = {
         inherit inputs;
-        pkgsFlake = pkgs; # TODO
+        pkgsFlake = pkgs;
         hardware = nixos.nixosModules // inputs.nixos-hardware.nixosModules;
         here = my.machines.${hostname};
       };

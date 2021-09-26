@@ -12,10 +12,13 @@
     hm.home.packages = with pkgs; [
       chromium
       thunderbird
+      element-desktop
+      tdesktop
       amfora
       libreoffice
       texlive.combined.scheme-full
       pandoc
+      coq
       audacity
       gimp
       transmission-gtk

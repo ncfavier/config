@@ -1,9 +1,16 @@
-{ config, pkgs, utils, ... }: {
+{ config, pkgs, utils, ... }: let
+  version = "1.17.1";
+in {
   hm = {
     home.packages = with pkgs; [
       minecraft
       (writeShellScriptBin "minecraft-install-fabric" ''
-        exec ${fabric-installer}/bin/fabric-installer client -mcversion 1.17.1 "$@"
+        ${fabric-installer}/bin/fabric-installer client -mcversion ${version} "$@"
+        # hide the "player safety disclaimer"
+        profile=$(jq -r '.profiles."fabric-loader-${version}" | "\(.lastVersionId)_\(.name)"' ~/.minecraft/launcher_profiles.json)
+        state=$(jq --arg profile "$profile" \
+          '.data.UiEvents |= (fromjson | (.hidePlayerSafetyDisclaimer[$profile] = true) | tojson)' ~/.minecraft/launcher_ui_state.json) &&
+        printf '%s\n' "$state" > ~/.minecraft/launcher_ui_state.json
       '')
     ];
 
@@ -11,8 +18,8 @@
       config.hm.lib.file.mkOutOfStoreSymlink "${config.synced.saves.path}/minecraft";
     home.file.".minecraft/mods".source = pkgs.linkFarmFromDrvs "minecraft-mods" [
       (pkgs.fetchurl {
-        url = "https://github.com/CaffeineMC/sodium-fabric/releases/download/mc1.17.1-0.3.1/sodium-fabric-mc1.17.1-0.3.1+build.6.jar";
-        sha256 = "1smsizqsjdfv1w35i7bvccxi2i9hnsybjrhfb8yzsv630zd8p8lr";
+        url = "https://github.com/CaffeineMC/sodium-fabric/releases/download/mc1.17.1-0.3.2/sodium-fabric-mc1.17.1-0.3.2+build.7.jar";
+        sha256 = "08hh7fhw2zd7ak4cwg6mysgxabgjxhxh2q0w35mbawngz7890ip2";
       })
       (pkgs.fetchurl {
         url = "https://github.com/CaffeineMC/lithium-fabric/releases/download/mc1.17.1-0.7.4/lithium-fabric-mc1.17.1-0.7.4.jar";

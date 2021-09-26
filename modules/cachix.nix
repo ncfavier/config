@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }: with lib; {
   options.cachix.derivationsToPush = mkOption {
     description = "A list of derivations to push to cachix.";
-    type = with types; listOf (either package str);
+    type = with types; listOf path;
     default = [];
   };
 

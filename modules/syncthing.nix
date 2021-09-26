@@ -5,7 +5,6 @@
 
   lib.shellEnv = {
     synced = mapAttrs (_: v: v.path) config.synced;
-    serverSynced = mapAttrs (_: v: v.path) my.server.config.synced;
   };
 
   secrets.syncthing = {

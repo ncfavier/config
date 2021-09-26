@@ -108,4 +108,5 @@ following subcommands:
 repository include:
 - partition layouts, disk encryption
 - GPG keys (used to decrypt secrets)
+- `wpa_supplicant` configuration
 - general state (mail, Firefox and Thunderbird profiles, command histories, …)

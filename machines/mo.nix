@@ -57,6 +57,7 @@
   networking = {
     interfaces.enp0s25.useDHCP = true;
     interfaces.wlp3s0.useDHCP = true;
+    dhcpcd.allowInterfaces = [ "enp0s26u1u1" "enp0s26u1u2" "enp0s20u1u2" ];
     wireless = {
       enable = true;
       interfaces = [ "wlp3s0" ];

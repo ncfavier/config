@@ -33,5 +33,7 @@ in {
       };
       lmtpSaveToDetailMailbox = "no";
     };
+
+    nix.gcRoots = [ inputs.simple-nixos-mailserver ];
   };
 }

@@ -18,4 +18,6 @@
 
     manual.html.enable = true;
   };
+
+  nix.gcRoots = [ inputs.home-manager ];
 }
