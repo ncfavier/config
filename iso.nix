@@ -11,7 +11,10 @@
     inputs.self.nixosModules.cachix
   ];
 
-  options.secrets = mkSinkUndeclaredOptions {};
+  options = {
+    secrets = mkSinkUndeclaredOptions {};
+    nix.gcRoots = mkSinkUndeclaredOptions {};
+  };
 
   config = {
     services.getty = {
