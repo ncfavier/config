@@ -27,8 +27,8 @@ hash_length=6
 
 # Parse command line arguments
 
-remove=0 force=0 interactive=0
-while getopts :l:rf o; do case $o in
+keep_name=0 remove=0 force=0 interactive=0
+while getopts :l:krf o; do case $o in
     :) OPTARG=1 ;&
     l)
         n=$OPTARG
@@ -39,13 +39,15 @@ while getopts :l:rf o; do case $o in
         done
         exit
         ;;
+    k) keep_name=1;;
     r) remove=1;;
     f) force=1;;
 esac done
 shift "$(( OPTIND - 1 ))"
 [[ -t 1 ]] && interactive=1
 source=$1
-destination=$2
+basename=${2:-$source}
+basename=${basename##*/}
 
 # Figure out what the source is
 
@@ -65,13 +67,11 @@ fi
 
 # Figure out what the destination should be
 
-basename=${source##*/}
-extension=$(extension "$basename")
-if [[ ! $destination ]]; then
-    hash=$(openssl dgst -sha1 -binary "$source" | basenc --base64url)
-    destination=${hash::hash_length}$extension
-elif [[ $destination == '=' ]]; then
+if (( keep_name )); then
     destination=$basename
+else
+    hash=$(openssl dgst -sha1 -binary "$source" | basenc --base64url)
+    destination=${hash::hash_length}$(extension "$basename")
 fi
 
 #  Upload

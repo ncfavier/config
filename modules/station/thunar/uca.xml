@@ -13,7 +13,7 @@
 	<icon>up</icon>
 	<name>Upload</name>
 	<unique-id>1536344904961360-1</unique-id>
-	<command>name=$(zenity --entry --title upload --text &quot;Name? (leave empty for random)&quot;) &amp;&amp; upload %f &quot;$name&quot;</command>
+    <command>name=$(zenity --entry --title upload --text &quot;Name? (leave empty for random)&quot;) &amp;&amp; upload ${name:+-k} %f &quot;$name&quot;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<audio-files/>
