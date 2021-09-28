@@ -28,6 +28,16 @@ in {
       "f.${my.domain}" = ssl // {
         root = uploadsRoot;
         locations."=/" = {
+          extraConfig = ''
+            fastcgi_pass unix:${config.services.phpfpm.pools.upload.socket};
+            client_max_body_size ${maxUploadSize};
+            limit_except GET {
+              ${concatMapStrings (r: ''
+              allow ${r};
+              '') (with config.networking.nat; internalIPs ++ internalIPv6s)}
+              deny all;
+            }
+          '';
           fastcgiParams.SCRIPT_FILENAME = toString (pkgs.writeText "upload.php" ''
             <?php
             header('Content-Type: text/plain');
@@ -40,16 +50,6 @@ in {
             } else
                 echo "Nothing to see here, move along.\n";
           '');
-          extraConfig = ''
-            limit_except GET {
-              ${concatMapStrings (r: ''
-              allow ${r};
-              '') (with config.networking.nat; internalIPs ++ internalIPv6s)}
-              deny all;
-            }
-            fastcgi_pass unix:${config.services.phpfpm.pools.upload.socket};
-            client_max_body_size ${maxUploadSize};
-          '';
         };
         locations."/".tryFiles = "$uri $uri/ /local$uri /local$uri/ =404";
         locations."/rice/".extraConfig = "autoindex on;";
@@ -79,21 +79,19 @@ in {
 
   systemd.services.nginx.serviceConfig.BindReadOnlyPaths = [ "${config.synced.uploads.path}:${uploadsRoot}" ];
 
-  services.phpfpm = {
-    pools.upload = {
-      user = my.username;
-      inherit (config.my) group;
-      settings = {
-        "listen.owner" = config.services.nginx.user;
-        "pm" = "static";
-        "pm.max_children" = 2;
-        "catch_workers_output" = true;
-      };
-      phpOptions = ''
-        upload_max_filesize = "${maxUploadSize}"
-        post_max_size = "${maxUploadSize}"
-      '';
+  services.phpfpm.pools.upload = {
+    user = my.username;
+    inherit (config.my) group;
+    settings = {
+      "listen.owner" = config.services.nginx.user;
+      "pm" = "static";
+      "pm.max_children" = 2;
+      "catch_workers_output" = true;
     };
+    phpOptions = ''
+      upload_max_filesize = "${maxUploadSize}"
+      post_max_size = "${maxUploadSize}"
+    '';
   };
 
   systemd.services.phpfpm-upload.serviceConfig.ProtectHome = mkForce false;
