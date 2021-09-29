@@ -8,7 +8,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     verbose = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+      modulesPath = "${inputs.home-manager}/modules"; # https://github.com/nix-community/home-manager/pull/2354
+    };
   };
 
   hm = {
@@ -19,5 +22,5 @@
     manual.html.enable = true;
   };
 
-  nix.gcRoots = [ inputs.home-manager ];
+  nix.gcRoots = [ inputs.home-manager inputs.home-manager-bash ];
 }

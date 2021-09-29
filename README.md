@@ -14,7 +14,6 @@ for an alternative with a stronger focus on software freedoms.)
 
 This repository is not meant to be used as-is by anyone else, but feel free to take
 inspiration (see the [license](https://github.com/ncfavier/config/blob/main/LICENSE)).
-
 Of course, this is a perpetual work in progress.
 
 ## Structure
@@ -31,12 +30,9 @@ Configuration for my home directory is managed using [Home Manager](https://gith
 (see the [`home-manager`](https://github.com/ncfavier/config/blob/main/modules/home-manager.nix) module).
 
 Configuration for Nix itself is defined in the [`nix`](https://github.com/ncfavier/config/blob/main/modules/nix.nix) module.
-This module defines the global flake registry which maps `config` to this flake,
-and `nixpkgs`, `nixos` and `nixos-stable` to this flake's inputs.
-
-It also defines the file `~/.nix-defexpr/default.nix`, which is used as the
+This module defines the file `~/.nix-defexpr/default.nix`, which is used as the
 source of Nix expressions for the `nix-env` and `nix repl` commands. This file
-replicates as much as possible of the environment available in module files:
+tries to replicate the environment available in modules:
 `lib`, `config`, `pkgs`, etc.
 
 #### [`machines`](https://github.com/ncfavier/config/tree/main/machines) contains machine-specific configuration:
@@ -48,40 +44,32 @@ replicates as much as possible of the environment available in module files:
 - [`mo`](https://github.com/ncfavier/config/blob/main/machines/mo.nix) is my
   laptop, a Lenovo ThinkPad T420.
 - [`fu`](https://github.com/ncfavier/config/blob/main/machines/fu.nix) is my
-  desktop computer, a HP Pavilion p6-2030.
+  desktop computer.
 
 #### [`secrets`](https://github.com/ncfavier/config/tree/main/secrets) contains [sops](https://github.com/mozilla/sops)-encrypted secrets.
 
 They are decrypted on system activation by [sops-nix](https://github.com/Mic92/sops-nix)
 using my GPG private key (see the [`secrets`](https://github.com/ncfavier/config/blob/main/modules/secrets.nix) module).
 
-#### [`lib`](https://github.com/ncfavier/config/blob/main/lib/default.nix) defines an extension of the Nixpkgs lib with
+#### [`lib`](https://github.com/ncfavier/config/blob/main/lib/default.nix) extends the Nixpkgs lib.
 
-- `importDir`, a function to import all the top-level modules in a directory
-  into an attribute set.
-- `exportToBash`, a function to export an attribute set of Nix values to Bash
-  code that defines corresponding variables. Supports arrays and attribute sets
-  (implemented as associative arrays) at depth 1.
-- [`my`](https://github.com/ncfavier/config/blob/main/lib/my.nix), a collection
-  of variables used in all the modules, such as my username, domain name and
-  email addresses.
+In particular, [`lib.my`](https://github.com/ncfavier/config/blob/main/lib/my.nix) is a collection
+of variables used in all the modules, such as my username, domain name and
+email addresses.
 
-  `my.machines` contains basic information about all my machines, including those
-  not (yet) running NixOS, such as WireGuard public keys and Syncthing IDs.
-  The module argument `here` is mapped to `my.machines.${hostname}`.
+`my.machines` contains basic information about all my machines (including those
+not <small>yet</small> running NixOS) such as WireGuard public keys and Syncthing IDs.
+The module argument `here` is mapped to `my.machines.${hostname}`.
 
-  This attribute uses the Nixpkgs module system to define default values.
+This attribute uses the Nixpkgs module system to define default values.
 
 #### [`flake.nix`](https://github.com/ncfavier/config/blob/main/flake.nix) declares this repository as a [flake](https://github.com/tweag/rfcs/blob/flakes/rfcs/0049-flakes.md), an experimental feature of Nix.
 
 This is the entry point where things are plugged into each other. The flake
 exports the following outputs:
+- `lib` is the lib defined above.
 - `nixosModules` is the set of top-level modules imported in each configuration.
 - `nixosConfigurations` is the set of configurations for my machines.
-- `devShell.x86-64_linux` provides an environment where sops is installed and
-  `SOPS_PGP_FP` is set to my PGP key's fingerprint. This environment is activated
-  automatically when I enter the directory, using [direnv](https://direnv.net/)
-  and [nix-direnv](https://github.com/nix-community/nix-direnv).
 - `packages.x86_64-linux.iso` creates an ISO image similar to the official
   unstable minimal ISO but with a few conveniences, like my localisation settings,
   a flakes-enabled Nix, git, and the GPG agent with SSH support
@@ -94,13 +82,15 @@ module defines a `config` command which I use to manage my systems. It has the
 following subcommands:
 
 - `repl` runs `nix repl ~/.nix-defexpr`.
+- `compare` allows me to compare the locked version of an input to the current upstream version.
 - `update` runs `nix flake update` on this flake.
 - `revert` is meant to be used after `config test` to revert to the latest generation.
 - `home` builds and activates my Home Manager configuration without building the whole
   system. This is useful for quickly testing a change to my home.
 - `env` is meant to be *sourced* (as in `. config env`) by Bash scripts and exports
-  a few common variables using `lib.exportToBash`.
+  a few common variables using `lib.toBash`.
 - every other command (`switch`, `test`, `build`, …) is passed on to `nixos-rebuild`.
+- If prefixed with `@host`, the command will be run remotely on `host`.
 
 ---------------
 

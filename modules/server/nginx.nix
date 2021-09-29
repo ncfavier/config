@@ -38,6 +38,7 @@ in {
               deny all;
             }
           '';
+          # https://github.com/NixOS/nixpkgs/pull/139815
           fastcgiParams.SCRIPT_FILENAME = toString (pkgs.writeText "upload.php" ''
             <?php
             header('Content-Type: text/plain');

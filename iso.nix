@@ -23,7 +23,7 @@
     };
 
     nix = {
-      package = pkgs.nixFlakes;
+      package = pkgs.nixUnstable;
       extraOptions = ''
         experimental-features = nix-command flakes ca-references ca-derivations
         warn-dirty = false

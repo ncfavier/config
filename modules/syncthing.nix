@@ -3,9 +3,7 @@
     (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "folders" ])
   ];
 
-  lib.shellEnv = {
-    synced = mapAttrs (_: v: v.path) config.synced;
-  };
+  lib.shellEnv.synced = mapAttrs (_: v: v.path) config.synced;
 
   secrets.syncthing = {
     format = "yaml";

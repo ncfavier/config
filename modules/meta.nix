@@ -72,7 +72,7 @@
               nix eval --json -f ~/.nix-defexpr "$@" | jq -r .
               ;;
           env) # meant to be sourced
-              ${exportToBash config.lib.shellEnv}
+              ${toBash config.lib.shellEnv}
               ;;
           @*)
               host=''${cmd#@}

@@ -1,4 +1,5 @@
 inputs: lib: prev: with lib; {
+  # Imports all the top-level modules in a directory into an attribute set.
   importDir = dir: pipe dir [
     builtins.readDir
     (mapAttrsToList (name: type:
@@ -13,7 +14,10 @@ inputs: lib: prev: with lib; {
     listToAttrs
   ];
 
-  exportToBash = vars: concatStringsSep "\n" (mapAttrsToList (name: value:
+  # Exports an attribute set of values to Bash code that defines corresponding
+  # variables. Supports arrays and attribute sets (implemented as associative
+  # arrays) at depth 1.
+  toBash = vars: concatStringsSep "\n" (mapAttrsToList (name: value:
     if isAttrs value then
       "declare -A ${name}=(${
         concatStringsSep " " (mapAttrsToList (n: v:

@@ -1,4 +1,4 @@
-{ lib, here, config, pkgs, ... }: with lib; {
+{ inputs, lib, here, config, pkgs, ... }: with lib; {
   my.shell = pkgs.bashInteractive_5;
 
   environment.systemPackages = with pkgs; [
@@ -59,51 +59,55 @@
     };
   };
 
-  hm.programs = {
-    bash = {
-      enable = true;
-      historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
-      historyIgnore = [ "ls" "l" "ll" "la" ];
-      shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
-      initExtra = ''
-        ${readFile ./completion.bash}
-        ${readFile ./functions.bash}
+  hm = {
+    disabledModules = [ "programs/bash.nix" ];
+    imports = [ "${inputs.home-manager-bash}/modules/programs/bash.nix" ];
+    programs = {
+      bash = {
+        enable = true;
+        historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
+        historyIgnore = [ "ls" "l" "ll" "la" ];
+        shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
+        initExtra = ''
+          ${readFile ./completion.bash}
+          ${readFile ./functions.bash}
 
-        stty -ixon
-        set -b +H
-        [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
-      '';
-    };
-
-    readline = {
-      enable = true;
-      variables = {
-        colored-completion-prefix = true;
-        completion-display-width = 0;
-        mark-symlinked-directories = true;
-        show-all-if-ambiguous = true;
-        page-completions = false;
+          stty -ixon
+          set -b +H
+          [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
+        '';
       };
-      bindings = {
-        "\\ef"  = "shell-forward-word";
-        "\\eb"  = "shell-backward-word";
-        "\\e[A" = "history-search-backward";
-        "\\e[B" = "history-search-forward";
-        "\\er"  = ''"\C-asudo \C-e"'';
-        "\\ec"  = ''"\C-a\ed"'';
-        "\\ev"  = ''"\C-a\edvim"'';
-        "\\el"  = ''"\C-e | less"'';
-      };
-    };
 
-    dircolors = {
-      enable = true;
-      settings = {
-        TERM = "*";
-        DIR = "1";
-        LINK = "target";
-        ORPHAN = "3;31";
-        EXEC = "1;35";
+      readline = {
+        enable = true;
+        variables = {
+          colored-completion-prefix = true;
+          completion-display-width = 0;
+          mark-symlinked-directories = true;
+          show-all-if-ambiguous = true;
+          page-completions = false;
+        };
+        bindings = {
+          "\\ef"  = "shell-forward-word";
+          "\\eb"  = "shell-backward-word";
+          "\\e[A" = "history-search-backward";
+          "\\e[B" = "history-search-forward";
+          "\\er"  = ''"\C-asudo \C-e"'';
+          "\\ec"  = ''"\C-a\ed"'';
+          "\\ev"  = ''"\C-a\edvim"'';
+          "\\el"  = ''"\C-e | less"'';
+        };
+      };
+
+      dircolors = {
+        enable = true;
+        settings = {
+          TERM = "*";
+          DIR = "1";
+          LINK = "target";
+          ORPHAN = "3;31";
+          EXEC = "1;35";
+        };
       };
     };
   };
