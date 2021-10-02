@@ -1,6 +1,6 @@
 { inputs, lib, config, pkgs, ... }: with lib; let
   uploadsRoot = "/run/nginx/uploads";
-  maxUploadSize = "100M";
+  maxUploadSize = "256M";
 in {
   services.nginx = {
     enable = true;
@@ -11,6 +11,12 @@ in {
       charset utf-8;
       types {
         text/plain sh csh tex latex rs tcl pl markdown md;
+      }
+      geo $internal {
+        default 0;
+        ${concatMapStrings (r: ''
+        ${r} 1;
+        '') (with config.networking.nat; internalIPs ++ internalIPv6s)}
       }
     '';
 
@@ -27,38 +33,44 @@ in {
 
       "f.${my.domain}" = ssl // {
         root = uploadsRoot;
-        locations."=/" = {
+        locations."= /" = {
           extraConfig = ''
+            if ($internal != 1) {
+              return 403 "Nothing to see here, move along.\n";
+            }
+            autoindex off;
             fastcgi_pass unix:${config.services.phpfpm.pools.upload.socket};
             client_max_body_size ${maxUploadSize};
-            limit_except GET {
-              ${concatMapStrings (r: ''
-              allow ${r};
-              '') (with config.networking.nat; internalIPs ++ internalIPv6s)}
-              deny all;
-            }
           '';
           # https://github.com/NixOS/nixpkgs/pull/139815
           fastcgiParams.SCRIPT_FILENAME = toString (pkgs.writeText "upload.php" ''
             <?php
-            header('Content-Type: text/plain');
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if (is_uploaded_file($_FILES['file']['tmp_name']))
-                    echo exec('. /etc/set-environment; upload -r '
-                        .escapeshellarg($_FILES['file']['tmp_name']).' '
-                        .escapeshellarg(basename($_FILES['file']['name']))
-                    )."\n";
-            } else
-                echo "Nothing to see here, move along.\n";
+              header('Content-Type: text/plain');
+              if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+                $url = exec('. /etc/set-environment; upload -r '.escapeshellarg($_FILES['file']['tmp_name']).' '.escapeshellarg(basename($_FILES['file']['name'])))."\n";
+                if (isset($_POST['browser']))
+                  header("Location: $url");
+                else
+                  echo $url;
+              }
+            } else { ?>
+            <!DOCTYPE html>
+            <meta name=viewport content="width=device-width, initial-scale=1">
+            <form method=post enctype=multipart/form-data>
+              <input type=file name=file onchange="form.submit()">
+              <input type=hidden name=browser value=1>
+            </form>
+            <?php }
           '');
         };
         locations."/".tryFiles = "$uri $uri/ /local$uri /local$uri/ =404";
-        locations."/rice/".extraConfig = "autoindex on;";
-        locations."=/live.iso".alias = let
+        locations."= /live.iso".alias = let
           iso = inputs.self.nixosConfigurations.iso.config;
         in "${iso.system.build.isoImage}/iso/${iso.isoImage.isoName}";
         extraConfig = ''
           default_type text/plain;
+          autoindex on;
         '';
       };
 
