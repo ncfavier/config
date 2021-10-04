@@ -41,7 +41,7 @@ in {
       } // genAttrs [
         "feh"
         "mpv"
-        ".file-roller-wrapped_" # TODO
+        "File-roller"
         "Lxappearance"
         "Pavucontrol"
         "Alacritty:calendar"
@@ -81,7 +81,9 @@ in {
         "super + {_,shift} + {button4,button5,Left,Right}" =
           "wm {focus-workspace,move-window-to-workspace} {prev,next,prev,next}";
         "super + {_,shift} + {a,n,z}" =
-          "wm {focus-workspace,move-window-to-workspace} {any.urgent,any.!occupied,last.occupied}";
+          "wm {focus-workspace,move-window-to-workspace} {any.urgent,any.!occupied,last}";
+        "super + ctrl + {_,shift} + z" =
+          "wm {focus-workspace,move-window-to-workspace} last.occupied";
         "super + {_,shift} + Tab" =
           "bspc desktop -l {next,prev}";
         "super + {Prior,Home}" =

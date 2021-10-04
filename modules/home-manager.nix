@@ -8,10 +8,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     verbose = true;
-    extraSpecialArgs = {
-      inherit inputs;
-      modulesPath = "${inputs.home-manager}/modules"; # https://github.com/nix-community/home-manager/pull/2354
-    };
+    extraSpecialArgs = { inherit inputs; };
   };
 
   hm = {

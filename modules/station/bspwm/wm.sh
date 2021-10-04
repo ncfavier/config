@@ -65,7 +65,7 @@ go() {
         music)
             exec rofi -show music;;
         video)
-            class=mpv focus-window;;
+            class=mpv focus-window || class=feh focus-window;;
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)

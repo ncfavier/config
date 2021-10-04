@@ -40,6 +40,7 @@
 
       # Shorthands
       C = "LC_ALL=C ";
+      diff = "git diff --no-index";
       dp = "declare -p";
       fc-grep = "fc-list | rg -i";
       l = "ls -l";

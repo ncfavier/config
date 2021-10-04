@@ -13,8 +13,10 @@
 
   config = {
     sops = {
-      gnupgHome = "${config.my.home}/.gnupg";
-      sshKeyPaths = [];
+      gnupg = {
+        home = config.hm.programs.gpg.homedir;
+        sshKeyPaths = [];
+      };
       defaultSopsFormat = "binary";
     };
 

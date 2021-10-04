@@ -16,10 +16,6 @@ in {
 
     mailserver = {
       enable = true;
-      enableImap = false;
-      enableImapSsl = true;
-      enableSubmission = false;
-      enableSubmissionSsl = true;
       localDnsResolver = false;
       fqdn = my.domain;
       domains = [ my.domain ];
@@ -28,7 +24,7 @@ in {
       keyFile = "${cert.directory}/key.pem";
       dkimKeyDirectory = "/etc/dkim";
       loginAccounts.${my.email} = {
-        hashedPassword = "$6$.ak/mUMQc5$6P0QSz5WZrzhEo56K1z6KAX.nMUfJMB6evxT4UD7p3f4cVp7nwnpVIagSyaFpUDiEM.rontDmltwT1hcT9oay0";
+        hashedPassword = "$2y$10$CBwz0/CVZ/N0w0yvSCBhoOvKR6J79zd42kdHPZtXwW44yglL.rfLa";
         aliases = [ "@${my.domain}" ];
       };
       lmtpSaveToDetailMailbox = "no";

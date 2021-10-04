@@ -15,7 +15,7 @@
     environment.systemPackages = with pkgs; [
       cachix
       (writeShellScriptBin "cachix-push" ''
-        cachix push ${my.githubUsername} ${escapeShellArgs config.cachix.derivationsToPush} "$@"
+        exec cachix push ${my.githubUsername} ${escapeShellArgs config.cachix.derivationsToPush} "$@"
       '')
     ];
 

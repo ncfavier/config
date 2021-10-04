@@ -19,7 +19,7 @@
         ${my.username} = {
           isNormalUser = true;
           description = my.realName;
-          extraGroups = [ "wheel" "audio" "video" ];
+          extraGroups = [ "wheel" ];
           openssh.authorizedKeys.keys = my.sshKeys;
         };
 

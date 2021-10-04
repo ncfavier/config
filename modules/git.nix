@@ -67,6 +67,12 @@
             old = "red";
           };
         };
+        sendemail = {
+          smtpServer = my.domain;
+          smtpUser = my.email;
+          smtpEncryption = "tls";
+          smtpServerPort = 587;
+        };
       };
     };
 

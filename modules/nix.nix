@@ -59,7 +59,6 @@
     nixpkgs.overlays = [
       inputs.nur.overlay
       (self: super: {
-        nix-index = super.nix-index.override { nix = config.nix.package; }; # TODO nix-index-unwrapped
         nix-bash-completions = super.nix-bash-completions.overrideAttrs (o: {
           # let nix handle completion for the nix command
           postPatch = ''
@@ -68,11 +67,10 @@
         });
       })
     ];
-    cachix.derivationsToPush = [ pkgs.nix-index ];
 
     environment.systemPackages = with pkgs; [
       nix-bash-completions
-      nix-index
+      nix-index-unwrapped
       nix-prefetch-github
       nix-diff
       nix-top

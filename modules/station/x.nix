@@ -6,6 +6,20 @@
     autoRepeatDelay = 250;
   };
 
+  nixpkgs.overlays = [ (self: super: {
+    picom-flicker-workaround = self.stdenv.mkDerivation {
+      name = "picom-flicker-workaround";
+      src = self.fetchFromGitHub {
+        owner = "mphe";
+        repo = "picom-flicker-workaround";
+        rev = "fb484bdfac73444daea93e711d5c929f3767c0de";
+        sha256 = "aeiN7C8XtbF+Hbt0VeVIgTskv2fCIsij173q28uPEpE=";
+      };
+      nativeBuildInputs = with self.xorg; [ libX11 libXScrnSaver ];
+      makeFlags = [ "PREFIX=$(out)" ];
+    };
+  }) ];
+
   hm = {
     xsession = {
       enable = true;
@@ -16,6 +30,7 @@
       initExtra = ''
         [[ -f ~/.fehbg ]] && ~/.fehbg &
         ${pkgs.xorg.xset}/bin/xset -b
+        ${pkgs.picom-flicker-workaround}/bin/xssstart pkill -usr1 picom &
       '';
 
       pointerCursor = {

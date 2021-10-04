@@ -42,7 +42,7 @@
     fortune
     imagemagick
     ffmpeg-full
-    youtube-dl # TODO yt-dlp.override { withAlias = true; }
+    (yt-dlp.override { withAlias = true; })
     python3
     neofetch
     lesspass-cli

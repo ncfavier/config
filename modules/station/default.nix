@@ -5,6 +5,11 @@
     boot.kernelParams = [ "mitigations=off" ];
     boot.kernel.sysctl."kernel.sysrq" = 1;
 
+    programs.wireshark = {
+      enable = true;
+      package = pkgs.wireshark;
+    };
+
     environment.systemPackages = with pkgs; [
       gparted
     ];
@@ -12,6 +17,7 @@
     hm.home.packages = with pkgs; [
       chromium
       thunderbird
+      github-desktop
       element-desktop
       tdesktop
       amfora
@@ -38,5 +44,7 @@
         slop imagemagick ffmpeg-full ffmpegthumbnailer
       ])
     ];
+
+    my.extraGroups = [ "audio" "video" "wireshark" ];
   };
 }

@@ -8,7 +8,6 @@ in {
     forwardX11 = true;
   };
 
-
   programs.ssh.extraConfig = ''
     StrictHostKeyChecking accept-new
   '';
@@ -16,6 +15,8 @@ in {
   programs.mosh.enable = true;
 
   environment.systemPackages = with pkgs; [ autossh ];
+
+  environment.variables.SSH_ASKPASS = mkForce "";
 
   hm.programs.ssh = {
     enable = true;

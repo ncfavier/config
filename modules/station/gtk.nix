@@ -36,18 +36,14 @@
       };
     };
 
-    xdg.configFile = {
-      "gtk-3.0/settings.ini".force = true;
+    xdg.configFile."gtk-3.0/settings.ini".force = true;
 
-      # live reloading
-      "xsettingsd/xsettingsd.conf" = {
-        text = ''
-          Net/ThemeName "${config.hm.gtk.theme.name}"
-          Net/IconThemeName "${config.hm.gtk.iconTheme.name}"
-        '';
-        onChange = ''
-          timeout 3s ${pkgs.xsettingsd}/bin/xsettingsd 2> /dev/null &
-        '';
+    # live reloading
+    services.xsettingsd = {
+      enable = true;
+      settings = {
+        "Net/ThemeName" = config.hm.gtk.theme.name;
+        "Net/IconThemeName" = config.hm.gtk.iconTheme.name;
       };
     };
   };

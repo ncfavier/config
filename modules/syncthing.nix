@@ -33,19 +33,20 @@
         type = "trashcan";
         params.cleanoutDays = "0";
       };
+      simple = {
+        type = "simple";
+        params = {
+          keep = "5";
+          cleanoutDays = "0";
+        };
+      };
       allDevices = attrNames my.machines;
       allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) my.machines);
     in {
       my = {
         path = "${config.my.home}/my";
         devices = allDevices;
-        versioning = {
-          type = "simple";
-          params = {
-            keep = "5";
-            cleanoutDays = "0";
-          };
-        };
+        versioning = simple;
       };
       pictures = {
         path = "${config.my.home}/pictures";
@@ -81,7 +82,7 @@
       password-store = {
         path = config.hm.programs.password-store.settings.PASSWORD_STORE_DIR;
         devices = allDevices;
-        versioning = trashcan;
+        versioning = simple;
       };
     };
 

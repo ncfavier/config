@@ -63,8 +63,8 @@
             src = self.fetchFromGitHub {
               owner = "alacritty";
               repo = "alacritty";
-              rev = "cf35a2019162c6055e4a4c152976a424ba10869d";
-              sha256 = "dX/m+RAN/wkAY8fwJwAnPCxvfxAlOVFuU/W1YkP94io=";
+              rev = "8cda3d140574cbd8bd0fd8e89667ef67a4a1f900";
+              sha256 = "LzNDbZlAIYB33bT7ZhKyb9dtPDV9ep10D9ZnO+az8do=";
             };
             doCheck = false;
           });
