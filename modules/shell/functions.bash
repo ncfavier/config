@@ -105,6 +105,10 @@ zton() {
     tr '\0' '\n'
 }
 
+unansi() {
+    sed 's/\x1b\[[0-9;]*m//g' "$@"
+}
+
 # copy a command and its output to the clipboard
 alias clipcmd='clipcmd_helper # '
 clipcmd_helper() {

@@ -1,8 +1,5 @@
 { inputs, lib, here, config, pkgs, ... }: with lib; {
-  my.shell = pkgs.bashInteractive_5;
-
   environment.systemPackages = with pkgs; [
-    (hiPrio config.my.shell)
     jq
     alacritty.terminfo
   ];

@@ -55,7 +55,7 @@ in {
                   echo $url;
               }
             } else { ?>
-            <!DOCTYPE html>
+            <!doctype html>
             <meta name=viewport content="width=device-width, initial-scale=1">
             <form method=post enctype=multipart/form-data>
               <input type=file name=file onchange="form.submit()">
