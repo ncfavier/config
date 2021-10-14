@@ -1,6 +1,6 @@
 { lib, here, config, pkgs, ... }: with lib; let
   interface = "wg42";
-  port = 51820;
+  port = 500;
 in {
   config = mkMerge [
     (mkIf (here.isServer || here.isStation) {

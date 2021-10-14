@@ -37,7 +37,7 @@
 
       # Shorthands
       C = "LC_ALL=C ";
-      diff = "git diff --no-index";
+      diff = "git diff --no-index --no-prefix";
       dp = "declare -p";
       fc-grep = "fc-list | rg -i";
       l = "ls -l";

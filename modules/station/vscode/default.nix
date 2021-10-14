@@ -56,6 +56,9 @@
       ];
     };
 
-    xdg.configFile."VSCodium/User/settings.json".source = utils.mkMutableSymlink ./settings.json;
+    xdg.configFile = {
+      "VSCodium/User/settings.json".source = utils.mkMutableSymlink ./settings.json;
+      "VSCodium/User/keybindings.json".source = utils.mkMutableSymlink ./keybindings.json;
+    };
   };
 }
