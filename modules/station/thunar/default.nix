@@ -29,6 +29,7 @@
         ];
       })
       xfce.xfconf
+      glib.bin
       gnome.zenity
       (linkFarm "glib-default-terminal" [ {
         # workaround for https://gitlab.gnome.org/GNOME/glib/-/issues/338

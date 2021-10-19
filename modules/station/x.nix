@@ -56,9 +56,10 @@
       "${pkgs.xorg.xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'";
 
     home.packages = with pkgs; [
+      xlibs.xev
       arandr
       hsetroot
-      xlibs.xev
+      xdotool
     ];
 
     xresources.properties = with config.theme; {

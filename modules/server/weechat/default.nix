@@ -48,7 +48,7 @@ in {
 
   hm.xdg.configFile = mapAttrs' (name: _: {
     name = "weechat/${name}";
-    value.source = utils.mkMutableSymlink (./. + "/${name}");
+    value.source = utils.mkMutableSymlink ./${name};
   }) (filterAttrs (name: _: hasSuffix ".conf" name) (builtins.readDir ./.));
 
   networking.firewall.allowedTCPPorts = [ relayPort ];
