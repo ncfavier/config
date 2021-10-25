@@ -75,8 +75,6 @@
   services.xserver.videoDrivers = [ "intel" ];
   services.xserver.useGlamor = true;
 
-  hm.services.picom.experimentalBackends = true;
-
   services.xserver.libinput = {
     enable = true;
     touchpad = {

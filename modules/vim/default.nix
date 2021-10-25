@@ -15,6 +15,7 @@
           vim-markdown
           haskell-vim
           vim-nix
+          Coqtail
         ];
       };
     };

@@ -53,6 +53,12 @@
           version = "0.3.3";
           sha256 = "OPOgjjkooaDQzYoPOmly6WenvAILWhxBKuqRKmQi+rQ=";
         }
+        {
+          name = "vscoq";
+          publisher = "maximedenes";
+          version = "0.3.5";
+          sha256 = "mUjKjsBUZpgfMOWCRnEbUQpc7ngs+DwvyLoDkhlphBc=";
+        }
       ];
     };
 

@@ -219,11 +219,11 @@
     "www": {
       "flake": false,
       "locked": {
-        "lastModified": 1633632224,
-        "narHash": "sha256-PTIzbqS6RPl5i2gSJ/kPNTCXmRybC6xnNnM8kAdenyo=",
+        "lastModified": 1635154536,
+        "narHash": "sha256-UqFFEY0G9NZH0c+yCvU3MyNThh5x6kfc+NEczGaGcTo=",
         "owner": "ncfavier",
         "repo": "monade.li",
-        "rev": "40cf8062ca15993cf57214e0726144a6a03e9429",
+        "rev": "d68b5080d7cabf376bb4bab069cbde7b3c8b79cf",
         "type": "github"
       },
       "original": {

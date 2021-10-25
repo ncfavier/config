@@ -90,7 +90,7 @@ following subcommands:
 - `env` is meant to be *sourced* (as in `. config env`) by Bash scripts and exports
   a few common variables using `lib.toBash`.
 - every other command (`switch`, `test`, `build`, …) is passed on to `nixos-rebuild`.
-- If prefixed with `@host`, the command will be run remotely on `host`.
+  If prefixed with `@host`, the command will be run remotely on `host`.
 
 ---------------
 

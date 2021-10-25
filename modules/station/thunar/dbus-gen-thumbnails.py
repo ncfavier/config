@@ -14,6 +14,7 @@ recursive = False
 hidden = False
 delete = False
 dry_run = False
+xdev = True
 files = []
 
 def get_thumbnail_path(uri, size):
@@ -22,6 +23,8 @@ def get_thumbnail_path(uri, size):
 def add_path(p, depth=0):
     if not hidden and p.name.startswith('.') and depth > 0:
         return
+    if not xdev and p.is_mount() and depth > 0:
+        return
     if p.is_dir():
         if recursive or depth == 0:
             for child in p.iterdir():
@@ -29,7 +32,7 @@ def add_path(p, depth=0):
     elif p.is_file():
         files.append(p)
 
-opts, args = getopt(sys.argv[1:], ':rhdns:')
+opts, args = getopt(sys.argv[1:], ':rhdns:x')
 for o, arg in opts:
     if o == '-r':
         recursive = True
@@ -41,6 +44,8 @@ for o, arg in opts:
         dry_run = True
     elif o == '-s':
         sizes = [arg]
+    elif o == '-x':
+        xdev = False
 for p in args:
     add_path(Path(p))
 

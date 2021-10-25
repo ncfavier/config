@@ -57,6 +57,7 @@ in {
             } else { ?>
             <!doctype html>
             <meta name=viewport content="width=device-width, initial-scale=1">
+            <title>Upload</title>
             <form method=post enctype=multipart/form-data>
               <input type=file name=file onchange="form.submit()">
               <input type=hidden name=browser value=1>
