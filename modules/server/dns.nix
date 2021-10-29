@@ -69,6 +69,7 @@ in {
         ]) my.machines) ++ [
           ''"fu.home. A 192.168.1.2"''
           ''"mo.home. A 192.168.1.3"''
+          ''"no.home. A 192.168.1.5"''
           ''"tsu.home. A 192.168.1.4"''
           ''"printer.home. A 192.168.1.63"''
         ];

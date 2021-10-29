@@ -13,8 +13,6 @@
 
   config = {
     users = {
-      mutableUsers = false;
-
       users = {
         ${my.username} = {
           isNormalUser = true;

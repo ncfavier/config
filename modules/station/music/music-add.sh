@@ -42,7 +42,7 @@ for src in "${srcs[@]}"; do
 
     if [[ $src =~ ^[[:alpha:]]+:// ]]; then
         echo "Downloading audio files from $src..."
-        youtube-dl --ignore-config -x --audio-format mp3 -o "$srcdir/%(playlist_index)s - %(title)s.%(ext)s" "$src" || die "Failed to download audio files."
+        yt-dlp --ignore-config -x --audio-format mp3 -o "$srcdir/%(playlist_index)s - %(title)s.%(ext)s" --cookies-from firefox "$src" || die "Failed to download audio files."
         printf '\a'
     elif [[ -r $src ]]; then
         if [[ ${src%/*} -ef $destdir ]]; then cmd=mv; else cmd=cp; fi

@@ -82,6 +82,15 @@ inputs: lib: with lib; let
             };
             syncthing.id = "WO4GV6E-AJGKLLQ-M7RZGFT-WY7CCOW-LXODXRY-F3QPEJ2-AXDVWKR-SWBGDQP";
           };
+          no = {
+            isStation = true;
+            wireguard = {
+              ipv4 = "10.42.2.2";
+              ipv6 = "fd42::2:2";
+              publicKey = "mQe4b0adN/BDQUTAzc+0rZp8M+ZjV17ewEtBLRIdM0I=";
+            };
+            syncthing.id = "MN3PICD-LGLVMZ2-SSNK5CG-LXNWL5R-U2QMWNM-AIA4UAG-NQ5WT5Y-B3TKXQV";
+          };
           tsu = {
             isPhone = true;
             wireguard = {

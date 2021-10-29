@@ -26,7 +26,7 @@
         ffmpegthumbnailer xxd glib.bin
       ])
       (shellScriptWithDeps "music-add" ./music-add.sh [
-        libxml2Python imagemagick ffmpeg-full youtube-dl audacity mpc_cli
+        libxml2Python imagemagick ffmpeg-full audacity mpc_cli
       ])
       songrec
     ];

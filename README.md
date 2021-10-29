@@ -42,7 +42,9 @@ tries to replicate the environment available in modules:
   serves as an IRC bouncer (see the [`weechat`](https://github.com/ncfavier/config/blob/main/modules/server/weechat/default.nix) module)
   and a central node for my WireGuard network and for Syncthing.
 - [`mo`](https://github.com/ncfavier/config/blob/main/machines/mo.nix) is my
-  laptop, a Lenovo ThinkPad T420.
+  old laptop, a Lenovo ThinkPad T420.
+- [`no`](https://github.com/ncfavier/config/blob/main/machines/no.nix) is my
+  new laptop, a Lenovo ThinkPad T14s Gen 1 AMD.
 - [`fu`](https://github.com/ncfavier/config/blob/main/machines/fu.nix) is my
   desktop computer.
 
