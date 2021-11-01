@@ -1,3 +1,4 @@
+# TODO yt-dlp -j for music.youtube.com
 shopt -s nullglob lastpipe
 
 die() {

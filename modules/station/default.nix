@@ -1,4 +1,4 @@
-{ lib, here, pkgs, ... }: with lib; optionalAttrs here.isStation {
+{ lib, here, utils, pkgs, ... }: with lib; optionalAttrs here.isStation {
   imports = attrValues (importDir ./.);
 
   config = {
@@ -40,9 +40,11 @@
             logout) wm quit;;
         esac
       '')
-      (shellScriptWithDeps "shoot" ./shoot.sh [
-        slop imagemagick ffmpeg-full ffmpegthumbnailer
-      ])
+      (utils.shellScriptWith "shoot" ./shoot.sh {
+        deps = [
+          slop imagemagick ffmpeg-full ffmpegthumbnailer
+        ];
+      })
     ];
 
     my.extraGroups = [ "audio" "video" "wireshark" ];

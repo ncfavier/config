@@ -47,8 +47,8 @@
     neofetch
     lesspass-cli
     tmsu
-    (shellScriptWithDeps "upload" ./upload.sh [])
-    (shellScriptWithDeps "order" ./order.sh [])
+    (utils.shellScriptWith "upload" ./upload.sh {})
+    (utils.shellScriptWith "order" ./order.sh {})
   ];
 
   environment.etc.topdefaultrc.source = utils.mkMutableSymlink ./toprc;

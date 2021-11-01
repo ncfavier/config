@@ -28,7 +28,7 @@
     };
 
     xdg.configFile."feh/themes".text = ''
-      feh -B ${config.theme.background} -g 800x500 -. --action9 ';bspc node -t ~fullscreen'
+      feh -B ${config.theme.background} -g 1200x800 -. --action9 ';bspc node -t ~fullscreen'
     '';
 
     home.packages = with pkgs; [

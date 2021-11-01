@@ -24,16 +24,16 @@
       borderWidth = 0;
       borderColor = foreground;
       padding = 16;
+      barHeight = 32;
       gtkTheme = "Flat-Remix-GTK-Blue" + (if dark then "-Darkest" else "");
       iconTheme = "Flat-Remix-Blue";
+      gtkFont = "sans-serif";
       font = "bitmap";
       pangoFont = "${font} 8";
     };
 
     lib.shellEnv.theme = config.theme;
 
-    # specialisation.light.configuration = {
-    #   theme.dark = false;
-    # };
+    # specialisation.light.configuration.theme.dark = false;
   };
 }

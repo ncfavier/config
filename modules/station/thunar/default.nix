@@ -46,13 +46,13 @@
         MimeType=image/webp
         Exec=${thumbnailerScript "webp" ''${imagemagick}/bin/convert -thumbnail "$s" "$i" "$o"''}
       '')
-      (python3ScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
+      (utils.pythonScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
         with ps; [ dbus-python pygobject3 pyxdg ]))
     ];
 
     xdg.configFile = {
       "xfce4/xfconf/xfce-perchannel-xml/thunar.xml" = {
-        source = utils.mkMutableSymlink ./thunar.xml;
+        source = ./thunar.xml;
         force = true;
       };
       "Thunar/uca.xml".source = utils.mkMutableSymlink ./uca.xml;

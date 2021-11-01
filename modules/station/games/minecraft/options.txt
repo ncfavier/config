@@ -30,7 +30,7 @@ guiScale:0
 particles:1
 maxFps:60
 difficulty:2
-graphicsMode:0
+graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:true

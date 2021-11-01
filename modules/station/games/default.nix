@@ -5,8 +5,11 @@
 
   programs.steam.enable = true;
 
+  programs.gamemode.enable = true;
+
   hm = {
     home.packages = with pkgs; [
+      legendary-gl
       teeworlds
       (writeShellScriptBin "zcatch" ''
         exec ${zcatch}/bin/zcatch_srv -f zcatch.cfg "$@"

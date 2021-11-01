@@ -9,7 +9,7 @@
       };
 
       config = {
-        autofit = "0x500";
+        autofit = "70%";
         sub-auto = "fuzzy";
       };
 

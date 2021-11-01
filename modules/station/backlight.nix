@@ -3,13 +3,16 @@
 
   environment.systemPackages = with pkgs; [
     (writeShellScriptBin "backlight" ''
-      light() { command light -s sysfs/backlight/acpi_video0 "$@"; }
       if (( ! $# )); then
           light -G
-      else case $1 in
-          +) light -r -A 1;;
-          -) light -r -U 1;;
-      esac fi
+      elif [[ $1 =~ ^[+-]([0-9]*)$ ]]; then
+          n=''${BASH_REMATCH[1]:-1}
+          if [[ $1 == +* ]]; then
+              light -A "$n"
+          else
+              light -U "$n"
+          fi
+      fi
     '')
   ];
 }

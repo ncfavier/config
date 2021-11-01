@@ -2,7 +2,7 @@
   hm = {
     home.packages = [ pkgs.lxappearance ];
 
-    gtk = {
+    gtk = with config.theme; {
       enable = true;
       gtk2 = {
         configLocation = "${config.hm.xdg.configHome}/gtk-2.0/gtkrc";
@@ -23,20 +23,21 @@
         };
       };
       font = {
-        name = "sans-serif";
+        name = gtkFont;
         size = 10;
       };
       theme = {
         package = pkgs.flat-remix-gtk;
-        name = config.theme.gtkTheme;
+        name = gtkTheme;
       };
       iconTheme = {
         package = pkgs.flat-remix-icon-theme;
-        name = config.theme.iconTheme;
+        name = iconTheme;
       };
     };
 
     xdg.configFile."gtk-3.0/settings.ini".force = true;
+    home.file.".icons/default/index.theme".force = true;
 
     # live reloading
     services.xsettingsd = {

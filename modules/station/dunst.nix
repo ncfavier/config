@@ -4,7 +4,10 @@
 
     settings = with config.theme; rec {
       global = {
-        geometry = "800x5-32+64";
+        width = "(0, 1200)";
+        height = 500;
+        offset = "${toString (padding * 2)}x${toString (barHeight + padding * 2)}";
+        notification_limit = 6;
         shrink = true;
         inherit padding;
         horizontal_padding = padding;
@@ -17,7 +20,7 @@
         word_wrap = true;
         icon_position = "right";
         min_icon_size = 64;
-        max_icon_size = 350;
+        max_icon_size = global.height;
         dmenu = "rofi -dmenu -p dunst -no-fixed-num-lines";
         browser = "xdg-open";
         mouse_right_click = "context";

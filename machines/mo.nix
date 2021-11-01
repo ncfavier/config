@@ -43,7 +43,7 @@
     };
 
     "/home" = {
-      device = "LABEL=home";
+      device = "/dev/disk/by-label/home";
       fsType = "ext4";
       neededForBoot = true;
     };
@@ -82,8 +82,6 @@
       tapping = false;
     };
   };
-
-  my.hashedPassword = "$6$YQiLlxItjY$D8bmUq29Zi557FZ3i4fcWdK4S1Nc7YH/6aUUfl3NvuTyK0rq7uKdajhChK/myhmvtN3MzIYXDo6e0hmfhuHjn0";
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----

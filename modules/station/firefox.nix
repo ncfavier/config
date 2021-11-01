@@ -233,6 +233,12 @@ in {
               background-image: none !important;
               background-color: var(--bg) !important;
             }
+
+            ${optionalString (config.services.xserver.dpi != null) ''
+            body > img {
+              transform: scale(${toString (96.0 / config.services.xserver.dpi)});
+            }
+            ''}
           }
 
           @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing) {

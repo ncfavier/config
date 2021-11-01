@@ -60,7 +60,7 @@ fi
 
 # Shoot
 
-thumbnail_size=300
+thumbnail_size=500
 thumbnail=$(mktemp --suffix .png) || exit 1
 trap 'rm -f "$thumbnail"' exit
 

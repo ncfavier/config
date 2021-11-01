@@ -1,7 +1,9 @@
-{ lib, config, pkgs, ... }: with lib; let
-  bar = with pkgs; shellScriptWithDeps "bar" ./bar.sh [
-    lemonbar-xft xtitle xkb-switch
-  ];
+{ lib, config, utils, pkgs, ... }: with lib; let
+  bar = utils.shellScriptWith "bar" ./bar.sh {
+    deps = with pkgs; [
+      lemonbar-xft xtitle xkb-switch
+    ];
+  };
 in {
   hm = {
     xsession.windowManager.bspwm = {
@@ -67,7 +69,7 @@ in {
       xdo
       i3lock
       bar
-      (shellScriptWithDeps "wm" ./wm.sh [ xtitle ])
+      (utils.shellScriptWith "wm" ./wm.sh { deps = [ xtitle ]; })
     ];
 
     services.sxhkd = {
@@ -131,6 +133,10 @@ in {
           "volume {-,+}2";
         "XF86AudioMute" =
           "volume toggle";
+        "XF86AudioMicMute" =
+          "volume toggle-mic";
+        "XF86MonBrightness{Down,Up}" =
+          "backlight {-,+}";
         "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + Print" =
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + {_,shift,ctrl} + space" =

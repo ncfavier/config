@@ -11,7 +11,7 @@
         ];
       };
 
-      font = pangoFont;
+      font = "${font} 10";
 
       theme = with config.hm.lib.formats.rasi; {
         " @theme" = "default"; # space to make sure it's the first line...
@@ -43,10 +43,27 @@
       extraConfig = {
         drun-display-format = "{name}";
         sort = true;
+        normalize-match = true;
         sorting-method = "fzf";
         kb-mode-next = "Super+space,Control+Tab";
         kb-mode-previous = "Super+Shift+space,Control+ISO_Left_Tab";
       };
     };
+
+    home.file.${config.hm.programs.rofi.configPath}.text = mkAfter ''
+      @theme "custom"
+    '';
   };
+
+  nixpkgs.overlays = [ (self: super: {
+    rofi-unwrapped = super.rofi-unwrapped.overrideAttrs (o: {
+      src = self.fetchFromGitHub  {
+        owner = "davatorium";
+        repo = "rofi";
+        rev = "05e84544b186ec65057100feb7e07e3ae8c7151c";
+        sha256 = "SdXTQ+7aNYnCPTTJ4xkS1awri66qRAv6rCDi802zDkk=";
+        fetchSubmodules = true;
+      };
+    });
+  }) ];
 }

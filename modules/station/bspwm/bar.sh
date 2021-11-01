@@ -7,8 +7,6 @@ echo "$$" > "$pidfile"
 
 . config env
 
-xft_fonts=("siji:pixelsize=10" "Dina:pixelsize=10" "Dina:bold:pixelsize=10" "tewi:pixelsize=10" "Biwidth:pixelsize=12")
-
 # Functions
 
 desktop_label() case $1 in
@@ -89,10 +87,12 @@ battery=(/sys/class/power_supply/BAT*)
 read -r default_layout < <(xkb-switch -l)
 bold=3
 
+xft_fonts=("siji:pixelsize=10" "bitmap:pixelsize=14" "bitmap:bold:pixelsize=14" "tewi:pixelsize=14" "Biwidth:pixelsize=12")
 font_args=()
 for f in "${xft_fonts[@]}"; do
     case $f in
-        *tewi*|*Dina*) offset=1;;
+        *siji*) offset=-2;;
+        *Biwidth*) offset=-2;;
         *) offset=0;;
     esac
     font_args+=(-o "$offset" -f "$f")
@@ -133,16 +133,30 @@ cleanup_on_exit
         xkb-switch -W
     } | sed -u 's/^/K/' &
 
+    # Clock
     while true; do
-        # Clock
         printf 'C\n'
+        sleep 1
+    done &
 
-        # systemd
-        printf 'Y\n'
+    # systemd
+    while true; do
+        degraded=0
+        if [[ $(systemctl is-system-running) == degraded ]] ||
+           [[ $(systemctl --user is-system-running) == degraded ]]; then
+            degraded=1
+        fi
+        printf 'Y%s\n' "$degraded"
+        sleep 1
+    done &
 
-        # dunst
-        printf 'D\n'
-
+    # dunst
+    while true; do
+        paused=0
+        if [[ $(timeout 0.1s dunstctl is-paused) == true ]]; then
+            paused=1
+        fi
+        printf 'D%s\n' "$paused"
         sleep 1
     done &
 
@@ -158,14 +172,13 @@ cleanup_on_exit
     if backlight=(/sys/class/backlight/*); (( ${#backlight[@]} )); then
         udevadm monitor -u -s backlight |
         while
-            printf 'B\n'
+            printf 'B%s\n' "$(backlight)"
             read -r
         do :; done &
     fi
 
     # Sound
     stdbuf -oL alsactl monitor |
-    grep --line-buffered -i master |
     while
         printf 'S%s\n' "$(volume)"
         read -r
@@ -200,12 +213,42 @@ cleanup_on_exit
     do :; done &
 
     # Music
-    # while mpc idleloop; (( $? == 1 )); do sleep 1; done |
-    mpc idleloop |
-    while
-        printf 'M\n'
-        read -r
-    do :; done &
+    {
+        cleanup_on_exit
+        while echo; mpc idleloop; (( $? == 1 )); do sleep 1; done
+    } |& while read -r; do
+        song=
+        song_file=$(mpc current -f '%file%')
+        if [[ $song_file ]]; then
+            song_artist=$(mpc current -f '%artist%')
+            song_title=$(mpc current -f '%title%')
+            if [[ $song_title ]]; then
+                trunc song_title 30
+                escape song_title
+                song=$song_title
+                if [[ $song_artist ]]; then
+                    trunc song_artist 30
+                    escape song_artist
+                    song="%{T$bold}$song_artist%{T-} - $song"
+                fi
+            else
+                trunc song_file 50
+                escape song_file
+                song=$song_file
+            fi
+            if mpc status | grep -qi 'random: *on'; then
+                song=" $song"
+            fi
+            if mpc status | grep -qi 'repeat: *on'; then
+                if mpc status | grep -qi 'single: *on'; then
+                    song="$song (repeat1)"
+                else
+                    song="$song (repeat)"
+                fi
+            fi
+        fi
+        printf 'M%s\n' "$song"
+    done &
 
     # Wait
     until wait; do :; done
@@ -315,8 +358,7 @@ while read -rn 1 event; do
             fi
             ;;
         B) # backlight
-            read -r
-            percentage=$(backlight)
+            read -r percentage
             percentage=${percentage%.*}
             brightness="$(icon_ramp "$percentage"  10  50 ) $percentage%%"
             pad_right brightness
@@ -363,51 +405,23 @@ while read -rn 1 event; do
             fi
             ;;
         M) # music
-            song=
-            song_file=$(mpc current -f '%file%')
-            if [[ $song_file ]]; then
-                song_artist=$(mpc current -f '%artist%')
-                song_title=$(mpc current -f '%title%')
-                if [[ $song_title ]]; then
-                    trunc song_title 30
-                    escape song_title
-                    song=$song_title
-                    if [[ $song_artist ]]; then
-                        trunc song_artist 20
-                        escape song_artist
-                        song="%{T$bold}$song_artist%{T-} - $song"
-                    fi
-                else
-                    trunc song_file 50
-                    escape song_file
-                    song=$song_file
-                fi
-                if mpc status | grep -qi 'random: *on'; then
-                    song=" $song"
-                fi
-                if mpc status | grep -qi 'repeat: *on'; then
-                    if mpc status | grep -qi 'single: *on'; then
-                        song="$song (repeat1)"
-                    else
-                        song="$song (repeat)"
-                    fi
-                fi
+            read -r song
+            if [[ $song ]]; then
                 pad_right song
                 song="%{A2:mpc -q clear:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
             fi
             ;;
         Y) # systemd
-            read -r
+            read -r degraded
             systemd=
-            if [[ $(systemctl is-system-running) == degraded ]] ||
-               [[ $(systemctl --user is-system-running) == degraded ]]; then
+            if (( degraded )); then
                 systemd="%{F${theme[hot]}}%{F-}"
             fi
             ;;
         D) # dunst
-            read -r
+            read -r paused
             dunst=
-            if [[ $(dunstctl is-paused) == true ]]; then
+            if (( paused )); then
                 dunst="%{F${theme[hot]}}%{F-}"
             fi
             ;;
@@ -425,7 +439,7 @@ done |
 # Bar
 #
 
-lemonbar -g x32 \
+lemonbar -g x"${theme[barHeight]}" \
          -a 255 \
          -B "${theme[background]}" \
          -F "${theme[foreground]}" \

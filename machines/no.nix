@@ -4,11 +4,12 @@
     lenovo-thinkpad-t14s-amd-gen1
   ];
 
-  # services.tlp.settings = {
-  #   START_CHARGE_THRESH_BAT0 = 75;
-  #   STOP_CHARGE_THRESH_BAT0 = 80;
-  #   RESTORE_THRESHOLDS_ON_BAT = 1;
-  # };
+  services.tlp.settings = {
+    RUNTIME_PM_DENYLIST = "02:00.0"; # otherwise the Ethernet adapter doesn't work on battery mode
+    START_CHARGE_THRESH_BAT0 = 75;
+    STOP_CHARGE_THRESH_BAT0 = 80;
+    RESTORE_THRESHOLDS_ON_BAT = 1;
+  };
 
   boot = {
     loader = {
@@ -16,7 +17,6 @@
       systemd-boot = {
         enable = true;
         configurationLimit = 25;
-        # consoleMode = "max";
       };
     };
 
@@ -45,14 +45,14 @@
 
   networking = {
     interfaces.enp2s0f0.useDHCP = true;
-    # interfaces.wlp3s0.useDHCP = true;
-    # dhcpcd.allowInterfaces = [ "enp0s26u1u1" "enp0s26u1u2" "enp0s20u1u2" ]; # USB interfaces
-    # wireless = {
-    #   enable = true;
-    #   interfaces = [ "wlp3s0" ];
-    #   userControlled.enable = true;
-    #   allowAuxiliaryImperativeNetworks = true;
-    # };
+    interfaces.wlp3s0.useDHCP = true;
+    dhcpcd.allowInterfaces = [ "enp6s0f3u2" "enp6s0f4u2" ]; # USB interfaces
+    wireless = {
+      enable = true;
+      interfaces = [ "wlp3s0" ];
+      userControlled.enable = true;
+      allowAuxiliaryImperativeNetworks = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -61,17 +61,17 @@
     v4l-utils
   ];
 
-  # TODO https://nixos.org/manual/nixos/unstable/#sec-gpu-accel-opencl-amd
+  services.xserver.dpi = 120;
 
   services.xserver.libinput = {
     enable = true;
     touchpad = {
-      # accelSpeed = "0.6";
+      accelSpeed = "0.6";
       tapping = false;
     };
   };
 
-  # TODO fingerprint sensor
+  services.fprintd.enable = true;
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----

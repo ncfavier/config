@@ -15,6 +15,7 @@
         mute) pactl set-sink-mute @DEFAULT_SINK@ 1;;
         unmute) pactl set-sink-mute @DEFAULT_SINK@ 0;;
         toggle) pactl set-sink-mute @DEFAULT_SINK@ toggle;;
+        toggle-mic) pactl set-source-mute @DEFAULT_SOURCE@ toggle;;
         *) pactl set-sink-volume @DEFAULT_SINK@ "$1%";;
       esac fi
     '')
