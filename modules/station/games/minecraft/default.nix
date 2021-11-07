@@ -22,8 +22,8 @@ in {
         sha256 = "08hh7fhw2zd7ak4cwg6mysgxabgjxhxh2q0w35mbawngz7890ip2";
       })
       (pkgs.fetchurl {
-        url = "https://github.com/CaffeineMC/lithium-fabric/releases/download/mc1.17.1-0.7.4/lithium-fabric-mc1.17.1-0.7.4.jar";
-        sha256 = "0wwfylr00vz6idwfr1f3k2739rgrvfpb7slkn6ss0sixjb9r85ff";
+        url = "https://github.com/CaffeineMC/lithium-fabric/releases/download/mc1.17.1-0.7.5/lithium-fabric-mc1.17.1-0.7.5.jar";
+        sha256 = "041j50vccb5yk3957g1nl7vk701rbq3ggsid3mm91sbfkm1ys00w";
       })
       # (pkgs.fetchurl {
       #   url = "https://github.com/CaffeineMC/phosphor-fabric/releases/download/mc1.16.2-v0.7.2/phosphor-fabric-mc1.16.3-0.7.2+build.12.jar";

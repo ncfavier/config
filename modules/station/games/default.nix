@@ -7,6 +7,8 @@
 
   programs.gamemode.enable = true;
 
+  services.xserver.libinput.mouse.middleEmulation = false;
+
   hm = {
     home.packages = with pkgs; [
       legendary-gl

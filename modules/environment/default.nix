@@ -32,6 +32,7 @@
     mtools
     gptfdisk
     pciutils
+    usbutils
     zip
     unzip
     config.boot.kernelPackages.bcc

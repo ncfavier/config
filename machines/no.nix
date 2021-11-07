@@ -71,6 +71,9 @@
     };
   };
 
+  keys.composeKey = "prsc";
+  keys.printScreenKey = "XF86Favorites";
+
   services.fprintd.enable = true;
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''

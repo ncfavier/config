@@ -76,11 +76,6 @@
       };
     };
 
-    programs.gh = {
-      enable = true;
-      settings.git_protocol = "ssh";
-    };
-
     home.packages = with pkgs; [
       (writeShellScriptBin "git-random-commit-message" ''
         ${fortune}/bin/fortune -sn 80 \

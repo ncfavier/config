@@ -4,7 +4,7 @@
   services.xserver = {
     layout = "fr,us,ru,gr";
     xkbVariant = "oss,,phonetic_fr,";
-    xkbOptions = "grp:shifts_toggle,compose:rctrl,caps:escape_shifted_capslock";
+    xkbOptions = "grp:shifts_toggle";
   };
 
   time.timeZone = "Europe/Paris";

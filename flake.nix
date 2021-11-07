@@ -55,7 +55,10 @@
     }) (importDir ./machines) // {
       iso = nixosSystem {
         inherit system lib;
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          here = null;
+        };
         modules = [ ./iso.nix ];
       };
     };

@@ -1,6 +1,7 @@
 { inputs, lib, modulesPath, pkgs, ... }: with lib; {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+    inputs.self.nixosModules.networking
     inputs.self.nixosModules.home-manager
     inputs.self.nixosModules.users
     inputs.self.nixosModules.localisation

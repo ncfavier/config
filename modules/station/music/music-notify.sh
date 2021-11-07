@@ -15,7 +15,11 @@ mpc status | {
 file=$(xdg-user-dir MUSIC)/$file
 thumbnail=$(mktemp --suffix .png) || exit
 trap 'rm -f "$thumbnail"' exit
-ffmpegthumbnailer -i "$file" -o "$thumbnail" -s 500 -m
+if ffmpegthumbnailer -i "$file" -o "$thumbnail" -s 500 -m; then
+    icon=(-I "$thumbnail")
+else
+    icon=(-i application-audio)
+fi
 
 id=0x1F3B5 # 🎵
-dunstify -I "$thumbnail" -r "$id" "$artist" "<i>$album</i>\n$title\n$progress"
+dunstify "${icon[@]}" -r "$id" "$artist" "<i>$album</i>\n$title\n$progress"

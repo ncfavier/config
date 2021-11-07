@@ -137,7 +137,7 @@ in {
           "volume toggle-mic";
         "XF86MonBrightness{Down,Up}" =
           "backlight {-,+}";
-        "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + Print" =
+        "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + ${config.keys.printScreenKey}" =
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + {_,shift,ctrl} + space" =
           "rofi -sidebar-mode -show-icons -modi drun,run,window -show {drun,run,window}";
@@ -162,6 +162,8 @@ in {
       pkill ''${VERBOSE+-e} -USR1 -x sxhkd || true
     '';
   };
+
+  security.pam.services.i3lock.fprintAuth = false;
 
   nixpkgs.overlays = [
     (self: super: {

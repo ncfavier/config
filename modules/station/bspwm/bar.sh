@@ -123,7 +123,7 @@ cleanup_on_exit
     # WM info
     bspc subscribe report &
 
-    # Window title
+    # window title
     xtitle -sf 'T%s\n' | debounce 0.1 &
 
     # X keyboard layout
@@ -133,7 +133,7 @@ cleanup_on_exit
         xkb-switch -W
     } | sed -u 's/^/K/' &
 
-    # Clock
+    # clock
     while true; do
         printf 'C\n'
         sleep 1
@@ -160,15 +160,20 @@ cleanup_on_exit
         sleep 1
     done &
 
-    # Power
+    # power
     if [[ $battery ]]; then
+        udevadm monitor -u -s power_supply |
+        while read -r; do
+            printf 'P\n'
+        done &
+
         while true; do
             printf 'P\n'
             sleep 5
         done &
     fi
 
-    # Backlight
+    # backlight
     if backlight=(/sys/class/backlight/*); (( ${#backlight[@]} )); then
         udevadm monitor -u -s backlight |
         while
@@ -177,14 +182,14 @@ cleanup_on_exit
         do :; done &
     fi
 
-    # Sound
+    # sound
     stdbuf -oL alsactl monitor |
     while
         printf 'S%s\n' "$(volume)"
         read -r
     do :; done &
 
-    # Network
+    # network
     ip -o monitor address route rule |
     while
         sleep 0.1
@@ -212,7 +217,7 @@ cleanup_on_exit
         read -r
     do :; done &
 
-    # Music
+    # music
     {
         cleanup_on_exit
         while echo; mpc idleloop; (( $? == 1 )); do sleep 1; done
@@ -250,7 +255,7 @@ cleanup_on_exit
         printf 'M%s\n' "$song"
     done &
 
-    # Wait
+    # wait
     until wait; do :; done
 
 } |

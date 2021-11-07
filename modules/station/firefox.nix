@@ -5,6 +5,7 @@ in {
     programs.firefox = {
       enable = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        french-dictionary
         ublock-origin
         i-dont-care-about-cookies
         darkreader
@@ -233,12 +234,6 @@ in {
               background-image: none !important;
               background-color: var(--bg) !important;
             }
-
-            ${optionalString (config.services.xserver.dpi != null) ''
-            body > img {
-              transform: scale(${toString (96.0 / config.services.xserver.dpi)});
-            }
-            ''}
           }
 
           @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing) {
@@ -286,7 +281,7 @@ in {
     home.sessionVariables.MOZ_USE_XINPUT2 = "1";
 
     home.file.".mozilla/firefox/${profile}/chrome/userChrome.css".onChange = ''
-      if cd ~/.mozilla/firefox/${profile} && pgrep firefox > /dev/null; then
+      if cd ~/.mozilla/firefox/${profile} && pgrep -f ${config.hm.programs.firefox.package} > /dev/null; then
           shopt -s lastpipe
           port=6001
           firefox --start-debugger-server "$port" || exit
