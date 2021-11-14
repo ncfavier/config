@@ -76,7 +76,7 @@ in {
       enable = true;
       extraOptions = [ "-m 1" ];
       keybindings = {
-        "super + r" =
+        "super + @r" =
           "${config.hm.xdg.configHome}/bspwm/bspwmrc";
         "super + {_,shift} + {ampersand,eacute,quotedbl,apostrophe,parenleft,minus,egrave,underscore,ccedilla}" =
           "wm {focus-workspace,move-window-to-workspace} ^{1-9}";

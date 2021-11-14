@@ -19,7 +19,7 @@ bobView:false
 toggleCrouch:false
 toggleSprint:false
 darkMojangStudiosBackground:false
-mouseSensitivity:0.5
+mouseSensitivity:0.8327464788732394
 fov:0.75
 screenEffectScale:1.0
 fovEffectScale:1.0

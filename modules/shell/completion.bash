@@ -15,7 +15,7 @@ complete_alias() {
 
 # Aliases
 
-complete -c C
+complete -c C cxa cxan
 complete -v dp
 complete_alias s _systemctl systemctl
 complete_alias u _systemctl systemctl --user

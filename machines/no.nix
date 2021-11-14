@@ -21,6 +21,13 @@
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelPatches = [ {
+      name = "bluetooth";
+      patch = null;
+      extraConfig = ''
+        BT_HCIBTUSB_MTK y
+      '';
+    } ];
     kernelModules = [ "kvm-amd" ];
     initrd.availableKernelModules = [ "nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
 
@@ -60,6 +67,9 @@
     wpa_supplicant_gui
     v4l-utils
   ];
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   services.xserver.dpi = 120;
 

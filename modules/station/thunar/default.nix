@@ -57,7 +57,12 @@
       };
       "Thunar/uca.xml".source = utils.mkMutableSymlink ./uca.xml;
       "Thunar/accels.scm".source = utils.mkMutableSymlink ./accels.scm;
-      "tumbler/tumbler.rc".source = ./tumbler.rc;
+      "tumbler/tumbler.rc" = {
+        source = ./tumbler.rc;
+        onChange = ''
+          pkill ''${VERBOSE+-e} -f ${pkgs.xfce.tumbler} || true
+        '';
+      };
     };
   };
 }

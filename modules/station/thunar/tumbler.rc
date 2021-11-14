@@ -3,7 +3,7 @@
 ###
 # Jpeg thumbnailer (from exif data if possible)
       [JPEGThumbnailer]
-      Disabled=false
+      Disabled=true
       Priority=3
       Locations=
       Excludes=

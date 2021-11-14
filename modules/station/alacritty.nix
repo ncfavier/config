@@ -66,6 +66,7 @@
               rev = "8cda3d140574cbd8bd0fd8e89667ef67a4a1f900";
               sha256 = "LzNDbZlAIYB33bT7ZhKyb9dtPDV9ep10D9ZnO+az8do=";
             };
+            patches = [];
             doCheck = false;
           });
       };

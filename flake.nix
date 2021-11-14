@@ -19,7 +19,7 @@
     };
     nur.url = "nur";
     nix-dns = {
-      url = "github:kirelagin/nix-dns";
+      url = "github:kirelagin/nix-dns/v1.1.2";
       inputs.nixpkgs.follows = "nixos";
     };
     simple-nixos-mailserver = {

@@ -18,19 +18,18 @@
   };
 
   config = {
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
     services.getty = {
       helpLine = mkForce "";
       autologinUser = mkForce my.username;
     };
 
-    nix = {
-      package = pkgs.nixUnstable;
-      extraOptions = ''
-        experimental-features = nix-command flakes ca-references ca-derivations
-        warn-dirty = false
-      '';
-    };
+    nix.extraOptions = ''
+      experimental-features = nix-command flakes ca-references ca-derivations
+      warn-dirty = false
+    '';
 
-    system.stateVersion = "21.05";
+    system.stateVersion = "21.11";
   };
 }

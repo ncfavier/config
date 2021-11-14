@@ -87,6 +87,6 @@ rsync "${rsync_opts[@]}" "$source" "$rsync_host$uploads_dir/$destination" || exi
 url=$(build_url "$destination")
 printf '%s\n' "$url" | tee >(clip)
 
-if (( ! interactive )) && [[ $(dunstify -t 10000 -A open,open -i up "Uploaded $basename" "to $url") == open ]]; then
+if (( ! interactive )) && [[ $(dunstify -t 10000 -A open,open -i checkmark "Uploaded $basename" "to $url") == open ]]; then
     exec xdg-open "$url" &> /dev/null
 fi &

@@ -10,8 +10,6 @@ in {
       group = config.services.opendkim.group;
     };
 
-    environment.etc."dkim/${my.domain}.${config.mailserver.dkimSelector}.txt".text = ""; # so the key isn't regenerated
-
     lib.dkim.pk = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/MUKMp4lOoDhaeyIh5hzVNkr5eJ7GMekGRCvVMpSx2DWgUPg8UR68VT1ObmEAQZVDd696XdRNFgFJZuaGSTqcjPfGVq7e+DFVZcRZbISat8mlvOyuDe7J2EwZQxn3gup9hwbesfFPCY6V+ZMwLylT0j974xqJPxEvkebZ+DylUwIDAQAB";
 
     mailserver = {

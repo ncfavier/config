@@ -15,6 +15,7 @@
     <Multi_key> <m> <e> <h> : "ಠ_ಠ"
     <Multi_key> <t> <f> : "(╯°□°）╯︵ ┻━┻"
     <Multi_key> <q> <t> : "(◕‿◕)"
+    <Multi_key> <greater> <minus> <minus> <less> : "👉👈"
     <Multi_key> <i> <n> <f> : "∞"
     <Multi_key> <f> <l> : "❧"
     <Multi_key> <o> <k> : "✓"

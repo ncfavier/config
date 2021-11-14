@@ -4,6 +4,7 @@
 
     settings = with config.theme; rec {
       global = {
+        enable_recursive_icon_lookup = true;
         width = "(0, 1200)";
         height = 500;
         offset = "${toString (padding * 2)}x${toString (barHeight + padding * 2)}";
@@ -25,29 +26,8 @@
         browser = "xdg-open";
         mouse_right_click = "context";
         show_indicators = false;
-        icon_path = concatMapStringsSep ":" (p: "${config.hm.gtk.iconTheme.package}/share/icons/${config.hm.gtk.iconTheme.name}/${p}") [
-          "actions/scalable"
-          "actions/symbolic"
-          "animations"
-          "apps/scalable"
-          "apps/symbolic"
-          "categories/scalable"
-          "categories/symbolic"
-          "devices/scalable"
-          "devices/symbolic"
-          "emblems/scalable"
-          "emblems/symbolic"
-          "emotes"
-          "mimetypes/scalable"
-          "mimetypes/symbolic"
-          "panel"
-          "places/scalable"
-          "places/symbolic"
-          "status/scalable/16"
-          "status/scalable/32"
-          "status/scalable/512"
-          "status/symbolic"
-        ];
+        icon_theme = config.hm.gtk.iconTheme.name;
+        icon_path = mkForce "";
       };
 
       urgency_low = urgency_normal;
@@ -64,4 +44,19 @@
       };
     };
   };
+
+  nixpkgs.overlays = [ (self: super: {
+    dunst = super.dunst.overrideAttrs (o: {
+      version = "1.7.1";
+
+      src = self.fetchFromGitHub {
+        owner = "dunst-project";
+        repo = "dunst";
+        rev = "45c7c12280b9ab99a4ab2d3f659401e3c3288340";
+        sha256 = "jAjuujQqsfn+QDPwAvcm0zqGlpnXHcBfgxjXp/iXXg0=";
+      };
+
+      patches = [];
+    });
+  }) ];
 }

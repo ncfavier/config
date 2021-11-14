@@ -102,6 +102,11 @@
       services.picom = {
         enable = true;
         vSync = true;
+
+        # workaround for https://github.com/yshui/picom/issues/16#issuecomment-792739119
+        fade = true;
+        fadeSteps = [ "1" "1" ];
+        fadeDelta = 30;
       };
     };
   };

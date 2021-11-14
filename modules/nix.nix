@@ -28,8 +28,6 @@
     };
 
     nix = {
-      package = pkgs.nixUnstable;
-
       trustedUsers = [ "root" "@wheel" ];
 
       registry = {
@@ -71,6 +69,7 @@
     environment.systemPackages = with pkgs; [
       nix-bash-completions
       nix-index-unwrapped
+      nix-prefetch-git
       nix-prefetch-github
       nix-diff
       nix-top

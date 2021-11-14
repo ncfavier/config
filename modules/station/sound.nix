@@ -1,10 +1,18 @@
 { pkgs, ... }: {
-  hardware.pulseaudio = {
+  services.pipewire = {
     enable = true;
-    support32Bit = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    pulse.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
+    alsaUtils
+    pulseaudio
+    pavucontrol
+    easyeffects
     (writeShellScriptBin "volume" ''
       if (( ! $# )); then
         data=$(LC_ALL=C pactl list sinks)
@@ -19,6 +27,5 @@
         *) pactl set-sink-volume @DEFAULT_SINK@ "$1%";;
       esac fi
     '')
-    pavucontrol
   ];
 }

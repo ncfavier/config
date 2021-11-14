@@ -222,7 +222,7 @@ remindme() {
     shift
     {
         sleep "$delay"
-        exec dunstify -i dialog-info -t 10000 "$*"
+        exec dunstify -i dialog-information -t 10000 "$*"
     } &> /dev/null & disown
 }
 
