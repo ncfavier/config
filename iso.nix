@@ -31,5 +31,13 @@
     '';
 
     system.stateVersion = "21.11";
+
+    nixpkgs.overlays = [ (self: super: {
+      linuxPackages_latest = super.linuxPackages_latest.extend (lself: lsuper: {
+        zfs = lsuper.zfs.overrideAttrs (o: {
+          meta.broken = false;
+        });
+      });
+    }) ];
   };
 }
