@@ -155,7 +155,7 @@ complete_alias sshesc _ssh ssh
 
 weechat_fifo() {
     . config env
-    sshesc "$server_hostname" -- bash -lc 'cat > "${XDG_CACHE_HOME-$HOME/.cache}"/weechat/weechat_fifo'
+    ssh "$server_hostname" '. config env; cat > "$weechat_fifo"'
 }
 
 irg() ( # search IRC logs

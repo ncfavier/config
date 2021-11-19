@@ -52,4 +52,6 @@ in {
   }) (filterAttrs (name: _: hasSuffix ".conf" name) (builtins.readDir ./.));
 
   networking.firewall.allowedTCPPorts = [ relayPort ];
+
+  lib.shellEnv.weechat_fifo = "${config.hm.xdg.cacheHome}/weechat/weechat_fifo";
 }

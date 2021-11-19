@@ -67,7 +67,7 @@ in {
         };
         locations."/".tryFiles = "$uri $uri/ /local$uri /local$uri/ =404";
         locations."= /favicon.ico".root = inputs.www;
-        locations."= /live.iso".alias = let
+        locations."= /nixos.iso".alias = let
           iso = inputs.self.nixosConfigurations.iso.config;
         in "${iso.system.build.isoImage}/iso/${iso.isoImage.isoName}";
         extraConfig = ''
