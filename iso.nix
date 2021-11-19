@@ -1,6 +1,6 @@
-{ inputs, lib, modulesPath, pkgs, ... }: with lib; {
+{ inputs, lib, modulesPath, ... }: with lib; {
   imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+    "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
     inputs.self.nixosModules.networking
     inputs.self.nixosModules.home-manager
     inputs.self.nixosModules.users
@@ -15,11 +15,12 @@
   options = {
     secrets = mkSinkUndeclaredOptions {};
     nix.gcRoots = mkSinkUndeclaredOptions {};
+    boot.supportedFilesystems = mkOption {
+      apply = subtractLists [ "zfs" "btrfs" "reiserfs" "xfs" "cifs" "f2fs" ];
+    };
   };
 
   config = {
-    boot.kernelPackages = pkgs.linuxPackages_latest;
-
     services.getty = {
       helpLine = mkForce "";
       autologinUser = mkForce my.username;
@@ -31,13 +32,5 @@
     '';
 
     system.stateVersion = "21.11";
-
-    nixpkgs.overlays = [ (self: super: {
-      linuxPackages_latest = super.linuxPackages_latest.extend (lself: lsuper: {
-        zfs = lsuper.zfs.overrideAttrs (o: {
-          meta.broken = false;
-        });
-      });
-    }) ];
   };
 }

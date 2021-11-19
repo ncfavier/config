@@ -167,6 +167,26 @@ in {
 
   nixpkgs.overlays = [
     (self: super: {
+      bspwm = super.bspwm.overrideAttrs (o: {
+        patches = o.patches or [] ++ [ (builtins.toFile "bspwm-patch" ''
+          https://github.com/baskerville/bspwm/issues/935#issuecomment-901511011
+          --- a/src/bspwm.c
+          +++ b/src/bspwm.c
+          @@ -36,4 +36,5 @@
+           #include <string.h>
+           #include <xcb/xinerama.h>
+          +#include <xcb/xcb_aux.h>
+           #include "types.h"
+           #include "desktop.h"
+          @@ -246,4 +247,5 @@ int main(int argc, char *argv[])
+
+           			if (FD_ISSET(dpy_fd, &descriptors)) {
+          +				xcb_aux_sync(dpy);
+           				while ((event = xcb_poll_for_event(dpy)) != NULL) {
+           					handle_event(event);
+        '') ];
+      });
+
       lemonbar-xft = super.lemonbar-xft.overrideAttrs (o: {
         src = self.fetchFromGitLab {
           owner = "protesilaos";

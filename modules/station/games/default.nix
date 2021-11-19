@@ -5,8 +5,6 @@
 
   programs.steam.enable = true;
 
-  programs.gamemode.enable = true;
-
   services.xserver.libinput.mouse.middleEmulation = false;
 
   hm = {
