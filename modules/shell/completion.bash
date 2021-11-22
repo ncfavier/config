@@ -15,12 +15,12 @@ complete_alias() {
 
 # Aliases
 
-complete -c C cxa cxan
+complete -F _command C cxa cxan
 complete -v dp
+complete -c what
 complete_alias s _systemctl systemctl
 complete_alias u _systemctl systemctl --user
 complete_alias j _journalctl journalctl
-complete -c what
 
 # Scripts
 

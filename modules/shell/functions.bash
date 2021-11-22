@@ -66,14 +66,14 @@ writeiso() { # write an ISO file to a block device
     sudo dd if="$file" of="$device" bs=1M oflag=sync status=progress
 }
 
-grep() {
+grep() { # page output
     local args=()
     [[ -t 1 ]] && args+=(--color=always)
     command grep "${args[@]}" "$@" | less
     return "${PIPESTATUS[0]}"
 }
 
-rg() {
+rg() { # page output
     local args=()
     [[ -t 0 ]] && args+=(--line-number)
     [[ -t 1 ]] && args+=(--color always --heading)
@@ -160,11 +160,22 @@ weechat_fifo() {
 
 irg() ( # search IRC logs
     . config env
+    local interleave=
+    if [[ $1 == -i ]]; then
+        interleave=1
+        shift
+    fi
     local where=${1%%+(/)}
     shift
     (( $# )) || return
-    builtin cd "${synced[irc-logs]}" &&
-    rg -N --sort path "$@" ${where:+$where?(.weechatlog)}
+    builtin cd "${synced[irc-logs]}" || return
+    if [[ -d $where ]]; then
+        builtin cd "$where" || return
+        where=
+    fi
+    command rg --color always -N ${interleave:+-H} --no-heading --sort path "$@" $where |
+    if (( interleave )); then sed 's/:/\t/' | sort -s -b -t$'\t' -k2,2; else cat; fi |
+    less
 )
 _irg() {
     if (( COMP_CWORD == 1 )); then

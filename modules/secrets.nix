@@ -27,6 +27,10 @@
 
     hm.programs.password-store.enable = true;
 
-    nix.gcRoots = [ inputs.sops-nix ];
+    nix = {
+      binaryCaches = mkAfter [ "https://mic92.cachix.org" ];
+      binaryCachePublicKeys = mkAfter [ "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ=" ];
+      gcRoots = [ inputs.sops-nix ];
+    };
   };
 }

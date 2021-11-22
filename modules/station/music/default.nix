@@ -29,7 +29,7 @@
       })
       (utils.shellScriptWith "music-add" ./music-add.sh {
         deps = [
-          libxml2Python imagemagick ffmpeg-full audacity mpc_cli
+          htmlq imagemagick ffmpeg-full audacity mpc_cli
         ];
       })
       songrec

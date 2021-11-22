@@ -20,18 +20,14 @@
     ];
 
     nix = {
-      binaryCaches = [
+      binaryCaches = mkOrder 1200 [
         "https://nix-community.cachix.org"
-        "https://ncfavier.cachix.org"
-        "https://mic92.cachix.org" # for sops-nix
-        "https://nix-gaming.cachix.org"
+        "https://${my.githubUsername}.cachix.org"
       ];
 
-      binaryCachePublicKeys = [
+      binaryCachePublicKeys = mkOrder 1200 [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "ncfavier.cachix.org-1:RpBMt+EIZOwVwU1CW71cWZAVJ9DCNbCMsX8VOGSf3ME="
-        "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ="
-        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+        "${my.githubUsername}.cachix.org-1:RpBMt+EIZOwVwU1CW71cWZAVJ9DCNbCMsX8VOGSf3ME="
       ];
     };
   };

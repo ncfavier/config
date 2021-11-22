@@ -76,7 +76,7 @@ done
 
 artist= album= cover_src=
 if [[ ${srcs[0]} == http?(s)://*bandcamp.com/* ]]; then
-    bandcamp_json=$(curl -fsSL "${srcs[0]}" | xmllint --html --xpath 'string(//script[@type="application/ld+json"])' - 2> /dev/null)
+    bandcamp_json=$(curl -fsSL "${srcs[0]}" | htmlq -t 'script[type="application/ld+json"]')
     jq -r '.byArtist.name, .name, (.image | if type == "array" then .[0] else . end)' <<< "$bandcamp_json" |
     { read -r artist; read -r album; read -r cover_src; }
 fi

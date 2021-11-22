@@ -47,7 +47,7 @@
 
   nixpkgs.overlays = [ (self: super: {
     dunst = super.dunst.overrideAttrs (o: {
-      version = "1.7.1";
+      version = "1.7.2pre";
 
       src = self.fetchFromGitHub {
         owner = "dunst-project";

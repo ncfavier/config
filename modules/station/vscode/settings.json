@@ -6,5 +6,6 @@
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
   "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "1984"
+  "workbench.colorTheme": "1984",
+  "files.autoSave": "afterDelay"
 }

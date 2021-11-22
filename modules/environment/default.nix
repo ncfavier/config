@@ -40,6 +40,7 @@
     gcc
     gnumake
     openssl
+    bc
     fortune
     imagemagick
     ffmpeg-full
@@ -64,7 +65,7 @@
 
   nixpkgs.overlays = [ (self: super: {
     tmsu = super.tmsu.overrideAttrs (o: {
-      patches = o.patches or [] ++ [ (self.writeText "tmsu-patch" ''
+      patches = o.patches or [] ++ [ (builtins.toFile "tmsu-patch" ''
         --- a/src/github.com/oniony/TMSU/common/path/path.go
         +++ b/src/github.com/oniony/TMSU/common/path/path.go
         @@ -92,14 +92 @@ func Dereference(path string) (string, error) {
