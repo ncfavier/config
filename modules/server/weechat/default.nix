@@ -53,5 +53,7 @@ in {
 
   networking.firewall.allowedTCPPorts = [ relayPort ];
 
+  environment.systemPackages = with pkgs; [ lolcat ];
+
   lib.shellEnv.weechat_fifo = "${config.hm.xdg.cacheHome}/weechat/weechat_fifo";
 }
