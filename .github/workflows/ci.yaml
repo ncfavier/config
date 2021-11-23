@@ -4,11 +4,15 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check Markdown links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
       - name: Install flakes-enabled Nix
         uses: cachix/install-nix-action@v14
         with:
           install_url: https://nixos-nix-install-tests.cachix.org/serve/kqchxcar98r8hj447mz0c0fdvdi5xcw1/install
-          install_options: '--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve'
+          install_options: --tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve
           extra_nix_config: experimental-features = nix-command flakes
       - name: Set up Cachix
         uses: cachix/cachix-action@v10
@@ -16,18 +20,52 @@ jobs:
           name: ${{ github.actor }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           extraPullNames: nix-community
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Check Markdown links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
       - name: Check flake
         run: nix -vL flake check
-      - name: Build ISO image
-        run: nix -vL build .#iso
+      - name: Build ISO
+        run: nix -vL build .#iso -o nixos.iso
       - name: Create ISO release
-        uses: softprops/action-gh-release@v1
+        id: release
+        uses: ncfavier/action-gh-release@live
         with:
           tag_name: iso
-          name: Live ISO
-          files: result/*.iso
+          name: ISO image
+          delete_on_existing: true
+          files: nixos.iso
           fail_on_unmatched_files: true
+      - name: "Vultr: list ISOs"
+        id: list_isos
+        uses: fjogeleit/http-request-action@v1.8.1
+        with:
+          url: https://api.vultr.com/v2/iso
+          bearerToken: ${{ secrets.VULTR_API_KEY }}
+          method: GET
+      - name: Set variables
+        id: vars
+        env:
+          assets: ${{ steps.release.outputs.assets }}
+          isos: ${{ steps.list_isos.outputs.response }}
+          script: |
+            def set($name; $value): "::set-output name=\($name)::\($value)";
+            set("upload_data"; {url: $assets[0].browser_download_url}),
+            ($isos.isos |
+            set("do_vultr"; all(.sha512sum != $sha512)),
+            set("nixos_id"; map(select(.filename == "nixos.iso").id)[0] // ""))
+        run: |
+          read -r sha512 _ < <(sha512sum nixos.iso)
+          jq -nr --arg sha512 "$sha512" --argjson assets "$assets" --argjson isos "$isos" "$script"
+      - name: "Vultr: delete current nixos.iso"
+        uses: fjogeleit/http-request-action@v1.8.1
+        if: ${{ steps.vars.outputs.do_vultr == 'true' && steps.vars.outputs.nixos_id }}
+        with:
+          url: https://api.vultr.com/v2/iso/${{ steps.vars.outputs.nixos_id }}
+          bearerToken: ${{ secrets.VULTR_API_KEY }}
+          method: DELETE
+      - name: "Vultr: upload nixos.iso"
+        uses: fjogeleit/http-request-action@v1.8.1
+        if: ${{ steps.vars.outputs.do_vultr == 'true' }}
+        with:
+          url: https://api.vultr.com/v2/iso
+          bearerToken: ${{ secrets.VULTR_API_KEY }}
+          method: POST
+          data: ${{ steps.vars.outputs.upload_data }}
