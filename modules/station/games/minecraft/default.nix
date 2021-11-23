@@ -18,8 +18,8 @@ in {
       config.hm.lib.file.mkOutOfStoreSymlink "${config.synced.saves.path}/minecraft";
     home.file.".minecraft/mods".source = pkgs.linkFarmFromDrvs "minecraft-mods" [
       (pkgs.fetchurl {
-        url = "https://github.com/CaffeineMC/sodium-fabric/releases/download/mc1.17.1-0.3.2/sodium-fabric-mc1.17.1-0.3.2+build.7.jar";
-        sha256 = "08hh7fhw2zd7ak4cwg6mysgxabgjxhxh2q0w35mbawngz7890ip2";
+        url = "https://github.com/CaffeineMC/sodium-fabric/releases/download/mc1.17.1-0.3.3/sodium-fabric-mc1.17.1-0.3.3+build.8.jar";
+        sha256 = "1c78nwvs3fv41w9v405sz7vp33vby40slaynd2cn7xrqn1zsh6xr";
       })
       (pkgs.fetchurl {
         url = "https://github.com/CaffeineMC/lithium-fabric/releases/download/mc1.17.1-0.7.5/lithium-fabric-mc1.17.1-0.7.5.jar";
