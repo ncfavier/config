@@ -31,6 +31,8 @@
       warn-dirty = false
     '';
 
+    networking.useDHCP = true;
+
     i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];
     documentation.doc.enable = false;
     security.polkit.enable = false;
