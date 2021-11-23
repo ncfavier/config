@@ -31,6 +31,20 @@
       warn-dirty = false
     '';
 
+    i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];
+    documentation.doc.enable = false;
+    security.polkit.enable = false;
+    services.udisks2.enable = false;
+    xdg.sounds.enable = false;
+    nixpkgs.overlays = [ (self: super: {
+      firmwareLinuxNonfree = super.firmwareLinuxNonfree.overrideAttrs (o: {
+        postInstall = ''
+          rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl}
+        '';
+        outputHash = "sha256-jz2isuCebjam9UYHTxzIkPr1u/Jv2mbp/onp3Det1Rk=";
+      });
+    }) ];
+
     system.stateVersion = "21.11";
   };
 }

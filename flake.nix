@@ -65,13 +65,13 @@
 
     # horrible hack, see https://github.com/NixOS/nix/issues/5633
     packages.${system}.iso = let
-      rotDir = name: dir: pkgs.runCommandNoCC name {} ''
+      involution = name: dir: pkgs.runCommandNoCC name {} ''
         mkdir -p "$out"
         for f in ${dir}/*; do
-          ${pkgs.fortune}/bin/rot < "$f" > "$out/''${f##*/}"
+          tr a-z0-9 n-za-m5-90-4 < "$f" > "$out/''${f##*/}"
         done
       '';
-      nukeReferences = name: dir: rotDir name (rotDir "${name}-rot" dir);
+      nukeReferences = name: dir: involution name (involution "${name}-rot" dir);
     in nukeReferences "nixos.iso" "${self.nixosConfigurations.iso.config.system.build.isoImage}/iso";
   };
 }
