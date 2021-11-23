@@ -24,9 +24,10 @@ jobs:
         run: nix -vL flake check
       - name: Build ISO image
         run: nix -vL build .#iso
-      - name: Create release
+      - name: Create ISO release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: iso
           name: Live ISO
-          files: result/iso/*.iso
+          files: result/*.iso
+          fail_on_unmatched_files: true
