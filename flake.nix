@@ -63,6 +63,15 @@
       };
     };
 
-    packages.${system}.iso = self.nixosConfigurations.iso.config.system.build.isoImage;
+    # horrible hack, see https://github.com/NixOS/nix/issues/5633
+    packages.${system}.iso = let
+      rotDir = name: dir: pkgs.runCommandNoCC name {} ''
+        mkdir -p "$out"
+        for f in ${dir}/*; do
+          ${pkgs.fortune}/bin/rot < "$f" > "$out/''${f##*/}"
+        done
+      '';
+      nukeReferences = name: dir: rotDir name (rotDir "${name}-rot" dir);
+    in nukeReferences "nixos.iso" "${self.nixosConfigurations.iso.config.system.build.isoImage}/iso";
   };
 }
