@@ -154,6 +154,9 @@ autocmd BufWriteCmd http://ix.io/* write !curl -F 'f:1=<-' ix.io | tee >(clip)
 " balance windows when the terminal is resized
 autocmd VimResized * wincmd =
 
+" indent haskell with 2 spaces
+autocmd Filetype haskell setlocal tabstop=2 softtabstop=2
+
 " Commands
 
 command! Reload source $MYVIMRC
