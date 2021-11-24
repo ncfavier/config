@@ -23,7 +23,7 @@ jobs:
       - name: Check flake
         run: nix -vL flake check
       - name: Build ISO
-        run: nix -vL build .#iso -o nixos.iso; cp nixos.iso nixos2.iso
+        run: nix -vL build .#iso -o nixos.iso
       - name: Create ISO release
         id: release
         uses: ncfavier/action-gh-release@live
@@ -32,7 +32,7 @@ jobs:
           target_commitish: ${{ github.ref }}
           name: ISO image
           delete_on_existing: true
-          files: nixos2.iso
+          files: nixos.iso
           fail_on_unmatched_files: true
       - name: "Vultr: list ISOs"
         id: list_isos
