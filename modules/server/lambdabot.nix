@@ -63,7 +63,6 @@
           "FlexibleContexts",
           "FlexibleInstances",
           "GADTs",
-          "GADTSyntax",
           "GeneralisedNewtypeDeriving",
           "HexFloatLiterals",
           "ImplicitPrelude",
@@ -96,6 +95,7 @@
           "TupleSections",
           "TypeApplications",
           "TypeOperators",
+          "TypeFamilies",
           "TypeSynonymInstances",
           "UnicodeSyntax",
           "ViewPatterns"

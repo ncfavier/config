@@ -239,18 +239,9 @@ in {
           @-moz-document url(about:home), url(about:newtab), url(about:privatebrowsing) {
             html, body {
               background: var(--bg) !important;
-              overflow-y: auto !important;
             }
 
-            html.private {
-              --in-content-page-background: var(--bg) !important;
-            }
-
-            #onboarding-overlay-button {
-              display: none !important;
-            }
-
-            .personalize-button {
+            body {
               display: none !important;
             }
           }

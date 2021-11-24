@@ -29,6 +29,7 @@ jobs:
         uses: ncfavier/action-gh-release@live
         with:
           tag_name: iso
+          target_commitish: ${{ github.ref }}
           name: ISO image
           delete_on_existing: true
           files: nixos.iso
