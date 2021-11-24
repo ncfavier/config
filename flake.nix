@@ -17,6 +17,10 @@
       url = "github:ncfavier/home-manager/bash-init";
       inputs.nixpkgs.follows = "nixos";
     };
+    home-manager-vscode = {
+      url = "github:ncfavier/home-manager/vscode-ifd";
+      inputs.nixpkgs.follows = "nixos";
+    };
     nur.url = "nur";
     nix-dns = {
       url = "github:kirelagin/nix-dns/v1.1.2";

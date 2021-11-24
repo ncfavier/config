@@ -72,6 +72,27 @@
         "type": "github"
       }
     },
+    "home-manager-vscode": {
+      "inputs": {
+        "nixpkgs": [
+          "nixos"
+        ]
+      },
+      "locked": {
+        "lastModified": 1637723410,
+        "narHash": "sha256-C7DFtHDTEMQoTWYbikNaI3vIuycaFFUqAQ8I3MUCWgE=",
+        "owner": "ncfavier",
+        "repo": "home-manager",
+        "rev": "b72642b03d5b2f0fc5fce6e915fc79898a99cfd7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "vscode-ifd",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "nix-dns": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -159,6 +180,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "home-manager-bash": "home-manager-bash",
+        "home-manager-vscode": "home-manager-vscode",
         "nix-dns": "nix-dns",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",

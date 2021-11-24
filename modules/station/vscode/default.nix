@@ -1,5 +1,7 @@
-{ pkgs, utils, ... }: {
+{ inputs, pkgs, utils, ... }: {
   hm = {
+    disabledModules = [ "programs/vscode.nix" ];
+    imports = [ "${inputs.home-manager-vscode}/modules/programs/vscode.nix" ];
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
