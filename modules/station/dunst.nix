@@ -44,19 +44,4 @@
       };
     };
   };
-
-  nixpkgs.overlays = [ (self: super: {
-    dunst = super.dunst.overrideAttrs (o: {
-      version = "1.7.2pre";
-
-      src = self.fetchFromGitHub {
-        owner = "dunst-project";
-        repo = "dunst";
-        rev = "45c7c12280b9ab99a4ab2d3f659401e3c3288340";
-        sha256 = "jAjuujQqsfn+QDPwAvcm0zqGlpnXHcBfgxjXp/iXXg0=";
-      };
-
-      patches = [];
-    });
-  }) ];
 }
