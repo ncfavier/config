@@ -5,7 +5,29 @@
   "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
-  "window.menuBarVisibility": "toggle",
   "workbench.colorTheme": "1984",
-  "files.autoSave": "afterDelay"
+  "window.menuBarVisibility": "toggle",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["C-r"],
+      "commands": ["redo"]
+    }
+  ],
+  "haskell.plugin.importLens.codeLensOn": false,
+  "coq.autoRevealProofStateAtCursor": true,
+  "coq.format.indentAfterOpenProof": true,
+  "coq.interpretToEndOfSentence": true,
+  "coq.showProofViewOn": "open-script",
+  "coqtop.startOn": "open-script",
+  "diffEditor.codeLens": true,
+  "editor.codeLensFontFamily": "monospace",
+  "editor.codeLensFontSize": 13,
+  "window.titleBarStyle": "custom",
+  "nix.enableLanguageServer": true,
+  "editor.renderFinalNewline": false,
+  "haskell.plugin.ghcide-type-lenses.globalOn": false
 }

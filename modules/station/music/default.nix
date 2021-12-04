@@ -13,6 +13,7 @@
 
     programs.ncmpcpp = {
       enable = true;
+      settings.lyrics_directory = "${config.hm.xdg.dataHome}/lyrics";
     };
 
     programs.rofi.extraConfig.modi = "music:${

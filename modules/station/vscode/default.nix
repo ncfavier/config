@@ -1,13 +1,11 @@
-{ inputs, pkgs, utils, ... }: {
+{ pkgs, utils, ... }: {
   hm = {
-    disabledModules = [ "programs/vscode.nix" ];
-    imports = [ "${inputs.home-manager-vscode}/modules/programs/vscode.nix" ];
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
         vscodevim.vim
-        bbenoist.nix
+        jnoortheen.nix-ide
         haskell.haskell
         james-yu.latex-workshop
         justusadam.language-haskell

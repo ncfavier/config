@@ -13,6 +13,7 @@
 
   hm = {
     home.stateVersion = config.system.stateVersion;
+    home.enableNixpkgsReleaseCheck = false;
 
     systemd.user.startServices = true;
 

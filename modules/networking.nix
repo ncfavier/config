@@ -61,5 +61,23 @@
     ];
 
     programs.mtr.enable = true;
+
+    security.wrappers.nethogs = {
+      owner = "root";
+      group = "root";
+      capabilities = "cap_net_admin,cap_net_raw+p";
+      source = "${pkgs.nethogs}/bin/nethogs";
+    };
+    nixpkgs.overlays = [ (self: super: {
+      nethogs = super.nethogs.overrideAttrs (o: {
+        src = self.fetchFromGitHub {
+          owner = "raboof";
+          repo = "nethogs";
+          rev = "54f88038f6c6c44c9c642cac5dc90f21d4cb84b9";
+          sha256 = "qnCphrVRh7bl+e5B6pbz32cCdmD8eiWbnHOWLGetmJQ=";
+        };
+        patches = [];
+      });
+    }) ];
   };
 }

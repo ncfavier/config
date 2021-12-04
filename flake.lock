@@ -38,11 +38,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1637516270,
-        "narHash": "sha256-qTffAQ0kWA2qXMJUVMDsgXVbzMNI0BfR78vB/4QFA+o=",
+        "lastModified": 1638571010,
+        "narHash": "sha256-KSO7u13VRLdklQTKYJaBSfVcurEvw+HifAsHR7V2i5E=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "15ae861e1bfad90e0d14106551544e9e07cbcb10",
+        "rev": "781d25b315def05cd7ede3765226c54216f0b1fe",
         "type": "github"
       },
       "original": {
@@ -72,27 +72,6 @@
         "type": "github"
       }
     },
-    "home-manager-vscode": {
-      "inputs": {
-        "nixpkgs": [
-          "nixos"
-        ]
-      },
-      "locked": {
-        "lastModified": 1637723410,
-        "narHash": "sha256-C7DFtHDTEMQoTWYbikNaI3vIuycaFFUqAQ8I3MUCWgE=",
-        "owner": "ncfavier",
-        "repo": "home-manager",
-        "rev": "b72642b03d5b2f0fc5fce6e915fc79898a99cfd7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ncfavier",
-        "ref": "vscode-ifd",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
     "nix-dns": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -117,11 +96,11 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1637595801,
-        "narHash": "sha256-LkIMwVFKCuEqidaUdg8uxwpESAXjsPo4oCz3eJ7RaRw=",
+        "lastModified": 1638376152,
+        "narHash": "sha256-ucgLpVqhFnClH7YRUHBHnmiOd82RZdFR3XJt36ks5fE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "263ef4cc4146c9fab808085487438c625d4426a9",
+        "rev": "6daa4a5c045d40e6eae60a3b6e427e8700f1c07f",
         "type": "github"
       },
       "original": {
@@ -180,7 +159,6 @@
       "inputs": {
         "home-manager": "home-manager",
         "home-manager-bash": "home-manager-bash",
-        "home-manager-vscode": "home-manager-vscode",
         "nix-dns": "nix-dns",
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",

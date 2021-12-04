@@ -65,10 +65,7 @@ in {
         ];
       };
 
-      systemd.services."wg-quick-${interface}" = {
-        after = [ "nss-lookup.target" ];
-        path = [ pkgs.openresolv ];
-      };
+      systemd.services."wg-quick-${interface}".after = [ "nss-lookup.target" ];
 
       environment.systemPackages = with pkgs; [
         (writeShellScriptBin "wg-toggle" ''

@@ -173,8 +173,8 @@ irg() ( # search IRC logs
         builtin cd "$where" || return
         where=
     fi
-    command rg --color always -N ${interleave:+-H} --no-heading --sort path "$@" $where |
-    if (( interleave )); then sed 's/:/\t/' | sort -s -b -t$'\t' -k2,2; else cat; fi |
+    command rg --color always -N ${interleave:+-H --no-context-separator} --no-heading --field-context-separator=$'\t' --field-match-separator=$'\t' --sort path "$@" $where |
+    if (( interleave )); then sort -s -b -t$'\t' -k2,2; else cat; fi |
     less
 )
 _irg() {

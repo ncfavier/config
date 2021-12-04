@@ -48,16 +48,16 @@
       };
     }
 
-    (mkIf here.isStation {
-      hm = {
-        home.packages = [ pkgs.clipster ];
-        xdg.configFile."clipster/clipster.ini".text = ''
-          [clipster]
-          default_selection = CLIPBOARD
-          history_size = 0
-        '';
-        xsession.windowManager.bspwm.startupPrograms = [ "clipster -d" ];
-      };
-    })
+    # (mkIf here.isStation {
+    #   hm = {
+    #     home.packages = [ pkgs.clipster ];
+    #     xdg.configFile."clipster/clipster.ini".text = ''
+    #       [clipster]
+    #       default_selection = CLIPBOARD
+    #       history_size = 0
+    #     '';
+    #     xsession.windowManager.bspwm.startupPrograms = [ "clipster -d" ];
+    #   };
+    # })
   ];
 }

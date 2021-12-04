@@ -24,11 +24,11 @@ fov:0.75
 screenEffectScale:1.0
 fovEffectScale:1.0
 gamma:1.0
-renderDistance:12
+renderDistance:14
 entityDistanceScaling:1.0
 guiScale:0
-particles:1
-maxFps:60
+particles:0
+maxFps:260
 difficulty:2
 graphicsMode:1
 ao:2

@@ -25,10 +25,10 @@ in {
         url = "https://github.com/CaffeineMC/lithium-fabric/releases/download/mc1.17.1-0.7.5/lithium-fabric-mc1.17.1-0.7.5.jar";
         sha256 = "041j50vccb5yk3957g1nl7vk701rbq3ggsid3mm91sbfkm1ys00w";
       })
-      # (pkgs.fetchurl {
-      #   url = "https://github.com/CaffeineMC/phosphor-fabric/releases/download/mc1.16.2-v0.7.2/phosphor-fabric-mc1.16.3-0.7.2+build.12.jar";
-      #   sha256 = "142ka4p135ml29gx7i44dlfb8f4c6m8izbswph5v839kp82wcpnn";
-      # })
+      (pkgs.fetchurl {
+        url = "https://github.com/CaffeineMC/phosphor-fabric/releases/download/mc1.17.x-0.8.0/phosphor-fabric-mc1.17.x-0.8.0.jar";
+        sha256 = "1klcacydjh0j16ibsjbzdqxa1in87mrspiz8yc52p5bvihc3yaxr";
+      })
     ];
     home.file.".minecraft/options.txt".source =
       utils.mkMutableSymlink ./options.txt;

@@ -77,6 +77,7 @@
       nixpkgs-fmt
       nixpkgs-review
       nixfmt
+      rnix-lsp
     ];
 
     environment.sessionVariables.NIX_SHELL_PRESERVE_PROMPT = "1";
