@@ -77,6 +77,7 @@
       <Multi_key> <underscore> <k> : "ₖ"
       <Multi_key> <underscore> <m> : "ₘ"
       <Multi_key> <underscore> <n> : "ₙ"
+      <dead_circumflex> <n> : "ⁿ"
       <Multi_key> <C> <P> : "𝒫"
       <Multi_key> <B> <A> : "𝔸"
       <Multi_key> <B> <B> : "𝔹"

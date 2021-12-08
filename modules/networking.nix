@@ -45,11 +45,9 @@
           *) usage 1;;
         esac
         protocols=()
-        case $2 in
-          tcp|both) protocols+=(tcp);;&
-          udp|both) protocols+=(udp);;
-          *) usage 1;;
-        esac
+        [[ $2 == @(tcp|both) ]] && protocols+=(tcp)
+        [[ $2 == @(udp|both) ]] && protocols+=(udp)
+        (( ''${#protocols[@]} )) || usage 1
         port=$3
         [[ $port ]] || usage 1
         for proto in "''${protocols[@]}"; do

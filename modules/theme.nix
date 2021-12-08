@@ -25,8 +25,8 @@
       borderColor = foreground;
       padding = 16;
       barHeight = 32;
-      gtkTheme = "Flat-Remix-GTK-Blue" + (if dark then "-Darkest" else "");
-      iconTheme = "Flat-Remix-Blue";
+      gtkTheme = "Flat-Remix-GTK" + (if dark then "-Violet-Darkest" else "-Black-Light");
+      iconTheme = "Flat-Remix-Violet" + (if dark then "-Dark" else "-Light");
       gtkFont = "sans-serif";
       font = "bitmap";
       pangoFont = "${font} 8";

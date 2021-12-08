@@ -200,6 +200,7 @@ in {
             }
 
             #navigator-toolbox {
+              background-color: var(--bg) !important;
               border: none !important;
             }
 
@@ -277,7 +278,7 @@ in {
           port=6001
           firefox --start-debugger-server "$port" || exit
           exec {ff}<>/dev/tcp/localhost/"$port"
-          while read -u "$ff" -rd : len && IFS= read -u "$ff" -rd "" -n "$len" json; do
+          while read -u "$ff" -rd : len && IFS= LC_ALL=C read -u "$ff" -rd "" -n "$len" json; do
               printf '%s\n' "$json"
           done |
           jq -cn --unbuffered --arg text "$(< chrome/userChrome.css)" \

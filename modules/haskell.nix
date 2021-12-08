@@ -17,9 +17,9 @@
       unordered-containers
       vector
     ]))
-    cabal-install
-    stack
-    haskell-language-server
+    haskellPackages.cabal-install
+    haskellPackages.stack
+    haskellPackages.haskell-language-server
   ];
 
   # nix = {

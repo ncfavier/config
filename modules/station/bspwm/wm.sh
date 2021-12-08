@@ -10,8 +10,8 @@ focus-window() {
             .monitors[].desktops[].root//empty |
             recurse(.firstChild//empty, .secondChild//empty) |
             select(.client != null) |
-            select($class == "" or (.client.className | test($class; "i"))) |
-            select($instance == "" or (.client.instanceName | test($instance; "i"))) |
+            select($class == "" or (.client.className | test("^(\($class))$"; "i"))) |
+            select($instance == "" or (.client.instanceName | test("^(\($instance))$"; "i"))) |
             .id
         ),
         "",
@@ -61,11 +61,11 @@ go() {
         mail)
             class=thunderbird focus-window || exec thunderbird &;;
         files)
-            class=thunar focus-window || exec thunar &;;
+            class=.thunar-wrapped_ focus-window || exec thunar &;;
         music)
             exec rofi -show music;;
         video)
-            class=mpv focus-window || class=feh focus-window;;
+            class='mpv|feh' focus-window;;
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)
