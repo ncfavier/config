@@ -30,5 +30,6 @@
   "nix.enableLanguageServer": true,
   "editor.renderFinalNewline": false,
   "haskell.plugin.tactics.globalOn": false,
-  "haskell.updateBehavior": "never-check"
+  "haskell.updateBehavior": "never-check",
+  "haskell.plugin.ghcide-type-lenses.globalOn": false
 }

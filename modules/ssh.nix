@@ -14,9 +14,8 @@ in {
 
   programs.mosh.enable = true;
 
-  environment.systemPackages = with pkgs; [ autossh ];
-
   environment.variables.SSH_ASKPASS = mkForce "";
+  environment.variables.MOSH_TITLE_NOPREFIX = "1";
 
   hm.programs.ssh = {
     enable = true;
@@ -70,4 +69,16 @@ in {
       } ]
     );
   };
+
+  nixpkgs.overlays = [ (self: super: {
+    mosh = super.mosh.overrideAttrs (o: {
+      patches = o.patches or [] ++ [
+        (self.fetchpatch {
+          url = "https://github.com/mobile-shell/mosh/commit/378dfa6aa5778cf168646ada7f52b6f4a8ec8e41.patch";
+          sha256 = "0zmnj26jjbzpqkx5294dg1zpjjk35mzngc7j68iyblmyaix40xk0";
+        })
+      ];
+    });
+  }) ];
+  cachix.derivationsToPush = [ pkgs.mosh ];
 }
