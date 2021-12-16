@@ -5,11 +5,6 @@
 
   lib.shellEnv.synced = mapAttrs (_: v: v.path) config.synced;
 
-  secrets.syncthing = {
-    format = "yaml";
-    key = here.hostname;
-  };
-
   services.syncthing = {
     enable = true;
     user = my.username;

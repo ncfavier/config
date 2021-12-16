@@ -1,15 +1,8 @@
-{ inputs, lib, config, pkgs, ... }: with lib; {
+{ inputs, lib, here, config, pkgs, ... }: with lib; {
   imports = [
     inputs.sops-nix.nixosModule
     (mkAliasOptionModule [ "secrets" ] [ "sops" "secrets" ])
   ];
-
-  options.sops.secrets = mkOption {
-    type = with types; attrsOf (submodule ({ config, name, ... }: {
-      sopsFile = "${inputs.self}/secrets/${name}" +
-        optionalString (config.format != "binary") ".${config.format}";
-    }));
-  };
 
   config = {
     sops = {
@@ -17,7 +10,18 @@
         home = config.hm.programs.gpg.homedir;
         sshKeyPaths = [];
       };
-      defaultSopsFormat = "binary";
+
+      secrets = let
+        secretsDir = "${inputs.self}/secrets";
+      in mapAttrs' (name: _: let
+        parts = splitString "." name;
+        base = head parts;
+        format = if length parts > 1 then elemAt parts 1 else "binary";
+      in nameValuePair base {
+        sopsFile = "${secretsDir}/${name}";
+        inherit format;
+        key = here.hostname;
+      }) (builtins.readDir secretsDir);
     };
 
     environment = {

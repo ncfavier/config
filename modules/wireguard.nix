@@ -4,11 +4,6 @@
 in {
   config = mkMerge [
     (mkIf (here.isServer || here.isStation) {
-      secrets.wireguard = {
-        format = "yaml";
-        key = here.hostname;
-      };
-
       networking.firewall.trustedInterfaces = [ interface ];
     })
 

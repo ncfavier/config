@@ -44,12 +44,7 @@
   networking = {
     interfaces.eno1.useDHCP = true;
     interfaces.wlp3s0.useDHCP = true;
-    wireless = {
-      enable = true;
-      interfaces = [ "wlp3s0" ];
-      userControlled.enable = true;
-      allowAuxiliaryImperativeNetworks = true;
-    };
+    wireless.interfaces = [ "wlp3s0" ];
   };
 
   environment.systemPackages = with pkgs; [

@@ -98,8 +98,7 @@ following subcommands:
 
 <sup id=almost>[†](#top-almost)</sup> things currently not managed by this repository include:
 - partition layouts, disk encryption
-- GPG keys (used to decrypt secrets)
-- local git repositories
-- `wpa_supplicant` configuration
+- GPG private keys (used to decrypt secrets in this repository)
+- local git checkouts
 - Thunderbird configuration
-- general state (mail, command histories, …)
+- general state (wireless networks, mail, command histories, …)
