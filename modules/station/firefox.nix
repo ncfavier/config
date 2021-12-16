@@ -266,6 +266,16 @@ in {
               display: none;
             }
           }
+
+          @-moz-document url-prefix(https://adventofcode.com/) {
+            body {
+              font-size: 12pt !important;
+            }
+
+            article {
+              width: 75em !important;
+            }
+          }
         '';
       };
     };

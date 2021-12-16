@@ -54,16 +54,4 @@
       @theme "custom"
     '';
   };
-
-  nixpkgs.overlays = [ (self: super: {
-    rofi-unwrapped = super.rofi-unwrapped.overrideAttrs (o: {
-      src = self.fetchFromGitHub  {
-        owner = "davatorium";
-        repo = "rofi";
-        rev = "05e84544b186ec65057100feb7e07e3ae8c7151c";
-        sha256 = "SdXTQ+7aNYnCPTTJ4xkS1awri66qRAv6rCDi802zDkk=";
-        fetchSubmodules = true;
-      };
-    });
-  }) ];
 }

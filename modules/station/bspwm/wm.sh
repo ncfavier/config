@@ -53,7 +53,7 @@ go() {
         term|terminal)
             terminal &;;
         chat|irc)
-            instance=irc title=weechat terminal mosh --predict=never "$server_hostname" -- tmux -L weechat attach -d &;;
+            instance=irc terminal mosh --predict=never "$server_hostname" -- tmux -L weechat attach -d &;;
         editor)
             focus_title='- VIM$' terminal vim &;;
         web|browser)

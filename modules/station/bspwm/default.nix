@@ -129,8 +129,8 @@ in {
           "mpc -q {toggle,prev,next,volume -2,volume +2,repeat,random,single,clear,seek -3,seek +3,update}";
         "XF86Audio{Play,Prev,Next,Stop}" =
           "mpc -q {toggle,prev,next,stop}";
-        "XF86Audio{Lower,Raise}Volume" =
-          "volume {-,+}2";
+        "{_,super + alt} + XF86Audio{Lower,Raise}Volume" =
+          "{_,mpc} volume {-,+}2";
         "XF86AudioMute" =
           "volume toggle";
         "XF86AudioMicMute" =
