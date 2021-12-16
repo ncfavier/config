@@ -52,7 +52,6 @@
 
   environment.systemPackages = with pkgs; [
     efibootmgr
-    wpa_supplicant_gui
     v4l-utils
   ];
 

@@ -23,7 +23,7 @@
           =8IGY
           -----END PGP PUBLIC KEY BLOCK-----
         '';
-        trust = 5;
+        trust = "ultimate";
       } ];
     };
 

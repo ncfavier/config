@@ -14,7 +14,7 @@
       font = "${font} 10";
 
       theme = with config.hm.lib.formats.rasi; {
-        " @theme" = "default"; # space to make sure it's the first line...
+        " @import" = "default"; # space to make sure it's the first line...
         "*" = {
           background = mkLiteral background;
           lightbg = mkLiteral background;
@@ -49,9 +49,5 @@
         kb-mode-previous = "Super+Shift+space,Control+ISO_Left_Tab";
       };
     };
-
-    home.file.${config.hm.programs.rofi.configPath}.text = mkAfter ''
-      @theme "custom"
-    '';
   };
 }

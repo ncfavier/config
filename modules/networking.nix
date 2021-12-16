@@ -90,6 +90,8 @@
           tsu.psk = "@PSK_TSU@";
         };
       };
+
+      environment.systemPackages = with pkgs; [ wpa_supplicant_gui ];
     })
   ];
 }

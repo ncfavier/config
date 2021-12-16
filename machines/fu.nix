@@ -49,7 +49,6 @@
 
   environment.systemPackages = with pkgs; [
     efibootmgr
-    wpa_supplicant_gui
   ];
 
   services.xserver = {
