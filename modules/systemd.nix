@@ -1,5 +1,6 @@
 {
   systemd.extraConfig = ''
+    DefaultTimeoutStartSec=30s
     DefaultTimeoutStopSec=15s
   '';
 }

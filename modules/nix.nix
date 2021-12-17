@@ -68,7 +68,7 @@
 
     environment.systemPackages = with pkgs; [
       nix-bash-completions
-      nix-index-unwrapped
+      nix-index-unwrapped # use the system-wide Nix
       nix-prefetch-git
       nix-prefetch-github
       nix-diff
@@ -80,7 +80,17 @@
       rnix-lsp
     ];
 
-    environment.sessionVariables.NIX_SHELL_PRESERVE_PROMPT = "1";
+    # TODO
+    # systemd.services.nix-index = {
+    #   description = "Regenerate nix-index database";
+    #   serviceConfig.User = my.username;
+    #   script = ''
+    #     ${pkgs.nix-index-unwrapped}/bin/nix-index
+    #   '';
+    #   startAt = "Mon 04:15";
+    # };
+
+    environment.variables.NIX_SHELL_PRESERVE_PROMPT = "1";
 
     environment.etc.gc-roots.text = concatMapStrings (x: x + "\n") config.nix.gcRoots;
 

@@ -41,18 +41,18 @@
   in with lib; {
     inherit lib;
 
-    nixosModules = importDir ./modules;
+    nixosModules = modulesIn ./modules;
 
-    nixosConfigurations = mapAttrs (hostname: local: nixosSystem {
-      inherit system lib; # https://github.com/NixOS/nixpkgs/pull/126769
+    nixosConfigurations = mapAttrs (hostname: localModule: nixosSystem {
+      inherit system lib;
       specialArgs = {
         inherit inputs;
         pkgsFlake = pkgs;
         hardware = nixos.nixosModules // inputs.nixos-hardware.nixosModules;
         here = my.machines.${hostname};
       };
-      modules = attrValues self.nixosModules ++ [ local ];
-    }) (importDir ./machines) // {
+      modules = attrValues self.nixosModules ++ [ localModule ];
+    }) (modulesIn ./machines) // {
       iso = nixosSystem {
         inherit system lib;
         specialArgs = {

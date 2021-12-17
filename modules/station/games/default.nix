@@ -1,5 +1,5 @@
 { lib, config, pkgs, ... }: with lib; {
-  imports = attrValues (importDir ./.);
+  imports = attrValues (modulesIn ./.);
 
   nixpkgs.config.allowUnfree = true;
 

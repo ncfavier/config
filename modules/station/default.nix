@@ -1,5 +1,5 @@
 { lib, here, utils, pkgs, ... }: with lib; optionalAttrs here.isStation {
-  imports = attrValues (importDir ./.);
+  imports = attrValues (modulesIn ./.);
 
   config = {
     boot.kernelParams = [ "mitigations=off" ];

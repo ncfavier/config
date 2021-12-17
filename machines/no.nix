@@ -73,6 +73,8 @@
 
   services.fprintd.enable = true;
 
+  my.hashedPassword = "$6$R44ADtNdZEuHgWMz$STSpgn6SA/hTSdy/zOhnezmOIht5c99OXIzezemIrzxxWDGyv.CznmfW/RHNOwOY4Wbj/ue5NANralDWmlvw40";
+
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----
     MIICHTCCAaOgAwIBAgIJAN36G61Lv2lfMAoGCCqGSM49BAMCMEoxEjAQBgNVBAoT
