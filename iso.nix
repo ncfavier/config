@@ -1,15 +1,16 @@
-{ inputs, lib, modulesPath, ... }: with lib; {
+{ lib, modulesPath, ... }: with lib; {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
-    inputs.self.nixosModules.networking
-    inputs.self.nixosModules.home-manager
-    inputs.self.nixosModules.users
-    inputs.self.nixosModules.localisation
-    inputs.self.nixosModules.console
-    inputs.self.nixosModules.shell
-    inputs.self.nixosModules.gpg
-    inputs.self.nixosModules.git
-    inputs.self.nixosModules.cachix
+    # TODO: use enable options
+    modules/networking.nix
+    modules/home-manager.nix
+    modules/users.nix
+    modules/localisation.nix
+    modules/console.nix
+    modules/shell
+    modules/gpg.nix
+    modules/git.nix
+    modules/cachix.nix
   ];
 
   options = {

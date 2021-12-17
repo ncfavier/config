@@ -70,7 +70,6 @@ This attribute uses the Nixpkgs module system to define default values.
 This is the entry point where things are plugged into each other. The flake
 exports the following outputs:
 - `lib` is the lib defined above.
-- `nixosModules` is the set of top-level modules imported in each configuration.
 - `nixosConfigurations` is the set of configurations for my machines.
 - `packages.x86_64-linux.iso` creates an ISO image similar to the official
   unstable minimal ISO but with a few conveniences, like my localisation settings,

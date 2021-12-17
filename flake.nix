@@ -41,8 +41,6 @@
   in with lib; {
     inherit lib;
 
-    nixosModules = modulesIn ./modules;
-
     nixosConfigurations = mapAttrs (hostname: localModule: nixosSystem {
       inherit system lib;
       specialArgs = {
@@ -51,7 +49,7 @@
         hardware = nixos.nixosModules // inputs.nixos-hardware.nixosModules;
         here = my.machines.${hostname};
       };
-      modules = attrValues self.nixosModules ++ [ localModule ];
+      modules = attrValues (modulesIn ./modules) ++ [ localModule ];
     }) (modulesIn ./machines) // {
       iso = nixosSystem {
         inherit system lib;
