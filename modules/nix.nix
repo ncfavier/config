@@ -56,16 +56,16 @@
 
     nixpkgs.overlays = [
       inputs.nur.overlay
-      (self: super: {
-        nix-bash-completions = super.nix-bash-completions.overrideAttrs (o: {
+      (pkgs: prev: {
+        nix-bash-completions = prev.nix-bash-completions.overrideAttrs (o: {
           # let nix handle completion for the nix command
           postPatch = ''
             substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
           '';
         });
 
-        nix-top = super.nix-top.overrideAttrs (o: {
-          src = self.fetchFromGitHub {
+        nix-top = prev.nix-top.overrideAttrs (o: {
+          src = pkgs.fetchFromGitHub {
             owner = "ncfavier";
             repo = "nix-top";
             rev = "improve-event-handling";

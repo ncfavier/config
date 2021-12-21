@@ -67,9 +67,9 @@
         capabilities = "cap_net_admin,cap_net_raw+p";
         source = "${pkgs.nethogs}/bin/nethogs";
       };
-      nixpkgs.overlays = [ (self: super: {
-        nethogs = super.nethogs.overrideAttrs (o: {
-          src = self.fetchFromGitHub {
+      nixpkgs.overlays = [ (pkgs: prev: {
+        nethogs = prev.nethogs.overrideAttrs (o: {
+          src = pkgs.fetchFromGitHub {
             owner = "raboof";
             repo = "nethogs";
             rev = "54f88038f6c6c44c9c642cac5dc90f21d4cb84b9";

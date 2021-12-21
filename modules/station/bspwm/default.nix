@@ -166,8 +166,8 @@ in {
   security.pam.services.i3lock.fprintAuth = false;
 
   nixpkgs.overlays = [
-    (self: super: {
-      bspwm = super.bspwm.overrideAttrs (o: {
+    (pkgs: prev: {
+      bspwm = prev.bspwm.overrideAttrs (o: {
         patches = o.patches or [] ++ [ (builtins.toFile "bspwm-patch" ''
           https://github.com/baskerville/bspwm/issues/935#issuecomment-901511011
           --- a/src/bspwm.c
@@ -187,8 +187,8 @@ in {
         '') ];
       });
 
-      lemonbar-xft = super.lemonbar-xft.overrideAttrs (o: {
-        src = self.fetchFromGitLab {
+      lemonbar-xft = prev.lemonbar-xft.overrideAttrs (o: {
+        src = pkgs.fetchFromGitLab {
           owner = "protesilaos";
           repo = "lemonbar-xft";
           rev = "0042efd2ec1477ab96eb044ebba72a10aefff21f";

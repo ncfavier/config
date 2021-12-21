@@ -30,8 +30,8 @@
     inherit (here) isServer;
   };
 
-  nixpkgs.overlays = [ (self: super: {
-    config-cli = self.writeShellScriptBin "config" ''
+  nixpkgs.overlays = [ (pkgs: prev: {
+    config-cli = pkgs.writeShellScriptBin "config" ''
       configPath=${escapeShellArg utils.configPath}
       cmd=$1
       shift

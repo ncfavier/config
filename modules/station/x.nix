@@ -20,16 +20,16 @@
       xkbOptions = "compose:${config.keys.composeKey},caps:escape_shifted_capslock";
     };
 
-    nixpkgs.overlays = [ (self: super: {
-      picom-flicker-workaround = self.stdenv.mkDerivation {
+    nixpkgs.overlays = [ (pkgs: prev: {
+      picom-flicker-workaround = pkgs.stdenv.mkDerivation {
         name = "picom-flicker-workaround";
-        src = self.fetchFromGitHub {
+        src = pkgs.fetchFromGitHub {
           owner = "mphe";
           repo = "picom-flicker-workaround";
           rev = "fb484bdfac73444daea93e711d5c929f3767c0de";
           sha256 = "aeiN7C8XtbF+Hbt0VeVIgTskv2fCIsij173q28uPEpE=";
         };
-        nativeBuildInputs = with self.xorg; [ libX11 libXScrnSaver ];
+        nativeBuildInputs = with pkgs.xorg; [ libX11 libXScrnSaver ];
         makeFlags = [ "PREFIX=$(out)" ];
       };
     }) ];

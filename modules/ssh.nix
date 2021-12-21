@@ -70,10 +70,10 @@ in {
     );
   };
 
-  nixpkgs.overlays = [ (self: super: {
-    mosh = super.mosh.overrideAttrs (o: {
+  nixpkgs.overlays = [ (pkgs: prev: {
+    mosh = prev.mosh.overrideAttrs (o: {
       patches = o.patches or [] ++ [
-        (self.fetchpatch {
+        (pkgs.fetchpatch {
           url = "https://github.com/mobile-shell/mosh/commit/378dfa6aa5778cf168646ada7f52b6f4a8ec8e41.patch";
           sha256 = "0zmnj26jjbzpqkx5294dg1zpjjk35mzngc7j68iyblmyaix40xk0";
         })

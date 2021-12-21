@@ -63,8 +63,8 @@
     };
   };
 
-  nixpkgs.overlays = [ (self: super: {
-    tmsu = super.tmsu.overrideAttrs (o: {
+  nixpkgs.overlays = [ (pkgs: prev: {
+    tmsu = prev.tmsu.overrideAttrs (o: {
       patches = o.patches or [] ++ [ (builtins.toFile "tmsu-patch" ''
         --- a/src/github.com/oniony/TMSU/common/path/path.go
         +++ b/src/github.com/oniony/TMSU/common/path/path.go

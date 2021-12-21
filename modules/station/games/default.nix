@@ -36,8 +36,8 @@
     binaryCachePublicKeys = mkAfter [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
   };
 
-  nixpkgs.overlays = [ (self: super: {
-    zcatch = with self; stdenv.mkDerivation rec {
+  nixpkgs.overlays = [ (pkgs: prev: {
+    zcatch = with pkgs; stdenv.mkDerivation rec {
       pname = "zcatch";
       version = "0.3.5";
       src = fetchFromGitHub {

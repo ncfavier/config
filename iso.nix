@@ -39,8 +39,8 @@
     security.polkit.enable = false;
     services.udisks2.enable = false;
     xdg.sounds.enable = false;
-    nixpkgs.overlays = [ (self: super: {
-      firmwareLinuxNonfree = super.firmwareLinuxNonfree.overrideAttrs (o: {
+    nixpkgs.overlays = [ (pkgs: prev: {
+      firmwareLinuxNonfree = prev.firmwareLinuxNonfree.overrideAttrs (o: {
         postInstall = ''
           rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl}
         '';
