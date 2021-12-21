@@ -50,24 +50,26 @@
         here = my.machines.${hostname};
       };
       modules = attrValues (modulesIn ./modules) ++ [ localModule ];
-    }) (modulesIn ./machines) // {
-      iso = nixosSystem {
-        inherit system lib;
-        specialArgs = {
-          inherit inputs;
-          here = null;
-        };
-        modules = [ ./iso.nix ];
-      };
-    };
+    }) (modulesIn ./machines);
 
-    # horrible hack, see https://github.com/NixOS/nix/issues/5633
-    packages.${system}.iso = let
-      involution = name: file: pkgs.runCommand name {} ''
-        tr a-z0-9 n-za-m5-90-4 < ${lib.escapeShellArg file} > "$out"
-      '';
-      nukeReferences = name: file: involution name (involution "${name}-rot" file);
-      iso = self.nixosConfigurations.iso.config;
-    in nukeReferences "nixos.iso" "${iso.system.build.isoImage}/iso/${iso.isoImage.isoName}";
+    packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
+      iso = let
+        iso = (nixosSystem {
+          inherit system lib;
+          specialArgs = {
+            inherit inputs;
+            here = null;
+          };
+          modules = [ ./iso.nix ];
+        }).config;
+
+        # horrible hack, see https://github.com/NixOS/nix/issues/5633
+        involution = name: file: pkgs.runCommand name {} ''
+          tr a-z0-9 n-za-m5-90-4 < ${lib.escapeShellArg file} > "$out"
+        '';
+        nukeReferences = name: file: involution name (involution "${name}-rot" file);
+      in
+        nukeReferences "nixos.iso" "${iso.system.build.isoImage}/iso/${iso.isoImage.isoName}";
+    };
   };
 }

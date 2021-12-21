@@ -80,6 +80,7 @@ let &t_EI = "\e[0 q"
 let &t_SR = "\e[3 q"
 
 colorscheme peachpuff
+highlight Search ctermfg=0
 
 " Mappings
 

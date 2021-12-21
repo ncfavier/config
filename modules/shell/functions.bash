@@ -252,10 +252,23 @@ nix-build-delete() { # useful for running NixOS tests
 }
 complete_alias nix-build-delete _nix_completion nix-build
 
+nix-time() { # get a lower bound on the build time of a derivation (best if build wasn't interrupted) https://github.com/NixOS/nix/issues/1710
+    local drv name prefix log birth mod
+    drv=$(nix show-derivation "$1" | jq -r 'keys[0]')
+    [[ $drv == /nix/store/* ]] || return
+    name=${drv#/nix/store/} prefix=${name::2}
+    log=(/nix/var/log/nix/drvs/$prefix/${name#"$prefix"}*)
+    [[ -e $log ]] || return
+    read -r birth mod < <(stat -c '%W %Y' "$log")
+    python -c "import datetime; print(datetime.timedelta(seconds=$((mod - birth))))"
+}
+complete_alias nix-time _complete_nix nix show-derivation
+
 what() {
     local p=$(type -P "$1")
     realpath "${p:-$1}"
 }
+complete -c what
 
 fdnp() {
     fd -L "$@" $NIX_PROFILES

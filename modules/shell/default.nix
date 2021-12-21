@@ -34,14 +34,17 @@
       ls = "ls -h --color=auto --group-directories-first";
       lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
       mv = "mv -i";
+      nix = "nix -v";
 
       # Shorthands
       C = "LC_ALL=C ";
       diff = "git diff --no-index --no-prefix";
       dp = "declare -p";
+      drv = "nix show-derivation";
       fc-grep = "fc-list | rg -i";
       l = "ls -l";
       ll = "ls -la";
+      nwd = "nix why-depends";
       o = "xdg-open";
       rgs = "rg --sort path";
       tall = "tail -f -n +1";

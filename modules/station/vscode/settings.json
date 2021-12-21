@@ -1,12 +1,11 @@
 {
-  "editor.fontFamily": "monospace",
+  "editor.fontFamily": "Iosevka",
   "files.trimTrailingWhitespace": true,
   "keyboard.dispatch": "keyCode",
   "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
-  "workbench.colorTheme": "1984",
-  "window.menuBarVisibility": "toggle",
+  "workbench.colorTheme": "1984 - Cyberpunk",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["u"],
@@ -26,11 +25,12 @@
   "diffEditor.codeLens": true,
   "editor.codeLensFontFamily": "monospace",
   "editor.codeLensFontSize": 13,
-  "window.titleBarStyle": "custom",
   "nix.enableLanguageServer": true,
   "editor.renderFinalNewline": false,
   "haskell.plugin.tactics.globalOn": false,
   "haskell.updateBehavior": "never-check",
   "haskell.plugin.ghcide-type-lenses.globalOn": false,
-  "haskell.plugin.hlint.diagnosticsOn": false
+  "haskell.plugin.hlint.diagnosticsOn": false,
+  "editor.fontSize": 16,
+  "window.menuBarVisibility": "hidden"
 }

@@ -47,7 +47,7 @@
       gcRoots = with inputs; [ nixos nixos-stable nixos-hardware nur ];
 
       extraOptions = ''
-        experimental-features = nix-command flakes ca-references ca-derivations
+        experimental-features = nix-command flakes ca-derivations
         warn-dirty = false
         keep-outputs = true
         keep-derivations = true
@@ -62,6 +62,15 @@
           postPatch = ''
             substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
           '';
+        });
+
+        nix-top = super.nix-top.overrideAttrs (o: {
+          src = self.fetchFromGitHub {
+            owner = "ncfavier";
+            repo = "nix-top";
+            rev = "improve-event-handling";
+            sha256 = "EuklXXJVUg1qiGFEpal1ZupmxIovCNRdAgm2r9T3akM=";
+          };
         });
       })
     ];
@@ -80,7 +89,7 @@
       rnix-lsp
     ];
 
-    # TODO
+    # TODO nix-index service
     # systemd.services.nix-index = {
     #   description = "Regenerate nix-index database";
     #   serviceConfig.User = my.username;

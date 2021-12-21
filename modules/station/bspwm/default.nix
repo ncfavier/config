@@ -113,7 +113,7 @@ in {
         "super + ctrl + {b,e}" =
           "bspc node -{B,E}";
         "super + ctrl + {_,shift} + r" =
-          "bspc node -R {90,270}";
+          "bspc node @/ -R {90,270}";
 
         "super + shift + l" =
           "wm lock";

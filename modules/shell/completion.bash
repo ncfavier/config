@@ -3,8 +3,7 @@ complete_alias() {
     local base_function=$2
     local function_name=_alias_$alias_name
     shift 2
-    eval "
-    $function_name() {
+    eval "$function_name() {
         COMP_WORDS=( ${*@Q} \"\${COMP_WORDS[@]:1}\" )
         (( COMP_CWORD += $(( $# - 1 )) ))
         _completion_loader $1
@@ -17,13 +16,15 @@ complete_alias() {
 
 complete -F _command C cxa cxan
 complete -v dp
-complete -c what
+complete_alias drv _complete_nix nix show-derivation
+complete -f nwd
 complete_alias s _systemctl systemctl
 complete_alias u _systemctl systemctl --user
 complete_alias j _journalctl journalctl
 
 # Scripts
 
+# TODO
 # _config() {
 #
 # }

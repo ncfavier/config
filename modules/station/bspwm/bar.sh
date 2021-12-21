@@ -283,10 +283,11 @@ while read -rn 1 event; do
                         item="%{A3:wm focus-workspace $desktop;wm go terminal:}$item%{A}"
                     fi
                     case $type in
-                        F|O|U) item="%{B${theme[foreground]}}$item%{B-}";;&
-                        f|F) item="%{F${theme[foregroundAlt]}}$item%{F-}";;&
-                        O) item="%{F${theme[background]}}$item%{F-}";;&
-                        u|U) item="%{F${theme[hot]}}$item%{F-}";;&
+                        f|F) f=${theme[foregroundAlt]};;&
+                        o|O) f=${theme[foreground]};;&
+                        u|U) f=${theme[hot]};;&
+                        f|o|u) item="%{F$f}$item%{F-}";;&
+                        F|O|U) item="%{F${theme[background]}}%{B$f}$item%{B-}%{F-}";;&
                     esac
                     wm+=$item
                 fi

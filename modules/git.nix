@@ -76,10 +76,17 @@
       };
     };
 
+    programs.gh = {
+      enable = true;
+      settings = {
+        git_protocol = "ssh";
+      };
+    };
+
     home.packages = with pkgs; [
       (writeShellScriptBin "git-random-commit-message" ''
         ${fortune}/bin/fortune -sn 80 \
-            computers debian definitions disclaimer education fortunes goedel humorists linuxcookie \
+            computers debian definitions disclaimer education fortunes goedel humorists linux \
             magic miscellaneous perl pets platitudes science songs-poems translate-me wisdom zippy |
         tr -s '[:space:]' '[ *]'
       '')

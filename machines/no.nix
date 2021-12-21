@@ -1,4 +1,9 @@
 { hardware, here, pkgs, ... }: {
+  # nixpkgs.overlays = [ (final: prev: {
+  #   wrapGAppsHook = prev.wrapGAppsHook.override {
+  #     makeWrapper = final.makeBinaryWrapper;
+  #   };
+  # }) ];
   imports = with hardware; [
     notDetected
     lenovo-thinkpad-t14s-amd-gen1

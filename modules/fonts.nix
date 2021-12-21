@@ -21,6 +21,7 @@
           source-han-serif
           source-han-sans
           source-han-mono
+          iosevka
           roboto
           twitter-color-emoji
           noto-fonts-emoji
