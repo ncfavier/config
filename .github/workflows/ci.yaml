@@ -11,7 +11,7 @@ jobs:
       - name: Install flakes-enabled Nix
         uses: cachix/install-nix-action@v16
         with:
-          install_url: https://nixos-nix-install-tests.cachix.org/serve/kqchxcar98r8hj447mz0c0fdvdi5xcw1/install
+          install_url: https://nixos-nix-install-tests.cachix.org/serve/d6m5dgxdh3hnjwkvll0sm5mk4bnrf4rk/install
           install_options: --tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve
           extra_nix_config: experimental-features = nix-command flakes ca-derivations
       - name: Set up Cachix
