@@ -4,12 +4,12 @@ in {
   hm = {
     programs.firefox = {
       enable = true;
-      # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      #   french-dictionary
-      #   ublock-origin
-      #   i-dont-care-about-cookies
-      #   darkreader
-      # ];
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        french-dictionary
+        ublock-origin
+        i-dont-care-about-cookies
+        darkreader
+      ];
       profiles.${profile} = with config.theme; {
         settings = {
           "browser.fixup.alternate.enabled" = false;
