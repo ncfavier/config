@@ -52,7 +52,7 @@
       modules = attrValues (modulesIn ./modules) ++ [ localModule ];
     }) (modulesIn ./machines);
 
-    packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
+    packages.${system} = { #mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
       iso = let
         iso = (nixosSystem {
           inherit system lib;
