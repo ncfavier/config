@@ -13,7 +13,7 @@ jobs:
         with:
           install_url: https://nixos-nix-install-tests.cachix.org/serve/d6m5dgxdh3hnjwkvll0sm5mk4bnrf4rk/install
           install_options: --tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve
-          extra_nix_config: experimental-features = nix-command flakes ca-derivations
+          extra_nix_config: experimental-features = nix-command flakes
       - name: Set up Cachix
         uses: cachix/cachix-action@v10
         with:
@@ -21,7 +21,7 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           extraPullNames: nix-community
       - name: Check flake
-        run: nix -vL flake check
+        run: nix -vL flake check --extra-experimental-features ca-derivations
       - name: Build ISO
         run: nix -vL build .#iso -o nixos.iso
       - name: Create ISO release
