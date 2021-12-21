@@ -9,7 +9,7 @@
     path = [ pkgs.config-cli ];
     script = ''
       . config env
-      (( day = $(TZ=America/New_York date +%j) - $(date -d "december 1" +%j) + 1 ))
+      (( day = $(TZ=America/New_York date +%j) - $(date -d "december 1" +%j) + 1 )) || true
       read -r board < ${config.secrets.ulmaoc-topic.path}
 
       topic="Advent of Code $(date +%Y) https://adventofcode.com | Jour $day | Leaderboard $board | Spoilers -> #adventofcode-spoilers"

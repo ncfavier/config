@@ -79,6 +79,7 @@
           "NoMonomorphismRestriction",
           "NumericUnderscores",
           "OverloadedStrings",
+          "PartialTypeSignatures",
           "PatternGuards",
           "PatternSynonyms",
           "PolyKinds",
@@ -108,8 +109,10 @@
       rc ${config.secrets.lambdabot-ulminfo.path}
       admin + ulminfo:nf
       admin + libera:nf
+      url-off
       join ulminfo:#haskell
       join libera:##nf
+      join libera:#adventofcode-spoilers
     '';
   };
 
@@ -117,4 +120,16 @@
     wants = [ "nss-lookup.target" ];
     after = [ "nss-lookup.target" ];
   };
+
+  nixpkgs.overlays = [ (pkgs: prev: {
+    haskell = prev.haskell // {
+      packageOverrides = hpkgs: hprev: {
+        lambdabot-core = hprev.lambdabot-core.overrideAttrs (o: {
+          postPatch = o.postPatch or "" + ''
+            substituteInPlace src/Lambdabot/Plugin.hs --replace 'limitStr 80' 'limitStr 180'
+          '';
+        });
+      };
+    };
+  }) ];
 }
