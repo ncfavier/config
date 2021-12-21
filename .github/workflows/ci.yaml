@@ -19,9 +19,9 @@ jobs:
         with:
           name: ${{ github.actor }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          extraPullNames: nix-community
+          extraPullNames: nix-community mic92
       - name: Check flake
-        run: nix -v flake check --extra-experimental-features ca-derivations
+        run: nix -v flake check --no-build
       - name: Build ISO
         run: nix -vL build .#iso -o nixos.iso
       - name: Create ISO release
