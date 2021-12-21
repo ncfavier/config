@@ -17,7 +17,7 @@
 
     systemd.user.startServices = true;
 
-    manual.html.enable = true;
+    # manual.html.enable = true;
   };
 
   nix.gcRoots = [ inputs.home-manager inputs.home-manager-bash ];
