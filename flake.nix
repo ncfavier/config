@@ -52,7 +52,7 @@
       modules = attrValues (modulesIn ./modules) ++ [ localModule ];
     }) (modulesIn ./machines);
 
-    packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
+    packages.${system} = {
       iso = let
         iso = (nixosSystem {
           inherit system lib;
@@ -70,6 +70,6 @@
         nukeReferences = name: file: involution name (involution "${name}-rot" file);
       in
         nukeReferences "nixos.iso" "${iso.system.build.isoImage}/iso/${iso.isoImage.isoName}";
-    };
+    }; # // mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations;
   };
 }

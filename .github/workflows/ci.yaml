@@ -21,7 +21,7 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           extraPullNames: nix-community,mic92
       - name: Check flake
-        run: nix -v flake check --no-build
+        run: nix -v flake check
       - name: Build ISO
         run: nix -vL build .#iso -o nixos.iso
       - name: Create ISO release
