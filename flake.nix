@@ -70,6 +70,6 @@
         nukeReferences = name: file: involution name (involution "${name}-rot" file);
       in
         nukeReferences "nixos.iso" "${iso.system.build.isoImage}/iso/${iso.isoImage.isoName}";
-    }; # // mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations;
+    } // mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations;
   };
 }
