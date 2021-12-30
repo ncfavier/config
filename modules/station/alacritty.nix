@@ -15,7 +15,7 @@
       };
       font = {
         normal.family = font;
-        size = 7;
+        size = fontSize;
       };
       colors = {
         primary = {

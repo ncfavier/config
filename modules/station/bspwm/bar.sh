@@ -87,12 +87,12 @@ battery=(/sys/class/power_supply/BAT*)
 read -r default_layout < <(xkb-switch -l)
 bold=3
 
-xft_fonts=("siji:pixelsize=10" "bitmap:pixelsize=14" "bitmap:bold:pixelsize=14" "tewi:pixelsize=14" "Biwidth:pixelsize=12")
+xft_fonts=("siji:pixelsize=10" "${theme[font]}:size=${theme[fontSize]}" "${theme[font]}:bold:size=${theme[fontSize]}" "tewi:size=${theme[fontSize]}" "Biwidth:size=${theme[fontSize]}")
 font_args=()
 for f in "${xft_fonts[@]}"; do
     case $f in
         *siji*) offset=-2;;
-        *Biwidth*) offset=-2;;
+        *Biwidth*) offset=-1;;
         *) offset=0;;
     esac
     font_args+=(-o "$offset" -f "$f")
@@ -141,12 +141,13 @@ cleanup_on_exit
 
     # systemd
     while true; do
-        degraded=0
-        if [[ $(systemctl is-system-running) == degraded ]] ||
-           [[ $(systemctl --user is-system-running) == degraded ]]; then
-            degraded=1
-        fi
-        printf 'Y%s\n' "$degraded"
+        failed_units=()
+        for user in '' --user; do
+            systemctl $user list-units --failed --plain --no-legend
+        done | while read -r unit _; do
+            failed_units+=("${unit%.service}")
+        done
+        printf 'Y%s\n' "${failed_units[*]}"
         sleep 1
     done &
 
@@ -418,10 +419,10 @@ while read -rn 1 event; do
             fi
             ;;
         Y) # systemd
-            read -r degraded
+            read -ra failed_units
             systemd=
-            if (( degraded )); then
-                systemd="%{F${theme[hot]}}%{F-}"
+            if (( ${#failed_units} )); then
+                systemd="%{F${theme[hot]}}%{F-} ${failed_units[*]}"
             fi
             ;;
         D) # dunst

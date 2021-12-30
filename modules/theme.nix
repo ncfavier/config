@@ -29,7 +29,8 @@
       iconTheme = "Flat-Remix-Violet" + (if dark then "-Dark" else "-Light");
       gtkFont = "sans-serif";
       font = "bitmap";
-      pangoFont = "${font} 8";
+      fontSize = 8;
+      pangoFont = "${font} ${toString fontSize}";
     };
 
     lib.shellEnv.theme = config.theme;

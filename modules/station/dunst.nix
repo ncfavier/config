@@ -6,7 +6,7 @@
       global = {
         enable_recursive_icon_lookup = true;
         width = "(0, 1200)";
-        height = 500;
+        height = 9999;
         offset = "${toString (padding * 2)}x${toString (barHeight + padding * 2)}";
         notification_limit = 6;
         shrink = true;
@@ -21,7 +21,7 @@
         word_wrap = true;
         icon_position = "right";
         min_icon_size = 64;
-        max_icon_size = global.height;
+        max_icon_size = 500;
         dmenu = "rofi -dmenu -p dunst -no-fixed-num-lines";
         browser = "xdg-open";
         mouse_right_click = "context";

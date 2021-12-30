@@ -11,7 +11,7 @@
         ];
       };
 
-      font = "${font} 10";
+      font = pangoFont;
 
       theme = with config.hm.lib.formats.rasi; {
         " @import" = "default"; # space to make sure it's the first line...
@@ -41,6 +41,7 @@
       terminal = "alacritty";
 
       extraConfig = {
+        dpi = 0; # auto-detect using X screen size
         drun-display-format = "{name}";
         sort = true;
         normalize-match = true;

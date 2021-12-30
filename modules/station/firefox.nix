@@ -57,7 +57,7 @@ in {
               --cold: ${cold};
               --hot: ${hot};
               --font: ${font};
-              --font-size: 10px;
+              --font-size: ${toString fontSize}pt;
 
               --toolbar-non-lwt-bgcolor: var(--bg) !important;
               --toolbar-non-lwt-bgimage: none !important;

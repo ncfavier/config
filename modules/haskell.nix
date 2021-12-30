@@ -12,6 +12,7 @@
       megaparsec
       mtl
       profunctors
+      QuickCheck
       random
       split
       unordered-containers
@@ -99,6 +100,7 @@
       import System.Exit
       import System.IO
       import System.Random
+      import Test.QuickCheck
       import Text.Read
     '';
 

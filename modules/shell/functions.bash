@@ -1,3 +1,24 @@
+compreply() {
+    local completion
+    while IFS= read -r completion; do
+        COMPREPLY+=("$completion")
+    done < <(compgen "$@")
+}
+
+complete_alias() { # completion function for aliases
+    local alias_name=$1
+    local base_function=$2
+    local function_name=_alias_$alias_name
+    shift 2
+    eval "$function_name() {
+        COMP_WORDS=( ${*@Q} \"\${COMP_WORDS[@]:1}\" )
+        (( COMP_CWORD += $(( $# - 1 )) ))
+        _completion_loader $1
+        $base_function
+    }"
+    complete -F "$function_name" "$alias_name"
+}
+
 cat() { # cat directories to list them
     if (( $# == 1 )) && [[ -d $1 ]]; then
         ll "$1"
@@ -34,9 +55,14 @@ unbck() { # restore
 }
 
 mutate() { # replace a read-only symlink with a mutable copy
+    local sudo=
+    if [[ $1 == -r ]]; then
+        shift
+        sudo=sudo
+    fi
     local f=$1
-    [[ -L $f ]] && command cp --remove-destination --preserve=mode -- "$(realpath -- "$f")" "$f"
-    chmod u+w -- "$f"
+    [[ -L $f ]] && command $sudo cp --remove-destination --preserve=mode -- "$(realpath -- "$f")" "$f"
+    $sudo chmod u+w -- "$f"
 }
 
 readlinks() { # print a chain of symlinks

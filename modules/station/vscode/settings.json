@@ -32,5 +32,6 @@
   "haskell.plugin.ghcide-type-lenses.globalOn": false,
   "haskell.plugin.hlint.diagnosticsOn": false,
   "editor.fontSize": 16,
-  "window.menuBarVisibility": "hidden"
+  "window.menuBarVisibility": "hidden",
+  "editor.tabSize": 2
 }

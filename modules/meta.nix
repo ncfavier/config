@@ -87,5 +87,26 @@
     '';
   }) ];
 
+  # hm.programs.bash.completion = ''
+  #   _config() {
+  #     local cur prev words cword
+  #     _init_completion -n ':=&'
+  #     if [[ $cword == 1 ]] || [[ $cword == 2 && $prev == @* ]]; then
+  #       if [[ $cur == @* ]]; then
+  #         _known_hosts_real -a -- "$cur"
+  #       else
+  #         # COMP_WORDS=(nixos-rebuild "${COMP_WORDS[@]:1}")
+  #         COMP_WORDS=(nixos-rebuild "")
+  #         COMP_CWORD=1
+  #         # _completion_loader _nix_completion
+  #         _nix_completion # nixos-rebuild "" nixos-rebuild
+  #         declare -p COMPREPLY
+  #         compreply -W 'repl compare update specialise revert home eval env' -- "$cur"
+  #       fi
+  #     fi
+  #   }
+  #   complete -F _config config
+  # '';
+
   environment.systemPackages = with pkgs; [ config-cli ];
 }
