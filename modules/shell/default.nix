@@ -64,12 +64,6 @@
     disabledModules = [ "programs/bash.nix" ];
     imports = [ "${inputs.home-manager-bash}/modules/programs/bash.nix" ]; # TODO remove
 
-    options.programs.bash.completion = mkOption { # TODO PR
-      description = "Completion commands";
-      type = types.lines;
-      default = "";
-    };
-
     config = {
       programs = {
         bash = {
@@ -77,24 +71,24 @@
           historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
           historyIgnore = [ "ls" "l" "ll" "la" ];
           shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
-          initExtra = ''
-            ${readFile ./functions.bash}
+          initExtra = mkMerge [
+            (mkBefore (readFile ./functions.bash))
+            ''
+              stty -ixon
+              set -b +H
 
-            ${config.hm.programs.bash.completion}
-
-            stty -ixon
-            set -b +H
-            [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
-          '';
-          completion = ''
-            complete -F _command C cxa cxan
-            complete -v dp
-            complete_alias drv _complete_nix nix show-derivation
-            complete -f nwd # TODO
-            complete_alias s _systemctl systemctl
-            complete_alias u _systemctl systemctl --user
-            complete_alias j _journalctl journalctl
-          '';
+              complete -F _command C cxa cxan
+              complete -v dp
+              complete_alias drv _complete_nix nix show-derivation
+              complete -f nwd # TODO
+              complete_alias s _systemctl systemctl
+              complete_alias u _systemctl systemctl --user
+              complete_alias j _journalctl journalctl
+            ''
+            (mkAfter ''
+              [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
+            '')
+          ];
         };
 
         readline = {
