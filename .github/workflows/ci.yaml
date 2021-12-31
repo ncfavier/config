@@ -8,12 +8,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Check Markdown links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
-      - name: Install flakes-enabled Nix
+      - name: Install Nix
         uses: cachix/install-nix-action@v16
-        with:
-          install_url: https://nixos-nix-install-tests.cachix.org/serve/d6m5dgxdh3hnjwkvll0sm5mk4bnrf4rk/install
-          install_options: --tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve
-          extra_nix_config: experimental-features = nix-command flakes
       - name: Set up Cachix
         uses: cachix/cachix-action@v10
         with:
