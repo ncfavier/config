@@ -87,7 +87,7 @@
         allowAuxiliaryImperativeNetworks = true;
         environmentFile = config.secrets.wireless.path;
         networks = {
-          tsu.psk = "@PSK_TSU@";
+          tsu.psk = "@TSU_PSK@";
         };
       };
 
