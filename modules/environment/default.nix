@@ -2,7 +2,7 @@
   documentation = {
     dev.enable = true;
     man.generateCaches = true;
-    man.manualPages = (pkgs.buildEnv {
+    man.man-db.manualPages = (pkgs.buildEnv {
       name = "man-paths";
       paths = config.environment.systemPackages ++ config.hm.home.packages;
       pathsToLink = [ "/share/man" ];
