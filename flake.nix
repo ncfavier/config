@@ -35,14 +35,14 @@
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
-    lib = nixpkgs.lib.extend (import ./lib);
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-  in with lib; {
-    inherit lib;
+  in with self.lib; {
+    lib = nixpkgs.lib.extend (import ./lib);
 
     nixosConfigurations = mapAttrs (hostname: localModule: nixosSystem {
-      inherit system lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
+      inherit (self) lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
+      inherit system;
       modules = attrValues (modulesIn ./modules) ++ [ localModule ];
       specialArgs = {
         inherit inputs;
@@ -55,7 +55,8 @@
     packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
       iso = let
         inherit (nixosSystem {
-          inherit system lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
+          inherit (self) lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
+          inherit system;
           modules = [ ./iso.nix ];
           specialArgs = {
             inherit inputs;
