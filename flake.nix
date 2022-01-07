@@ -2,30 +2,30 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-21.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-21.11";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-bash = {
       url = "github:ncfavier/home-manager/bash-init";
-      inputs.nixpkgs.follows = "nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "nur";
     nix-dns = {
       url = "github:kirelagin/nix-dns/v1.1.2";
-      inputs.nixpkgs.follows = "nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-      inputs.nixpkgs.follows = "nixos";
-      inputs.nixpkgs-21_05.follows = "nixos-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-21_05.follows = "nixpkgs-stable";
       inputs.utils.follows = "nix-dns/flake-utils";
     };
     www = {
@@ -34,10 +34,10 @@
     };
   };
 
-  outputs = inputs@{ self, nixos, ... }: let
+  outputs = inputs@{ self, nixpkgs, ... }: let
     system = "x86_64-linux";
-    pkgs = nixos.legacyPackages.${system};
-    lib = nixos.lib.extend (import ./lib inputs);
+    pkgs = nixpkgs.legacyPackages.${system};
+    lib = nixpkgs.lib.extend (import ./lib inputs);
   in with lib; {
     inherit lib;
 
@@ -46,7 +46,7 @@
       specialArgs = {
         inherit inputs;
         pkgsFlake = pkgs;
-        hardware = nixos.nixosModules // inputs.nixos-hardware.nixosModules;
+        hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
         here = my.machines.${hostname};
       };
       modules = attrValues (modulesIn ./modules) ++ [ localModule ];

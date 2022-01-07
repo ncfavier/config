@@ -12,7 +12,7 @@
         inherit (config.nixpkgs) localSystem crossSystem config;
       };
 
-      pkgsStable = utils.importNixpkgs inputs.nixos-stable;
+      pkgsStable = utils.importNixpkgs inputs.nixpkgs-stable;
       pkgsLocal = utils.importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
       pkgsBranch = rev: sha256: utils.importNixpkgs (pkgs.fetchFromGitHub {
         owner = my.githubUsername;
@@ -32,7 +32,7 @@
 
       registry = {
         config.flake = inputs.self;
-        nixpkgs.flake = inputs.nixos;
+        nixpkgs.flake = inputs.nixpkgs;
       };
 
       nixPath = [ "nixpkgs=${pkgs.writeText "nixpkgs.nix" ''
@@ -44,7 +44,7 @@
         options = "--delete-older-than 30d";
       };
       optimise.automatic = true;
-      gcRoots = with inputs; [ nixos nixos-stable nixos-hardware nur ];
+      gcRoots = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
 
       extraOptions = ''
         experimental-features = nix-command flakes ca-derivations
