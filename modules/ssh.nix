@@ -44,8 +44,7 @@ in {
         };
 
         "unlock.${m.hostname}" = mkIf m.isServer {
-          hostname = my.domain;
-          addressFamily = "inet";
+          hostname = head m.ipv4;
           user = "root";
           extraOptions = {
             RemoteCommand = "cryptsetup-askpass";
