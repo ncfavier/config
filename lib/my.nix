@@ -1,4 +1,4 @@
-inputs: lib: with lib; let
+lib: with lib; let
   modules = [
     (mkAliasOptionModule [ "server" ] [ "machines" "wo" ])
     {

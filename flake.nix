@@ -37,7 +37,7 @@
   outputs = inputs@{ self, nixpkgs, ... }: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    lib = nixpkgs.lib.extend (import ./lib inputs);
+    lib = nixpkgs.lib.extend (import ./lib);
   in with lib; {
     inherit lib;
 

@@ -1,4 +1,4 @@
-inputs: lib: prev: with lib; {
+lib: prev: with lib; {
   # Collects the top-level modules in a directory into an attribute set of paths.
   # A module `foo` can be either a file (`foo.nix`) or a directory (`foo/default.nix`).
   modulesIn = dir: pipe dir [
@@ -31,5 +31,5 @@ inputs: lib: prev: with lib; {
       "declare -- ${name}=${escapeShellArg value}"
   ) vars);
 
-  my = import ./my.nix inputs lib;
+  my = import ./my.nix lib;
 }
