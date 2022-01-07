@@ -315,7 +315,7 @@ complete_alias hm _systemctl systemctl
 
 command_not_found_handle() {
     local IFS=$' \t\n'
-    if [[ $1 == *@* ]]; then
+    if [[ $1 == *@* ]]; then # [user]@host as a shorthand for ssh user@host
         local host=${1#@}
         shift
         if (( $# )); then
@@ -323,20 +323,35 @@ command_not_found_handle() {
         else
             ssh -q "$host"
         fi
-    else
-        local attrs
+    else # look for a package providing the command in nixpkgs
+        local pkgs=() i n action
         printf '%s\n' "$1: command not found" >&2
         if [[ -t 1 ]] && {
-            readarray -t attrs < <(nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1")
-            for (( i = 0; i < ${#attrs[@]}; i++ )); do
-                attrs[i]=${attrs[i]%.out}
-            done
-            (( ${#attrs[@]} ))
+            readarray -t pkgs < <(nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1")
+            (( n = ${#pkgs[@]} ))
         }; then
             echo "It is provided by the following attributes:"
-            for attr in "${attrs[@]}"; do
-                echo "  $attr"
+            for (( i = 0; i < n; i++ )); do
+                pkgs[i]=${pkgs[i]%.out}
+                printf '%*d %s\n' "${#n}" "$((i+1))" "${pkgs[i]}"
             done
+            read -p "? " action
+            if [[ $action =~ ^([0-9]+)([rsi]?)$ ]]; then
+                i=${BASH_REMATCH[1]}
+                action=${BASH_REMATCH[2]:-s}
+                if (( 1 <= i && i <= n )); then
+                    case $action in
+                    r)
+                        nix-shell -p "${pkgs[i-1]}" --command "$*";;
+                    s)
+                        history -a
+                        nix-shell -p "${pkgs[i-1]}";;
+                    i)
+                        nix-env -iA "pkgs.${pkgs[i-1]}";;
+                    esac
+                    return
+                fi
+            fi
         fi
         return 127
     fi

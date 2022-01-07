@@ -11,11 +11,16 @@
     home.packages = with pkgs; [
       legendary-gl
       teeworlds
+      ddnet
       (writeShellScriptBin "zcatch" ''
         exec ${zcatch}/bin/zcatch_srv -f zcatch.cfg "$@"
       '')
       dwarf-fortress
     ];
+
+    # for DDNet
+    home.file.".teeworlds".source =
+      config.hm.lib.file.mkOutOfStoreSymlink "${config.hm.xdg.dataHome}/teeworlds";
 
     xdg.dataFile."teeworlds/zcatch.cfg".text = ''
       sv_register 0

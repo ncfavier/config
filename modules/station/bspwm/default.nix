@@ -72,6 +72,19 @@ in {
       (utils.shellScriptWith "wm" ./wm.sh { deps = [ xtitle ]; })
     ];
 
+    programs.bash.initExtra = ''
+      _wm() {
+        local cur prev words cword
+        _init_completion
+        if (( cword == 1 )); then
+          compreply -W 'go focus-window focus-workspace move-window-to-workspace lock quit' -- "$cur"
+        elif [[ ''${words[1]} == go ]]; then
+          compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi' -- "$cur"
+        fi
+      }
+      complete -F _wm wm
+    '';
+
     services.sxhkd = {
       enable = true;
       extraOptions = [ "-m 1" ];

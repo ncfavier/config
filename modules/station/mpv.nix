@@ -11,6 +11,7 @@
       config = {
         autofit = "80%x80%";
         sub-auto = "fuzzy";
+        sub-border-size = 1;
       };
 
       profiles = {

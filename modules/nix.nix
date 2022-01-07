@@ -63,15 +63,6 @@
             substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
           '';
         });
-
-        nix-top = prev.nix-top.overrideAttrs (o: {
-          src = pkgs.fetchFromGitHub {
-            owner = "ncfavier";
-            repo = "nix-top";
-            rev = "improve-event-handling";
-            sha256 = "EuklXXJVUg1qiGFEpal1ZupmxIovCNRdAgm2r9T3akM=";
-          };
-        });
       })
     ];
 

@@ -57,7 +57,7 @@ go() {
         editor)
             focus_title='- VIM$' terminal vim &;;
         web|browser)
-            class=firefox focus-window || exec firefox &;;
+            class='firefox|chromium-browser' focus-window || exec firefox &;;
         mail)
             class=thunderbird focus-window || exec thunderbird &;;
         files)
