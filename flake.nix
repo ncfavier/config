@@ -66,7 +66,7 @@
 
         # horrible hack, see https://github.com/NixOS/nix/issues/5633
         involution = name: file: pkgs.runCommand name {} ''
-          tr a-z0-9 n-za-m5-90-4 < ${lib.escapeShellArg file} > "$out"
+          tr a-z0-9 n-za-m5-90-4 < ${escapeShellArg file} > "$out"
         '';
         nukeReferences = name: file: involution name (involution "${name}-rot" file);
       in
