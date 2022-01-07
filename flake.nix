@@ -35,33 +35,33 @@
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
+    lib = nixpkgs.lib.extend (import ./lib);
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    lib = nixpkgs.lib.extend (import ./lib);
   in with lib; {
     inherit lib;
 
     nixosConfigurations = mapAttrs (hostname: localModule: nixosSystem {
-      inherit system lib;
+      inherit system lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
+      modules = attrValues (modulesIn ./modules) ++ [ localModule ];
       specialArgs = {
         inherit inputs;
         pkgsFlake = pkgs;
         hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
         here = my.machines.${hostname};
       };
-      modules = attrValues (modulesIn ./modules) ++ [ localModule ];
     }) (modulesIn ./machines);
 
     packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
       iso = let
-        iso = (nixosSystem {
-          inherit system lib;
+        inherit (nixosSystem {
+          inherit system lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
+          modules = [ ./iso.nix ];
           specialArgs = {
             inherit inputs;
             here = null;
           };
-          modules = [ ./iso.nix ];
-        }).config;
+        }) config;
 
         # horrible hack, see https://github.com/NixOS/nix/issues/5633
         involution = name: file: pkgs.runCommand name {} ''
@@ -69,7 +69,7 @@
         '';
         nukeReferences = name: file: involution name (involution "${name}-rot" file);
       in
-        nukeReferences "nixos.iso" "${iso.system.build.isoImage}/iso/${iso.isoImage.isoName}";
+        nukeReferences "nixos.iso" "${config.system.build.isoImage}/iso/${config.isoImage.isoName}";
     };
   };
 }
