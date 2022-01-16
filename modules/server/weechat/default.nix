@@ -31,14 +31,13 @@ in {
     inherit (config.my) group;
   };
 
-  systemd.services."tmux-weechat-${my.username}" = {
+  systemd.services."tmux-weechat-${my.username}" = rec {
     description = "WeeChat in a tmux session";
     wants = [ "user@${toString config.my.uid}.service" "network-online.target" ];
-    after = [ "user@${toString config.my.uid}.service" "network-online.target" "nss-lookup.target" ];
+    after = wants ++ [ "nss-lookup.target" ];
     wantedBy = [ "default.target" ];
     serviceConfig = {
       User = my.username;
-      Group = config.my.group;
       Type = "forking";
       ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
       ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
