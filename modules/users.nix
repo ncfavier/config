@@ -15,6 +15,7 @@
     users = {
       users = {
         ${my.username} = {
+          uid = 1000;
           isNormalUser = true;
           description = my.realName;
           extraGroups = [ "wheel" ];

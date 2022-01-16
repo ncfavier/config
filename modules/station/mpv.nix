@@ -2,7 +2,7 @@
   hm = {
     programs.mpv = {
       enable = true;
-      package = pkgs.mpv-with-scripts.override {
+      package = pkgs.mpv.override {
         scripts = with pkgs.mpvScripts; [
           autoload
         ];

@@ -65,14 +65,6 @@
 
   services.xserver.dpi = 120;
 
-  services.xserver.libinput = {
-    enable = true;
-    touchpad = {
-      accelSpeed = "0.6";
-      tapping = false;
-    };
-  };
-
   keys.composeKey = "prsc";
   keys.printScreenKey = "XF86Favorites";
 

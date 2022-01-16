@@ -15,8 +15,8 @@
 
       fonts = {
         fonts = with pkgs; [
-          source-serif-pro
-          source-sans-pro
+          source-serif
+          source-sans
           source-code-pro
           source-han-serif
           source-han-sans
@@ -47,9 +47,9 @@
                 <family>bitmap</family>
                 <prefer>
                   <family>Dina</family>
-                  <family>tewi</family>
                   <family>Biwidth</family>
                   <family>Twitter Color Emoji</family>
+                  <family>tewi</family>
                   <family>Symbola</family>
                 </prefer>
               </alias>
@@ -86,7 +86,7 @@
       environment.systemPackages = with pkgs; [
         gucharmap
         (writeShellScriptBin "show-siji" ''
-          exec ${xlibs.xfd}/bin/xfd -rows 23 -columns 28 -fn '-*-siji-*-10-*'
+          exec ${xorg.xfd}/bin/xfd -rows 23 -columns 28 -fn '-*-siji-*-10-*'
         '')
       ];
     })

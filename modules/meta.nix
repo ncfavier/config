@@ -36,53 +36,45 @@
       cmd=$1
       shift
       case $cmd in
-          repl)
-              exec nix repl ~/.nix-defexpr "$@"
-              ;;
-          compare)
-              input=$1
-              . <(nix flake metadata config --json | jq -r --arg input "$input" '
-                def browse($url): @sh "xdg-open \($url)";
-                .locks.nodes[$input] |
-                if .locked.type == "github" then
-                  browse("https://github.com/\(.locked.owner)/\(.locked.repo)/compare/\(.locked.rev)...\(.original.ref // "master")")
-                elif .locked.type == "gitlab" then
-                  browse("https://gitlab.com/\(.locked.owner)/\(.locked.repo)/-/compare/\(.locked.rev)...\(.original.ref // "master")")
-                else
-                  "echo unsupported input type"
-                end
-              ')
-              ;;
-          update)
-              exec nix flake update "$configPath" "$@"
-              ;;
-          specialise)
-              name=$1
-              shift
-              exec sudo /run/current-system/specialisation/"$name"/bin/switch-to-configuration switch "$@"
-              ;;
-          revert)
-              exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@"
-              ;;
-          home)
-              attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
-              export VERBOSE=1
-              exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation
-              ;;
-          eval)
-              nix eval --json -f ~/.nix-defexpr "$@" | jq -r .
-              ;;
-          env) # meant to be sourced
-              ${toBash config.lib.shellEnv}
-              ;;
-          @*)
-              host=''${cmd#@}
-              hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
-              exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@"
-              ;;
-          *)
-              exec sudo nixos-rebuild -v --flake "$configPath" "$cmd" "$@"
-              ;;
+      repl)
+        exec nix repl ~/.nix-defexpr "$@";;
+      compare)
+        input=$1
+        . <(nix flake metadata config --json | jq -r --arg input "$input" '
+          def browse($url): @sh "xdg-open \($url)";
+          .locks.nodes[$input] |
+          if .locked.type == "github" then
+            browse("https://github.com/\(.locked.owner)/\(.locked.repo)/compare/\(.locked.rev)...\(.original.ref // "master")")
+          elif .locked.type == "gitlab" then
+            browse("https://gitlab.com/\(.locked.owner)/\(.locked.repo)/-/compare/\(.locked.rev)...\(.original.ref // "master")")
+          else
+            "echo unsupported input type"
+          end
+        ')
+        ;;
+      update)
+        exec nix flake update "$configPath" "$@";;
+      specialise)
+        name=$1
+        shift
+        exec sudo /run/current-system/specialisation/"$name"/bin/switch-to-configuration switch "$@";;
+      revert)
+        exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch "$@";;
+      home)
+        attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
+        export VERBOSE=1
+        exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation;;
+      eval)
+        nix eval --json -f ~/.nix-defexpr "$@" | jq -r .;;
+      env) # meant to be sourced
+        ${toBash config.lib.shellEnv}
+        ;;
+      @*)
+        host=''${cmd#@}
+        hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
+        exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@";;
+      *)
+        exec sudo nixos-rebuild -v --flake "$configPath" "$cmd" "$@";;
       esac
     '';
   }) ];

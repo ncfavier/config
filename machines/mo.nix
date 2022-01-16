@@ -69,14 +69,6 @@
   services.xserver.videoDrivers = [ "intel" ];
   services.xserver.useGlamor = true;
 
-  services.xserver.libinput = {
-    enable = true;
-    touchpad = {
-      accelSpeed = "0.6";
-      tapping = false;
-    };
-  };
-
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----
     MIIBmjCCASCgAwIBAgIIU2Crk9b6ZekwCgYIKoZIzj0EAwMwFDESMBAGA1UEAxMJ

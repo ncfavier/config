@@ -18,6 +18,14 @@
       tty = 1;
       autoRepeatDelay = 250;
       xkbOptions = "compose:${config.keys.composeKey},caps:escape_shifted_capslock";
+      libinput = {
+        enable = true;
+        mouse.accelSpeed = "0.5";
+        touchpad = {
+          accelSpeed = "0.5";
+          tapping = false;
+        };
+      };
     };
 
     nixpkgs.overlays = [ (pkgs: prev: {
@@ -70,7 +78,7 @@
         "${pkgs.xorg.xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'";
 
       home.packages = with pkgs; [
-        xlibs.xev
+        xorg.xev
         arandr
         hsetroot
         xdotool

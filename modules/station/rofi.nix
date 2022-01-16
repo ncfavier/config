@@ -14,7 +14,7 @@
       font = pangoFont;
 
       theme = with config.hm.lib.formats.rasi; {
-        " @import" = "default"; # space to make sure it's the first line...
+        "@import" = "default";
         "*" = {
           background = mkLiteral background;
           lightbg = mkLiteral background;

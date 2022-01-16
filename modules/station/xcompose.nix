@@ -107,6 +107,7 @@
       <Multi_key> <B> <Z> : "ℤ"
       <Multi_key> <B> <1> : "𝟙"
       <Multi_key> <B> <0> : "𝟘"
+      <Multi_key> <y> <o> : "よ"
 
       # Misc
       <Multi_key> <space> <space> : "␣"

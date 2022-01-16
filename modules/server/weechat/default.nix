@@ -33,8 +33,8 @@ in {
 
   systemd.services."tmux-weechat-${my.username}" = {
     description = "WeeChat in a tmux session";
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" "nss-lookup.target" ];
+    wants = [ "user@${config.my.uid}.service" "network-online.target" ];
+    after = [ "user@${config.my.uid}.service" "network-online.target" "nss-lookup.target" ];
     wantedBy = [ "default.target" ];
     serviceConfig = {
       User = my.username;

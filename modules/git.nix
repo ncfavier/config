@@ -16,10 +16,10 @@
       aliases = {
         i = "init";
         s = "status";
-        d = "diff";
-        dh = "diff HEAD";
-        dc = "diff --cached";
-        do = "diff origin";
+        d = "diff --no-prefix";
+        dh = "d HEAD";
+        dc = "d --cached";
+        do = "d origin";
         b = "branch";
         a = "add";
         aa = "add -A";

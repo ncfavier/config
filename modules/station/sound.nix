@@ -9,7 +9,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    alsaUtils
+    alsa-utils
     pulseaudio
     pavucontrol
     easyeffects
