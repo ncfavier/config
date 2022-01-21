@@ -2,15 +2,15 @@
   documentation = {
     dev.enable = true;
     man.generateCaches = true;
-    man.man-db.manualPages = (pkgs.buildEnv {
-      name = "man-paths";
-      paths = config.environment.systemPackages ++ config.hm.home.packages;
-      pathsToLink = [ "/share/man" ];
-      extraOutputsToInstall = ["man"];
-      ignoreCollisions = true;
-    }).overrideAttrs (o: {
-      __contentAddressed = true; # avoids rebuilding the cache every time nixos-version changes
-    });
+    # man.man-db.manualPages = (pkgs.buildEnv {
+    #   name = "man-paths";
+    #   paths = config.environment.systemPackages ++ config.hm.home.packages;
+    #   pathsToLink = [ "/share/man" ];
+    #   extraOutputsToInstall = ["man"];
+    #   ignoreCollisions = true;
+    # }).overrideAttrs (o: {
+    #   __contentAddressed = true; # avoids rebuilding the cache every time nixos-version changes
+    # });
   };
 
   environment.localBinInPath = true;
@@ -45,6 +45,7 @@
     imagemagick
     ffmpeg-full
     (yt-dlp.override { withAlias = true; })
+    htmlq
     python3
     neofetch
     lesspass-cli
