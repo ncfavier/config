@@ -16,6 +16,7 @@
       <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
 
       # Math
+      <Multi_key> <o> <o> : "∘"
       <Multi_key> <asciitilde> <equal> : "≃"
       <Multi_key> <asciitilde> <asciitilde> : "≈"
       <Multi_key> <question> <equal> : "≟"

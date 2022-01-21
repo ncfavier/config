@@ -64,6 +64,9 @@
         attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
         export VERBOSE=1
         exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation;;
+      build)
+        (( $# )) || set -- toplevel
+        nix build --json -f ~/.nix-defexpr "$@" | jq -r .;;
       eval)
         nix eval --json -f ~/.nix-defexpr "$@" | jq -r .;;
       env) # meant to be sourced

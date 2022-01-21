@@ -33,6 +33,7 @@ in {
 
   systemd.services."tmux-weechat-${my.username}" = rec {
     description = "WeeChat in a tmux session";
+    # create a user manager so that SSH_AUTH_SOCK gets set correctly
     wants = [ "user@${toString config.my.uid}.service" "network-online.target" ];
     after = wants ++ [ "nss-lookup.target" ];
     wantedBy = [ "default.target" ];

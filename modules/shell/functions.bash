@@ -274,7 +274,7 @@ mk() ( # runs make using the closest makefile in the hierarchy
 )
 
 nix-build-delete() { # useful for running NixOS tests
-    nix-store --delete "$(nix-build --no-out-link "$@")"
+    sudo nix-store --delete --ignore-liveness "$(nix-build --no-out-link "$@")"
 }
 complete_alias nix-build-delete _nix_completion nix-build
 

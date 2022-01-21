@@ -47,9 +47,9 @@
                 <family>bitmap</family>
                 <prefer>
                   <family>Dina</family>
-                  <family>Biwidth</family>
                   <family>Twitter Color Emoji</family>
                   <family>tewi</family>
+                  <family>Biwidth</family>
                   <family>Symbola</family>
                 </prefer>
               </alias>
@@ -65,6 +65,17 @@
                   <family>sans-serif</family>
                 </prefer>
               </alias>
+              <match target="font">
+                <test name="family"><string>Twitter Color Emoji</string></test>
+                <edit name="charset" mode="assign">
+                  <minus>
+                    <name>charset</name>
+                    <charset>
+                      <int>0x2122</int>
+                    </charset>
+                  </minus>
+                </edit>
+              </match>
               <selectfont>
                 <rejectfont>
                   <pattern>

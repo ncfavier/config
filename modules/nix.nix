@@ -105,6 +105,7 @@
         inherit (lib) my;
         here = my.machines.${strings.escapeNixIdentifier here.hostname};
         inherit (local) config;
+        inherit (local.config.system.build) toplevel vm vmWithBootLoader manual;
       } // machines // local._module.args
     '';
   };
