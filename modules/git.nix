@@ -28,6 +28,7 @@
         c = ''!git commit --allow-empty-message -m "$*" #'';
         ca = "commit --amend";
         ce = "commit --edit";
+        fixup = "commit --fixup";
         cf = ''!git commit -m "$(git-random-commit-message)"'';
         caf = ''!git commit --amend -m "$(git-random-commit-message)"'';
         co = "checkout";

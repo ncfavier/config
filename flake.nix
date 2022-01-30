@@ -13,10 +13,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager-bash = {
-      url = "github:ncfavier/home-manager/bash-init";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nur.url = "nur";
     nix-dns = {
       url = "github:kirelagin/nix-dns/v1.1.2";
@@ -35,14 +31,14 @@
   };
 
   outputs = inputs@{ self, nixpkgs, ... }: let
+    lib = nixpkgs.lib.extend (import ./lib);
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-  in with self.lib; {
-    lib = nixpkgs.lib.extend (import ./lib);
+  in with lib; {
+    inherit lib;
 
     nixosConfigurations = mapAttrs (hostname: localModule: nixosSystem {
-      inherit (self) lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
-      inherit system;
+      inherit lib system;
       modules = attrValues (modulesIn ./modules) ++ [ localModule ];
       specialArgs = {
         inherit inputs;
@@ -55,8 +51,7 @@
     packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
       iso = let
         inherit (nixosSystem {
-          inherit (self) lib; # TODO https://github.com/NixOS/nixpkgs/pull/126769
-          inherit system;
+          inherit lib system;
           modules = [ ./iso.nix ];
           specialArgs = {
             inherit inputs;

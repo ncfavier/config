@@ -63,7 +63,7 @@
   keys.composeKey = "prsc";
   keys.printScreenKey = "XF86Favorites";
 
-  services.fprintd.enable = true;
+  # services.fprintd.enable = true;
 
   my.hashedPassword = "$6$R44ADtNdZEuHgWMz$STSpgn6SA/hTSdy/zOhnezmOIht5c99OXIzezemIrzxxWDGyv.CznmfW/RHNOwOY4Wbj/ue5NANralDWmlvw40";
 

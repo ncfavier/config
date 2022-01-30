@@ -1,4 +1,3 @@
-# TODO yt-dlp -j for music.youtube.com
 shopt -s nullglob lastpipe
 
 die() {
@@ -79,6 +78,10 @@ if [[ ${srcs[0]} == http?(s)://*bandcamp.com/* ]]; then
     bandcamp_json=$(curl -fsSL "${srcs[0]}" | htmlq -t 'script[type="application/ld+json"]')
     jq -r '.byArtist.name, .name, (.image | if type == "array" then .[0] else . end)' <<< "$bandcamp_json" |
     { read -r artist; read -r album; read -r cover_src; }
+elif [[ ${srcs[0]} == http?(s)://music.youtube.com/* ]]; then
+    ytmusic_json=$(yt-dlp -J "${srcs[0]}")
+    jq -r '.entries[0] | .artist, .album, limit(1; .thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))' <<< "$ytmusic_json" |
+    { read -r artist; read -r album; read -r cover_src; }
 fi
 
 read -ep "Artist? " ${artist:+-i "$artist"} artist
@@ -129,6 +132,9 @@ for file in "${files[@]}"; do
     echo "File: $basename ($(( ++i ))/${#files[@]})"
     if [[ $bandcamp_json ]]; then
         jq -r --argjson i "$i" '(if has("track") then .track.itemListElement[] | select(.position == $i).item else . end).name' <<< "$bandcamp_json" |
+        read -r title
+    elif [[ $ytmusic_json ]]; then
+        jq -r --argjson i "$i" '.entries[] | select(.playlist_index == $i).title' <<< "$ytmusic_json" |
         read -r title
     else
         title=${basename#*' - '}

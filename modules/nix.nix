@@ -28,6 +28,7 @@
     };
 
     nix = {
+      package = pkgs.nix_2_6; # TODO
       trustedUsers = [ "root" "@wheel" ];
 
       registry = {
@@ -46,6 +47,7 @@
       optimise.automatic = true;
       gcRoots = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
 
+      # TODO nix.settings
       extraOptions = ''
         experimental-features = nix-command flakes ca-derivations
         warn-dirty = false
@@ -80,7 +82,6 @@
       rnix-lsp
     ];
 
-    # TODO nix-index service
     # systemd.services.nix-index = {
     #   description = "Regenerate nix-index database";
     #   serviceConfig.User = my.username;

@@ -20,5 +20,5 @@
     manual.html.enable = true;
   };
 
-  nix.gcRoots = [ inputs.home-manager inputs.home-manager-bash ];
+  nix.gcRoots = [ inputs.home-manager ];
 }

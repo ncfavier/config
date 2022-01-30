@@ -52,25 +52,4 @@
       ];
     };
   };
-
-  nixpkgs.overlays = [ (pkgs: prev: {
-    alacritty = prev.alacritty.override {
-      rustPlatform = prev.rustPlatform // {
-        buildRustPackage = o:
-          prev.rustPlatform.buildRustPackage (removeAttrs o [ "cargoSha256" ] // {
-            cargoHash = "sha256-LtPn99KJ45sTsGBcTKCOsyAfEdwrtmWUAi9eP+jQgCs=";
-            version = "0.9.0";
-            src = pkgs.fetchFromGitHub {
-              owner = "alacritty";
-              repo = "alacritty";
-              rev = "8cda3d140574cbd8bd0fd8e89667ef67a4a1f900";
-              sha256 = "LzNDbZlAIYB33bT7ZhKyb9dtPDV9ep10D9ZnO+az8do=";
-            };
-            patches = [];
-            doCheck = false;
-          });
-      };
-    };
-  }) ];
-  cachix.derivationsToPush = [ pkgs.alacritty ];
 }

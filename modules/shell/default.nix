@@ -1,4 +1,4 @@
-{ inputs, lib, here, config, pkgs, ... }: with lib; {
+{ lib, here, config, pkgs, ... }: with lib; {
   environment.systemPackages = with pkgs; [
     jq
     alacritty.terminfo
@@ -61,66 +61,61 @@
   };
 
   hm = {
-    disabledModules = [ "programs/bash.nix" ];
-    imports = [ "${inputs.home-manager-bash}/modules/programs/bash.nix" ]; # TODO remove
+    programs = {
+      bash = {
+        enable = true;
+        historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
+        historyIgnore = [ "ls" "l" "ll" "la" ];
+        shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
+        initExtra = mkMerge [
+          (mkBefore (readFile ./functions.bash))
+          ''
+            stty -ixon
+            set -b +H
 
-    config = {
-      programs = {
-        bash = {
-          enable = true;
-          historyControl = [ "erasedups" "ignoredups" "ignorespace" ];
-          historyIgnore = [ "ls" "l" "ll" "la" ];
-          shellOptions = [ "autocd" "extglob" "globstar" "histappend" ];
-          initExtra = mkMerge [
-            (mkBefore (readFile ./functions.bash))
-            ''
-              stty -ixon
-              set -b +H
+            complete -F _command C cxa cxan
+            complete -v dp
+            complete_alias drv _complete_nix nix show-derivation
+            complete_alias nwd _complete_nix nix why-depends
+            complete_alias s _systemctl systemctl
+            complete_alias u _systemctl systemctl --user
+            complete_alias j _journalctl journalctl
+          ''
+          (mkAfter ''
+            [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
+          '')
+        ];
+      };
 
-              complete -F _command C cxa cxan
-              complete -v dp
-              complete_alias drv _complete_nix nix show-derivation
-              complete -f nwd # TODO
-              complete_alias s _systemctl systemctl
-              complete_alias u _systemctl systemctl --user
-              complete_alias j _journalctl journalctl
-            ''
-            (mkAfter ''
-              [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
-            '')
-          ];
+      readline = {
+        enable = true;
+        variables = {
+          colored-completion-prefix = true;
+          completion-display-width = 0;
+          mark-symlinked-directories = true;
+          show-all-if-ambiguous = true;
+          page-completions = false;
         };
-
-        readline = {
-          enable = true;
-          variables = {
-            colored-completion-prefix = true;
-            completion-display-width = 0;
-            mark-symlinked-directories = true;
-            show-all-if-ambiguous = true;
-            page-completions = false;
-          };
-          bindings = {
-            "\\ef"  = "shell-forward-word";
-            "\\eb"  = "shell-backward-word";
-            "\\e[A" = "history-search-backward";
-            "\\e[B" = "history-search-forward";
-            "\\er"  = ''"\C-asudo \C-e"'';
-            "\\ec"  = ''"\C-a\ed"'';
-            "\\ev"  = ''"\C-a\edvim"'';
-            "\\el"  = ''"\C-e | less"'';
-          };
+        bindings = {
+          "\\ef"  = "shell-forward-word";
+          "\\eb"  = "shell-backward-word";
+          "\\e[A" = "history-search-backward";
+          "\\e[B" = "history-search-forward";
+          "\\er"  = ''"\C-asudo \C-e"'';
+          "\\ec"  = ''"\C-a\ed"'';
+          "\\ev"  = ''"\C-a\edvim"'';
+          "\\el"  = ''"\C-e | less"'';
         };
+      };
 
-        dircolors = {
-          enable = true;
-          settings = {
-            TERM = "*";
-            DIR = "1";
-            LINK = "target";
-            ORPHAN = "3;31";
-            EXEC = "1;35";
-          };
+      dircolors = {
+        enable = true;
+        settings = {
+          TERM = "*";
+          DIR = "1";
+          LINK = "target";
+          ORPHAN = "3;31";
+          EXEC = "1;35";
         };
       };
     };

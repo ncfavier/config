@@ -446,14 +446,11 @@ done |
 # Bar
 #
 
-{
-    lemonbar -g x"${theme[barHeight]}" \
-            -a 255 \
-            -B "${theme[background]}" \
-            -F "${theme[foreground]}" \
-            "${font_args[@]}"
-    echo "lemonbar exited with status $?" >&2
-} |
+lemonbar -g x"${theme[barHeight]}" \
+         -a 255 \
+         -B "${theme[background]}" \
+         -F "${theme[foreground]}" \
+         "${font_args[@]}" |
 
 #
 # Eval

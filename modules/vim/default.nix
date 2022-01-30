@@ -30,6 +30,7 @@
           args = [ "--lsp" ];
           rootPatterns = [ "*.cabal" "stack.yaml" "cabal.project" "package.yaml" "hie.yaml" ];
           filetypes = [ "haskell" "lhaskell" ];
+          initializationOptions.languageServerHaskell.hlintOn = false;
         };
         nix = {
           command = "rnix-lsp";

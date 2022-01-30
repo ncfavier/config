@@ -1,7 +1,6 @@
 { lib, modulesPath, ... }: with lib; {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
-    # TODO: use enable options
     modules/networking.nix
     modules/home-manager.nix
     modules/users.nix
@@ -40,7 +39,7 @@
     services.udisks2.enable = false;
     xdg.sounds.enable = false;
     nixpkgs.overlays = [ (pkgs: prev: {
-      firmwareLinuxNonfree = prev.firmwareLinuxNonfree.overrideAttrs (o: { # TODO linux-firmware
+      linux-firmware = prev.linux-firmware.overrideAttrs (o: {
         postInstall = ''
           rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl}
         '';
