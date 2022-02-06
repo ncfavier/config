@@ -1,18 +1,11 @@
 { pkgs, ... }: {
-  services.pipewire = {
+  hardware.pulseaudio = {
     enable = true;
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-    pulse.enable = true;
+    support32Bit = true;
   };
 
   environment.systemPackages = with pkgs; [
-    alsa-utils
-    pulseaudio
     pavucontrol
-    easyeffects
     (writeShellScriptBin "volume" ''
       if (( ! $# )); then
         data=$(LC_ALL=C pactl list sinks)

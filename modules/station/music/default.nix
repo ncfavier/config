@@ -5,8 +5,8 @@
       musicDirectory = config.synced.music.path;
       extraConfig = ''
         audio_output {
-          type "pipewire"
-          name "PipeWire"
+          type "pulse"
+          name "PulseAudio"
         }
       '';
     };
