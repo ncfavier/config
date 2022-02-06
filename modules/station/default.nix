@@ -24,7 +24,7 @@
       libreoffice
       texlive.combined.scheme-full
       pandoc
-      coq
+      coq_8_14
       audacity
       gimp
       transmission-gtk

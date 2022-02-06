@@ -28,20 +28,6 @@
       };
     };
 
-    nixpkgs.overlays = [ (pkgs: prev: {
-      picom-flicker-workaround = pkgs.stdenv.mkDerivation {
-        name = "picom-flicker-workaround";
-        src = pkgs.fetchFromGitHub {
-          owner = "mphe";
-          repo = "picom-flicker-workaround";
-          rev = "fb484bdfac73444daea93e711d5c929f3767c0de";
-          sha256 = "aeiN7C8XtbF+Hbt0VeVIgTskv2fCIsij173q28uPEpE=";
-        };
-        nativeBuildInputs = with pkgs.xorg; [ libX11 libXScrnSaver ];
-        makeFlags = [ "PREFIX=$(out)" ];
-      };
-    }) ];
-
     hm = {
       xsession = {
         enable = true;
@@ -52,7 +38,6 @@
         initExtra = ''
           [[ -f ~/.fehbg ]] && ~/.fehbg &
           ${pkgs.xorg.xset}/bin/xset -b
-          ${pkgs.picom-flicker-workaround}/bin/xssstart pkill -usr1 picom &
         '';
 
         pointerCursor = {
@@ -115,6 +100,11 @@
         fade = true;
         fadeSteps = [ "1" "1" ];
         fadeDelta = 30;
+
+        # workaround for https://github.com/yshui/picom/issues/578
+        extraOptions = ''
+          use-damage = false;
+        '';
       };
     };
   };

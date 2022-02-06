@@ -40,6 +40,7 @@ in {
           "layers.acceleration.force-enabled" = true;
           "network.trr.mode" = "5";
           "places.history.expiration.max_pages" = "9999999";
+          "privacy.donottrackheader.enabled" = true;
           "security.dialog_enable_delay" = "0";
           "security.fileuri.strict_origin_policy" = false;
           "security.mixed_content.block_active_content" = false;
