@@ -26,10 +26,10 @@
       autologinUser = mkForce my.username;
     };
 
-    nix.extraOptions = ''
-      experimental-features = nix-command flakes ca-derivations
-      warn-dirty = false
-    '';
+    nix.settings = {
+      experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+      warn-dirty = false;
+    };
 
     networking.useDHCP = true;
 

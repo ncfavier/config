@@ -68,6 +68,7 @@
             old = "red";
           };
         };
+        format.signOff = true;
         sendemail = {
           smtpServer = my.domain;
           smtpUser = my.email;

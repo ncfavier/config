@@ -23,9 +23,9 @@
     haskellPackages.haskell-language-server
   ];
 
-  # nix = {
-  #   binaryCaches = mkAfter [ "https://hydra.iohk.io" ];
-  #   binaryCachePublicKeys = mkAfter [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+  # nix.settings = {
+  #   substituters = mkAfter [ "https://hydra.iohk.io" ];
+  #   trusted-public-keys = mkAfter [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
   # };
 
   hm.home.file = {

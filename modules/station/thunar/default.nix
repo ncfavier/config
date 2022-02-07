@@ -4,10 +4,6 @@
   programs.dconf.enable = true;
   programs.file-roller.enable = true;
 
-  # TODO https://github.com/NixOS/nixpkgs/pull/126832
-  environment.sessionVariables.GIO_EXTRA_MODULES = "${config.services.gvfs.package}/lib/gio/modules";
-  environment.variables.GIO_EXTRA_MODULES = mkForce config.environment.sessionVariables.GIO_EXTRA_MODULES;
-
   hm = {
     home.packages = with pkgs; let
       thumbnailerScript = name: script: "${writeShellScript "${name}-script" ''

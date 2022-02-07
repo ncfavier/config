@@ -28,8 +28,12 @@
     };
 
     nix = {
-      package = pkgs.nix_2_6; # TODO
-      trustedUsers = [ "root" "@wheel" ];
+      settings = {
+        experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+        warn-dirty = false;
+        keep-outputs = true;
+        trusted-users = [ "root" "@wheel" ];
+      };
 
       registry = {
         config.flake = inputs.self;
@@ -46,14 +50,6 @@
       };
       optimise.automatic = true;
       gcRoots = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
-
-      # TODO nix.settings
-      extraOptions = ''
-        experimental-features = nix-command flakes ca-derivations
-        warn-dirty = false
-        keep-outputs = true
-        keep-derivations = true
-      '';
     };
 
     nixpkgs.overlays = [

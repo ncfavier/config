@@ -10,7 +10,7 @@
         james-yu.latex-workshop
         justusadam.language-haskell
         yzhang.markdown-all-in-one
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ # TODO add those to nixpkgs
         {
           name = "white";
           publisher = "arthurwhite";
