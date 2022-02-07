@@ -57,7 +57,7 @@ set title
 set ttimeoutlen=10
 set ttymouse=xterm2
 set whichwrap=b,s,<,>,[,]
-set wildignore+=**/dist-newstyle/**
+set wildignore+=**/result/**,**/result-*/**,**/dist-newstyle/**
 set wildignorecase
 
 set visualbell
@@ -112,8 +112,6 @@ vnoremap          ??               y?\V<C-r>=escape(@",'?\')<Return><Return>
 noremap  <silent> <C-l>            :set number!<Return>
 noremap  <silent> <C-c>            :call nerdcommenter#Comment(0, 'toggle')<Return>
 noremap  <silent> <C-n>            :NERDTreeToggle<Return>
-noremap           <C-p>            :find<Space>
-cnoremap          <C-p>            <C-u>vert sfind<Space>
 noremap           <C-Left>         <C-w>h
 noremap           <C-Right>        <C-w>l
 noremap           <C-Down>         <C-w>j
