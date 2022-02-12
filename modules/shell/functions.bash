@@ -273,6 +273,12 @@ mk() ( # runs make using the closest makefile in the hierarchy
     make -f "${files[0]}" "$@"
 )
 
+nix-shell() { # sync the history before and after running nix-shell
+    history -a
+    command nix-shell "$@"
+    history -n
+}
+
 nix-build-delete() { # useful for running NixOS tests
     sudo nix-store --delete --ignore-liveness "$(nix-build --no-out-link "$@")"
 }

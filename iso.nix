@@ -21,18 +21,19 @@
   };
 
   config = {
-    services.getty = {
-      helpLine = mkForce "";
-      autologinUser = mkForce my.username;
-    };
-
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
       warn-dirty = false;
     };
 
+    services.getty = {
+      helpLine = mkForce "";
+      autologinUser = mkForce my.username;
+    };
+
     networking.useDHCP = true;
 
+    # reduce size
     i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];
     documentation.doc.enable = false;
     security.polkit.enable = false;

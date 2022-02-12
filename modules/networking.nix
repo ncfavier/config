@@ -89,6 +89,7 @@
         networks = {
           tsu.psk = "@TSU_PSK@";
         };
+        fallbackToWPA2 = false;
       };
 
       environment.systemPackages = with pkgs; [ wpa_supplicant_gui ];

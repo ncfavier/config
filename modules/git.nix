@@ -35,6 +35,7 @@
         r = "reset";
         p = "push";
         pa = "push --all";
+        pf = "push --force-with-lease";
         pl = "pull --rebase --autostash";
         cl = "clone";
         cl1 = "clone --depth=1";

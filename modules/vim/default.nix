@@ -43,7 +43,7 @@
 
   nixpkgs.overlays = [ (pkgs: prev: {
     vimPlugins = prev.vimPlugins // {
-      ctrlp = prev.vimPlugins.ctrlp.overrideAttrs (o: {
+      ctrlp = prev.vimPlugins.ctrlp.overrideAttrs (o: { # TODO
         patches = o.patches or [] ++ [
           (pkgs.fetchpatch {
             url = "https://github.com/ctrlpvim/ctrlp.vim/pull/571.patch";
