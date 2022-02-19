@@ -2,7 +2,7 @@ compreply() {
     local completion
     while IFS= read -r completion; do
         COMPREPLY+=("$completion")
-    done < <(compgen "$@")
+    done < <(compgen "$@" -- "$cur")
 }
 
 complete_alias() { # completion function for aliases
@@ -12,7 +12,7 @@ complete_alias() { # completion function for aliases
     shift 2
     eval "$function_name() {
         COMP_WORDS=( ${*@Q} \"\${COMP_WORDS[@]:1}\" )
-        (( COMP_CWORD += $(( $# - 1 )) ))
+        (( COMP_CWORD += $# - 1 ))
         _completion_loader $1
         $base_function
     }"

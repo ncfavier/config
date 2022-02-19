@@ -77,9 +77,9 @@ in {
         local cur prev words cword
         _init_completion
         if (( cword == 1 )); then
-          compreply -W 'go focus-window focus-workspace move-window-to-workspace lock quit' -- "$cur"
+          compreply -W 'go focus-window focus-workspace move-window-to-workspace lock quit'
         elif [[ ''${words[1]} == go ]]; then
-          compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi' -- "$cur"
+          compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi'
         fi
       }
       complete -F _wm wm
@@ -139,7 +139,7 @@ in {
         "super + grave" =
           "dunstctl history-pop";
         "super + alt + {space,Left,Right,Down,Up,r,z,y,c,b,f,u}" =
-          "mpc -q {toggle,prev,next,volume -2,volume +2,repeat,random,single,clear,seek -3,seek +3,update}";
+          "mpc -q {toggle,prev,next,volume -2,volume +2,repeat,random,single,stop,seek -3,seek +3,update}";
         "XF86Audio{Play,Prev,Next,Stop}" =
           "mpc -q {toggle,prev,next,stop}";
         "{_,super + alt} + XF86Audio{Lower,Raise}Volume" =
@@ -182,24 +182,13 @@ in {
 
   nixpkgs.overlays = [
     (pkgs: prev: {
-      bspwm = prev.bspwm.overrideAttrs (o: {
-        patches = o.patches or [] ++ [ (builtins.toFile "bspwm-patch" ''
-          https://github.com/baskerville/bspwm/issues/935#issuecomment-901511011
-          --- a/src/bspwm.c
-          +++ b/src/bspwm.c
-          @@ -36,4 +36,5 @@
-           #include <string.h>
-           #include <xcb/xinerama.h>
-          +#include <xcb/xcb_aux.h>
-           #include "types.h"
-           #include "desktop.h"
-          @@ -246,4 +247,5 @@ int main(int argc, char *argv[])
-
-           			if (FD_ISSET(dpy_fd, &descriptors)) {
-          +				xcb_aux_sync(dpy);
-           				while ((event = xcb_poll_for_event(dpy)) != NULL) {
-           					handle_event(event);
-        '') ];
+      bspwm = assert prev.bspwm.version == "0.9.10"; prev.bspwm.overrideAttrs (o: {
+        src = pkgs.fetchFromGitHub {
+          owner = "baskerville";
+          repo = "bspwm";
+          rev = "1560df35be303807052c235634eb8d59415c37ff";
+          sha256 = "Ga3vLenEWM2pioRc/U4i4LW5wj97ekvKdJnyAOCjiHI=";
+        };
       });
 
       lemonbar-xft = prev.lemonbar-xft.overrideAttrs (o: {

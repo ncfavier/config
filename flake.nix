@@ -34,30 +34,24 @@
     lib = nixpkgs.lib.extend (import ./lib);
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    mkSystem = here: modules: lib.nixosSystem {
+      inherit lib system modules;
+      specialArgs = {
+        inherit inputs here;
+        hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
+        pkgsBase = pkgs; # for use in imports without infinite recursion
+      };
+    };
   in with lib; {
     inherit lib;
 
-    nixosConfigurations = mapAttrs (hostname: localModule: nixosSystem {
-      inherit lib system;
-      modules = attrValues (modulesIn ./modules) ++ [ localModule ];
-      specialArgs = {
-        inherit inputs;
-        pkgsFlake = pkgs;
-        hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
-        here = my.machines.${hostname};
-      };
-    }) (modulesIn ./machines);
+    nixosConfigurations = mapAttrs (hostname: localConfig:
+      mkSystem my.machines.${hostname} (attrValues (modulesIn ./modules) ++ [ localConfig ])
+    ) (modulesIn ./machines);
 
     packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
       iso = let
-        inherit (nixosSystem {
-          inherit lib system;
-          modules = [ ./iso.nix ];
-          specialArgs = {
-            inherit inputs;
-            here = null;
-          };
-        }) config;
+        inherit (mkSystem null [ ./iso.nix ]) config;
 
         # horrible hack, see https://github.com/NixOS/nix/issues/5633
         involution = name: file: pkgs.runCommand name {} ''

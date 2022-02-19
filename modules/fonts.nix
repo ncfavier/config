@@ -8,6 +8,22 @@
         sed 's/POINT_SIZE/AVERAGE_WIDTH/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-8.bdf |
         ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 512 "$out"
       '';
+
+      # TODO remove
+      nixpkgs.overlays = [ (self: super: {
+        python39 = super.python39.override {
+          packageOverrides = python-self: python-super: {
+            remarshal = python-super.remarshal.overrideAttrs (oldAttrs: {
+                postPatch = ''
+                  substituteInPlace pyproject.toml \
+                    --replace "poetry.masonry.api" "poetry.core.masonry.api" \
+                    --replace 'PyYAML = "^5.3"' 'PyYAML = "*"' \
+                    --replace 'tomlkit = "^0.7"' 'tomlkit = "*"'
+                '';
+            });
+          };
+        };
+      }) ];
     }
 
     (mkIf here.isStation {

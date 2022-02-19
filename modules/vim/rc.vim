@@ -57,7 +57,7 @@ set title
 set ttimeoutlen=10
 set ttymouse=xterm2
 set whichwrap=b,s,<,>,[,]
-set wildignore+=**/result/**,**/result-*/**,**/dist-newstyle/**
+set wildignore+=*.o,**/result/**,**/result-*/**,**/dist-newstyle/**
 set wildignorecase
 
 set visualbell

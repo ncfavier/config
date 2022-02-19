@@ -10,54 +10,54 @@
         james-yu.latex-workshop
         justusadam.language-haskell
         yzhang.markdown-all-in-one
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ # TODO add those to nixpkgs
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "white";
           publisher = "arthurwhite";
           version = "1.3.6";
-          sha256 = "9Pvzb29d13vgiU8DwasLUiyPVHK97RcnBA3f0q+4y/8=";
-        }
-        {
-          name = "white-winter";
-          publisher = "jker";
-          version = "1.0.1";
-          sha256 = "+IYYyhlgL6ITvh08jgQVrPmGAe0zf0Y7oaM8fLBYGjw=";
+          sha256 = "1zybp2px5pqd0hkigvdxf9a8yb2j1fmw20sgi7h7pmsxdxpz7yzl";
         }
         {
           name = "night-owl-light-bold";
           publisher = "feego";
-          version = "0.0.5";
-          sha256 = "U7wmya8jEwgUcKWyT7t9L1Ca5RlzIAO7hHm9gEF26Vg=";
+          version = "0.0.11";
+          sha256 = "19yrbkp0jpzv0rd0c5bxzkaa2xr76wq70zc9dfl79mb05h1spl69";
         }
         {
-          name = "theme-lavender";
+          name = "Theme-Lavender";
           publisher = "gerane";
           version = "0.0.5";
-          sha256 = "zQFdseqhR11fH6KmejIDJUhjaLH0xHup1FC+OzqqWH0=";
+          sha256 = "0zaqm8x3pgjhsjlppi7ln5l66j150cr7m9m23xgmsix1xaqms0fd";
         }
         {
           name = "theme-github-bold";
           publisher = "gustavo";
           version = "0.0.4";
-          sha256 = "nnDukucH4ynbc6LDBJ8/Ohsye8xt+1OZJhedZcSHlmU=";
+          sha256 = "0rcnhz26b78p4scm7yvdrixk46rs7ygh9hx2fgdjkqq7wy9fww4y";
+        }
+        {
+          name = "white-winter";
+          publisher = "jker";
+          version = "1.0.1";
+          sha256 = "0g0sb2q7qg53l4xlczrkxl0qdydc2l28wg0xpq9s4bv03751i1pq";
         }
         {
           name = "vscode-theme-1984";
           publisher = "juanmnl";
           version = "0.3.4";
-          sha256 = "RZ6SMs5thosLw6XvJwesHxdlcyvWnqCPV7VJc1mBYWM=";
+          sha256 = "0qv1h5cp6jdmay7s17nn5drna5qzmh3jgvx5qc5qp1kdrqr957j5";
+        }
+        {
+          name = "vscoq";
+          publisher = "maximedenes";
+          version = "0.3.6";
+          sha256 = "1sailpizg7zvncggdma9dyxdnga8jya1a2vswwij1rzd9il04j3g";
         }
         {
           name = "vscode-duotone-dark";
           publisher = "sallar";
           version = "0.3.3";
-          sha256 = "OPOgjjkooaDQzYoPOmly6WenvAILWhxBKuqRKmQi+rQ=";
-        }
-        {
-          name = "vscoq";
-          publisher = "maximedenes";
-          version = "0.3.5";
-          sha256 = "mUjKjsBUZpgfMOWCRnEbUQpc7ngs+DwvyLoDkhlphBc=";
+          sha256 = "1d7s49j2m4ga590iqnhb0ayafrz9f9lkl3warp8a1898767a1wrq";
         }
       ];
     };

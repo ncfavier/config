@@ -5,6 +5,12 @@
     boot.kernelParams = [ "mitigations=off" ];
     boot.kernel.sysctl."kernel.sysrq" = 1;
 
+    services.earlyoom = {
+      enable = true;
+      freeMemThreshold = 5;
+      freeSwapThreshold = 5;
+    };
+
     programs.wireshark = {
       enable = true;
       package = pkgs.wireshark;
@@ -22,7 +28,13 @@
       tdesktop
       amfora
       libreoffice
-      texlive.combined.scheme-full
+      (texlive.combine {
+        inherit (texlive)
+          scheme-medium
+          collection-latexextra
+          collection-fontsextra
+          collection-bibtexextra;
+      })
       pandoc
       coq_8_14
       audacity

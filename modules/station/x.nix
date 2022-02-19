@@ -106,6 +106,12 @@
           use-damage = false;
         '';
       };
+
+      services.redshift = {
+        enable = true;
+        latitude = 48.0;
+        longitude = 2.0;
+      };
     };
   };
 }

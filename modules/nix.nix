@@ -37,12 +37,26 @@
 
       registry = {
         config.flake = inputs.self;
+        config-git = {
+          exact = false;
+          to = {
+            type = "git";
+            url = "file:${utils.configPath}";
+          };
+        };
+        config-github = {
+          exact = false;
+          to = {
+            type = "github";
+            owner = my.githubUsername;
+            repo = "config";
+          };
+        };
+
         nixpkgs.flake = inputs.nixpkgs;
       };
 
-      nixPath = [ "nixpkgs=${pkgs.writeText "nixpkgs.nix" ''
-        import (builtins.getFlake "nixpkgs")
-      ''}" ];
+      nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
       gc = {
         automatic = true;
@@ -51,6 +65,8 @@
       optimise.automatic = true;
       gcRoots = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
     };
+
+    environment.etc.nixpkgs.source = inputs.nixpkgs;
 
     nixpkgs.overlays = [
       inputs.nur.overlay
@@ -92,8 +108,8 @@
     environment.etc.gc-roots.text = concatMapStrings (x: x + "\n") config.nix.gcRoots;
 
     hm.home.file.".nix-defexpr/default.nix".text = ''
-      { wip ? false }: let
-        self = builtins.getFlake (if wip then ${strings.escapeNixString utils.configPath} else "config");
+      let
+        self = builtins.getFlake "config";
         machines = self.nixosConfigurations;
         local = machines.${strings.escapeNixIdentifier here.hostname};
       in rec {
@@ -104,6 +120,12 @@
         inherit (local) config;
         inherit (local.config.system.build) toplevel vm vmWithBootLoader manual;
       } // machines // local._module.args
+    '';
+
+    hm.home.activation.updateNixpkgsTag = ''
+      ${optionalString (inputs.nixpkgs ? rev) ''
+      $DRY_RUN_CMD ${pkgs.git}/bin/git -C ${config.my.home}/git/nixpkgs tag -f current ${inputs.nixpkgs.rev} || true
+      ''}
     '';
   };
 }

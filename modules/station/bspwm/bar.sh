@@ -415,7 +415,7 @@ while read -rn 1 event; do
             read -r song
             if [[ $song ]]; then
                 pad_right song
-                song="%{A2:mpc -q clear:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
+                song="%{A2:mpc -q stop:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
             fi
             ;;
         Y) # systemd

@@ -40,17 +40,4 @@
       };
     };
   };
-
-  nixpkgs.overlays = [ (pkgs: prev: {
-    vimPlugins = prev.vimPlugins // {
-      ctrlp = prev.vimPlugins.ctrlp.overrideAttrs (o: { # TODO
-        patches = o.patches or [] ++ [
-          (pkgs.fetchpatch {
-            url = "https://github.com/ctrlpvim/ctrlp.vim/pull/571.patch";
-            sha256 = "sha256-DX6vRL9AQV4IU/irOOCcK59LhLjo/g4K+mGFkmYk9Hc=";
-          })
-        ];
-      });
-    };
-  }) ];
 }
