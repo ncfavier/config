@@ -16,11 +16,14 @@ jobs:
           name: ${{ github.actor }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           extraPullNames: nix-community,mic92
+          skipPush: true
       # TODO disabled for now because of https://github.com/cachix/cachix-action/issues/89
       # - name: Check flake
       #   run: nix -v flake check
       - name: Build ISO
         run: nix -vL build .#iso -o nixos.iso
+      - name: Push ISO to cachix
+        run: cachix push -j8 ${{ github.actor }} nixos.iso
       - name: Create ISO release
         id: release
         uses: ncfavier/action-gh-release@delete-existing
