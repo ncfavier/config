@@ -16,7 +16,7 @@
     secrets = mkSinkUndeclaredOptions {};
     nix.gcRoots = mkSinkUndeclaredOptions {};
     boot.supportedFilesystems = mkOption {
-      apply = subtractLists [ "zfs" "btrfs" "reiserfs" "xfs" "cifs" ];
+      apply = subtractLists [ "zfs" "btrfs" "reiserfs" "xfs" "cifs" "f2fs" ];
     };
   };
 

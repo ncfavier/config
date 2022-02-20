@@ -90,7 +90,7 @@ following subcommands:
 - `home` builds and activates my Home Manager configuration without building the whole
   system. This is useful for quickly testing a change to my home.
 - every other command (`build`, `test`, `switch`, …) is passed on to `nixos-rebuild`.
-  If prefixed with `@host`, the command will be run remotely on `host`.
+  If prefixed with `@host`, the command is run remotely on `host`.
 
 ---------------
 
