@@ -71,7 +71,7 @@
                   <minus>
                     <name>charset</name>
                     <charset>
-                      <int>0x2122</int>
+                      <int>0x2122</int> <!-- ™ -->
                     </charset>
                   </minus>
                 </edit>

@@ -96,6 +96,7 @@
 
       nixpkgs.overlays = [ (pkgs: prev: {
         wpa_supplicant = prev.wpa_supplicant.overrideAttrs (o: {
+          # TODO remove
           patches = o.patches or [] ++ [ (builtins.toFile "wpa_supplicant-patch" ''
 --- a/wpa_supplicant/config_file.c
 +++ b/wpa_supplicant/config_file.c

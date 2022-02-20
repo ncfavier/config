@@ -128,7 +128,6 @@
               ;;
 
             compare)
-              # TODO implement this for generic git trees
               input=$1
               . <(nix flake metadata config --json | jq -r --arg input "$input" '
                 def browse($url): @sh "xdg-open \($url)";
@@ -138,7 +137,7 @@
                 elif .locked.type == "gitlab" then
                   browse("https://gitlab.com/\(.locked.owner)/\(.locked.repo)/-/compare/\(.locked.rev)...\(.original.ref // "master")")
                 else
-                  "echo unsupported input type"
+                  "echo unsupported input type \(.locked.type) (supported: github, gitlab)"
                 end
               ')
               ;;
@@ -164,7 +163,6 @@
             eval)
               exec nix eval -f ~/.nix-defexpr --json "$@" | jq -r .;;
             bld)
-              (( $# )) || set -- config.system.build.toplevel
               exec nix build -f ~/.nix-defexpr --json "$@" | jq -r .;;
 
             specialise)
