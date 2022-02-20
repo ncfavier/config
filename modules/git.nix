@@ -95,4 +95,20 @@
       '')
     ];
   };
+
+  # TODO remove
+  nixpkgs.overlays = [ (self: super: {
+    python39 = super.python39.override {
+      packageOverrides = python-self: python-super: {
+        remarshal = python-super.remarshal.overrideAttrs (oldAttrs: {
+            postPatch = ''
+              substituteInPlace pyproject.toml \
+                --replace "poetry.masonry.api" "poetry.core.masonry.api" \
+                --replace 'PyYAML = "^5.3"' 'PyYAML = "*"' \
+                --replace 'tomlkit = "^0.7"' 'tomlkit = "*"'
+            '';
+        });
+      };
+    };
+  }) ];
 }
