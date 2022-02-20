@@ -128,6 +128,7 @@
               ;;
 
             compare)
+              # TODO implement this for generic git trees
               input=$1
               . <(nix flake metadata config --json | jq -r --arg input "$input" '
                 def browse($url): @sh "xdg-open \($url)";

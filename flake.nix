@@ -15,7 +15,7 @@
     };
     nur.url = "nur";
     nix-dns = {
-      url = "github:kirelagin/nix-dns/v1.1.2";
+      url = "github:kirelagin/nix-dns";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     simple-nixos-mailserver = {
@@ -37,8 +37,10 @@
     mkSystem = here: modules: lib.nixosSystem {
       inherit lib system modules;
       specialArgs = {
-        inherit inputs here;
-        hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
+        inherit here;
+        inputs = inputs // {
+          hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
+        };
         pkgsBase = pkgs; # for use in imports without infinite recursion
       };
     };

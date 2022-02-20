@@ -68,7 +68,6 @@
       },
       "original": {
         "owner": "kirelagin",
-        "ref": "v1.1.2",
         "repo": "nix-dns",
         "type": "github"
       }
