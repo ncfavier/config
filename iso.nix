@@ -16,7 +16,7 @@
     secrets = mkSinkUndeclaredOptions {};
     nix.gcRoots = mkSinkUndeclaredOptions {};
     boot.supportedFilesystems = mkOption {
-      apply = subtractLists [ "zfs" "btrfs" "reiserfs" "xfs" "cifs" "f2fs" ];
+      apply = subtractLists [ "zfs" "btrfs" "reiserfs" "xfs" "cifs" ];
     };
   };
 
@@ -27,7 +27,7 @@
     };
 
     services.getty = {
-      helpLine = mkForce "a";
+      helpLine = mkForce "";
       autologinUser = mkForce my.username;
     };
 

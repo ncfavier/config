@@ -15,7 +15,7 @@ jobs:
         with:
           name: ${{ github.actor }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          extraPullNames: nix-community,mic92
+          extraPullNames: nix-community, mic92
           skipPush: true
       # TODO disabled for now because of https://github.com/cachix/cachix-action/issues/89
       # - name: Check flake
