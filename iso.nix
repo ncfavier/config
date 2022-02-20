@@ -27,7 +27,7 @@
     };
 
     services.getty = {
-      helpLine = mkForce "";
+      helpLine = mkForce "a";
       autologinUser = mkForce my.username;
     };
 
@@ -42,7 +42,7 @@
     nixpkgs.overlays = [ (pkgs: prev: {
       linux-firmware = prev.linux-firmware.overrideAttrs (o: {
         postInstall = ''
-          rm -rf  "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl}
+          rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl}
         '';
         outputHash = "sha256-+rIkG+iWAfuUxboWXs2XxtMfnJfPIt0s18r+1HmlEGo=";
       });
