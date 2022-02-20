@@ -14,7 +14,7 @@
         "comonad"
         "containers"
         "kan-extensions"
-        "lens_5_1" # https://github.com/ekmett/lens/commit/0160d7d93c
+        "lens_5_1" # TODO https://github.com/ekmett/lens/commit/0160d7d93c
         "linear"
         "megaparsec"
         "mtl"
@@ -26,6 +26,7 @@
     in pkgs.lambdabot.override {
       packages = attrVals packages;
       configuration = ''[
+        textWidth ==> 380,
         commandPrefixes ==> ["@"],
         evalPrefixes ==> ["%"],
         trustedPackages ==> [
@@ -109,26 +110,34 @@
       rc ${config.secrets.lambdabot-ulminfo.path}
       admin + ulminfo:nf
       admin + libera:nf
-      url-off
       join ulminfo:#haskell
       join libera:##nf
-      join libera:#adventofcode-spoilers
     '';
   };
 
   systemd.services.lambdabot = {
     wants = [ "nss-lookup.target" ];
     after = [ "nss-lookup.target" ];
+    serviceConfig = {
+      MemoryMax = "10%";
+      Restart = "on-failure";
+    };
   };
 
-  nixpkgs.overlays = [ (pkgs: prev: {
+  nixpkgs.overlays = [ (pkgs: prev: let
+    lambdabot = pkgs.fetchFromGitHub {
+      owner = "ncfavier";
+      repo = "lambdabot";
+      rev = "live";
+      sha256 = "sha256-ZH9sqHsIwd5MjXAzkeU85nAqhIbTn7x9RqQb9N/vYcI=";
+    };
+  in {
     haskell = prev.haskell // {
       packageOverrides = hpkgs: hprev: {
         lambdabot-core = hprev.lambdabot-core.overrideAttrs (o: {
-          postPatch = o.postPatch or "" + ''
-            substituteInPlace src/Lambdabot/Plugin.hs --replace 'limitStr 80' 'limitStr 180'
-          '';
+          src = "${lambdabot}/lambdabot-core";
         });
+        lambdabot-reference-plugins = hpkgs.callCabal2nix "lambdabot-reference-plugins" "${lambdabot}/lambdabot-reference-plugins" {};
       };
     };
   }) ];

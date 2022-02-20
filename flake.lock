@@ -103,21 +103,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-21_11": {
-      "locked": {
-        "lastModified": 1638371214,
-        "narHash": "sha256-0kE6KhgH7n0vyuX4aUoGsGIQOqjIx2fJavpCWtn73rc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "a640d8394f34714578f3e6335fc767d0755d78f9",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-21.11",
-        "type": "indirect"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1644472683,
@@ -167,25 +152,22 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "nixpkgs-21_05": [
-          "nixpkgs-stable"
-        ],
-        "nixpkgs-21_11": "nixpkgs-21_11",
         "utils": [
           "nix-dns",
           "flake-utils"
         ]
       },
       "locked": {
-        "lastModified": 1638911354,
-        "narHash": "sha256-hNhzLOp+dApEY15vwLAQZu+sjEQbJcOXCaSfAT6lpsQ=",
-        "owner": "simple-nixos-mailserver",
+        "lastModified": 1642778355,
+        "narHash": "sha256-gK6B6tbkUPj1NxZAL6a3vlpsD0NrwvjgQGZO6APueCE=",
+        "owner": "ncfavier",
         "repo": "nixos-mailserver",
-        "rev": "6e3a7b2ea6f0d68b82027b988aa25d3423787303",
+        "rev": "1ea4530734ac4c0e96bb615568c86bbe6002f7c1",
         "type": "gitlab"
       },
       "original": {
-        "owner": "simple-nixos-mailserver",
+        "owner": "ncfavier",
+        "ref": "nixos-searchable",
         "repo": "nixos-mailserver",
         "type": "gitlab"
       }

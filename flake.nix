@@ -19,9 +19,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      url = "gitlab:ncfavier/nixos-mailserver/nixos-searchable";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-21_05.follows = "nixpkgs-stable";
       inputs.utils.follows = "nix-dns/flake-utils";
     };
     www = {
