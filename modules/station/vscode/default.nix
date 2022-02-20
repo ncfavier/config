@@ -5,11 +5,12 @@
       package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
         vscodevim.vim
+        xadillax.viml
         jnoortheen.nix-ide
         haskell.haskell
-        james-yu.latex-workshop
         justusadam.language-haskell
         yzhang.markdown-all-in-one
+        james-yu.latex-workshop
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "white";

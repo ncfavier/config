@@ -4,24 +4,6 @@
     configPath = "${config.my.home}/git/config";
     mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
       (utils.configPath + removePrefix (toString inputs.self) (toString path));
-    shellScriptWith = name: src: { deps ? [], vars ? {} }:
-      pkgs.writeScriptBin name ''
-        #!${config.my.shellPath}
-        ${optionalString (deps != []) ''
-        PATH=${makeBinPath deps}''${PATH+:$PATH}
-        ''}
-        ${toBash vars}
-        ${readFile src}
-      '';
-    pythonScriptWithDeps = name: src: deps:
-      pkgs.stdenv.mkDerivation {
-        inherit name;
-        buildInputs = [ (pkgs.python3.withPackages deps) ];
-        dontUnpack = true;
-        installPhase = ''
-          install -D -m555 ${src} "$out/bin/${name}"
-        '';
-      };
   };
 
   lib.shellEnv = {

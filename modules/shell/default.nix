@@ -82,7 +82,7 @@
             complete_alias j _journalctl journalctl
           ''
           (mkAfter ''
-            [[ $BASH_STARTUP ]] && eval "$BASH_STARTUP"
+            if [[ $BASH_STARTUP ]]; then eval "$BASH_STARTUP"; fi
           '')
         ];
       };

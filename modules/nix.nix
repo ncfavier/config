@@ -82,7 +82,7 @@
 
     environment.systemPackages = with pkgs; [
       nix-bash-completions
-      nix-index-unwrapped # use the system-wide Nix
+      nix-index-unwrapped # use the system-wide nix
       nix-prefetch-git
       nix-prefetch-github
       nix-diff

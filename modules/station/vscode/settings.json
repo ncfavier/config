@@ -5,7 +5,55 @@
   "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
-  "workbench.colorTheme": "1984 - Cyberpunk",
+  "workbench.colorTheme": "White Night",
+  "workbench.colorCustomizations": {
+    "[White Night]": {
+      "activityBar.foreground": "#555566",
+      "editorLineNumber.foreground": "#333333",
+      "editorLineNumber.activeForeground": "#777777",
+      "input.placeholderForeground": "#555566",
+      "panelTitle.activeBorder": "#555566",
+      "peekViewTitleDescription.foreground": "#555566",
+      "sideBarTitle.foreground": "#555566",
+      "statusBar.foreground": "#555566",
+      "tab.inactiveForeground": "#555566",
+      "titleBar.inactiveForeground": "#555566",
+      "gitDecoration.ignoredResourceForeground": "#555566",
+      "gitDecoration.modifiedResourceForeground": "#dd00ff",
+      "gitDecoration.untrackedResourceForeground": "#555566",
+
+      "button.background": "#dd00ff",
+      "editor.lineHighlightBackground": "#dd00ff14",
+      "editor.selectionBackground": "#dd00ff7f",
+      "editor.selectionHighlightBorder": "#dd00ff3f",
+      "editor.wordHighlightBackground": "#dd00ff3f",
+      "editor.wordHighlightStrongBackground": "#dd00ff7f",
+      "editorBracketMatch.background": "#dd00ff7f",
+      "editorCursor.foreground": "#dd00ff",
+      "editorLink.activeForeground": "#dd00ff",
+      "editorOverviewRuler.bracketMatchForeground": "#dd00ff7f",
+      "editorOverviewRuler.selectionHighlightForeground": "#dd00ff7f",
+      "editorOverviewRuler.wordHighlightForeground": "#dd00ff3f",
+      "editorOverviewRuler.wordHighlightStrongForeground": "#dd00ff7f",
+      "extensionButton.prominentBackground": "#dd00ff",
+      "extensionButton.prominentHoverBackground": "#dd00ff",
+      "list.dropBackground": "#dd00ff7f",
+      "list.focusBackground": "#dd00ff3f",
+      "list.highlightForeground": "#dd00ff",
+      "progressBar.background": "#dd00ff",
+      "terminal.ansiBrightMagenta": "#dd00ff",
+      "terminal.ansiMagenta": "#dd00ff",
+      "terminal.selectionBackground": "#dd00ff7f",
+      "terminalCursor.foreground": "#dd00ff",
+      "textLink.activeForeground": "#dd00ff",
+      "textLink.foreground": "#dd00ff",
+    }
+  },
+  "editor.tokenColorCustomizations": {
+    "[White Night]": {
+      "comments": "#dd00ff"
+    }
+  },
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["u"],
@@ -25,7 +73,6 @@
   "diffEditor.codeLens": true,
   "editor.codeLensFontFamily": "monospace",
   "editor.codeLensFontSize": 13,
-  "nix.enableLanguageServer": true,
   "editor.renderFinalNewline": false,
   "haskell.plugin.tactics.globalOn": false,
   "haskell.updateBehavior": "never-check",
@@ -33,5 +80,11 @@
   "haskell.plugin.hlint.diagnosticsOn": false,
   "editor.fontSize": 16,
   "window.menuBarVisibility": "hidden",
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "nix.enableLanguageServer": true,
+  "search.useIgnoreFiles": false,
+  "search.exclude": {
+    "**/result": true,
+    "**/result-*": true
+  },
 }
