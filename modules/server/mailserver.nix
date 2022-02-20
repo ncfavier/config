@@ -28,6 +28,8 @@ in {
       lmtpSaveToDetailMailbox = "no";
     };
 
+    my.extraGroups = [ config.mailserver.vmailGroupName ];
+
     nix.gcRoots = [ inputs.simple-nixos-mailserver ];
   };
 }

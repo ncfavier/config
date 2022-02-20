@@ -79,6 +79,13 @@
         devices = allDevices;
         versioning = simple;
       };
+      mail = {
+        path = if config.mailserver.enable or false
+          then config.mailserver.mailDirectory
+          else "${config.my.home}/mail";
+        devices = allDevicesExceptPhone;
+        versioning = simple;
+      };
     };
 
     extraOptions = {
