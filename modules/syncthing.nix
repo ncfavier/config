@@ -1,4 +1,4 @@
-{ lib, here, config, ... }: with lib; {
+{ lib, this, config, ... }: with lib; {
   imports = [
     (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "folders" ])
   ];
@@ -11,7 +11,7 @@
     inherit (config.my) group;
     dataDir = config.my.home;
 
-    guiAddress = "[${here.wireguard.ipv6}]:8384";
+    guiAddress = "[${this.wireguard.ipv6}]:8384";
     openDefaultPorts = true;
 
     key = config.secrets.syncthing.path;

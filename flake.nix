@@ -34,10 +34,10 @@
     lib = nixpkgs.lib.extend (import ./lib);
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    mkSystem = here: modules: lib.nixosSystem {
+    mkSystem = this: modules: lib.nixosSystem {
       inherit lib system modules;
       specialArgs = {
-        inherit here;
+        inherit this;
         inputs = inputs // {
           hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
         };

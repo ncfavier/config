@@ -1,4 +1,4 @@
-{ lib, here, config, utils, pkgs, ... }: with lib; let
+{ lib, this, config, utils, pkgs, ... }: with lib; let
   relayPort = 6642;
   scripts = [
     "color_popup.pl"
@@ -19,7 +19,7 @@
         /script install ${concatStringsSep " " scripts}
         /script load ${./autojoin.py}
         /set sec.crypt.passphrase_command "cat ${config.secrets.weechat.path}"
-        /set relay.network.bind_address ${here.wireguard.ipv4}
+        /set relay.network.bind_address ${this.wireguard.ipv4}
         /set relay.port.weechat ${toString relayPort}
         /set logger.file.path ${config.synced.irc-logs.path}
       ''}";

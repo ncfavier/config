@@ -1,10 +1,10 @@
-{ lib, here, config, pkgs, ... }: with lib; {
+{ lib, this, config, pkgs, ... }: with lib; {
   config = mkMerge [
     {
       hm.xdg.enable = true;
     }
 
-    (mkIf here.isStation {
+    (mkIf this.isStation {
       hm = {
         home.packages = with pkgs; [ xdg-user-dirs ];
 

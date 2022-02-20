@@ -1,4 +1,4 @@
-{ inputs, lib, here, config, utils, pkgs, ... }: with lib; {
+{ inputs, lib, this, config, utils, pkgs, ... }: with lib; {
   # work around issues like https://github.com/NixOS/nix/issues/3995 and https://github.com/NixOS/nix/issues/719
   options.nix.gcRoots = mkOption {
     description = "A list of garbage collector roots.";
@@ -104,7 +104,7 @@
     lib.shellEnv = {
       inherit (my) domain;
       server_hostname = my.server.hostname;
-      inherit (here) isServer;
+      inherit (this) isServer;
     };
 
     nixpkgs.overlays = [
@@ -175,7 +175,7 @@
               exec sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch;;
 
             home)
-              attr=nixosConfigurations.${escapeShellArg here.hostname}.config.hm.home.activationPackage
+              attr=nixosConfigurations.${escapeShellArg this.hostname}.config.hm.home.activationPackage
               export VERBOSE=1
               exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation;;
             @*)
@@ -224,12 +224,12 @@
         let
           self = builtins.getFlake "config";
           machines = self.nixosConfigurations;
-          local = machines.${strings.escapeNixIdentifier here.hostname};
+          local = machines.${strings.escapeNixIdentifier this.hostname};
         in rec {
           inherit self;
           inherit (self) inputs lib;
           inherit (lib) my;
-          here = my.machines.${strings.escapeNixIdentifier here.hostname};
+          this = my.machines.${strings.escapeNixIdentifier this.hostname};
           inherit (local) config;
           inherit (local.config.system.build) toplevel vm vmWithBootLoader manual;
         } // machines // local._module.args

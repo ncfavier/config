@@ -1,4 +1,4 @@
-{ lib, here, utils, pkgs, ... }: with lib; optionalAttrs here.isStation {
+{ lib, this, utils, pkgs, ... }: with lib; optionalAttrs this.isStation {
   imports = attrValues (modulesIn ./.);
 
   config = {

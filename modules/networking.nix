@@ -1,4 +1,4 @@
-{ lib, here, config, pkgs, ... }: with lib; {
+{ lib, this, config, pkgs, ... }: with lib; {
   options.networking = with types; {
     interfaces = mkOption {
       type = attrsOf (submodule {
@@ -10,7 +10,7 @@
   config = mkMerge [
     {
       networking = {
-        hostName = mkIf (here != null) here.hostname;
+        hostName = mkIf (this != null) this.hostname;
 
         useDHCP = mkDefault false;
         nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
@@ -80,7 +80,7 @@
       }) ];
     }
 
-    (mkIf (here.isStation or false) {
+    (mkIf (this.isStation or false) {
       networking.wireless = {
         enable = true;
         userControlled.enable = true;

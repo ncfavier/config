@@ -1,4 +1,4 @@
-{ inputs, lib, here, config, pkgs, ... }: with lib; {
+{ inputs, lib, this, config, pkgs, ... }: with lib; {
   imports = [
     inputs.sops-nix.nixosModule
     (mkAliasOptionModule [ "secrets" ] [ "sops" "secrets" ])
@@ -25,7 +25,7 @@
       in nameValuePair base {
         sopsFile = "${secretsDir}/${name}";
         inherit format;
-        key = here.hostname;
+        key = this.hostname;
       }) (builtins.readDir secretsDir);
     };
 

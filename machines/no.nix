@@ -1,4 +1,4 @@
-{ inputs, here, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = with inputs.hardware; [
     notDetected
     lenovo-thinkpad-t14s-amd-gen1

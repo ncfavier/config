@@ -1,19 +1,19 @@
-{ lib, here, config, pkgs, ... }: with lib; let
+{ lib, this, config, pkgs, ... }: with lib; let
   interface = "wg42";
   port = 500;
 in {
   config = mkMerge [
-    (mkIf (here.isServer || here.isStation) {
+    (mkIf (this.isServer || this.isStation) {
       networking.firewall.trustedInterfaces = [ interface ];
     })
 
-    (mkIf here.isServer {
+    (mkIf this.isServer {
       networking = {
         wireguard = {
           enable = true;
           interfaces.${interface} = {
             privateKeyFile = config.secrets.wireguard.path;
-            ips = [ "${here.wireguard.ipv4}/16" "${here.wireguard.ipv6}/16" ];
+            ips = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
             listenPort = port;
             allowedIPsAsRoutes = false;
             peers = mapAttrsToList (_: m: {
@@ -45,10 +45,10 @@ in {
       };
     })
 
-    (mkIf here.isStation {
+    (mkIf this.isStation {
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
-        address = [ "${here.wireguard.ipv4}/16" "${here.wireguard.ipv6}/16" ];
+        address = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
         dns = [ my.server.wireguard.ipv4 my.server.wireguard.ipv6 ];
         peers = [
           {

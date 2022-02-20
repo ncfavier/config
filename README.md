@@ -60,7 +60,7 @@ email addresses.
 
 `my.machines` contains basic information about all my machines (including those
 not <small>yet</small> running NixOS) such as WireGuard public keys and Syncthing IDs.
-The module argument `here` is mapped to `my.machines.${hostname}`.
+The module argument `this` is mapped to `my.machines.${hostname}`.
 
 #### [`flake.nix`](https://github.com/ncfavier/config/blob/main/flake.nix) declares this repository as a [flake](https://github.com/tweag/rfcs/blob/flakes/rfcs/0049-flakes.md), an experimental feature of Nix.
 

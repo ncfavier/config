@@ -1,3 +1,3 @@
-{ lib, here, pkgs, ... }: with lib; optionalAttrs here.isServer {
+{ lib, this, pkgs, ... }: with lib; optionalAttrs this.isServer {
   imports = attrValues (modulesIn ./.);
 }

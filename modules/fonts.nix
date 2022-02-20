@@ -1,4 +1,4 @@
-{ lib, here, pkgs, ... }: with lib; {
+{ lib, this, pkgs, ... }: with lib; {
   config = mkMerge [
     {
       fonts.fontconfig.enable = mkDefault false;
@@ -26,7 +26,7 @@
       }) ];
     }
 
-    (mkIf here.isStation {
+    (mkIf this.isStation {
       nixpkgs.config.allowUnfree = true; # for symbola
 
       fonts = {

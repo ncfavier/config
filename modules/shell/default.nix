@@ -1,4 +1,4 @@
-{ lib, here, config, pkgs, ... }: with lib; {
+{ lib, pkgs, ... }: with lib; {
   environment.systemPackages = with pkgs; [
     jq
     alacritty.terminfo

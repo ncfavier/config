@@ -1,4 +1,4 @@
-{ lib, here, pkgs, ... }: with lib; {
+{ lib, this, pkgs, ... }: with lib; {
   config = mkMerge [
     {
       environment.systemPackages = with pkgs; [
@@ -48,7 +48,7 @@
       };
     }
 
-    (mkIf here.isStation {
+    (mkIf this.isStation {
       hm = {
         home.packages = [ pkgs.clipster ];
         xdg.configFile."clipster/clipster.ini".text = ''

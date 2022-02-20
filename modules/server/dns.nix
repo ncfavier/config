@@ -1,16 +1,16 @@
-{ inputs, lib, here, config, ... }: with lib; let
+{ inputs, lib, this, config, ... }: with lib; let
   dns = inputs.nix-dns.lib;
 in {
   services.nsd = {
     enable = true;
-    interfaces = here.ipv4 ++ here.ipv6;
+    interfaces = this.ipv4 ++ this.ipv6;
     ipTransparent = true;
     ratelimit.enable = true;
 
     zones.${my.domain}.data = with dns.combinators; let
       ips = {
-        A = map a here.ipv4;
-        AAAA = map aaaa here.ipv6;
+        A = map a this.ipv4;
+        AAAA = map aaaa this.ipv6;
       };
     in dns.toString my.domain (ips // {
       TTL = 60 * 60;
@@ -54,7 +54,7 @@ in {
       server = {
         interface = [
           "127.0.0.1" "::1"
-          here.wireguard.ipv4 here.wireguard.ipv6
+          this.wireguard.ipv4 this.wireguard.ipv6
         ];
         access-control = [
           "127.0.0.0/8 allow" "::1/128 allow"
