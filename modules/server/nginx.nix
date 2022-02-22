@@ -38,12 +38,10 @@ in {
             if ($internal != 1) {
               return 403 "Nothing to see here, move along.\n";
             }
-            autoindex off;
             fastcgi_pass unix:${config.services.phpfpm.pools.upload.socket};
             client_max_body_size ${maxUploadSize};
           '';
-          # https://github.com/NixOS/nixpkgs/pull/139815
-          fastcgiParams.SCRIPT_FILENAME = toString (pkgs.writeText "upload.php" ''
+          fastcgiParams.SCRIPT_FILENAME = pkgs.writeText "upload.php" ''
             <?php
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               header('Content-Type: text/plain');
@@ -63,10 +61,11 @@ in {
               <input type=hidden name=browser value=1>
             </form>
             <?php }
-          '');
+          '';
         };
         locations."/".tryFiles = "$uri $uri/ /local$uri /local$uri/ =404";
         locations."= /favicon.ico".root = inputs.www;
+        locations."/.st".extraConfig = "internal;";
         extraConfig = ''
           default_type text/plain;
           autoindex on;
