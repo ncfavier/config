@@ -32,7 +32,7 @@ while getopts :l:krf o; do case $o in
     :) OPTARG=1 ;&
     l)
         n=$OPTARG
-        ssh -q "$host" "find ${uploads_dir@Q} -type f -printf '%T@/%P\0'" |
+        ssh -q "$host" "find ${uploads_dir@Q} -name .stversions -prune -o -type f -printf '%T@/%P\0'" |
         sort -znst / -k 1,1 | tail -zn "$n" |
         while IFS=/ read -rd '' time path; do
             build_url "$path"

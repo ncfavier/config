@@ -1,4 +1,5 @@
 { lib, config, pkgs, ... }: with lib; {
+  # TODO declare imported modules
   secrets.lambdabot-ulminfo = {
     owner = config.users.users.lambdabot.name;
     group = config.users.users.lambdabot.group;

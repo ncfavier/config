@@ -342,8 +342,8 @@ command_not_found_handle() {
                 printf '%*d %s\n' "${#n}" "$((i+1))" "${pkgs[i]}"
             done
             read -p "? " action
-            if [[ $action =~ ^([0-9]+)([rsi]?)$ ]]; then
-                i=${BASH_REMATCH[1]}
+            if [[ $action =~ ^([0-9]*)([rsi]?)$ ]]; then
+                i=${BASH_REMATCH[1]:-1}
                 action=${BASH_REMATCH[2]:-s}
                 if (( 1 <= i && i <= n )); then
                     case $action in

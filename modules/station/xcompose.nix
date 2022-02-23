@@ -158,7 +158,7 @@
     '';
 
     onChange = ''
-      rm -f "''${XDG_CACHE_HOME:-$HOME/.cache}"/{gtk-*,ibus}/compose/* # TODO https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/4165 https://github.com/ibus/ibus/pull/2362
+      rm -f "''${XDG_CACHE_HOME:-$HOME/.cache}"/ibus/compose/* # https://github.com/ibus/ibus/pull/2362
       ibus restart
     '';
   };
