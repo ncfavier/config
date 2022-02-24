@@ -1,6 +1,6 @@
 lib: with lib; let
   modules = [
-    (mkAliasOptionModule [ "server" ] [ "machines" "wo" ])
+    (mkAliasOptionModule [ "server" ] [ "machines" "mu" ])
     {
       options.machines = mkOption {
         description = "My machines";
