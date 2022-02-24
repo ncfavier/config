@@ -1,4 +1,4 @@
-{ lib, this, utils, pkgs, ... }: with lib; optionalAttrs this.isStation {
+{ lib, this, pkgs, ... }: with lib; optionalAttrs this.isStation {
   imports = attrValues (modulesIn ./.);
 
   config = {
@@ -52,7 +52,7 @@
             logout) wm quit;;
         esac
       '')
-      (utils.shellScriptWith "shoot" ./shoot.sh {
+      (shellScriptWith "shoot" ./shoot.sh {
         deps = [
           slop imagemagick ffmpeg-full ffmpegthumbnailer
         ];

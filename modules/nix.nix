@@ -1,4 +1,4 @@
-{ inputs, lib, this, config, utils, pkgs, ... }: with lib; {
+{ inputs, lib, this, config, pkgs, ... }: with lib; {
   # work around issues like https://github.com/NixOS/nix/issues/3995 and https://github.com/NixOS/nix/issues/719
   options.nix.gcRoots = mkOption {
     description = "A list of garbage collector roots.";
@@ -7,30 +7,30 @@
   };
 
   config = {
-    _module.args = {
-      utils = {
-        configPath = "${config.my.home}/git/config";
-        mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
-          (utils.configPath + removePrefix (toString inputs.self) (toString path));
-
-        importNixpkgs = nixpkgs: import nixpkgs {
-          inherit (config.nixpkgs) localSystem crossSystem config;
-        };
+    _module.args = let
+      importNixpkgs = nixpkgs: import nixpkgs {
+        inherit (config.nixpkgs) localSystem crossSystem config;
       };
-
-      pkgsStable = utils.importNixpkgs inputs.nixpkgs-stable;
-      pkgsLocal = utils.importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
-      pkgsBranch = rev: sha256: utils.importNixpkgs (pkgs.fetchFromGitHub {
+    in {
+      pkgsStable = importNixpkgs inputs.nixpkgs-stable;
+      pkgsLocal = importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
+      pkgsBranch = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
         owner = my.githubUsername;
         repo = "nixpkgs";
         inherit rev sha256;
       });
-      pkgsPR = pr: sha256: utils.importNixpkgs (pkgs.fetchFromGitHub {
+      pkgsPR = pr: sha256: importNixpkgs (pkgs.fetchFromGitHub {
         owner = "NixOS";
         repo = "nixpkgs";
         rev = "refs/pull/${toString pr}/head";
         inherit sha256;
       });
+    };
+
+    lib.meta = {
+      configPath = "${config.my.home}/git/config";
+      mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
+        (config.lib.meta.configPath + removePrefix (toString inputs.self) (toString path));
     };
 
     nix = {
@@ -47,7 +47,7 @@
           exact = false;
           to = {
             type = "git";
-            url = "file:${utils.configPath}";
+            url = "file:${config.lib.meta.configPath}";
           };
         };
         config-github = {
@@ -119,7 +119,7 @@
       })
       (pkgs: prev: {
         config-cli = pkgs.writeShellScriptBin "config" ''
-          configPath=${escapeShellArg utils.configPath}
+          configPath=${escapeShellArg config.lib.meta.configPath}
           cmd=$1
           shift
           case $cmd in
@@ -198,7 +198,7 @@
         }
         _config() {
           local cur prev words cword
-          local configPath=${escapeShellArg utils.configPath}
+          local configPath=${escapeShellArg config.lib.meta.configPath}
           _init_completion -n ':=&'
           if [[ $cword == 1 ]] || [[ $cword == 2 && $prev == @* ]]; then
             if [[ $cur == @* ]]; then

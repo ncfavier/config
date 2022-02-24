@@ -1,4 +1,4 @@
-{ lib, this, config, utils, pkgs, ... }: with lib; let
+{ lib, this, config, pkgs, ... }: with lib; let
   relayPort = 6642;
   scripts = [
     "color_popup.pl"
@@ -48,7 +48,7 @@ in {
 
   hm.xdg.configFile = mapAttrs' (name: _: {
     name = "weechat/${name}";
-    value.source = utils.mkMutableSymlink ./${name};
+    value.source = config.lib.meta.mkMutableSymlink ./${name};
   }) (filterAttrs (name: _: hasSuffix ".conf" name) (builtins.readDir ./.));
 
   networking.firewall.allowedTCPPorts = [ relayPort ];

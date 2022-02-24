@@ -1,25 +1,4 @@
-{ lib, config, utils, pkgs, ... }: with lib; {
-  _module.args.utils = {
-    shellScriptWith = name: src: { deps ? [], vars ? {} }:
-      pkgs.writeScriptBin name ''
-        #!${config.my.shellPath}
-        ${optionalString (deps != []) ''
-        PATH=${makeBinPath deps}''${PATH+:$PATH}
-        ''}
-        ${toBash vars}
-        ${readFile src}
-      '';
-    pythonScriptWithDeps = name: src: deps:
-      pkgs.stdenv.mkDerivation {
-        inherit name;
-        buildInputs = [ (pkgs.python3.withPackages deps) ];
-        dontUnpack = true;
-        installPhase = ''
-          install -D -m555 ${src} "$out/bin/${name}"
-        '';
-      };
-  };
-
+{ lib, config, pkgs, ... }: with lib; {
   documentation = {
     dev.enable = true;
     man.generateCaches = true;
@@ -71,11 +50,11 @@
     neofetch
     lesspass-cli
     tmsu
-    (utils.shellScriptWith "upload" ./upload.sh {})
-    (utils.shellScriptWith "order" ./order.sh {})
+    (shellScriptWith "upload" ./upload.sh {})
+    (shellScriptWith "order" ./order.sh {})
   ];
 
-  environment.etc.topdefaultrc.source = utils.mkMutableSymlink ./toprc;
+  environment.etc.topdefaultrc.source = config.lib.meta.mkMutableSymlink ./toprc;
 
   hm.programs.htop = {
     enable = true;
@@ -86,6 +65,26 @@
   };
 
   nixpkgs.overlays = [ (pkgs: prev: {
+    shellScriptWith = name: src: { deps ? [], vars ? {} }:
+      pkgs.writeScriptBin name ''
+        #!${config.my.shellPath}
+        ${optionalString (deps != []) ''
+        PATH=${makeBinPath deps}''${PATH+:$PATH}
+        ''}
+        ${toBash vars}
+        ${readFile src}
+      '';
+
+    pythonScriptWithDeps = name: src: deps:
+      pkgs.stdenv.mkDerivation {
+        inherit name;
+        buildInputs = [ (pkgs.python3.withPackages deps) ];
+        dontUnpack = true;
+        installPhase = ''
+          install -D -m555 ${src} "$out/bin/${name}"
+        '';
+      };
+
     tmsu = prev.tmsu.overrideAttrs (o: {
       patches = o.patches or [] ++ [ (builtins.toFile "tmsu-patch" ''
         --- a/src/github.com/oniony/TMSU/common/path/path.go
@@ -109,5 +108,6 @@
       '') ];
     });
   }) ];
+
   cachix.derivationsToPush = [ pkgs.tmsu ];
 }

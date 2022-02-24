@@ -1,4 +1,4 @@
-{ config, pkgs, utils, ... }: let
+{ config, pkgs, ... }: let
   version = "1.17.1";
 in {
   hm = {
@@ -31,9 +31,9 @@ in {
       })
     ];
     home.file.".minecraft/options.txt".source =
-      utils.mkMutableSymlink ./options.txt;
+      config.lib.meta.mkMutableSymlink ./options.txt;
     home.file.".minecraft/config/sodium-options.json" = {
-      source = utils.mkMutableSymlink ./sodium.json;
+      source = config.lib.meta.mkMutableSymlink ./sodium.json;
       force = true;
     };
   };

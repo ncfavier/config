@@ -1,4 +1,4 @@
-{ pkgs, utils, ... }: {
+{ config, pkgs, ... }: {
   hm = {
     programs.vscode = {
       enable = true;
@@ -64,8 +64,8 @@
     };
 
     xdg.configFile = {
-      "VSCodium/User/settings.json".source = utils.mkMutableSymlink ./settings.json;
-      "VSCodium/User/keybindings.json".source = utils.mkMutableSymlink ./keybindings.json;
+      "VSCodium/User/settings.json".source = config.lib.meta.mkMutableSymlink ./settings.json;
+      "VSCodium/User/keybindings.json".source = config.lib.meta.mkMutableSymlink ./keybindings.json;
     };
   };
 }

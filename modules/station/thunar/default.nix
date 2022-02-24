@@ -1,4 +1,4 @@
-{ lib, config, utils, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   services.gvfs.enable = true;
   services.tumbler.enable = true;
   programs.dconf.enable = true;
@@ -42,7 +42,7 @@
         MimeType=image/webp
         Exec=${thumbnailerScript "webp" ''${imagemagick}/bin/convert -thumbnail "$s" "$i" "$o"''}
       '')
-      (utils.pythonScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
+      (pythonScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
         with ps; [ dbus-python pygobject3 pyxdg ]))
     ];
 
@@ -51,8 +51,8 @@
         source = ./thunar.xml;
         force = true;
       };
-      "Thunar/uca.xml".source = utils.mkMutableSymlink ./uca.xml;
-      "Thunar/accels.scm".source = utils.mkMutableSymlink ./accels.scm;
+      "Thunar/uca.xml".source = config.lib.meta.mkMutableSymlink ./uca.xml;
+      "Thunar/accels.scm".source = config.lib.meta.mkMutableSymlink ./accels.scm;
       "tumbler/tumbler.rc" = {
         source = ./tumbler.rc;
         onChange = ''
