@@ -64,7 +64,4 @@ in {
   '';
 
   system.stateVersion = "22.05";
-
-  mailserver.enable = mkForce false;
-  systemd.services.tmux-weechat-n.wantedBy = mkForce [];
 }

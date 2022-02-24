@@ -30,6 +30,13 @@ in {
 
     my.extraGroups = [ config.mailserver.vmailGroupName ];
 
+    system.activationScripts.vmailPermissions = {
+      deps = [ "users" ];
+      text = ''
+        chmod -R g=u ${config.mailserver.mailDirectory}
+      '';
+    };
+
     nix.gcRoots = [ inputs.simple-nixos-mailserver ];
   };
 }
