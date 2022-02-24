@@ -36,8 +36,8 @@ Configuration for my home directory is managed using [Home Manager](https://gith
 
 #### [`machines`](https://github.com/ncfavier/config/tree/main/machines) contains machine-specific configuration:
 
-- [`wo`](https://github.com/ncfavier/config/blob/main/machines/wo.nix) is a
-  Netcup VPS that runs web, mail and DNS servers for [`monade.li`](https://monade.li),
+- [`mu`](https://github.com/ncfavier/config/blob/main/machines/mu.nix) is a
+  Vultr VPS that runs web, mail and DNS servers for [`monade.li`](https://monade.li),
   serves as an IRC bouncer (see the [`weechat`](https://github.com/ncfavier/config/blob/main/modules/server/weechat/default.nix) module)
   and a central node for my WireGuard network and for Syncthing.
 - [`mo`](https://github.com/ncfavier/config/blob/main/machines/mo.nix) is my

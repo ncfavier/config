@@ -64,6 +64,17 @@ lib: with lib; let
             };
             syncthing.id = "7YQ7LRQ-IAWYNHN-VGHTAEQ-JDSH3C7-DUPWBYD-G6L4OJC-W3YLUFZ-SSM5CA6";
           };
+          mu = {
+            isServer = true;
+            ipv4 = [ "45.32.183.6" ];
+            ipv6 = [ "2001:19f0:7400:8e5a:5400:03ff:fede:4dc0" ];
+            wireguard = {
+              ipv4 = "10.42.0.2";
+              ipv6 = "fd42::0:2";
+              publicKey = "wYNBfzEDs9E10z/wfeWuOe6u63SFW+7EWdGHYrU1SUc=";
+            };
+            syncthing.id = "26Z2VZW-TJEASC6-CWQHMCJ-QMGT4MJ-YTTUW7V-M6IIUQU-LY3SCYS-UQ6FGAY";
+          };
           fu = {
             isStation = true;
             wireguard = {
