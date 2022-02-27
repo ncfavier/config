@@ -53,17 +53,6 @@ lib: with lib; let
         ];
 
         machines = {
-          wo = {
-            isServer = true;
-            ipv4 = [ "202.61.245.252" ];
-            ipv6 = [ "2a03:4000:53:fb4::1" ];
-            wireguard = {
-              ipv4 = "10.42.0.1";
-              ipv6 = "fd42::0:1";
-              publicKey = "fzC/SGpGcIbH/DyHrPYIW+9aAm2h4CvHZZosBPEHDHA=";
-            };
-            syncthing.id = "7YQ7LRQ-IAWYNHN-VGHTAEQ-JDSH3C7-DUPWBYD-G6L4OJC-W3YLUFZ-SSM5CA6";
-          };
           mu = {
             isServer = true;
             ipv4 = [ "45.32.183.6" ];
