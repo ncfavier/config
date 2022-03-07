@@ -44,7 +44,7 @@
         postInstall = ''
           rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl}
         '';
-        outputHash = "sha256-+rIkG+iWAfuUxboWXs2XxtMfnJfPIt0s18r+1HmlEGo=";
+        outputHash = null;
       });
     }) ];
 

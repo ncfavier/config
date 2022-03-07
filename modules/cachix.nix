@@ -9,8 +9,9 @@
     secrets.cachix = {
       owner = my.username;
       inherit (config.my) group;
-      path = "${config.hm.xdg.configHome}/cachix/cachix.dhall";
     };
+
+    hm.xdg.configFile."cachix/cachix.dhall".source = config.hm.lib.file.mkOutOfStoreSymlink config.secrets.cachix.path;
 
     environment.systemPackages = with pkgs; [
       cachix
