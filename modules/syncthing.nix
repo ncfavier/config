@@ -54,23 +54,23 @@
         versioning = trashcan;
       };
       camera = {
-        path = "${config.my.home}/camera";
+        path = "${config.my.home}/sync/camera";
         devices = allDevices;
         versioning = trashcan;
       };
       saves = {
-        path = "${config.my.home}/saves";
+        path = "${config.my.home}/sync/saves";
         devices = allDevicesExceptPhone;
         versioning = trashcan;
       };
       irc-logs = {
-        path = "${config.my.home}/irc-logs";
+        path = "${config.my.home}/sync/irc-logs";
         devices = allDevicesExceptPhone;
         watch = false;
         versioning = trashcan;
       };
       uploads = {
-        path = "${config.my.home}/uploads";
+        path = "${config.my.home}/sync/uploads";
         devices = allDevicesExceptPhone;
         versioning = trashcan;
       };
@@ -82,7 +82,7 @@
       mail = {
         path = if config.mailserver.enable or false
           then config.mailserver.mailDirectory
-          else "${config.my.home}/mail";
+          else "${config.my.home}/sync/mail";
         devices = allDevicesExceptPhone;
         versioning = simple;
       };

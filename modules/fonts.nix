@@ -65,7 +65,7 @@
                   <family>sans-serif</family>
                 </prefer>
               </alias>
-              <match target="font">
+              <match target="scan">
                 <test name="family"><string>Twitter Color Emoji</string></test>
                 <edit name="charset" mode="assign">
                   <minus>

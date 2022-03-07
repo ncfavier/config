@@ -93,27 +93,6 @@
       };
 
       environment.systemPackages = with pkgs; [ wpa_supplicant_gui ];
-
-      nixpkgs.overlays = [ (pkgs: prev: {
-        wpa_supplicant = prev.wpa_supplicant.overrideAttrs (o: {
-          # TODO remove
-          patches = o.patches or [] ++ [ (builtins.toFile "wpa_supplicant-patch" ''
---- a/wpa_supplicant/config_file.c
-+++ b/wpa_supplicant/config_file.c
-@@ -297,8 +297,8 @@ struct wpa_config * wpa_config_read(const char *name, struct wpa_config *cfgp)
- 	struct wpa_ssid *ssid, *tail, *head;
- 	struct wpa_cred *cred, *cred_tail, *cred_head;
- 	struct wpa_config *config;
--	int id = 0;
--	int cred_id = 0;
-+	static int id = 0;
-+	static int cred_id = 0;
-
- 	if (name == NULL)
- 		return NULL;
-          '')];
-        });
-      }) ];
     })
   ];
 }

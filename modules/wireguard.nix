@@ -52,7 +52,7 @@ in {
         dns = [ my.server.wireguard.ipv4 my.server.wireguard.ipv6 ];
         peers = [
           {
-            endpoint = "${head (my.server.ipv6 ++ my.server.ipv4 ++ [ my.domain ])}:${toString port}";
+            endpoint = "${head (my.server.ipv4 ++ [ my.domain ])}:${toString port}";
             inherit (my.server.wireguard) publicKey;
             allowedIPs = [ "0.0.0.0/0" "::/0" ];
             persistentKeepalive = 21;

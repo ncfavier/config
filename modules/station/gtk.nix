@@ -37,6 +37,7 @@
     };
 
     xdg.configFile."gtk-3.0/settings.ini".force = true;
+    xdg.configFile."gtk-3.0/bookmarks".force = true;
     home.file.".icons/default/index.theme".force = true;
 
     # live reloading

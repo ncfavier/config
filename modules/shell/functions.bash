@@ -273,9 +273,13 @@ mk() ( # runs make using the closest makefile in the hierarchy
     make -f "${files[0]}" "$@"
 )
 
-nix-shell() { # sync the history before and after running nix-shell
+nix-build() {
+    command nix-build --log-format bar-with-logs "$@"
+}
+
+nix-shell() {
     history -a
-    command nix-shell "$@"
+    command nix-shell --log-format bar-with-logs "$@"
     history -n
 }
 

@@ -147,7 +147,7 @@
                 for input do args+=(--update-input "$input"); done
                 exec nix flake lock "$configPath" "''${args[@]}"
               else
-                exec nix flake update "$configPath"
+                exec nix flake update -v "$configPath"
               fi;;
 
             repl|eval|bld)

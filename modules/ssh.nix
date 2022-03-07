@@ -42,8 +42,8 @@ in {
           forwardX11 = true;
           forwardX11Trusted = true;
         };
-
-        "unlock.${m.hostname}" = mkIf m.isServer {
+      } // optionalAttrs m.isServer {
+        "unlock.${m.hostname}" = {
           hostname = head m.ipv4;
           user = "root";
           extraOptions = {
