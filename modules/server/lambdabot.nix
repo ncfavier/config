@@ -15,7 +15,7 @@
         "comonad"
         "containers"
         "kan-extensions"
-        "lens_5_1" # TODO https://github.com/ekmett/lens/commit/0160d7d93c
+        "lens_5_1" # https://github.com/ekmett/lens/commit/0160d7d93c
         "linear"
         "megaparsec"
         "mtl"

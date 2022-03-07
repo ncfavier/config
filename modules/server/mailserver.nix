@@ -28,6 +28,8 @@ in {
       lmtpSaveToDetailMailbox = "no";
     };
 
+    services.redis.servers.rspamd.bind = "127.0.0.1"; # TODO remove after https://github.com/NixOS/nixpkgs/pull/162214
+
     my.extraGroups = [ config.mailserver.vmailGroupName ];
 
     system.activationScripts.vmailPermissions = {

@@ -19,7 +19,7 @@ in {
             peers = mapAttrsToList (_: m: {
               inherit (m.wireguard) publicKey;
               allowedIPs = [ "${m.wireguard.ipv4}/32" "${m.wireguard.ipv6}/128" ];
-            }) (filterAttrs (_: m: !m.isServer) my.machines);
+            }) my.machines;
           };
         };
 
