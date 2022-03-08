@@ -10,7 +10,7 @@
   config = mkMerge [
     {
       networking = {
-        hostName = mkIf (this != null) this.hostname;
+        hostName = mkIf (this ? hostname) this.hostname;
 
         useDHCP = mkDefault false;
         nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];

@@ -52,7 +52,7 @@
 
     packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
       iso = let
-        inherit (mkSystem null [ ./iso.nix ]) config;
+        inherit (mkSystem {} [ ./iso.nix ]) config;
 
         # horrible hack, see https://github.com/NixOS/nix/issues/5633
         involution = name: file: pkgs.runCommand name {} ''

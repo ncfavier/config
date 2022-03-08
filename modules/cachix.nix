@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, this, config, pkgs, ... }: with lib; {
   options.cachix.derivationsToPush = mkOption {
     description = "A list of derivations to push to cachix.";
     type = with types; listOf path;
@@ -11,7 +11,9 @@
       inherit (config.my) group;
     };
 
-    hm.xdg.configFile."cachix/cachix.dhall".source = config.hm.lib.file.mkOutOfStoreSymlink config.secrets.cachix.path;
+    hm.xdg.configFile."cachix/cachix.dhall" = mkIf (this ? hostname) { # temporary hack to detect if this is the ISO config
+      source = config.hm.lib.file.mkOutOfStoreSymlink config.secrets.cachix.path;
+    };
 
     environment.systemPackages = with pkgs; [
       cachix
