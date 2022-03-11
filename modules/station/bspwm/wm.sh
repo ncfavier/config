@@ -29,6 +29,14 @@ focus-window() {
     }
 }
 
+get-workspaces() {
+    readarray -t workspaces < <(bspc query --desktops --names)
+    n=0
+    for w in "${workspaces[@]}"; do
+        (( w > n )) && (( n = w ))
+    done
+}
+
 terminal() {
     local instance title focus_title columns lines hold
     if [[ $instance || $focus_title ]]; then
@@ -86,6 +94,14 @@ case $cmd in
         bspc desktop -f "$@";;
     move-window-to-workspace)
         bspc node -d "$@" -f;;
+    remove-workspace)
+        get-workspaces
+        bspc desktop "$n" -r;;
+    add-workspace)
+        get-workspaces
+        bspc monitor -a "$((n + 1))"
+        bspc monitor -o "${workspaces[@]::n}" "$((n + 1))" "${workspaces[@]:n}"
+        bspc desktop -f "$((n + 1))";;
     lock)
         i3lock -c 000000;;
     quit)

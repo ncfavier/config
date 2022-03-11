@@ -38,15 +38,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1646364779,
-        "narHash": "sha256-481vkO9b3h++bHzLbGDDhgpBoXQ0Wlo4lm4h5/EJMO4=",
-        "owner": "nix-community",
+        "lastModified": 1646921282,
+        "narHash": "sha256-BCXX89M4+BdBm+2+nCSCoxxr4p35SxASttP4OhBr36E=",
+        "owner": "ncfavier",
         "repo": "home-manager",
-        "rev": "d119cea3763977801ad66330668c1ab4346cb7f7",
+        "rev": "ffe910539db2d2b3e05ddb89c10f4b7e90ac5650",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "ncfavier",
+        "ref": "bspwm-dynamic-desktops",
         "repo": "home-manager",
         "type": "github"
       }

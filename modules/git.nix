@@ -19,7 +19,7 @@
         d = "diff --no-prefix";
         dh = "d HEAD";
         dc = "d --cached";
-        do = "d origin";
+        du = "d @{upstream}";
         b = "branch";
         a = "add";
         aa = "add -A";

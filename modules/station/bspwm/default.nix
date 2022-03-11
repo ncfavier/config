@@ -8,7 +8,8 @@ in {
   hm = {
     xsession.windowManager.bspwm = {
       enable = true;
-      monitors.focused = [ "1" "2" "3" "4" "5" "6" "web" "mail" "chat" "files" ];
+      monitors.focused = [ "1" "2" "3" "web" "mail" "chat" "files" ];
+      alwaysResetDesktops = false;
       settings = with config.theme; {
         focused_border_color = foreground;
         normal_border_color = foregroundAlt;
@@ -77,7 +78,7 @@ in {
         local cur prev words cword
         _init_completion
         if (( cword == 1 )); then
-          compreply -W 'go focus-window focus-workspace move-window-to-workspace lock quit'
+          compreply -W 'go focus-window focus-workspace move-window-to-workspace remove-workspace add-workspace lock quit'
         elif [[ ''${words[1]} == go ]]; then
           compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi'
         fi
@@ -99,6 +100,8 @@ in {
           "wm {focus-workspace,move-window-to-workspace} {any.urgent,any.!occupied,last}";
         "super + ctrl + {_,shift} + z" =
           "wm {focus-workspace,move-window-to-workspace} last.occupied";
+        "super + {plus,equal}" =
+          "wm {add,remove}-workspace";
         "super + {_,shift} + Tab" =
           "bspc desktop -l {next,prev}";
         "super + {Prior,Home}" =

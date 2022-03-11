@@ -1,6 +1,7 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, pkgs, pkgsRev, ... }: with lib; {
   hm.services.dunst = {
     enable = true;
+    package = (pkgsRev "c82b46413401efa740a0b994f52e9903a4f6dcd5" "13s8g6p0gzpa1q6mwc2fj2v451dsars67m4mwciimgfwhdlxx0bk").dunst;
 
     settings = with config.theme; rec {
       global = {
@@ -19,6 +20,7 @@
         markup = "full";
         format = "<b>%s</b>\\n%b %p";
         word_wrap = true;
+        icon_theme = config.hm.gtk.iconTheme.name;
         icon_position = "right";
         min_icon_size = 64;
         max_icon_size = 500;
@@ -26,8 +28,6 @@
         browser = "xdg-open";
         mouse_right_click = "context";
         show_indicators = false;
-        icon_theme = config.hm.gtk.iconTheme.name;
-        icon_path = mkForce "";
       };
 
       urgency_low = urgency_normal;

@@ -300,6 +300,10 @@ nix-time() { # get a lower bound on the build time of a derivation (best if buil
 }
 complete_alias nix-time _complete_nix nix show-derivation
 
+pkgs() {
+    config bld --no-link pkgs."$1" | jq -r '.[0].outputs[]'
+}
+
 what() {
     local p=$(type -P "$1")
     realpath "${p:-$1}"

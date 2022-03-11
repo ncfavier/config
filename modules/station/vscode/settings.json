@@ -78,7 +78,6 @@
   "haskell.updateBehavior": "never-check",
   "haskell.plugin.ghcide-type-lenses.globalOn": false,
   "haskell.plugin.hlint.diagnosticsOn": false,
-  "window.menuBarVisibility": "hidden",
   "editor.tabSize": 2,
   "nix.enableLanguageServer": true,
   "search.useIgnoreFiles": false,
@@ -113,4 +112,5 @@
     "*.vrb",
     "*.synctex.gz"
   ],
+  "window.menuBarVisibility": "hidden",
 }

@@ -139,6 +139,16 @@ cleanup_on_exit
         sleep 1
     done &
 
+    # ram
+    while true; do
+        while read -r k v _; do case $k in
+            MemTotal:) memtotal=$v;;
+            MemAvailable:) memavailable=$v;;
+        esac done < /proc/meminfo
+        printf 'R%s\n' "$(( memavailable * 100 / memtotal ))"
+        sleep 3
+    done &
+
     # systemd
     while true; do
         failed_units=()
@@ -267,42 +277,12 @@ cleanup_on_exit
 
 while read -rn 1 event; do
     case $event in
-        W) # window manager
-            wm=
-            IFS=: read -ra parts
-            for part in "${parts[@]}"; do
-                type=${part::1}
-                item=${part:1}
-                if [[ ${type,,} == [fou] ]]; then
-                    desktop=$item
-                    item=$(desktop_label "$item")
-                    pad item
-                    item="%{A:wm focus-workspace $desktop:}%{A2:wm move-window-to-workspace $desktop:}$item%{A}%{A}"
-                    if [[ $desktop =~ ^[[:alpha:]]+$ ]]; then
-                        item="%{A3:wm go $desktop:}$item%{A}"
-                    else
-                        item="%{A3:wm focus-workspace $desktop;wm go terminal:}$item%{A}"
-                    fi
-                    case $type in
-                        f|F) f=${theme[foregroundAlt]};;&
-                        o|O) f=${theme[foreground]};;&
-                        u|U) f=${theme[hot]};;&
-                        f|o|u) item="%{F$f}$item%{F-}";;&
-                        F|O|U) item="%{F${theme[background]}}%{B$f}$item%{B-}%{F-}";;&
-                    esac
-                    wm+=$item
-                fi
-            done
-            ;;
-        T) # title
-            read -r title
-            trunc title 50
-            escape title
-            if [[ $title ]]; then
-                title=" $title"
-                pad title
-                title="%{A:bspc node -t ~floating:}%{A2:bspc node -c:}%{A3:bspc desktop -l next:}$title%{A}%{A}%{A}"
-            fi
+        B) # backlight
+            read -r percentage
+            percentage=${percentage%.*}
+            brightness="$(icon_ramp "$percentage"  10  50 ) $percentage%%"
+            pad_right brightness
+            brightness="%{A:light -S 100:}%{A3:light -S 0.8:}%{A4:backlight +:}%{A5:backlight -:}$brightness%{A}%{A}%{A}%{A}"
             ;;
         C) # clock
             read -r toggle
@@ -319,6 +299,61 @@ while read -rn 1 event; do
             printf -v clock " %($date_format %%{T$bold}$time_format%%{T-})T" -1
             pad_right clock
             clock="%{A:pkill -USR1 -P $$ -f $0 -o:}%{A3:wm go calendar:}$clock%{A}%{A}"
+            ;;
+        D) # dunst
+            read -r paused
+            dunst=
+            if (( paused )); then
+                dunst="%{F${theme[hot]}}%{F-}"
+            fi
+            ;;
+        K) # keyboard
+            read -r layout
+            if [[ $layout == "$default_layout" ]]; then
+                keyboard=
+            else
+                layout=${layout%%(*}
+                escape layout
+                keyboard=" $layout"
+                pad_right keyboard
+            fi
+            ;;
+        M) # music
+            read -r song
+            if [[ $song ]]; then
+                pad_right song
+                song="%{A2:mpc -q stop:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
+            fi
+            ;;
+        N) # network
+            IFS= read -r parts
+            network=
+            if [[ $parts ]]; then
+                while read -rn 1 type; do case $type in
+                    D) # wired
+                        read -d : interface
+                        network+=""
+                        ;;
+                    L) # wireless
+                        IFS=, read -d : interface ssid
+                        trunc ssid 15
+                        escape ssid
+                        network+="%{A:wm go wifi:}%{A}"
+                        ;;
+                    G) # wireguard
+                        read -d : interface
+                        wg=""
+                        outDev4=$(ip -j route get 1.1.1.1 | jq -r '.[0].dev')
+                        outDev6=$(ip -j route get 2606:4700:4700::1111 | jq -r '.[0].dev')
+                        if [[ $outDev4 != "$interface" || $outDev6 != "$interface" ]]; then
+                            wg="%{F${theme[hot]}}$wg%{F-}"
+                        fi
+                        wg="%{A3:wg-toggle:}$wg%{A}"
+                        network+=$wg
+                        ;;
+                esac done <<< "$parts:"
+                pad_right network
+            fi
             ;;
         P) # power
             read -r toggle
@@ -353,23 +388,13 @@ while read -rn 1 event; do
             pad_right power
             power="%{A:pkill -USR2 -P $$ -f $0 -o:}%{A3:power:}$power%{A}%{A}"
             ;;
-        K) # keyboard
-            read -r layout
-            if [[ $layout == "$default_layout" ]]; then
-                keyboard=
-            else
-                layout=${layout%%(*}
-                escape layout
-                keyboard=" $layout"
-                pad_right keyboard
+        R) # RAM
+            read -r ram_percent
+            ram=
+            if (( ram_percent <= 20 )); then
+                ram="%{F${theme[hot]}} $ram_percent%%%{F-}"
+                pad_right ram
             fi
-            ;;
-        B) # backlight
-            read -r percentage
-            percentage=${percentage%.*}
-            brightness="$(icon_ramp "$percentage"  10  50 ) $percentage%%"
-            pad_right brightness
-            brightness="%{A:light -S 100:}%{A3:light -S 0.8:}%{A4:backlight +:}%{A5:backlight -:}$brightness%{A}%{A}%{A}%{A}"
             ;;
         S) # sound
             IFS=: read -r percentage mute
@@ -381,42 +406,42 @@ while read -rn 1 event; do
             pad_right sound
             sound="%{A:wm go volume:}%{A3:volume toggle:}%{A4:volume +2:}%{A5:volume -2:}$sound%{A}%{A}%{A}%{A}"
             ;;
-        N) # network
-            IFS= read -r parts
-            network=
-            if [[ $parts ]]; then
-                while read -rn 1 type; do case $type in
-                    D) # wired
-                        read -d : interface
-                        network+=""
-                        ;;
-                    L) # wireless
-                        IFS=, read -d : interface ssid
-                        trunc ssid 15
-                        escape ssid
-                        network+="%{A:wm go wifi:}%{A}"
-                        ;;
-                    G) # wireguard
-                        read -d : interface
-                        wg=""
-                        outDev4=$(ip -j route get 1.1.1.1 | jq -r '.[0].dev')
-                        outDev6=$(ip -j route get 2606:4700:4700::1111 | jq -r '.[0].dev')
-                        if [[ $outDev4 != "$interface" || $outDev6 != "$interface" ]]; then
-                            wg="%{F${theme[hot]}}$wg%{F-}"
-                        fi
-                        wg="%{A3:wg-toggle:}$wg%{A}"
-                        network+=$wg
-                        ;;
-                esac done <<< "$parts:"
-                pad_right network
+        T) # title
+            read -r title
+            trunc title 80
+            escape title
+            if [[ $title ]]; then
+                title=" $title"
+                pad title
+                title="%{A:bspc node -t ~floating:}%{A2:bspc node -c:}%{A3:bspc desktop -l next:}$title%{A}%{A}%{A}"
             fi
             ;;
-        M) # music
-            read -r song
-            if [[ $song ]]; then
-                pad_right song
-                song="%{A2:mpc -q stop:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
-            fi
+        W) # window manager
+            wm=
+            IFS=: read -ra parts
+            for part in "${parts[@]}"; do
+                type=${part::1}
+                item=${part:1}
+                if [[ ${type,,} == [fou] ]]; then
+                    desktop=$item
+                    item=$(desktop_label "$item")
+                    pad item
+                    item="%{A:wm focus-workspace $desktop:}%{A2:wm move-window-to-workspace $desktop:}$item%{A}%{A}"
+                    if [[ $desktop =~ ^[[:alpha:]]+$ ]]; then
+                        item="%{A3:wm go $desktop:}$item%{A}"
+                    else
+                        item="%{A3:wm focus-workspace $desktop;wm go terminal:}$item%{A}"
+                    fi
+                    case $type in
+                        f|F) f=${theme[foregroundAlt]};;&
+                        o|O) f=${theme[foreground]};;&
+                        u|U) f=${theme[hot]};;&
+                        f|o|u) item="%{F$f}$item%{F-}";;&
+                        F|O|U) item="%{F${theme[background]}}%{B$f}$item%{B-}%{F-}";;&
+                    esac
+                    wm+=$item
+                fi
+            done
             ;;
         Y) # systemd
             read -ra failed_units
@@ -425,20 +450,13 @@ while read -rn 1 event; do
                 systemd="%{F${theme[hot]}}%{F-} ${failed_units[*]}"
             fi
             ;;
-        D) # dunst
-            read -r paused
-            dunst=
-            if (( paused )); then
-                dunst="%{F${theme[hot]}}%{F-}"
-            fi
-            ;;
     esac
 
     alerts=$dunst$systemd
     [[ $alerts ]] && pad_right alerts
 
     left=$wm$title
-    right=$song$mail$network$sound$brightness$im$keyboard$alerts$power$clock
+    right=$song$mail$network$sound$brightness$im$keyboard$alerts$ram$power$clock
     echo "%{l}$left%{r}$right"
 done |
 

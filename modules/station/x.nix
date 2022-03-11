@@ -112,6 +112,9 @@
         latitude = 48.0;
         longitude = 2.0;
       };
+      systemd.user.services.redshift.Service.ExecStop =
+        let term = "${pkgs.util-linux}/bin/kill $MAINPID";
+        in "${term} ; ${term}"; # don't wait for the fade-out
     };
   };
 }

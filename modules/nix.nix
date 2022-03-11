@@ -13,18 +13,18 @@
       };
     in {
       pkgsStable = importNixpkgs inputs.nixpkgs-stable;
-      pkgsLocal = importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
-      pkgsBranch = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+      pkgsRev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+        owner = "NixOS";
+        repo = "nixpkgs";
+        inherit rev sha256;
+      });
+      pkgsPR = pr: pkgsRev "refs/pull/${toString pr}/head";
+      pkgsMine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
         owner = my.githubUsername;
         repo = "nixpkgs";
         inherit rev sha256;
       });
-      pkgsPR = pr: sha256: importNixpkgs (pkgs.fetchFromGitHub {
-        owner = "NixOS";
-        repo = "nixpkgs";
-        rev = "refs/pull/${toString pr}/head";
-        inherit sha256;
-      });
+      pkgsLocal = importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
     };
 
     lib.meta = {
@@ -72,11 +72,9 @@
       gcRoots = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
     };
 
-    # systemd.services.nix-index = {
-    #   description = "Regenerate nix-index database";
-    #   serviceConfig.User = my.username;
+    # systemd.user.services.nix-index = {
+    #   description = "Periodically update the nix-index database";
     #   script = ''
-    #     ${pkgs.nix-index-unwrapped}/bin/nix-index
     #   '';
     #   startAt = "Mon 04:15";
     # };
@@ -213,6 +211,7 @@
             eval)           _complete_nix_cmd 2 nix eval -f ~/.nix-defexpr --json;;
             bld)            _complete_nix_cmd 2 nix build -f ~/.nix-defexpr --json;;
             home)           _complete_nix_cmd 2 nix shell "$configPath";;
+            build|switch)   _complete_nix_cmd 2 nix build "$configPath";;
           esac fi
         }
         complete -F _config config

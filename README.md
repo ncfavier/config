@@ -95,7 +95,7 @@ following subcommands:
 ---------------
 
 <sup id=almost>[†](#top-almost)</sup> things currently not managed by this repository include:
-- partition layouts, disk encryption
+- partition layouts, disk encryption and formatting
 - GPG private keys (used to decrypt secrets in this repository)
 - local git checkouts
 - Thunderbird configuration
