@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:ncfavier/home-manager/bspwm-dynamic-desktops";
+      url = "github:ncfavier/home-manager/live";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "nur";

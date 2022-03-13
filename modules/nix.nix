@@ -72,12 +72,18 @@
       gcRoots = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
     };
 
-    # systemd.user.services.nix-index = {
-    #   description = "Periodically update the nix-index database";
-    #   script = ''
-    #   '';
-    #   startAt = "Mon 04:15";
-    # };
+    systemd.user.services.nix-index = {
+      description = "Update the nix-index database";
+      path = [ pkgs.curl ];
+      script = ''
+        db=''${XDG_CACHE_HOME:-~/.cache}/nix-index/files
+        mkdir -p "''${db%/*}"
+        curl -fsSLR -o "$db" -z "$db" https://github.com/Mic92/nix-index-database/releases/latest/download/index-${config.nixpkgs.system}
+      '';
+      startAt = "Sun 04:15";
+    };
+    hm.xdg.configFile."systemd/user/timers.target.wants/nix-index.timer".source =
+      config.hm.lib.file.mkOutOfStoreSymlink "/etc/systemd/user/nix-index.timer";
 
     environment.etc.nixpkgs.source = inputs.nixpkgs;
     environment.etc.gc-roots.text = concatMapStrings (x: x + "\n") config.nix.gcRoots;

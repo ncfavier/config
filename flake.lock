@@ -38,16 +38,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1646921282,
-        "narHash": "sha256-BCXX89M4+BdBm+2+nCSCoxxr4p35SxASttP4OhBr36E=",
+        "lastModified": 1647198863,
+        "narHash": "sha256-Rb/dHPdcoWcwjvicSIzb68hi1Wbkt2nRbs/vRWA3aBo=",
         "owner": "ncfavier",
         "repo": "home-manager",
-        "rev": "ffe910539db2d2b3e05ddb89c10f4b7e90ac5650",
+        "rev": "15e5e3b234866a7ca3dafec6afcb3ad20ade7c2a",
         "type": "github"
       },
       "original": {
         "owner": "ncfavier",
-        "ref": "bspwm-dynamic-desktops",
+        "ref": "live",
         "repo": "home-manager",
         "type": "github"
       }

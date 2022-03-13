@@ -113,4 +113,5 @@
     "*.synctex.gz"
   ],
   "window.menuBarVisibility": "hidden",
+  "extensions.autoUpdate": false,
 }
