@@ -162,13 +162,13 @@ cleanup_on_exit
     done &
 
     # dunst
+    dbus-monitor --profile path=/org/freedesktop/Notifications,interface=org.freedesktop.DBus.Properties,member=PropertiesChanged |
+    debounce 0.1 |
     while true; do
         paused=0
-        if [[ $(timeout 0.1s dunstctl is-paused) == true ]]; then
-            paused=1
-        fi
+        [[ $(timeout 0.1s dunstctl is-paused) == true ]] && paused=1
         printf 'D%s\n' "$paused"
-        sleep 1
+        read -r
     done &
 
     # power

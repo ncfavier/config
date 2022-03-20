@@ -11,7 +11,9 @@
         justusadam.language-haskell
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      ]
+      # to update: nixpkgs/pkgs/applications/editors/vscode/extensions/update_installed_exts.sh
+      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "white";
           publisher = "arthurwhite";

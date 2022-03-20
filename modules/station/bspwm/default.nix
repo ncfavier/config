@@ -160,7 +160,7 @@ in {
         "super + asterisk" =
           "rofi -show calc";
         "super + o" =
-          "rofi -show emoji";
+          ''rofi -show emoji -theme-str 'configuration \{ font: "sans 14"; \}' '';
         "super + ctrl + f" =
           "rofi -show file-browser";
         "super + {_,shift} + Return" =

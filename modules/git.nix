@@ -36,7 +36,7 @@
         p = "push";
         pa = "push --all";
         pf = "push --force-with-lease";
-        pl = "pull --rebase --autostash";
+        pl = "pull --all";
         cl = "clone";
         cl1 = "clone --depth=1";
         l = "log --graph --oneline";

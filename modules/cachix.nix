@@ -24,13 +24,15 @@
 
     nix.settings = {
       substituters = mkOrder 1200 [
-        "https://nix-community.cachix.org"
         "https://${my.githubUsername}.cachix.org"
+        "https://nix-community.cachix.org"
+        "https://nixos-search.cachix.org"
       ];
 
       trusted-public-keys = mkOrder 1200 [
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "${my.githubUsername}.cachix.org-1:RpBMt+EIZOwVwU1CW71cWZAVJ9DCNbCMsX8VOGSf3ME="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "nixos-search.cachix.org-1:1HV3YF8az4fywnH+pAd+CXFEdpTXtv9WpoivPi+H70o="
       ];
     };
   };

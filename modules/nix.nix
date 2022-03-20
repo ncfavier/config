@@ -1,6 +1,6 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; {
   # work around issues like https://github.com/NixOS/nix/issues/3995 and https://github.com/NixOS/nix/issues/719
-  options.nix.gcRoots = mkOption {
+  options.nix.gcRoots = mkOption { # TODO remove
     description = "A list of garbage collector roots.";
     type = with types; listOf path;
     default = [];
@@ -78,7 +78,8 @@
       script = ''
         db=''${XDG_CACHE_HOME:-~/.cache}/nix-index/files
         mkdir -p "''${db%/*}"
-        curl -fsSLR -o "$db" -z "$db" https://github.com/Mic92/nix-index-database/releases/latest/download/index-${config.nixpkgs.system}
+        curl -fsSLR -o "$db" -z "$db" --retry 100 \
+          https://github.com/Mic92/nix-index-database/releases/latest/download/index-${config.nixpkgs.system}
       '';
       startAt = "Sun 04:15";
     };

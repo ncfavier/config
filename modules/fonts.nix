@@ -76,6 +76,17 @@
                   </minus>
                 </edit>
               </match>
+              <match target="font">
+                <test name="family"><string>Twitter Color Emoji</string></test>
+                <edit name="charset" mode="assign">
+                  <minus>
+                    <name>charset</name>
+                    <charset>
+                      <int>0x2122</int> <!-- ™ -->
+                    </charset>
+                  </minus>
+                </edit>
+              </match>
               <selectfont>
                 <rejectfont>
                   <pattern>
