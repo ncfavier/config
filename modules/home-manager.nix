@@ -20,5 +20,5 @@
     manual.html.enable = true;
   };
 
-  nix.gcRoots = [ inputs.home-manager ];
+  system.extraDependencies = [ inputs.home-manager ];
 }

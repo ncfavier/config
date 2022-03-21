@@ -1,5 +1,5 @@
 { lib, config, pkgs, ... }: with lib; let
-  profile = "default";
+  profile = "default"; # TODO expose
 in {
   hm = {
     programs.firefox = {
@@ -312,5 +312,5 @@ in {
     '';
   };
 
-  nix.gcRoots = [ pkgs.nur.repo-sources.rycee ];
+  system.extraDependencies = [ pkgs.nur.repo-sources.rycee ];
 }

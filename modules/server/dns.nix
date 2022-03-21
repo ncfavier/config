@@ -90,5 +90,5 @@ in {
     allowedUDPPorts = allowedTCPPorts;
   };
 
-  nix.gcRoots = [ inputs.nix-dns ];
+  system.extraDependencies = [ inputs.nix-dns ];
 }

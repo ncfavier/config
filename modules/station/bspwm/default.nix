@@ -24,7 +24,7 @@ in {
         pointer_action3 = "resize_corner";
       };
       rules = rec {
-        Firefox = {
+        firefox-default = {
           desktop = "web";
           follow = true;
         };
@@ -63,7 +63,9 @@ in {
     };
 
     xdg.configFile."bspwm/bspwmrc".onChange = ''
-      "$XDG_CONFIG_HOME"/bspwm/bspwmrc
+      if [[ -v DISPLAY ]] && pgrep bspwm > /dev/null; then
+        "$XDG_CONFIG_HOME"/bspwm/bspwmrc
+      fi
     '';
 
     home.packages = with pkgs; [

@@ -109,5 +109,5 @@ in {
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  nix.gcRoots = [ inputs.www ];
+  system.extraDependencies = [ inputs.www ];
 }

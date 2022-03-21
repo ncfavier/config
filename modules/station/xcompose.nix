@@ -158,7 +158,6 @@
     '';
 
     onChange = ''
-      rm -f "''${XDG_CACHE_HOME:-$HOME/.cache}"/ibus/compose/* # TODO https://github.com/ibus/ibus/pull/2362
       ibus restart
     '';
   };

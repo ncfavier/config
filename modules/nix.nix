@@ -1,11 +1,4 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; {
-  # work around issues like https://github.com/NixOS/nix/issues/3995 and https://github.com/NixOS/nix/issues/719
-  options.nix.gcRoots = mkOption { # TODO remove
-    description = "A list of garbage collector roots.";
-    type = with types; listOf path;
-    default = [];
-  };
-
   config = {
     _module.args = let
       importNixpkgs = nixpkgs: import nixpkgs {
@@ -69,8 +62,10 @@
         options = "--delete-older-than 30d";
       };
       optimise.automatic = true;
-      gcRoots = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
     };
+
+    # work around issues like https://github.com/NixOS/nix/issues/3995 and https://github.com/NixOS/nix/issues/719
+    system.extraDependencies = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
 
     systemd.user.services.nix-index = {
       description = "Update the nix-index database";
@@ -87,7 +82,6 @@
       config.hm.lib.file.mkOutOfStoreSymlink "/etc/systemd/user/nix-index.timer";
 
     environment.etc.nixpkgs.source = inputs.nixpkgs;
-    environment.etc.gc-roots.text = concatMapStrings (x: x + "\n") config.nix.gcRoots;
 
     environment.variables.NIX_SHELL_PRESERVE_PROMPT = "1";
 
