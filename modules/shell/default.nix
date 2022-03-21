@@ -51,6 +51,7 @@
       s = "sudo systemctl";
       u = "systemctl --user";
       j = "journalctl";
+      vim-patch = "vim -c 'au! mangle'";
 
       # Force alias expansion after these commands
       exec = "exec ";

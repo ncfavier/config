@@ -138,16 +138,18 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " set filetype to bash when editing bash dotfiles
 autocmd BufNewFile,BufRead ~/.dots/bash/* call dist#ft#SetFileTypeSH("bash")
 
-" delete trailing whitespace on write
-autocmd BufWritePre * %s/\s\+$//e
+augroup mangle " disable these when making patches
+  " delete trailing whitespace on write
+  autocmd BufWritePre * %s/\s\+$//e
 
-" auto-chmod files with a shebang
-autocmd BufWritePost * if getline(1) =~ '^#!' && !executable(expand('%:p')) | silent execute '!chmod +x -- '.shellescape(@%) | endif
+  " auto-chmod files with a shebang
+  autocmd BufWritePost * if getline(1) =~ '^#!' && !executable(expand('%:p')) | silent execute '!chmod +x -- '.shellescape(@%) | endif
+augroup END
 
 " source vimrc after writing it
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
-" upload to ix.io on write
+" edit ix.io URLs
 autocmd BufWriteCmd http://ix.io/* write !curl -F 'f:1=<-' ix.io | tee >(clip)
 
 " balance windows when the terminal is resized
