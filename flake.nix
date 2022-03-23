@@ -29,8 +29,8 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }: let
-    lib = nixpkgs.lib.extend (import ./lib);
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }: let
+    lib = (nixpkgs.lib.extend (_: _: home-manager.lib)).extend (import ./lib);
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     mkSystem = this: modules: lib.nixosSystem {

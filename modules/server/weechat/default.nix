@@ -16,6 +16,7 @@
       plugins = with availablePlugins; [ python perl ];
       scripts = with pkgs.weechatScripts; [ weechat-matrix ];
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
+        /script update
         /script install ${concatStringsSep " " scripts}
         /script load ${./autojoin.py}
         /set sec.crypt.passphrase_command "cat ${config.secrets.weechat.path}"

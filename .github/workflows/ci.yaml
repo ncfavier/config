@@ -22,7 +22,7 @@ jobs:
       #   run: nix -v flake check
       - name: Build ISO
         run: nix -vL build .#iso -o nixos.iso
-      - name: Create ISO release
+      - name: Create release
         id: release
         uses: ncfavier/action-gh-release@delete-existing
         with:
@@ -32,39 +32,3 @@ jobs:
           delete_on_existing: true
           files: nixos.iso
           fail_on_unmatched_files: true
-      - name: "Vultr: list ISOs"
-        id: list_isos
-        uses: fjogeleit/http-request-action@v1.8.1
-        with:
-          url: https://api.vultr.com/v2/iso
-          bearerToken: ${{ secrets.VULTR_API_KEY }}
-          method: GET
-      - name: Set variables
-        id: vars
-        env:
-          assets: ${{ steps.release.outputs.assets }}
-          isos: ${{ steps.list_isos.outputs.response }}
-          script: |
-            def set($name; $value): "::set-output name=\($name)::\($value)";
-            set("upload_data"; {url: $assets[0].browser_download_url}),
-            ($isos.isos |
-            set("do_vultr"; all(.sha512sum != $sha512)),
-            set("nixos_id"; map(select(.filename == "nixos.iso").id)[0] // ""))
-        run: |
-          read -r sha512 _ < <(sha512sum nixos.iso)
-          jq -nr --arg sha512 "$sha512" --argjson assets "$assets" --argjson isos "$isos" "$script"
-      - name: "Vultr: delete current nixos.iso"
-        uses: fjogeleit/http-request-action@v1.8.1
-        if: ${{ steps.vars.outputs.do_vultr == 'true' && steps.vars.outputs.nixos_id }}
-        with:
-          url: https://api.vultr.com/v2/iso/${{ steps.vars.outputs.nixos_id }}
-          bearerToken: ${{ secrets.VULTR_API_KEY }}
-          method: DELETE
-      - name: "Vultr: upload nixos.iso"
-        uses: fjogeleit/http-request-action@v1.8.1
-        if: ${{ steps.vars.outputs.do_vultr == 'true' }}
-        with:
-          url: https://api.vultr.com/v2/iso
-          bearerToken: ${{ secrets.VULTR_API_KEY }}
-          method: POST
-          data: ${{ steps.vars.outputs.upload_data }}

@@ -93,6 +93,7 @@
       nix-prefetch-github
       nix-diff
       nix-top
+      nix-output-monitor
       nix-tree
       nixpkgs-fmt
       nixpkgs-review
