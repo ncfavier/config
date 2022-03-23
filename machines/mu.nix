@@ -1,5 +1,5 @@
-{ lib, config, modulesPath, pkgs, ... }: with lib; let
-  interface = "enp1s0";
+{ lib, this, config, modulesPath, pkgs, ... }: with lib; let
+  interface = "ens3";
 in {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
@@ -8,14 +8,14 @@ in {
   boot = {
     loader.grub = {
       enable = true;
-      device = "/dev/vda";
+      device = "/dev/sda";
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
-    initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+    initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
 
     initrd.luks.devices.nixos = {
-      device = "/dev/vda2";
+      device = "/dev/sda2";
       allowDiscards = true;
       bypassWorkqueues = true;
     };
@@ -41,7 +41,15 @@ in {
     };
   };
 
-  networking.interfaces.${interface}.useDHCP = true;
+  networking.interfaces.${interface} = {
+    useDHCP = true;
+
+    ipv6.addresses = map (address: {
+      inherit address;
+      prefixLength = 64;
+    }) this.ipv6;
+  };
+
   networking.nat.externalInterface = interface;
 
   my.hashedPassword = "$6$SVHTxpoS0lwPgSjI$q9PATa2ObrGrU0ARBHQsJFK7O3T2fvtaMuzXQ8q4B1QAti7O5F.YGU./q9a0dmAK953Mbm2R/O2/TiXmaSEEH.";
