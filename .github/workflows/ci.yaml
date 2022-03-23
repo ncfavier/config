@@ -17,7 +17,7 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           extraPullNames: nix-community, mic92
           pathsToPush: nixos.iso
-      # TODO disabled for now because of https://github.com/cachix/cachix-action/issues/89
+      # disabled for now because of https://github.com/cachix/cachix-action/issues/89
       # - name: Check flake
       #   run: nix -v flake check
       - name: Build ISO
