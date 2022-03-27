@@ -116,9 +116,7 @@
             substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
           '';
         });
-      })
-      (pkgs: prev: {
-        config-cli = pkgs.writeShellScriptBin "config" ''
+        config-cli = hiPrio (pkgs.writeShellScriptBin "config" ''
           configPath=${escapeShellArg config.lib.meta.configPath}
           cmd=$1
           shift
@@ -183,7 +181,7 @@
             *)
               exec sudo nixos-rebuild -v --flake "$configPath" "$cmd" "$@";;
           esac
-        '';
+        '');
       })
     ];
 

@@ -97,7 +97,10 @@
     };
   };
 
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "yes";
+  systemd.services.syncthing = {
+    after = [ "home-manager-${my.username}.service" ]; # ensure ~/.config is created
+    environment.STNODEFAULTFOLDER = "yes";
+  };
 
   environment.systemPackages = [ config.services.syncthing.package ];
 

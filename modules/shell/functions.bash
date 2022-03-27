@@ -349,8 +349,7 @@ command_not_found_handle() {
                 pkgs[i]=${pkgs[i]%.out}
                 printf '%*d %s\n' "${#n}" "$((i+1))" "${pkgs[i]}"
             done
-            read -p "? " action
-            if [[ $action =~ ^([0-9]*)([rsi]?)$ ]]; then
+            if read -p "? " action && [[ $action =~ ^([0-9]*)([rsi]?)$ ]]; then
                 i=${BASH_REMATCH[1]:-1}
                 action=${BASH_REMATCH[2]:-s}
                 if (( 1 <= i && i <= n )); then

@@ -12,6 +12,7 @@ in {
       ];
       profiles.${profile} = with config.theme; {
         settings = {
+          "browser.download.alwaysOpenPanel" = false;
           "browser.fixup.alternate.enabled" = false;
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
           "browser.newtabpage.activity-stream.feeds.snippets" = false;
