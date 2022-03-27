@@ -14,6 +14,10 @@ in {
 
     mailserver = {
       enable = true;
+      enableImap = false;
+      enableSubmission = false;
+      enableImapSsl = true;
+      enableSubmissionSsl = true;
       localDnsResolver = false;
       fqdn = my.domain;
       domains = [ my.domain ];
