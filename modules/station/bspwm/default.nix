@@ -24,7 +24,7 @@ in {
         pointer_action3 = "resize_corner";
       };
       rules = rec {
-        firefox-default = {
+        firefox = {
           desktop = "web";
           follow = true;
         };

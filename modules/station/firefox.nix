@@ -1,5 +1,5 @@
 { lib, config, pkgs, ... }: with lib; let
-  profile = "default"; # TODO expose
+  profile = "default";
 in {
   hm = {
     programs.firefox = {

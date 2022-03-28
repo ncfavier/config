@@ -11,7 +11,7 @@
     inherit (config.my) group;
     dataDir = config.my.home;
 
-    guiAddress = "[${this.wireguard.ipv6}]:8384";
+    guiAddress = "0.0.0.0:8384";
     openDefaultPorts = true;
 
     key = config.secrets.syncthing.path;
@@ -89,10 +89,7 @@
     };
 
     extraOptions = {
-      gui = {
-        insecureAdminAccess = true;
-        theme = "default";
-      };
+      gui.theme = "default";
       options.urAccepted = -1;
     };
   };
@@ -100,6 +97,8 @@
   systemd.services.syncthing = {
     after = [ "home-manager-${my.username}.service" ]; # ensure ~/.config is created
     environment.STNODEFAULTFOLDER = "yes";
+    serviceConfig.StartLimitIntervalSec = "1min";
+    serviceConfig.StartLimitBurst = 5;
   };
 
   environment.systemPackages = [ config.services.syncthing.package ];

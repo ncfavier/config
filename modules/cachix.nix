@@ -18,7 +18,7 @@
     system.extraSystemBuilderCmds = ''
       {
         echo ${escapeShellArgs config.cachix.derivationsToPush}
-        grep -oE '\S*-man-cache' "$out/etc/man_db.conf"
+        grep -oE '\S*-man-cache' "$out/etc/man_db.conf" 2> /dev/null || true
       } > "$out/derivations-to-push"
     '';
     environment.systemPackages = with pkgs; [

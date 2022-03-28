@@ -64,8 +64,6 @@ in {
           "fd42::/16" "10.42.0.0/16"
         ];
         local-data = concatLists (mapAttrsToList (n: m: [
-          ''"${n}. A ${m.wireguard.ipv4}"'' # TODO remove
-          ''"${n}. AAAA ${m.wireguard.ipv6}"''
           ''"${n}.wg42. A ${m.wireguard.ipv4}"''
           ''"${n}.wg42. AAAA ${m.wireguard.ipv6}"''
         ]) my.machines) ++ [
@@ -82,7 +80,7 @@ in {
       };
       forward-zone = [ {
         name = ".";
-        forward-addr = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+        forward-addr = config.services.resolved.fallbackDns;
       } ];
     };
   };

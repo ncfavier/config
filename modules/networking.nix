@@ -14,11 +14,11 @@
         useDHCP = false; # specified per-interface instead
 
         hostName = mkIf (this ? hostname) this.hostname;
-        nameservers = mkDefault [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
         hosts = { # remove default hostname mappings
           "127.0.0.2" = mkForce [];
           "::1" = mkForce [];
         };
+        nameservers = mkDefault config.services.resolved.fallbackDns;
 
         firewall = {
           enable = true;
@@ -26,6 +26,8 @@
           rejectPackets = true;
         };
       };
+
+      services.resolved.fallbackDns = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
 
       environment.systemPackages = with pkgs; [
         traceroute
@@ -82,6 +84,9 @@
     }
 
     (mkIf (this.isStation or false) {
+      systemd.services.systemd-networkd-wait-online.serviceConfig.ExecStart = # TODO PR
+        [ "" "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --any" ];
+
       networking.wireless = {
         enable = true;
         userControlled.enable = true;

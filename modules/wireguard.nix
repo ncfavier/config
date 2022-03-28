@@ -5,7 +5,6 @@ in {
   config = mkMerge [
     (mkIf (this.isServer || this.isStation) {
       networking.firewall.trustedInterfaces = [ interface ];
-      services.resolved.domains = [ interface ];
     })
 
     (mkIf this.isServer {
@@ -44,13 +43,21 @@ in {
           internalIPv6s = [ "fd42::/16" ];
         };
       };
+
+      services.resolved.domains = [ interface ];
     })
 
     (mkIf this.isStation {
+      nixpkgs.overlays = [ (self: super: {
+        wireguard-tools = super.wireguard-tools.override {
+          openresolv = self.systemd; # TODO https://github.com/NixOS/nixpkgs/issues/139526
+        };
+      }) ];
+
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
         address = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
-        dns = [ my.server.wireguard.ipv4 my.server.wireguard.ipv6 ];
+        dns = [ my.server.wireguard.ipv4 my.server.wireguard.ipv6 interface ];
         peers = [
           {
             endpoint = "${head (my.server.ipv4 ++ [ my.domain ])}:${toString port}";
@@ -64,6 +71,7 @@ in {
       systemd.services."wg-quick-${interface}".after = [ "nss-lookup.target" ];
 
       environment.systemPackages = with pkgs; [
+        # TODO wg-toggle: toggle DNS
         (writeShellScriptBin "wg-toggle" ''
           ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }
           fwmark=$(sudo wg show ${interface} fwmark) || exit
