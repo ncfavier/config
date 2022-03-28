@@ -166,7 +166,7 @@ in {
         "super + ctrl + f" =
           "rofi -show file-browser";
         "super + {_,shift} + Return" =
-          "{_,BASH_STARTUP=@${my.domain}} wm go terminal";
+          "{_,BASH_STARTUP=@${my.server.hostname}} wm go terminal";
         "super + {_,shift} + {f,w,c,e,v}" =
           "wm go {_,-n} {files,web,chat,editor,video}";
         "super + ctrl + Return" =

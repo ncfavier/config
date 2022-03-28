@@ -8,11 +8,11 @@ in {
     ratelimit.enable = true;
 
     zones.${my.domain}.data = with dns.combinators; let
-      ips = {
+      here = {
         A = map a this.ipv4;
         AAAA = map aaaa this.ipv6;
       };
-    in dns.toString my.domain (ips // {
+    in dns.toString my.domain (here // {
       TTL = 60 * 60;
 
       SOA = {
@@ -41,7 +41,12 @@ in {
       CAA = letsEncrypt (my.emailFor "dns+caa");
 
       subdomains = rec {
-        "*" = ips;
+        ${this.hostname} = here;
+
+        f   = here;
+        up  = here; # → f
+        git = here; # → github
+
         github.CNAME = [ "${my.githubUsername}.github.io." ];
         glam = github;
       };
@@ -66,13 +71,7 @@ in {
         local-data = concatLists (mapAttrsToList (n: m: [
           ''"${n}.wg42. A ${m.wireguard.ipv4}"''
           ''"${n}.wg42. AAAA ${m.wireguard.ipv6}"''
-        ]) my.machines) ++ [
-          ''"fu.home. A 192.168.1.2"''
-          ''"mo.home. A 192.168.1.3"''
-          ''"no.home. A 192.168.1.5"''
-          ''"tsu.home. A 192.168.1.4"''
-          ''"printer.home. A 192.168.1.63"''
-        ];
+        ]) my.machines);
         local-data-ptr = concatLists (mapAttrsToList (n: m: [
           ''"${m.wireguard.ipv4} ${n}.wg42."''
           ''"${m.wireguard.ipv6} ${n}.wg42."''
