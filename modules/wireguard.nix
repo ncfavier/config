@@ -5,6 +5,7 @@ in {
   config = mkMerge [
     (mkIf (this.isServer || this.isStation) {
       networking.firewall.trustedInterfaces = [ interface ];
+      services.resolved.domains = [ interface ];
     })
 
     (mkIf this.isServer {

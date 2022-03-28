@@ -15,10 +15,16 @@
       source = config.hm.lib.file.mkOutOfStoreSymlink config.secrets.cachix.path;
     };
 
+    system.extraSystemBuilderCmds = ''
+      {
+        echo ${escapeShellArgs config.cachix.derivationsToPush}
+        grep -oE '\S*-man-cache' "$out/etc/man_db.conf"
+      } > "$out/derivations-to-push"
+    '';
     environment.systemPackages = with pkgs; [
       cachix
       (writeShellScriptBin "cachix-push" ''
-        exec cachix push ${my.githubUsername} ${escapeShellArgs config.cachix.derivationsToPush} "$@"
+        exec cachix push ${my.githubUsername} "$@" < /run/current-system/derivations-to-push
       '')
     ];
 

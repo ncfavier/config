@@ -10,10 +10,11 @@
   config = mkMerge [
     {
       networking = {
-        hostName = mkIf (this ? hostname) this.hostname;
+        useNetworkd = true;
+        useDHCP = false; # specified per-interface instead
 
-        useDHCP = mkDefault false;
-        nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+        hostName = mkIf (this ? hostname) this.hostname;
+        nameservers = mkDefault [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
         hosts = { # remove default hostname mappings
           "127.0.0.2" = mkForce [];
           "::1" = mkForce [];

@@ -30,7 +30,8 @@
       autologinUser = mkForce my.username;
     };
 
-    networking.useDHCP = true;
+    # networking.useNetworkd = mkForce false;
+    # networking.useDHCP = mkForce true;
 
     # reduce size
     i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];

@@ -64,8 +64,10 @@ in {
           "fd42::/16" "10.42.0.0/16"
         ];
         local-data = concatLists (mapAttrsToList (n: m: [
-          ''"${n}. A ${m.wireguard.ipv4}"''
+          ''"${n}. A ${m.wireguard.ipv4}"'' # TODO remove
           ''"${n}. AAAA ${m.wireguard.ipv6}"''
+          ''"${n}.wg42. A ${m.wireguard.ipv4}"''
+          ''"${n}.wg42. AAAA ${m.wireguard.ipv6}"''
         ]) my.machines) ++ [
           ''"fu.home. A 192.168.1.2"''
           ''"mo.home. A 192.168.1.3"''
@@ -74,16 +76,18 @@ in {
           ''"printer.home. A 192.168.1.63"''
         ];
         local-data-ptr = concatLists (mapAttrsToList (n: m: [
-          ''"${m.wireguard.ipv4} ${n}."''
-          ''"${m.wireguard.ipv6} ${n}."''
+          ''"${m.wireguard.ipv4} ${n}.wg42."''
+          ''"${m.wireguard.ipv6} ${n}.wg42."''
         ]) my.machines);
       };
       forward-zone = [ {
         name = ".";
-        forward-addr = config.networking.nameservers;
+        forward-addr = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
       } ];
     };
   };
+
+  networking.nameservers = [ "127.0.0.1" "::1" ]; # use unbound for local queries
 
   networking.firewall = rec {
     allowedTCPPorts = [ 53 ];
