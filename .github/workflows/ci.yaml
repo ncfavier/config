@@ -9,7 +9,7 @@ jobs:
       - name: Check Markdown links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
-          use-verbose-mode: true
+          use-verbose-mode: 'yes'
       - name: Install Nix
         uses: cachix/install-nix-action@v17
       - name: Set up Cachix
