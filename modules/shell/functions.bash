@@ -242,6 +242,10 @@ rfc() {
     curl -fsSL https://www.ietf.org/rfc/rfc"$n".txt | sponge | less
 }
 
+xcompose() { # print the path to the system-wide XCompose file
+    echo "$(pkgs xorg.libX11)/share/X11/locale/en_US.UTF-8/Compose"
+}
+
 args() {
     echo "$# arguments"
     if (( $# )); then

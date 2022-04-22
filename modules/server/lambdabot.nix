@@ -1,5 +1,6 @@
 { lib, config, pkgs, ... }: with lib; {
   # TODO declare imported modules (override Pristine.hs.default)
+  # TODO GHC 9
   secrets.lambdabot-ulminfo = {
     owner = config.users.users.lambdabot.name;
     group = config.users.users.lambdabot.group;

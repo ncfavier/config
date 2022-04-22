@@ -42,10 +42,12 @@
       dp = "declare -p";
       drv = "nix show-derivation";
       fc-grep = "fc-list | rg -i";
+      http = "python -m http.server";
       l = "ls -l";
       ll = "ls -la";
       nwd = "nix why-depends";
       o = "xdg-open";
+      pr = "gh pr create --web";
       rgs = "rg --sort path";
       tall = "tail -f -n +1";
       s = "sudo systemctl";

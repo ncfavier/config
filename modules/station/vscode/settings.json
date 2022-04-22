@@ -5,7 +5,7 @@
   "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
-  "workbench.colorTheme": "White Night",
+  "workbench.colorTheme": "1984",
   "workbench.colorCustomizations": {
     "[White Night]": {
       "activityBar.foreground": "#555566",
@@ -71,9 +71,7 @@
   "coq.showProofViewOn": "open-script",
   "coqtop.startOn": "open-script",
   "diffEditor.codeLens": true,
-  "editor.codeLensFontFamily": "monospace",
   "editor.codeLensFontSize": 13,
-  "editor.renderFinalNewline": false,
   "haskell.plugin.tactics.globalOn": false,
   "haskell.updateBehavior": "never-check",
   "haskell.plugin.ghcide-type-lenses.globalOn": false,
@@ -85,7 +83,6 @@
     "**/result": true,
     "**/result-*": true
   },
-  "editor.fontSize": 15,
   "latex-workshop.latex.clean.fileTypes": [
     "*.aux",
     "*.bbl",
@@ -114,4 +111,12 @@
   ],
   "window.menuBarVisibility": "hidden",
   "extensions.autoUpdate": false,
+  "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
+  "agdaMode.view.panelMountPosition": "right",
+  "agdaMode.highlighting.getHighlightWithThemeColors": false,
+  "editor.codeLensFontFamily": "monospace",
+  "editor.fontSize": 15,
+  "files.insertFinalNewline": true,
+  "editor.renderFinalNewline": false,
+  "files.trimFinalNewlines": true,
 }

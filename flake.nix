@@ -2,9 +2,9 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-21.11";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-21.11";
+    nixos-hardware.url = "nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";

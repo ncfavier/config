@@ -5,6 +5,8 @@ in {
   config = mkMerge [
     (mkIf (this.isServer || this.isStation) {
       networking.firewall.trustedInterfaces = [ interface ];
+
+      systemd.network.wait-online.ignoredInterfaces = [ interface ];
     })
 
     (mkIf this.isServer {
@@ -50,14 +52,17 @@ in {
     (mkIf this.isStation {
       nixpkgs.overlays = [ (self: super: {
         wireguard-tools = super.wireguard-tools.override {
-          openresolv = self.systemd; # TODO https://github.com/NixOS/nixpkgs/issues/139526
+          openresolv = self.systemd;
         };
       }) ];
 
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
         address = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
-        dns = [ my.server.wireguard.ipv4 my.server.wireguard.ipv6 interface ];
+        dns = [
+          my.server.wireguard.ipv4 my.server.wireguard.ipv6
+          interface # search domain
+        ];
         peers = [
           {
             endpoint = "${head (my.server.ipv4 ++ [ my.domain ])}:${toString port}";
@@ -68,10 +73,12 @@ in {
         ];
       };
 
-      systemd.services."wg-quick-${interface}".after = [ "nss-lookup.target" ];
+      environment.etc."systemd/networkd.conf".text = ''
+        [Network]
+        ManageForeignRoutingPolicyRules=no
+      '';
 
       environment.systemPackages = with pkgs; [
-        # TODO wg-toggle: toggle DNS
         (writeShellScriptBin "wg-toggle" ''
           ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }
           fwmark=$(sudo wg show ${interface} fwmark) || exit

@@ -1,13 +1,5 @@
 [
     {
-        "key": "ctrl+tab",
-        "command": "workbench.action.nextEditor"
-    },
-    {
-        "key": "ctrl+shift+tab",
-        "command": "workbench.action.previousEditor"
-    },
-    {
         "key": "ctrl+w",
         "command": "-extension.vim_ctrl+w",
         "when": "editorTextFocus && vim.active && vim.use<C-w> && !inDebugRepl"
@@ -84,5 +76,36 @@
     {
         "key": "ctrl+shift+w",
         "command": "-workbench.action.closeWindow"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "-extension.vim_ctrl+c",
+        "when": "editorTextFocus && vim.active && vim.overrideCtrlC && vim.use<C-c> && !inDebugRepl"
+    },
+    {
+        "key": "ctrl+8",
+        "command": "agda-mode.input-symbol[Activate]",
+        "when": "editorLangId == 'agda'"
+    },
+    {
+        "key": "\\",
+        "command": "-agda-mode.input-symbol[Activate]",
+        "when": "editorLangId == 'agda'"
+    },
+    {
+        "key": "ctrl+tab",
+        "command": "workbench.action.nextEditorInGroup"
+    },
+    {
+        "key": "ctrl+k ctrl+pagedown",
+        "command": "-workbench.action.nextEditorInGroup"
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.previousEditorInGroup"
+    },
+    {
+        "key": "ctrl+k ctrl+pageup",
+        "command": "-workbench.action.previousEditorInGroup"
     }
 ]

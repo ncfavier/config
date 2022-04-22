@@ -1,17 +1,10 @@
 { lib, this, config, pkgs, ... }: with lib; {
-  options.networking = with types; {
-    interfaces = mkOption {
-      type = attrsOf (submodule {
-        tempAddress = "disabled";
-      });
-    };
-  };
-
   config = mkMerge [
     {
       networking = {
         useNetworkd = true;
         useDHCP = false; # specified per-interface instead
+        tempAddresses = "disabled";
 
         hostName = mkIf (this ? hostname) this.hostname;
         hosts = { # remove default hostname mappings
@@ -73,23 +66,9 @@
         capabilities = "cap_net_admin,cap_net_raw+p";
         source = "${pkgs.nethogs}/bin/nethogs";
       };
-      nixpkgs.overlays = [ (pkgs: prev: {
-        nethogs = prev.nethogs.overrideAttrs (o: {
-          src = pkgs.fetchFromGitHub {
-            owner = "raboof";
-            repo = "nethogs";
-            rev = "54f88038f6c6c44c9c642cac5dc90f21d4cb84b9";
-            sha256 = "qnCphrVRh7bl+e5B6pbz32cCdmD8eiWbnHOWLGetmJQ=";
-          };
-          patches = [];
-        });
-      }) ];
     }
 
     (mkIf (this.isStation or false) {
-      systemd.services.systemd-networkd-wait-online.serviceConfig.ExecStart = # TODO PR
-        [ "" "${config.systemd.package}/lib/systemd/systemd-networkd-wait-online --any" ];
-
       networking.wireless = {
         enable = true;
         userControlled.enable = true;
@@ -102,6 +81,8 @@
       };
 
       environment.systemPackages = with pkgs; [ wpa_supplicant_gui ];
+
+      systemd.network.wait-online.anyInterface = true;
     })
   ];
 }

@@ -37,6 +37,10 @@
       })
       pandoc
       coq_8_14
+      (agda.withPackages (p: with p; [
+        standard-library
+        cubical
+      ]))
       audacity
       gimp
       transmission-gtk

@@ -1,5 +1,5 @@
 { config, pkgs, ... }: let
-  version = "1.17.1";
+  version = "1.18.2";
 in {
   hm = {
     home.packages = with pkgs; [
@@ -18,16 +18,16 @@ in {
       config.hm.lib.file.mkOutOfStoreSymlink "${config.synced.saves.path}/minecraft";
     home.file.".minecraft/mods".source = pkgs.linkFarmFromDrvs "minecraft-mods" [
       (pkgs.fetchurl {
-        url = "https://github.com/CaffeineMC/sodium-fabric/releases/download/mc1.17.1-0.3.3/sodium-fabric-mc1.17.1-0.3.3+build.8.jar";
-        sha256 = "1c78nwvs3fv41w9v405sz7vp33vby40slaynd2cn7xrqn1zsh6xr";
+        url = "https://github.com/CaffeineMC/sodium-fabric/releases/download/mc1.18.2-0.4.1/sodium-fabric-mc1.18.2-0.4.1+build.15.jar";
+        sha256 = "sha256-d2+zzYyN3uiY6x2dyIpy2JmqqHkvIZFLOa2ZDOolN4Q=";
       })
       (pkgs.fetchurl {
-        url = "https://github.com/CaffeineMC/lithium-fabric/releases/download/mc1.17.1-0.7.5/lithium-fabric-mc1.17.1-0.7.5.jar";
-        sha256 = "041j50vccb5yk3957g1nl7vk701rbq3ggsid3mm91sbfkm1ys00w";
+        url = "https://github.com/CaffeineMC/lithium-fabric/releases/download/mc1.18.2-0.7.9/lithium-fabric-mc1.18.2-0.7.9.jar";
+        sha256 = "sha256-GdV7g/3YhZOiGSEabmk2vY3ZCVf9GeVoH/qFb+Nlv1g=";
       })
       (pkgs.fetchurl {
-        url = "https://github.com/CaffeineMC/phosphor-fabric/releases/download/mc1.17.x-0.8.0/phosphor-fabric-mc1.17.x-0.8.0.jar";
-        sha256 = "1klcacydjh0j16ibsjbzdqxa1in87mrspiz8yc52p5bvihc3yaxr";
+        url = "https://github.com/CaffeineMC/phosphor-fabric/releases/download/mc1.18.x-0.8.1/phosphor-fabric-mc1.18.x-0.8.1.jar";
+        sha256 = "sha256-QqE532MANA8jzaRFf8C6fjkSTBusBdiSMrAWe9UeanU=";
       })
     ];
     home.file.".minecraft/options.txt".source =

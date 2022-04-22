@@ -17,7 +17,9 @@
 
       # Math
       <Multi_key> <o> <o> : "∘"
+      <Multi_key> <equal> <equal> : "≡"
       <Multi_key> <asciitilde> <equal> : "≃"
+      <Multi_key> <equal> <asciitilde> : "≅"
       <Multi_key> <asciitilde> <asciitilde> : "≈"
       <Multi_key> <question> <equal> : "≟"
       <Multi_key> <less> <less> : "≪"
@@ -44,6 +46,8 @@
       <Multi_key> <equal> <i> <n> <c> : "⊆"
       <Multi_key> <c> <u> <p> : "∪"
       <Multi_key> <c> <a> <p> : "∩"
+      <Multi_key> <s> <q> <c> <u> <p> : "⊔"
+      <Multi_key> <s> <q> <c> <a> <p> : "⊓"
       <Multi_key> <slash> <0> : "∅"
       <Multi_key> <i> <n> <f> : "∞"
       <Multi_key> <a> <l> <e> <p> <h> : "ℵ"
@@ -79,6 +83,7 @@
       <Multi_key> <underscore> <m> : "ₘ"
       <Multi_key> <underscore> <n> : "ₙ"
       <dead_circumflex> <n> : "ⁿ"
+      <Multi_key> <e> <l> : "ℓ"
       <Multi_key> <C> <P> : "𝒫"
       <Multi_key> <B> <A> : "𝔸"
       <Multi_key> <B> <B> : "𝔹"
@@ -136,6 +141,7 @@
       <Multi_key> <c> <e> <l> : "⌈"
       <Multi_key> <c> <e> <r> : "⌉"
       <Multi_key> <asterisk> <asterisk> : "•"
+      <Multi_key> <asterisk> <period> : "∙"
       <Multi_key> <asterisk> <o> : "◦"
       <Multi_key> <2> <exclam> : "‼"
       <Multi_key> <2> <question> : "⁇"
@@ -158,7 +164,7 @@
     '';
 
     onChange = ''
-      ibus restart
+      ibus restart || true
     '';
   };
 }

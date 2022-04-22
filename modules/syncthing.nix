@@ -1,4 +1,4 @@
-{ lib, this, config, ... }: with lib; {
+{ lib, config, ... }: with lib; {
   imports = [
     (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "folders" ])
   ];
@@ -61,6 +61,7 @@
       saves = {
         path = "${config.my.home}/sync/saves";
         devices = allDevicesExceptPhone;
+        watch = false;
         versioning = trashcan;
       };
       irc-logs = {

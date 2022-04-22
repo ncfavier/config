@@ -21,6 +21,12 @@
           sha256 = "1zybp2px5pqd0hkigvdxf9a8yb2j1fmw20sgi7h7pmsxdxpz7yzl";
         }
         {
+          name = "agda-mode";
+          publisher = "banacorn";
+          version = "0.3.7";
+          sha256 = "sha256-K+kXyJ1ySdPiQQBKWPCC3xNQii0zu1jeKJDkRv1qtEI=";
+        }
+        {
           name = "night-owl-light-bold";
           publisher = "feego";
           version = "0.0.11";

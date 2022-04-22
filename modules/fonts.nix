@@ -23,6 +23,7 @@
           source-han-mono
           iosevka
           roboto
+          inriafonts
           twitter-color-emoji
           noto-fonts-emoji
           symbola

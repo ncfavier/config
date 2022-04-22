@@ -52,7 +52,17 @@
           };
         };
 
-        nixpkgs.flake = inputs.nixpkgs;
+        nixpkgs = if (inputs.nixpkgs ? rev) then {
+          exact = false;
+          to = {
+            type = "github";
+            owner = "NixOS";
+            repo = "nixpkgs";
+            inherit (inputs.nixpkgs) rev;
+          };
+        } else {
+          flake = inputs.nixpkgs;
+        };
       };
 
       nixPath = [ "nixpkgs=/etc/nixpkgs" ];
@@ -145,6 +155,7 @@
                 for input do args+=(--update-input "$input"); done
                 exec nix flake lock "$configPath" "''${args[@]}"
               else
+                # https://github.com/NixOS/nix/issues/6095 prevents using config-git here
                 exec nix flake update -v "$configPath"
               fi;;
 

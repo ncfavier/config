@@ -1,8 +1,5 @@
 { lib, pkgs, ... }: with lib; {
-  programs.vim = {
-    defaultEditor = true;
-    package = pkgs.vim_configurable;
-  };
+  programs.vim.defaultEditor = true;
 
   hm = {
     programs.vim = {
@@ -11,6 +8,7 @@
         ctrlp
         nerdtree
         nerdcommenter
+        vim-sleuth
         vim-surround
         vim-easy-align
         vim-bracketed-paste
@@ -19,6 +17,7 @@
         vim-nix
         Coqtail
         coc-nvim
+        agda-vim
       ];
       extraConfig = readFile ./rc.vim;
     };
