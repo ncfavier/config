@@ -1,6 +1,5 @@
 { lib, config, pkgs, ... }: with lib; {
   # TODO declare imported modules (override Pristine.hs.default)
-  # TODO GHC 9
   secrets.lambdabot-ulminfo = {
     owner = config.users.users.lambdabot.name;
     group = config.users.users.lambdabot.group;
@@ -16,7 +15,7 @@
         "comonad"
         "containers"
         "kan-extensions"
-        "lens_5_1" # https://github.com/ekmett/lens/commit/0160d7d93c
+        "lens"
         "linear"
         "megaparsec"
         "mtl"
@@ -35,6 +34,7 @@
           "base",
           "bifunctors",
           "bytestring",
+          "ghc-prim",
           "lambdabot-trusted",
           "random",
           "semigroupoids",
@@ -74,6 +74,7 @@
           "KindSignatures",
           "LambdaCase",
           "LiberalTypeSynonyms",
+          "LinearTypes",
           "MonadComprehensions",
           "MultiParamTypeClasses",
           "MultiWayIf",
@@ -126,6 +127,8 @@
     };
   };
 
+  my.extraGroups = [ "lambdabot" ];
+
   nixpkgs.overlays = [ (pkgs: prev: let
     lambdabot = pkgs.fetchFromGitHub {
       owner = "ncfavier";
@@ -136,9 +139,7 @@
   in {
     haskell = prev.haskell // {
       packageOverrides = hpkgs: hprev: {
-        lambdabot-core = hprev.lambdabot-core.overrideAttrs (o: {
-          src = "${lambdabot}/lambdabot-core";
-        });
+        lambdabot-core = hprev.lambdabot-core.overrideAttrs (_: { src = "${lambdabot}/lambdabot-core"; });
         lambdabot-reference-plugins = hpkgs.callCabal2nix "lambdabot-reference-plugins" "${lambdabot}/lambdabot-reference-plugins" {};
       };
     };
