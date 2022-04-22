@@ -85,6 +85,7 @@ following subcommands:
 - `compare` allows me to compare the locked version of a flake input to the current upstream version.
 - `update` updates flake inputs.
 - `repl`, `eval` and `bld` run `nix repl`, `nix eval` and `nix build` respectively on `~/.nix-defexpr`. These three commands can be made to use the config from the worktree rather than the currently activated config by passing `--wip`.
+<!-- markdown-link-check-disable-next-line -->
 - `specialise` switches to a [specialisation](https://nixos.org/manual/nixos/unstable/options.html#opt-specialisation). I am not currently using this.
 - `revert` is meant to be used after `config test` or `config specialise` to revert to the latest generation of the system profile.
 - `home` builds and activates my Home Manager configuration without building the whole
