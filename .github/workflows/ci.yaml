@@ -8,6 +8,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Check Markdown links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: true
       - name: Install Nix
         uses: cachix/install-nix-action@v17
       - name: Set up Cachix
