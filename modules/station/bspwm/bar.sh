@@ -164,12 +164,12 @@ cleanup_on_exit
     # dunst
     dbus-monitor --profile path=/org/freedesktop/Notifications,interface=org.freedesktop.DBus.Properties,member=PropertiesChanged |
     debounce 0.1 |
-    while true; do
+    while
         paused=0
         [[ $(timeout 0.1s dunstctl is-paused) == true ]] && paused=1
         printf 'D%s\n' "$paused"
         read -r
-    done &
+    do :; done &
 
     # power
     if [[ $battery ]]; then

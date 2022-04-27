@@ -83,6 +83,12 @@
       environment.systemPackages = with pkgs; [ wpa_supplicant_gui ];
 
       systemd.network.wait-online.anyInterface = true;
+
+      systemd.network.networks."30-home" = {
+        matchConfig.BSSID = "00:25:15:b1:89:b8";
+        DHCP = "yes";
+        domains = [ "~home" ];
+      };
     })
   ];
 }

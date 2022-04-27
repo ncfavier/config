@@ -190,7 +190,7 @@
               hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
               exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@";;
             *)
-              exec sudo nixos-rebuild -v --flake "$configPath" "$cmd" "$@";;
+              exec nixos-rebuild -v --flake "$configPath" --use-remote-sudo "$cmd" "$@";;
           esac
         '');
       })
@@ -245,6 +245,7 @@
 
       home.activation.updateNixpkgsTag = ''
         ${optionalString (inputs.nixpkgs ? rev) ''
+        $DRY_RUN_CMD ${pkgs.git}/bin/git -C ${config.my.home}/git/nixpkgs fetch --all || true
         $DRY_RUN_CMD ${pkgs.git}/bin/git -C ${config.my.home}/git/nixpkgs tag -f current ${inputs.nixpkgs.rev} || true
         ''}
       '';

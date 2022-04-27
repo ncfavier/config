@@ -48,8 +48,8 @@
       src = fetchFromGitHub {
         owner = "jxsl13";
         repo = "zcatch";
-        rev = "v${version}";
-        sha256 = "XwoGf4Se3Yfxmi7uNzRrHp1VMkGIwWnRkWTjXlePsMM=";
+        rev = "e6e87a7fd84f24ef9306c39275ad7003965e55dd";
+        sha256 = "sha256-3rFHUWyjGRHgVld8uj7BAaTndpAGWgSMwXUfhNsfbgY=";
         fetchSubmodules = true;
       };
       postPatch = ''
