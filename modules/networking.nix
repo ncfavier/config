@@ -84,6 +84,11 @@
 
       systemd.network.wait-online.anyInterface = true;
 
+      systemd.network.networks."30-sncf" = {
+        matchConfig.SSID = "_SNCF_WIFI_INOUI";
+        DHCP = "yes";
+        domains = [ "~sncf" ];
+      };
       systemd.network.networks."30-home" = {
         matchConfig.BSSID = "00:25:15:b1:89:b8";
         DHCP = "yes";

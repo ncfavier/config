@@ -15,7 +15,7 @@
     home.stateVersion = config.system.stateVersion;
     home.enableNixpkgsReleaseCheck = false;
 
-    systemd.user.startServices = true;
+    systemd.user.startServices = "sd-switch";
 
     manual.html.enable = true;
   };

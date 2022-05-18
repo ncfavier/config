@@ -81,7 +81,7 @@ module also defines a `config` command which I use to manage my systems. It has 
 following subcommands:
 
 - `env` is meant to be *sourced* in scripts (as in `. config env`) and exports
-  a few common variables using `lib.toBash`.
+  a few common variables using `lib.toShellVars`.
 - `compare` allows me to compare the locked version of a flake input to the current upstream version.
 - `update` updates flake inputs.
 - `repl`, `eval` and `bld` run `nix repl`, `nix eval` and `nix build` respectively on `~/.nix-defexpr`. These three commands can be made to use the config from the worktree rather than the currently activated config by passing `--wip`.

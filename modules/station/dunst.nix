@@ -1,7 +1,15 @@
-{ lib, config, pkgs, pkgsRev, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   hm.services.dunst = {
     enable = true;
-    package = (pkgsRev "c82b46413401efa740a0b994f52e9903a4f6dcd5" "13s8g6p0gzpa1q6mwc2fj2v451dsars67m4mwciimgfwhdlxx0bk").dunst;
+    package = pkgs.dunst.overrideAttrs (o: {
+      version = "unstable";
+      src = pkgs.fetchFromGitHub {
+        owner = "dunst-project";
+        repo = "dunst";
+        rev = "6c9f83bcdd8e9eb5d81c3f6c43e2dfa5afd72fe7";
+        sha256 = "sha256-hGsSPNODNPgGoZZAvAXo8OzFsOvn9bFwa0p1VMWfpTE=";
+      };
+    });
 
     settings = with config.theme; rec {
       global = {

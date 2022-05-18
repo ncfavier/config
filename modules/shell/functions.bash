@@ -292,6 +292,12 @@ nix-build-delete() { # useful for running NixOS tests
 }
 complete_alias nix-build-delete _nix_completion nix-build
 
+nbe() {
+    local expr=$1
+    shift
+    nix-build -E "with import ./. {}; $expr" "$@"
+}
+
 nix-time() { # get a lower bound on the build time of a derivation (best if build wasn't interrupted) https://github.com/NixOS/nix/issues/1710
     local drv name prefix log birth mod
     drv=$(nix show-derivation "$1" | jq -r 'keys[0]')

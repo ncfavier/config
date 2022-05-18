@@ -40,7 +40,6 @@ in {
           desktop = "files";
           follow = true;
         };
-        ".thunar-wrapped_" = Thunar;
       } // genAttrs [
         "feh"
         "mpv"

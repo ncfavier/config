@@ -51,18 +51,6 @@
             repo = "config";
           };
         };
-
-        nixpkgs = if (inputs.nixpkgs ? rev) then {
-          exact = false;
-          to = {
-            type = "github";
-            owner = "NixOS";
-            repo = "nixpkgs";
-            inherit (inputs.nixpkgs) rev;
-          };
-        } else {
-          flake = inputs.nixpkgs;
-        };
       };
 
       nixPath = [ "nixpkgs=/etc/nixpkgs" ];
@@ -132,12 +120,12 @@
           shift
           case $cmd in
             env) # meant to be sourced
-              ${toBash config.lib.shellEnv}
+              ${toShellVars config.lib.shellEnv}
               ;;
 
             compare)
               input=$1
-              . <(nix flake metadata config --json | jq -r --arg input "$input" '
+              . <(nix flake metadata --json config | jq -r --arg input "$input" '
                 def browse($url): @sh "xdg-open \($url)";
                 .locks.nodes[$input] |
                 if .locked.type == "github" then
@@ -158,6 +146,14 @@
                 # https://github.com/NixOS/nix/issues/6095 prevents using config-git here
                 exec nix flake update -v "$configPath"
               fi;;
+            rev)
+              nix flake metadata --json config |
+                if (( $# )); then
+                  jq -r --arg input "$1" '.locks.nodes[$input].locked.rev'
+                else
+                  jq -r '.revision // "dirty"'
+                fi
+              ;;
 
             repl|eval|bld)
               args=()
@@ -241,13 +237,6 @@
           inherit (local) config;
           inherit (local.config.system.build) toplevel vm vmWithBootLoader manual;
         } // machines // local._module.args
-      '';
-
-      home.activation.updateNixpkgsTag = ''
-        ${optionalString (inputs.nixpkgs ? rev) ''
-        $DRY_RUN_CMD ${pkgs.git}/bin/git -C ${config.my.home}/git/nixpkgs fetch --all || true
-        $DRY_RUN_CMD ${pkgs.git}/bin/git -C ${config.my.home}/git/nixpkgs tag -f current ${inputs.nixpkgs.rev} || true
-        ''}
       '';
     };
   };

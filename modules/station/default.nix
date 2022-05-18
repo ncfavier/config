@@ -63,6 +63,11 @@
       })
     ];
 
+    hm.home.file.".agda/defaults".text = ''
+      standard-library
+      cubical
+    '';
+
     my.extraGroups = [ "audio" "video" "wireshark" ];
   };
 }

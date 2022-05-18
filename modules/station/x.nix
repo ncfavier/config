@@ -39,12 +39,6 @@
           [[ -f ~/.fehbg ]] && ~/.fehbg &
           ${pkgs.xorg.xset}/bin/xset -b
         '';
-
-        pointerCursor = {
-          package = pkgs.gnome.adwaita-icon-theme;
-          name = "Adwaita";
-          size = 16;
-        };
       };
 
       programs.bash.profileExtra = ''
@@ -61,6 +55,13 @@
 
       systemd.user.services.setxkbmap.Service.ExecStartPost =
         "${pkgs.xorg.xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'";
+
+      home.pointerCursor = {
+        package = pkgs.gnome.adwaita-icon-theme;
+        name = "Adwaita";
+        size = 16;
+        x11.enable = true;
+      };
 
       home.packages = with pkgs; [
         xorg.xev

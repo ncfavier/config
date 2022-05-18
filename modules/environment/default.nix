@@ -71,7 +71,7 @@
         ${optionalString (deps != []) ''
         PATH=${makeBinPath deps}''${PATH+:$PATH}
         ''}
-        ${toBash vars}
+        ${toShellVars vars}
         ${readFile src}
       '';
 

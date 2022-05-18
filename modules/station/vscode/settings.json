@@ -119,4 +119,7 @@
   "files.insertFinalNewline": true,
   "editor.renderFinalNewline": false,
   "files.trimFinalNewlines": true,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "workbench.editor.untitled.hint": "hidden",
+  "security.workspace.trust.enabled": false,
 }

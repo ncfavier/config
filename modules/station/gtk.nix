@@ -40,6 +40,8 @@
     xdg.configFile."gtk-3.0/bookmarks".force = true;
     home.file.".icons/default/index.theme".force = true;
 
+    home.pointerCursor.gtk.enable = true;
+
     # live reloading
     services.xsettingsd = {
       enable = true;
