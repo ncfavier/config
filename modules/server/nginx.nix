@@ -27,8 +27,11 @@ in {
       };
     in {
       ${my.domain} = ssl // {
-        serverAliases = [ "www.${my.domain}" ];
         root = inputs.www;
+      };
+
+      "www.${my.domain}" = ssl // {
+        globalRedirect = my.domain;
       };
 
       "f.${my.domain}" = ssl // {

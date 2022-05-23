@@ -43,6 +43,7 @@ in {
       subdomains = rec {
         ${this.hostname} = here;
 
+        www = here; # → @
         f   = here;
         up  = here; # → f
         git = here; # → github
