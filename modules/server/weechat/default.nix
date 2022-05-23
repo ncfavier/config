@@ -3,7 +3,6 @@
   scripts = [
     "color_popup.pl"
     "highmon.pl"
-    "perlexec.pl"
     "autosort.py"
     "buffer_autoset.py"
     "colorize_nicks.py"
@@ -14,11 +13,9 @@
   weechat = pkgs.weechat.override {
     configure = { availablePlugins, ... }: {
       plugins = with availablePlugins; [ python perl ];
-      scripts = with pkgs.weechatScripts; [ weechat-matrix ];
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
         /script update
         /script install ${concatStringsSep " " scripts}
-        /script load ${./autojoin.py}
         /set sec.crypt.passphrase_command "cat ${config.secrets.weechat.path}"
         /set relay.network.bind_address ${this.wireguard.ipv4}
         /set relay.port.weechat ${toString relayPort}
@@ -57,4 +54,16 @@ in {
   environment.systemPackages = with pkgs; [ lolcat ];
 
   lib.shellEnv.weechat_fifo = "${config.hm.xdg.cacheHome}/weechat/weechat_fifo";
+
+  nixpkgs.overlays = [ (self: super: {
+    weechat-unwrapped = super.weechat-unwrapped.overrideAttrs (o: {
+      patches = o.patches or [] ++ [
+        (self.fetchpatch {
+          url = "https://github.com/weechat/weechat/commit/d4d8117461c20b075332bb3d2a1fc8493d92a9d7.patch";
+          excludes = [ "ChangeLog.adoc" ];
+          hash = "sha256-hMti1TGbtduxx6JoyG7gFGBROTa8bF0e44k+v5kIWRk=";
+        })
+      ];
+    });
+  }) ];
 }
