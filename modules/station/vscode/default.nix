@@ -23,8 +23,8 @@
         {
           name = "agda-mode";
           publisher = "banacorn";
-          version = "0.3.8";
-          sha256 = "sha256-DCbW1bE1nqFNqJtM/CQ0RuELIoT4KsQmrEHtzW9GQ50=";
+          version = "0.3.9";
+          sha256 = "sha256-qzpAtEDcAwE6viqW1sHc0HtW6gEtymE/gX112mhNF0c=";
         }
         {
           name = "night-owl-light-bold";

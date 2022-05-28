@@ -320,6 +320,10 @@ what() {
 }
 complete -c what
 
+what-provides() {
+    nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1"
+}
+
 fdnp() {
     fd -L "$@" $NIX_PROFILES
 }
@@ -351,7 +355,7 @@ command_not_found_handle() {
         local pkgs=() i n action
         printf '%s\n' "$1: command not found" >&2
         if [[ -t 1 ]] && {
-            readarray -t pkgs < <(nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1")
+            readarray -t pkgs < <(what-provides "$1")
             (( n = ${#pkgs[@]} ))
         }; then
             echo "It is provided by the following attributes:"

@@ -35,6 +35,7 @@ in {
         "Alacritty:irc" = {
           desktop = "chat";
           follow = true;
+          state = "pseudo_tiled";
         };
         Thunar = {
           desktop = "files";

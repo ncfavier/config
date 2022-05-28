@@ -93,6 +93,34 @@
             magic miscellaneous perl pets platitudes science songs-poems translate-me wisdom zippy |
         tr -s '[:space:]' '[ *]'
       '')
+      (writeShellScriptBin "gh-default-branch" ''
+        gh api graphql -F owner='{owner}' -F repo='{repo}' -f query='
+          query($owner: String!, $repo: String!) {
+            repository(owner: $owner, name: $repo) {
+              defaultBranchRef { name }
+            }
+          }
+        ' --jq .data.repository.defaultBranchRef.name
+      '')
+      (writeShellScriptBin "gh-prs-for-file" ''
+        file=$1
+        branch=''${2-$(gh-default-branch)}
+        gh api graphql --paginate -F owner='{owner}' -F repo='{repo}' -F branch="$branch" -f query='
+          query($owner: String!, $repo: String!, $branch: String!, $endCursor: String) {
+            repository(owner: $owner, name: $repo) {
+              pullRequests(first: 100, after: $endCursor, states: OPEN, baseRefName: $branch) {
+                nodes {
+                  number
+                  files(first: 100) {
+                    nodes { path }
+                  }
+                }
+                pageInfo { hasNextPage endCursor }
+              }
+            }
+          }
+        ' | jq -r --arg file "$file" '.data.repository.pullRequests.nodes[] | select(.files.nodes | any(.path | test("^\($file)$"; ""))).number'
+      '')
     ];
   };
 }

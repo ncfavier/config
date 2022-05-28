@@ -2,6 +2,11 @@ shopt -s lastpipe
 
 . config env
 
+die() {
+    echo "$@" >&2
+    exit 1
+}
+
 focus-window() {
     local node wm_data=$(bspc wm -d)
     local -A nodes=()
@@ -38,7 +43,6 @@ get-workspaces() {
 }
 
 terminal() {
-    local instance title focus_title columns lines hold
     if [[ $instance || $focus_title ]]; then
         class=alacritty instance="$instance" title="$focus_title" focus-window && return
     fi
@@ -57,11 +61,13 @@ go() {
         shift
         focus-window() { return 1; }
     fi
-    case $1 in
+    app=$1
+    shift
+    case $app in
         term|terminal)
-            terminal &;;
+            terminal "$@" &;;
         chat|irc)
-            instance=irc terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
+            instance=irc lines=100 columns=140 terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
         editor)
             focus_title='- VIM$' terminal vim &;;
         web|browser)
@@ -80,6 +86,8 @@ go() {
             instance=calendar title=calendar columns=64 lines=9 hold=1 terminal cal -3 &;;
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
+        *)
+            die "unknown application $app";;
     esac
 }
 
@@ -107,4 +115,6 @@ case $cmd in
     quit)
         kill "$(< "$XDG_RUNTIME_DIR/bar.pid")" 2> /dev/null
         bspc quit;;
+    *)
+        die "no such command: $cmd";;
 esac

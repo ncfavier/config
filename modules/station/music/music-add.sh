@@ -1,16 +1,16 @@
 shopt -s nullglob lastpipe
 
 die() {
-    (( $# > 0 )) && printf '%s\n' "$1" >&2
+    (( $# )) && printf '%s\n' "$1" >&2
     exit 1
 }
 
 ask() {
-    local prompt=$1 default=${2:-y} yn
-    [[ ${default,,} == y* ]] && prompt+=" [Y/n]" || prompt+=" [y/N]"
-    read -rp "$prompt " -n 1 yn
-    if [[ $yn ]]; then echo; else yn=$default; fi
-    [[ ${yn,,} == y* ]]
+    local prompt=$1 default=${2:-y}
+    read -rp "$prompt " -n 1 answer
+    if [[ $answer ]]; then echo; else answer=$default; fi
+    answer=${answer,,}
+    [[ $answer == y ]]
 }
 
 destdir=$(xdg-user-dir MUSIC)
@@ -53,20 +53,21 @@ for src in "${srcs[@]}"; do
 
     for srcfile in "$srcdir"/*; do
         basename=${srcfile##*/}
-        editedfiles=()
 
-        if ask "Edit file $basename with Audacity?" n; then
+        if ask "Include '$basename' (or edit with Audacity)? [Y/e/n]"; then
+            files+=("$srcfile")
+        elif [[ $answer == e ]]; then
             editdir=$(mktemp --tmpdir="$tmpdir" -d "${basename%.*}-XXX")
             echo "Please save resulting file(s) under $editdir"
             echo "Starting Audacity..."
             audacity "$srcfile" &> /dev/null
             editedfiles=("$editdir"/*.mp3)
-        fi
 
-        if (( ${#editedfiles[@]} > 0 )); then
-            files+=("${editedfiles[@]}")
-        else
-            files+=("$srcfile")
+            if (( ${#editedfiles[@]} > 0 )); then
+                files+=("${editedfiles[@]}")
+            else
+                files+=("$srcfile")
+            fi
         fi
     done
 done
@@ -121,7 +122,7 @@ if [[ $cover_src ]]; then
 fi
 
 use_tracks=
-ask "Use track numbers?" && use_tracks=true
+ask "Use track numbers? [Y/n]" && use_tracks=true
 
 i=0
 for file in "${files[@]}"; do

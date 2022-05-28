@@ -73,10 +73,7 @@ in {
         ];
       };
 
-      environment.etc."systemd/networkd.conf".text = ''
-        [Network]
-        ManageForeignRoutingPolicyRules=no
-      '';
+      systemd.network.config.networkConfig.ManageForeignRoutingPolicyRules = false;
 
       environment.systemPackages = with pkgs; [
         (writeShellScriptBin "wg-toggle" ''

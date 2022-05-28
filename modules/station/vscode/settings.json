@@ -119,7 +119,16 @@
   "files.insertFinalNewline": true,
   "editor.renderFinalNewline": false,
   "files.trimFinalNewlines": true,
-  "editor.unicodeHighlight.nonBasicASCII": false,
   "workbench.editor.untitled.hint": "hidden",
   "security.workspace.trust.enabled": false,
+  "editor.unicodeHighlight.allowedCharacters": {
+    "ℕ": true,
+    "ℤ": true,
+    "𝕊": true,
+    "ℚ": true,
+    "ℝ": true,
+    "ℂ": true,
+    "∧": true,
+    "∨": true
+  },
 }

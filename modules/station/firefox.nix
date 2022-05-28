@@ -9,6 +9,7 @@ in {
         ublock-origin
         i-dont-care-about-cookies
         darkreader
+        refined-github
       ];
       profiles.${profile} = with config.theme; {
         settings = {

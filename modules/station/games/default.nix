@@ -19,6 +19,7 @@
     ];
 
     # for DDNet
+    # TODO https://github.com/ddnet/ddnet/pull/4509 move to $XDG_DATA_HOME/ddnet
     home.file.".teeworlds".source =
       config.hm.lib.file.mkOutOfStoreSymlink "${config.hm.xdg.dataHome}/teeworlds";
 

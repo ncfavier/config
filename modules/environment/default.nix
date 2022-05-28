@@ -9,7 +9,7 @@
       extraOutputsToInstall = ["man"];
       ignoreCollisions = true;
     }).overrideAttrs (o: {
-      __contentAddressed = true; # avoids rebuilding the cache every time nixos-version changes
+      __contentAddressed = true; # avoid needlessly rebuilding the cache
     });
   };
 

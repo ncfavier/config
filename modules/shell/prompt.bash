@@ -27,6 +27,6 @@ pwd_prompt_string='\W'
 PROMPT_COMMAND+=${PROMPT_COMMAND:+;}'printf "\\033]0;%s\\007" "${SSH_CONNECTION+$hostname_pretty:}${pwd_prompt_string@P}"'
 
 if [[ $TERM != *linux* ]]; then
-    trap '(( AT_PROMPT )) && AT_PROMPT=0 SECONDS_LAST=$SECONDS' debug
+    trap '[[ -v AT_PROMPT ]] && (( AT_PROMPT )) && AT_PROMPT=0 SECONDS_LAST=$SECONDS' debug
     PROMPT_COMMAND+=${PROMPT_COMMAND:+;}'(( SECONDS - SECONDS_LAST >= 3 )) && { (( SECONDS_ELAPSED = SECONDS - SECONDS_LAST )); printf \\a; }; AT_PROMPT=1'
 fi
