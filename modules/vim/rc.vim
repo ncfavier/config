@@ -79,7 +79,7 @@ let &t_SI = "\e[5 q"
 let &t_EI = "\e[0 q"
 let &t_SR = "\e[3 q"
 
-colorscheme peachpuff
+set t_Co=16
 highlight Search ctermfg=0
 
 " Mappings

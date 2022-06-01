@@ -166,6 +166,7 @@
       <Multi_key> <numbersign> <C> : "𝄡"
       <Multi_key> <degree> <C> : "℃"
       <Multi_key> <degree> <F> : "℉"
+      <Multi_key> <m> <u> : "無"
     '';
 
     onChange = ''
