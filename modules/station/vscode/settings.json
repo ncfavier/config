@@ -129,6 +129,10 @@
     "ℝ": true,
     "ℂ": true,
     "∧": true,
-    "∨": true
+    "∨": true,
+    "ℓ": true,
+    "𝓞": true,
+    "×": true
   },
+  "editor.unicodeHighlight.ambiguousCharacters": false,
 }

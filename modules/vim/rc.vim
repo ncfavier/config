@@ -26,6 +26,8 @@ let g:haskell_enable_arrowsyntax = 1
 let g:haskell_enable_pattern_synonyms = 1
 let g:haskell_enable_typeroles = 1
 
+let g:agdavim_includeutf8_mappings = 0 " barely works, messes with /
+
 " Options
 
 set autoindent
@@ -74,13 +76,21 @@ if &term == 'alacritty'
     execute "set <xLeft>=\e[1;*D"
 endif
 
-" cursor shapes
+" Cursor shapes
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[0 q"
 let &t_SR = "\e[3 q"
 
+" Colours
+
 set t_Co=16
 highlight Search ctermfg=0
+
+" highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 
 " Mappings
 

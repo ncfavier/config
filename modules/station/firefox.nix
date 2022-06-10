@@ -39,7 +39,6 @@ in {
           "general.autoScroll" = true;
           "general.warnOnAboutConfig" = false;
           "gfx.color_management.mode" = "0";
-          "gfx.e10s.font-list.shared" = false; # workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=1714282
           "layers.acceleration.force-enabled" = true;
           "network.trr.mode" = "5";
           "places.history.expiration.max_pages" = "9999999";
