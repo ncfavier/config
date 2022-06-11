@@ -1,9 +1,7 @@
-{ lib, this, config, pkgs, ... }: with lib; let
-  port = 2242;
-in {
+{ lib, this, config, pkgs, ... }: with lib; {
   services.openssh = {
     enable = true;
-    ports = [ port ];
+    ports = mkIf (this.sshPort != null) [ this.sshPort ];
     passwordAuthentication = !this.isServer;
     forwardX11 = true;
   };
@@ -36,8 +34,8 @@ in {
           ] ++ m.ipv4 ++ m.ipv6
         );
       in {
-        ${hosts} = {
-          inherit port;
+        ${hosts} = optionalAttrs (m.sshPort != null) {
+          port = m.sshPort;
         } // optionalAttrs this.isStation {
           forwardX11 = true;
           forwardX11Trusted = true;

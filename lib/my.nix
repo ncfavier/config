@@ -32,6 +32,11 @@ lib: with lib; let
               type = listOf str;
               default = [];
             };
+            sshPort = mkOption {
+              description = "The machine's SSH port";
+              type = nullOr int;
+              default = null;
+            };
           };
         }));
         default = {};
@@ -57,6 +62,7 @@ lib: with lib; let
             isServer = true;
             ipv4 = [ "46.38.232.212" ];
             ipv6 = [ "2a03:4000:2:fd1::42" ];
+            sshPort = 2242;
             wireguard = {
               ipv4 = "10.42.0.1";
               ipv6 = "fd42::0:1";
