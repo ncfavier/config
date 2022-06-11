@@ -1,5 +1,9 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; {
   config = {
+    system.extraDependencies = concatMap collectFlakeInputs (with inputs; [
+      nixpkgs nixpkgs-stable nixos-hardware nur
+    ]);
+
     _module.args = let
       importNixpkgs = nixpkgs: import nixpkgs {
         inherit (config.nixpkgs) localSystem crossSystem config;
@@ -61,12 +65,6 @@
       };
       optimise.automatic = true;
     };
-
-    # work around https://github.com/NixOS/nix/issues/3995
-    system.extraDependencies = let
-      collectInputs = input:
-        [ input ] ++ concatMap collectInputs (builtins.attrValues (input.inputs or {}));
-    in collectInputs inputs.self;
 
     systemd.user.services.nix-index = {
       description = "Update the nix-index database";

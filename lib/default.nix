@@ -15,5 +15,9 @@ lib: prev: with lib; {
     listToAttrs
   ];
 
+  # Collects the inputs of a flake recursively (with possible duplicates).
+  collectFlakeInputs = input:
+    [ input ] ++ concatMap collectFlakeInputs (builtins.attrValues (input.inputs or {}));
+
   my = import ./my.nix lib;
 }

@@ -2,6 +2,8 @@
   uploadsRoot = "/run/nginx/uploads";
   maxUploadSize = "256M";
 in {
+  system.extraDependencies = collectFlakeInputs inputs.www;
+
   services.nginx = {
     enable = true;
     package = pkgs.nginxMainline;
