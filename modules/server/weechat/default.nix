@@ -63,6 +63,11 @@ in {
           excludes = [ "ChangeLog.adoc" ];
           hash = "sha256-hMti1TGbtduxx6JoyG7gFGBROTa8bF0e44k+v5kIWRk=";
         })
+        (self.fetchpatch {
+          url = "https://github.com/weechat/weechat/commit/4d8df89bb5b56bd3ca7b281726722f9d21fefdf8.patch";
+          excludes = [ "ChangeLog.adoc" ];
+          hash = "sha256-Ew94eJnEYRcLWzazbC3mXp3NxzwQ/nYKdGCnBsGAvRQ=";
+        })
       ];
     });
   }) ];
