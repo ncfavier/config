@@ -17,11 +17,12 @@
     nix-dns = {
       url = "github:kirelagin/nix-dns";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "home-manager/utils";
     };
     simple-nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "nix-dns/flake-utils";
+      inputs.utils.follows = "home-manager/utils";
     };
     www = {
       url = "github:ncfavier/monade.li";
@@ -36,10 +37,8 @@
     mkSystem = this: modules: lib.nixosSystem {
       inherit lib system modules;
       specialArgs = {
-        inherit this;
-        inputs = inputs // {
-          hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
-        };
+        inherit inputs this;
+        hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
         pkgsBase = pkgs; # for use in imports without infinite recursion
       };
     };

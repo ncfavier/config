@@ -26,6 +26,11 @@
           tapping = false;
         };
       };
+      dpi = mkDefault 96;
+    };
+
+    lib.shellEnv = {
+      inherit (config.services.xserver) dpi;
     };
 
     hm = {

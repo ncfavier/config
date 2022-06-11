@@ -91,7 +91,7 @@ xft_fonts=("siji:pixelsize=10" "${theme[font]}:size=${theme[fontSize]}" "${theme
 font_args=()
 for f in "${xft_fonts[@]}"; do
     case $f in
-        *siji*) offset=-2;;
+        *siji*) if (( dpi > 100 )); then offset=-2; else offset=-1; fi;;
         *Biwidth*) offset=-1;;
         *) offset=0;;
     esac

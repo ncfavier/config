@@ -1,5 +1,5 @@
-{ inputs, pkgs, ... }: {
-  imports = with inputs.hardware; [
+{ inputs, hardware, pkgs, ... }: {
+  imports = with hardware; [
     notDetected
     lenovo-thinkpad-t420
   ];
@@ -24,8 +24,8 @@
     kernelModules = [ "kvm-intel" ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "firewire_ohci" "sdhci_pci" ];
 
-    initrd.luks.devices.home = {
-      device = "/dev/disk/by-partlabel/home";
+    initrd.luks.devices.nixos = {
+      device = "/dev/disk/by-partlabel/nixos";
       allowDiscards = true;
       bypassWorkqueues = true;
     };
@@ -33,19 +33,13 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-partlabel/nixos";
+      device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
     "/boot" = {
-      device = "/dev/disk/by-partlabel/boot";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
-    };
-
-    "/home" = {
-      device = "/dev/disk/by-label/home";
-      fsType = "ext4";
-      neededForBoot = true;
     };
   };
 

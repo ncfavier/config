@@ -1,5 +1,5 @@
-{ inputs, config, pkgs, ... }: {
-  imports = with inputs.hardware; [
+{ inputs, hardware, config, pkgs, ... }: {
+  imports = with hardware; [
     notDetected
     common-cpu-intel-sandy-bridge
   ];
