@@ -1,4 +1,6 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; let
+  tunnelPort = 6642;
+in {
   # TODO declare imported modules (override Pristine.hs.default)
   secrets.lambdabot-ulminfo = {
     owner = config.users.users.lambdabot.name;
@@ -108,7 +110,7 @@
       ]'';
     };
     script = ''
-      irc-persist-connect ulminfo ens.wtf 6667 lambdabot lambdabot
+      irc-persist-connect ulminfo localhost ${toString tunnelPort} lambdabot lambdabot
       irc-persist-connect libera irc.eu.libera.chat 6667 haskell lambdabot
       rc ${config.secrets.lambdabot-ulminfo.path}
       admin + ulminfo:nf
@@ -118,12 +120,20 @@
     '';
   };
 
-  systemd.services.lambdabot = {
-    wants = [ "nss-lookup.target" ];
-    after = [ "nss-lookup.target" ];
+  systemd.services.lambdabot = rec {
+    wants = [ "nss-lookup.target" "stunnel.service" ];
+    after = wants;
     serviceConfig = {
       MemoryMax = "10%";
       Restart = "on-failure";
+    };
+  };
+
+  services.stunnel = {
+    enable = true;
+    clients.ulminfo = {
+      accept = "localhost:${toString tunnelPort}";
+      connect = "ens.wtf:6697";
     };
   };
 

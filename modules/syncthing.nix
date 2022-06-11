@@ -12,7 +12,7 @@
     dataDir = config.my.home;
 
     guiAddress = "0.0.0.0:8384";
-    openDefaultPorts = true;
+    openDefaultPorts = false;
 
     key = config.secrets.syncthing.path;
 
