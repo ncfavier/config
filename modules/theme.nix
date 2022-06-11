@@ -24,7 +24,7 @@
       borderWidth = 0;
       borderColor = foreground;
       padding = 16;
-      barHeight = if config.services.xserver.dpi > 100 then 32 else 28;
+      barHeight = if config.services.xserver.dpi != null && config.services.xserver.dpi > 100 then 32 else 28;
       gtkTheme = "Flat-Remix-GTK" + (if dark then "-Violet-Darkest" else "-Black-Light");
       iconTheme = "Flat-Remix-Violet" + (if dark then "-Dark" else "-Light");
       gtkFont = "sans-serif";
