@@ -40,7 +40,5 @@ in {
         chmod -R g=u ${config.mailserver.mailDirectory}
       '';
     };
-
-    system.extraDependencies = [ inputs.simple-nixos-mailserver ];
   };
 }

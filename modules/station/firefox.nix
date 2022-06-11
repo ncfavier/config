@@ -314,5 +314,6 @@ in {
     '';
   };
 
+  # work around https://github.com/NixOS/nix/issues/719
   system.extraDependencies = [ pkgs.nur.repo-sources.rycee ];
 }

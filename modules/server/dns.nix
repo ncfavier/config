@@ -91,6 +91,4 @@ in {
     allowedTCPPorts = [ 53 ];
     allowedUDPPorts = allowedTCPPorts;
   };
-
-  system.extraDependencies = [ inputs.nix-dns ];
 }

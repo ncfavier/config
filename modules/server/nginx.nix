@@ -111,6 +111,4 @@ in {
   systemd.services.phpfpm-upload.serviceConfig.ProtectHome = mkForce false;
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
-
-  system.extraDependencies = [ inputs.www ];
 }

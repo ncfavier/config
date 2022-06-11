@@ -62,8 +62,11 @@
       optimise.automatic = true;
     };
 
-    # work around issues like https://github.com/NixOS/nix/issues/3995 and https://github.com/NixOS/nix/issues/719
-    system.extraDependencies = with inputs; [ nixpkgs nixpkgs-stable nixos-hardware nur ];
+    # work around https://github.com/NixOS/nix/issues/3995
+    system.extraDependencies = let
+      collectInputs = input:
+        [ input ] ++ concatMap collectInputs (builtins.attrValues (input.inputs or {}));
+    in collectInputs inputs.self;
 
     systemd.user.services.nix-index = {
       description = "Update the nix-index database";

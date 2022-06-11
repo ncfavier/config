@@ -19,6 +19,4 @@
 
     manual.html.enable = true;
   };
-
-  system.extraDependencies = [ inputs.home-manager ];
 }

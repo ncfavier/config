@@ -40,7 +40,5 @@
       substituters = mkAfter [ "https://mic92.cachix.org" ];
       trusted-public-keys = mkAfter [ "mic92.cachix.org-1:gi8IhgiT3CYZnJsaW7fxznzTkMUOn1RY4GmXdT/nXYQ=" ];
     };
-
-    system.extraDependencies = [ inputs.sops-nix ];
   };
 }
