@@ -35,7 +35,11 @@
     sessionVariables.SOPS_PGP_FP = my.pgpFingerprint;
   };
 
-  hm.programs.password-store.enable = true;
+  hm = {
+    programs.password-store.enable = true;
+    xdg.dataFile.password-store.source =
+      config.hm.lib.file.mkOutOfStoreSymlink config.synced.password-store.path;
+  };
 
   nix.settings = {
     substituters = mkAfter [ "https://mic92.cachix.org" ];

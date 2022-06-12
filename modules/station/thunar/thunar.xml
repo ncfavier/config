@@ -16,7 +16,7 @@
   <property name="misc-change-window-icon" type="bool" value="true"/>
   <property name="misc-date-style" type="string" value="THUNAR_DATE_STYLE_LONG"/>
   <property name="shortcuts-icon-size" type="string" value="THUNAR_ICON_SIZE_48"/>
-  <property name="shortcuts-icon-emblems" type="bool" value="true"/>
+  <property name="shortcuts-icon-emblems" type="bool" value="false"/>
   <property name="misc-exec-shell-scripts-by-default" type="bool" value="true"/>
   <property name="last-sort-column" type="string" value="THUNAR_COLUMN_NAME"/>
   <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>

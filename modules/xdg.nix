@@ -8,6 +8,10 @@
       hm = {
         home.packages = with pkgs; [ xdg-user-dirs ];
 
+        home.file = genAttrs [ "music" "pictures" "my" ] (dir: {
+          source = config.hm.lib.file.mkOutOfStoreSymlink config.synced.${dir}.path;
+        });
+
         xdg = {
           userDirs = {
             enable = true;
@@ -18,8 +22,8 @@
             documents   = config.my.home;
             templates   = config.my.home;
             publicShare = config.my.home;
-            music       = config.synced.music.path;
-            pictures    = config.synced.pictures.path;
+            music       = "${config.my.home}/music";
+            pictures    = "${config.my.home}/pictures";
             videos      = "${config.my.home}/videos";
           };
 

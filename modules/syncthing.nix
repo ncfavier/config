@@ -39,17 +39,17 @@
       allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) my.machines);
     in {
       my = {
-        path = "${config.my.home}/my";
+        path = "${config.my.home}/sync/my";
         devices = allDevices;
         versioning = simple;
       };
       pictures = {
-        path = "${config.my.home}/pictures";
+        path = "${config.my.home}/sync/pictures";
         devices = allDevices;
         versioning = trashcan;
       };
       music = {
-        path = "${config.my.home}/music";
+        path = "${config.my.home}/sync/music";
         devices = allDevices;
         versioning = trashcan;
       };
@@ -76,7 +76,7 @@
         versioning = trashcan;
       };
       password-store = {
-        path = config.hm.programs.password-store.settings.PASSWORD_STORE_DIR;
+        path = "${config.my.home}/sync/password-store";
         devices = allDevices;
         versioning = simple;
       };

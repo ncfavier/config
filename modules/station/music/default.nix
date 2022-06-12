@@ -2,7 +2,7 @@
   hm = {
     services.mpd = {
       enable = true;
-      musicDirectory = config.synced.music.path;
+      musicDirectory = config.hm.xdg.userDirs.music;
       extraConfig = ''
         audio_output {
           type "pulse"

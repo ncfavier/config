@@ -22,7 +22,7 @@ extension() {
 . config env
 
 host=f.$domain
-uploads_dir=${synced[uploads]} # this is wrong but it's going to disappear soon
+uploads_dir=${synced[uploads]} # this should be the server's uploads dir, not the local one
 hash_length=6
 
 # Parse command line arguments

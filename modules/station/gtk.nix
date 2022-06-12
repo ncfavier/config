@@ -9,11 +9,11 @@
       };
       gtk3 = {
         bookmarks = [
+          "file://${config.my.home}/my"
           "file://${config.my.home}/git"
-          "file://${config.synced.my.path}"
-          "file://${config.synced.pictures.path}"
-          "file://${config.synced.music.path}"
-          "file://${config.my.home}/videos"
+          "file://${config.hm.xdg.userDirs.pictures}"
+          "file://${config.hm.xdg.userDirs.music}"
+          "file://${config.hm.xdg.userDirs.videos}"
         ];
         extraConfig = {
           gtk-button-images = true;
