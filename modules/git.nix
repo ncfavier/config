@@ -9,7 +9,7 @@
       userName = my.realName;
       userEmail = my.email;
       signing = {
-        key = my.email;
+        key = my.pgpFingerprint;
         signByDefault = true;
       };
 
