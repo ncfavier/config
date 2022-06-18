@@ -3,7 +3,6 @@
     {
       networking = {
         useNetworkd = true;
-        useDHCP = false; # specified per-interface instead
         tempAddresses = "disabled";
 
         hostName = mkIf (this ? hostname) this.hostname;
@@ -82,8 +81,6 @@
 
       environment.systemPackages = with pkgs; [ wpa_supplicant_gui ];
 
-      systemd.network.wait-online.anyInterface = true;
-
       systemd.network.networks."30-sncf" = {
         matchConfig.SSID = "_SNCF_WIFI_INOUI";
         DHCP = "yes";
@@ -94,6 +91,10 @@
         DHCP = "yes";
         domains = [ "~home" ];
       };
+
+      systemd.network.wait-online.anyInterface = true;
+      systemd.network.networks."99-ethernet-default-dhcp".linkConfig.RequiredForOnline = true;
+      systemd.network.networks."99-wireless-client-dhcp".linkConfig.RequiredForOnline = true;
     })
   ];
 }

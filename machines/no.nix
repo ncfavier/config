@@ -43,12 +43,12 @@
     };
   };
 
-  networking = {
-    interfaces.enp2s0f0.useDHCP = true;
-    interfaces.wlp3s0.useDHCP = true;
-    dhcpcd.allowInterfaces = [ "enp6s0f3u2" "enp6s0f4u2" ]; # USB interfaces
-    wireless.interfaces = [ "wlp3s0" ];
-  };
+  swapDevices = [ {
+    device = "/swap";
+    size = 8192;
+  } ];
+
+  networking.wireless.interfaces = [ "wlp3s0" ];
 
   environment.systemPackages = with pkgs; [
     efibootmgr

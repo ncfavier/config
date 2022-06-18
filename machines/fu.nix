@@ -41,11 +41,7 @@
     size = 4096;
   } ];
 
-  networking = {
-    interfaces.eno1.useDHCP = true;
-    interfaces.wlp3s0.useDHCP = true;
-    wireless.interfaces = [ "wlp3s0" ];
-  };
+  networking.wireless.interfaces = [ "wlp3s0" ];
 
   environment.systemPackages = with pkgs; [
     efibootmgr

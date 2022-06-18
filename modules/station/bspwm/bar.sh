@@ -150,16 +150,17 @@ cleanup_on_exit
     done &
 
     # systemd
-    while true; do
-        failed_units=()
-        for user in '' --user; do
-            systemctl $user list-units --failed --plain --no-legend
-        done | while read -r unit _; do
-            failed_units+=("${unit%.service}")
-        done
-        printf 'Y%s\n' "${failed_units[*]}"
-        sleep 1
-    done &
+    journalctl --follow --lines=0 --identifier=systemd |
+    debounce 0.1 |
+    while
+        failed_system_units=() failed_user_units=()
+        systemctl list-units --failed --plain --no-legend |
+        while read -r unit _; do failed_system_units+=("$unit"); done
+        systemctl --user list-units --failed --plain --no-legend |
+        while read -r unit _; do failed_user_units+=("$unit"); done
+        printf 'Y%s:%s\n' "${failed_system_units[*]}" "${failed_user_units[*]}"
+        read -r -t 60
+    do :; done &
 
     # dunst
     dbus-monitor --profile path=/org/freedesktop/Notifications,interface=org.freedesktop.DBus.Properties,member=PropertiesChanged |
@@ -205,13 +206,13 @@ cleanup_on_exit
     while
         sleep 0.1
         parts=()
-        ip -o address show up scope global |
-        awk '!seen[$2]++ { print $2 }' |
-        while read -r interface; do
-            case $interface in
-            en*|eth*)
+        networkctl list --no-legend |
+        while read -r _ interface type status _; do
+            [[ $status == routable ]] || continue
+            case $type in
+            ether)
                 parts+=("D$interface");;
-            wl*)
+            wlan)
                 ssid=
                 iw dev "$interface" info | while read -r field value; do
                     if [[ $field == ssid ]]; then
@@ -220,7 +221,7 @@ cleanup_on_exit
                     fi
                 done
                 parts+=("L$interface,$ssid");;
-            wg*)
+            wireguard)
                 parts+=("G$interface");;
             esac
         done
@@ -444,10 +445,18 @@ while read -rn 1 event; do
             done
             ;;
         Y) # systemd
-            read -ra failed_units
+            IFS=: read -r failed_system_units failed_user_units
+            read -ra failed_system_units <<< "$failed_system_units"
+            read -ra failed_user_units <<< "$failed_user_units"
             systemd=
-            if (( ${#failed_units} )); then
-                systemd="%{F${theme[hot]}}%{F-} ${failed_units[*]}"
+            if (( ${#failed_system_units[@]} || ${#failed_user_units[@]} )); then
+                systemd="%{F${theme[hot]}}%{F-}"
+                for unit in "${failed_system_units[@]}"; do
+                    systemd+=" %{A3:sudo systemctl restart $unit:}${unit%.service}%{A}"
+                done
+                for unit in "${failed_user_units[@]}"; do
+                    systemd+=" %{A3:systemctl --user restart $unit:}${unit%.service}%{A}"
+                done
             fi
             ;;
     esac

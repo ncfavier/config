@@ -235,12 +235,13 @@ man() { # man foo -bar
     fi
 }
 
+declare -A rfc_numbers=([ascii]=20 [udp]=768 [ip]=791 [icmp]=792 [tcp]=793 [arp]=826 [ftp]=959 [dns]=1034 [dns2]=1035 [ipoac]=1149 [imap2]=1176 [md5]=1321 [irc]=1459 [imap4]=1730 [netiquette]=1855 [private]=1918 [pop3]=1939 [http1]=1945 [http]=1945 [keywords]=2119 [dhcp]=2131 [abnf]=2234 [tls1]=2246 [ipv6]=2460 [ipoac2]=2549 [irc2]=2810 [ircc]=2812 [ircs]=2813 [nat]=3022 [punycode]=3492 [utf8]=3629 [sasl]=4422 [sha]=4634 [smtp]=5321 [websocket]=6455 [oauth]=6749 [http2]=7540)
 rfc() {
-    local -A numbers=([ascii]=20 [udp]=768 [ip]=791 [icmp]=792 [tcp]=793 [arp]=826 [ftp]=959 [dns]=1034 [dns2]=1035 [ipoac]=1149 [imap2]=1176 [md5]=1321 [irc]=1459 [imap4]=1730 [netiquette]=1855 [private]=1918 [pop3]=1939 [http1]=1945 [http]=1945 [keywords]=2119 [dhcp]=2131 [abnf]=2234 [tls1]=2246 [ipv6]=2460 [ipoac2]=2549 [irc2]=2810 [ircc]=2812 [ircs]=2813 [nat]=3022 [punycode]=3492 [utf8]=3629 [sasl]=4422 [sha]=4634 [smtp]=5321 [websocket]=6455 [oauth]=6749 [http2]=7540)
     local n=$1
-    [[ -v 'numbers[$n]' ]] && n=${numbers[$n]}
+    [[ -v 'rfc_numbers[$n]' ]] && n=${rfc_numbers[$n]}
     curl -fsSL https://www.ietf.org/rfc/rfc"$n".txt | sponge | less
 }
+complete -W "${!rfc_numbers[*]}" rfc
 
 xcompose() { # print the path to the system-wide XCompose file
     echo "$(pkgs xorg.libX11)/share/X11/locale/en_US.UTF-8/Compose"
@@ -316,7 +317,7 @@ nix-clear-cache() {
 }
 
 pkgs() {
-    config bld --no-link pkgs."$1" | jq -r '.[0].outputs[]'
+    config bld pkgs."$1" --no-out-link
 }
 
 what() {

@@ -169,7 +169,8 @@
             eval)
               exec nix eval -f ~/.nix-defexpr --json "$@" | jq -r .;;
             bld)
-              exec nix build -f ~/.nix-defexpr --json "$@" | jq -r .;;
+              # https://github.com/NixOS/nix/issues/6661
+              exec nix-build ~/.nix-defexpr -A "$@";;
 
             specialise)
               name=$1

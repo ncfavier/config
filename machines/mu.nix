@@ -43,7 +43,6 @@ in {
 
   networking.interfaces.${interface} = {
     useDHCP = true;
-
     ipv6.addresses = map (address: {
       inherit address;
       prefixLength = 64;
