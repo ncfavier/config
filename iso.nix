@@ -25,10 +25,9 @@
       warn-dirty = false;
     };
 
-    services.getty = {
-      helpLine = mkForce ""; # why is this needed?
-      autologinUser = mkForce my.username;
-    };
+    services.getty.autologinUser = mkForce my.username;
+
+    system.stateVersion = lib.trivial.release;
 
     # reduce size
     i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];
@@ -44,7 +43,5 @@
         outputHash = null;
       });
     }) ];
-
-    system.stateVersion = lib.trivial.release;
   };
 }

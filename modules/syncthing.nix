@@ -19,7 +19,7 @@
     overrideDevices = true;
     devices = mapAttrs (_: m: {
       inherit (m.syncthing) id;
-      introducer = true;
+      introducer = m.isServer;
     }) my.machines;
 
     overrideFolders = true;

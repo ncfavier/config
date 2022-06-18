@@ -69,7 +69,7 @@ if not dry_run:
     interface = dbus.Interface(thumbnailer, 'org.freedesktop.thumbnails.Thumbnailer1')
     def on_ready(handle, uris):
         for uri in uris:
-            print(uri + " => " + get_thumbnail_path(uri, handles[handle]))
+            print(f"{handles[handle]} {uri}")
     def on_finished(handle):
         del handles[handle]
         if not handles:

@@ -326,7 +326,7 @@ what() {
 }
 complete -c what
 
-what-provides() {
+nix-locate-program() {
     nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1"
 }
 
@@ -360,8 +360,8 @@ command_not_found_handle() {
     else # look for a package providing the command in nixpkgs
         local pkgs=() i n action
         printf '%s\n' "$1: command not found" >&2
-        if [[ -t 1 ]] && {
-            readarray -t pkgs < <(what-provides "$1")
+        if [[ -t 1 ]] && command -v nix-locate > /dev/null && {
+            readarray -t pkgs < <(nix-locate-program "$1")
             (( n = ${#pkgs[@]} ))
         }; then
             echo "It is provided by the following attributes:"
