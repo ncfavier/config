@@ -26,12 +26,9 @@
     };
 
     services.getty = {
-      helpLine = mkForce "";
+      helpLine = mkForce ""; # why is this needed?
       autologinUser = mkForce my.username;
     };
-
-    # networking.useNetworkd = mkForce false;
-    # networking.useDHCP = mkForce true;
 
     # reduce size
     i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];
@@ -48,6 +45,6 @@
       });
     }) ];
 
-    system.stateVersion = "21.11";
+    system.stateVersion = lib.trivial.release;
   };
 }
