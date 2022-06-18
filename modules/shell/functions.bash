@@ -1,3 +1,11 @@
+ask() {
+    local prompt=$1 default=${2:-y}
+    read -rp "$prompt " -n 1 answer
+    if [[ $answer ]]; then echo; else answer=$default; fi
+    answer=${answer,,}
+    [[ $answer == y ]]
+}
+
 compreply() {
     local completion
     while IFS= read -r completion; do
@@ -53,6 +61,16 @@ unbck() { # restore
         mv -i -- "$f" "${f%.bck}"
     done
 }
+
+rm() ( # rm, but more resilient to completion failures
+    shopt -s nullglob extglob
+    for arg do
+        if [[ $arg != -* && $arg != */ && -d $arg ]] && matches=("$arg"!()) && (( ${#matches[@]} )); then
+            ask "do you really want to remove '$arg'?" n || return 1
+        fi
+    done
+    exec rm "$@"
+)
 
 mutate() { # replace a read-only symlink with a mutable copy
     local sudo=
