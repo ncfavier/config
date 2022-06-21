@@ -65,7 +65,7 @@ unbck() { # restore
 rm() ( # rm, but more resilient to completion failures
     shopt -s nullglob extglob
     for arg do
-        if [[ $arg != -* && $arg != */ && -d $arg ]] && matches=("$arg"!()) && (( ${#matches[@]} )); then
+        if [[ $arg != -* && $arg != */ && ! -L $arg && -d $arg ]] && matches=("$arg"!()) && (( ${#matches[@]} )); then
             ask "do you really want to remove '$arg'?" n || return 1
         fi
     done

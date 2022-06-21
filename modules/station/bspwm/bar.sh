@@ -14,7 +14,7 @@ desktop_label() case $1 in
     mail) printf ;;
     chat) printf ;;
     files) printf ;;
-    *) printf '∙';;
+    *) printf '•';;
 esac
 
 escape() {
@@ -343,7 +343,7 @@ while read -rn 1 event; do
                         ;;
                     G) # wireguard
                         read -d : interface
-                        wg=""
+                        wg=""
                         outDev4=$(ip -j route get 1.1.1.1 | jq -r '.[0].dev')
                         outDev6=$(ip -j route get 2606:4700:4700::1111 | jq -r '.[0].dev')
                         if [[ $outDev4 != "$interface" || $outDev6 != "$interface" ]]; then

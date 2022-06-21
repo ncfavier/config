@@ -104,11 +104,10 @@ case $cmd in
         bspc node -d "$@" -f;;
     remove-workspace)
         get-workspaces
-        bspc desktop "$n" -r;;
+        (( n )) && bspc desktop "$n" -r;;
     add-workspace)
         get-workspaces
         bspc monitor -a "$((n + 1))"
-        bspc monitor -o "${workspaces[@]::n}" "$((n + 1))" "${workspaces[@]:n}"
         bspc desktop -f "$((n + 1))";;
     lock)
         i3lock -c 000000;;

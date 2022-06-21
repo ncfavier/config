@@ -6,7 +6,7 @@
       name = "man-paths";
       paths = config.environment.systemPackages ++ config.hm.home.packages;
       pathsToLink = [ "/share/man" ];
-      extraOutputsToInstall = ["man"];
+      extraOutputsToInstall = [ "man" ];
       ignoreCollisions = true;
     }).overrideAttrs (o: {
       __contentAddressed = true; # avoid needlessly rebuilding the cache

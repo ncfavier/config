@@ -8,7 +8,7 @@ in {
   hm = {
     xsession.windowManager.bspwm = {
       enable = true;
-      monitors.focused = [ "1" "2" "3" "web" "mail" "chat" "files" ];
+      monitors.focused = [ "web" "mail" "chat" "files" ];
       alwaysResetDesktops = false;
       settings = with config.theme; {
         focused_border_color = foreground;
@@ -94,12 +94,12 @@ in {
       keybindings = {
         "super + @r" =
           "${config.hm.xdg.configHome}/bspwm/bspwmrc";
-        "super + {_,shift} + {ampersand,eacute,quotedbl,apostrophe,parenleft,minus,egrave,underscore,ccedilla}" =
-          "wm {focus-workspace,move-window-to-workspace} ^{1-9}";
+        "super + {_,shift} + {_,ctrl} + {ampersand,eacute,quotedbl,apostrophe,parenleft,minus,egrave,underscore,ccedilla}" =
+          "wm {focus-workspace,move-window-to-workspace} {_,^}{1-9}";
         "super + {_,shift} + {button4,button5,Left,Right}" =
           "wm {focus-workspace,move-window-to-workspace} {prev,next,prev,next}";
-        "super + {_,shift} + {a,n,z}" =
-          "wm {focus-workspace,move-window-to-workspace} {any.urgent,any.!occupied,last}";
+        "super + {_,shift} + {a,z}" =
+          "wm {focus-workspace,move-window-to-workspace} {any.urgent,last}";
         "super + ctrl + {_,shift} + z" =
           "wm {focus-workspace,move-window-to-workspace} last.occupied";
         "super + {plus,equal}" =
@@ -165,14 +165,12 @@ in {
           ''rofi -show emoji -theme-str 'configuration \{ font: "sans 14"; \}' '';
         "super + ctrl + f" =
           "rofi -show file-browser";
-        "super + {_,shift} + Return" =
-          "{_,BASH_STARTUP=@${my.server.hostname}} wm go terminal";
-        "super + {_,shift} + {f,w,c,e,v}" =
-          "wm go {_,-n} {files,web,chat,editor,video}";
         "super + ctrl + Return" =
           "rofi -show ssh";
-        "super + {_,shift} + m" =
-          "wm go {music,mail}";
+        "super + {_,shift} + Return" =
+          "{_,BASH_STARTUP=@${my.server.hostname}} wm go terminal";
+        "super + {_,shift} + {w,x,c,f,e,v,m}" =
+          "wm go {_,-n} {web,mail,chat,files,editor,video,music}";
         "super + ctrl + w" =
           "wm go wifi";
       };

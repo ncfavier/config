@@ -73,8 +73,9 @@
         sendemail = {
           smtpServer = my.domain;
           smtpUser = my.email;
-          smtpEncryption = "tls";
-          smtpServerPort = 587;
+          smtpEncryption = "ssl";
+          smtpServerPort = 465;
+          confirm = "always";
         };
       };
     };
