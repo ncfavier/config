@@ -43,6 +43,7 @@
                 "application/x-extension-xht"
                 "application/x-extension-xhtml"
                 "application/xhtml+xml"
+                "image/svg+xml"
                 "text/html"
                 "text/xml"
                 "x-scheme-handler/chrome"

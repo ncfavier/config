@@ -93,8 +93,6 @@
       };
 
       systemd.network.wait-online.anyInterface = true;
-      systemd.network.networks."99-ethernet-default-dhcp".linkConfig.RequiredForOnline = true; # TODO remove
-      systemd.network.networks."99-wireless-client-dhcp".linkConfig.RequiredForOnline = true;  #
     })
   ];
 }

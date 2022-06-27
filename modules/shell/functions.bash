@@ -337,6 +337,7 @@ nix-clear-cache() {
 pkgs() {
     config bld pkgs."$1" --no-out-link
 }
+complete_alias pkgs _complete_nix nix build -f /etc/nixpkgs
 
 what() {
     local p=$(type -P "$1")

@@ -15,6 +15,7 @@ in {
         settings = {
           "apz.gtk.touchpad_pinch.enabled" = false;
           "browser.download.alwaysOpenPanel" = false;
+          "browser.download.always_ask_before_handling_new_types" = true;
           "browser.fixup.alternate.enabled" = false;
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
           "browser.newtabpage.activity-stream.feeds.snippets" = false;
