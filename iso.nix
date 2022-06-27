@@ -27,8 +27,6 @@
 
     services.getty.autologinUser = mkForce my.username;
 
-    system.stateVersion = lib.trivial.release;
-
     # reduce size
     i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];
     documentation.doc.enable = false;
