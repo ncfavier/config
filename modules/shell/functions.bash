@@ -203,20 +203,18 @@ weechat_fifo() {
 }
 
 irg() ( # search IRC logs
+    shopt -s extglob
     . config env
+    builtin cd "${synced[irc-logs]}" || return
     local interleave=
     if [[ $1 == -i ]]; then
         interleave=1
         shift
     fi
     local where=${1%%+(/)}
+    where=${where/\#/+(\#)}
     shift
-    (( $# )) || return
-    builtin cd "${synced[irc-logs]}" || return
-    if [[ -d $where ]]; then
-        builtin cd "$where" || return
-        where=
-    fi
+    (( $# )) || set -- '^'
     command rg --color always -N ${interleave:+-H --no-context-separator} --no-heading --field-context-separator=$'\t' --field-match-separator=$'\t' --sort path "$@" $where |
     if (( interleave )); then sort -s -b -t$'\t' -k2,2; else cat; fi |
     less

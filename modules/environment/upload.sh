@@ -46,7 +46,12 @@ esac done
 shift "$(( OPTIND - 1 ))"
 [[ -t 1 ]] && interactive=1
 source=$1
-basename=${2:-$source}
+if [[ $2 ]]; then
+    basename=$2
+    keep_name=1
+else
+    basename=$source
+fi
 basename=${basename##*/}
 
 # Figure out what the source is

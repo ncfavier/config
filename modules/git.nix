@@ -89,9 +89,9 @@
 
     home.packages = with pkgs; [
       (writeShellScriptBin "git-random-commit-message" ''
-        ${fortune}/bin/fortune -sn 80 \
-            computers debian definitions disclaimer education fortunes goedel humorists linux \
-            magic miscellaneous perl pets platitudes science songs-poems translate-me wisdom zippy |
+        ${fortune}/bin/fortune -esn 100 \
+            definitions disclaimer education goedel humorists magic miscellaneous \
+            pets science songs-poems translate-me zippy |
         tr -s '[:space:]' '[ *]'
       '')
       (writeShellScriptBin "gh-default-branch" ''

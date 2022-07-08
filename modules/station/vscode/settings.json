@@ -115,7 +115,6 @@
   "agdaMode.view.panelMountPosition": "right",
   "agdaMode.highlighting.getHighlightWithThemeColors": false,
   "editor.codeLensFontFamily": "monospace",
-  "editor.fontSize": 15,
   "files.insertFinalNewline": true,
   "editor.renderFinalNewline": false,
   "files.trimFinalNewlines": true,

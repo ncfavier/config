@@ -48,6 +48,7 @@ in {
           "security.fileuri.strict_origin_policy" = false;
           "security.mixed_content.block_active_content" = false;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "widget.gtk.overlay-scrollbars.enabled" = false;
         };
         userChrome = ''
           @-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml) {
