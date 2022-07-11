@@ -9,6 +9,7 @@
         jnoortheen.nix-ide
         haskell.haskell
         justusadam.language-haskell
+        eugleo.magic-racket
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
       ]

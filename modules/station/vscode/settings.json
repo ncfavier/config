@@ -111,7 +111,6 @@
   ],
   "window.menuBarVisibility": "hidden",
   "extensions.autoUpdate": false,
-  "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
   "agdaMode.view.panelMountPosition": "right",
   "agdaMode.highlighting.getHighlightWithThemeColors": false,
   "editor.codeLensFontFamily": "monospace",
@@ -134,4 +133,7 @@
     "×": true
   },
   "editor.unicodeHighlight.ambiguousCharacters": false,
+  "vim.useSystemClipboard": true,
+  "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
+  "magic-racket.lsp.enabled": false,
 }

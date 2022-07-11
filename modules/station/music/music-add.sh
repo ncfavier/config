@@ -135,7 +135,7 @@ for file in "${files[@]}"; do
         jq -r --argjson i "$i" '(if has("track") then .track.itemListElement[] | select(.position == $i).item else . end).name' <<< "$bandcamp_json" |
         read -r title
     elif [[ $ytmusic_json ]]; then
-        jq -r --argjson i "$i" '.entries[] | select(.playlist_index == $i).title' <<< "$ytmusic_json" |
+        jq -r --argjson i "$i" '.entries[]? | select(.playlist_index == $i).title' <<< "$ytmusic_json" |
         read -r title
     else
         title=${basename#*' - '}
