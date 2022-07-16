@@ -134,6 +134,9 @@
   },
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "vim.useSystemClipboard": true,
-  "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
   "magic-racket.lsp.enabled": false,
+  "files.exclude": {
+    "**/*.agdai": true
+  },
+  "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
 }

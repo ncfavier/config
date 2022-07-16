@@ -24,6 +24,7 @@
       chromium
       thunderbird
       github-desktop
+      discord
       element-desktop
       tdesktop
       amfora
@@ -41,6 +42,7 @@
         standard-library
         cubical
       ]))
+      racket
       audacity
       gimp
       transmission-gtk

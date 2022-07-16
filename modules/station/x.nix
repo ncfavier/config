@@ -105,10 +105,14 @@
 
         # workaround for https://github.com/yshui/picom/issues/16#issuecomment-792739119
         fade = true;
+        # fadeSteps = [ 0.99 0.99 ];
         fadeSteps = [ "1" "1" ];
         fadeDelta = 30;
 
         # workaround for https://github.com/yshui/picom/issues/578
+        # TODO https://github.com/nix-community/home-manager/pull/2939
+        # settings.use-damage = false;
+        # backend = "glx";
         extraOptions = ''
           use-damage = false;
         '';

@@ -83,6 +83,7 @@ if (( video )); then
     ffmpeg -hide_banner -y \
         -i "$tmpvideo" \
         -c:v libvpx-vp9 -lossless 1 \
+        -pix_fmt yuv420p `# for compatibility with Safari...` \
         "$target" &&
     rm -f "$tmpvideo"
 
