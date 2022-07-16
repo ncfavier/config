@@ -74,7 +74,13 @@ in {
         local-data = concatLists (mapAttrsToList (n: m: [
           ''"${n}.wg42. A ${m.wireguard.ipv4}"''
           ''"${n}.wg42. AAAA ${m.wireguard.ipv6}"''
-        ]) my.machines);
+        ]) my.machines) ++ [
+          ''"fu.home. A 192.168.1.2"''
+          ''"mo.home. A 192.168.1.3"''
+          ''"tsu.home. A 192.168.1.4"''
+          ''"no.home. A 192.168.1.5"''
+          ''"printer.home. A 192.168.1.63"''
+        ];
         local-data-ptr = concatLists (mapAttrsToList (n: m: [
           ''"${m.wireguard.ipv4} ${n}.wg42."''
           ''"${m.wireguard.ipv6} ${n}.wg42."''
