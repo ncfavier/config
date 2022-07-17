@@ -144,7 +144,7 @@ in {
       owner = "ncfavier";
       repo = "lambdabot";
       rev = "live";
-      sha256 = "sha256-ZH9sqHsIwd5MjXAzkeU85nAqhIbTn7x9RqQb9N/vYcI=";
+      sha256 = "sha256-wg24y+nmQNw3AWqHFmQ6njjq8iTwLCLavnDAbBlGtpg=";
     };
   in {
     haskell = prev.haskell // {

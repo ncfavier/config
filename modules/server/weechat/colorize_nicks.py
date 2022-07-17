@@ -140,7 +140,7 @@ def colorize_config_init():
     colorize_config_option["min_nick_length"] = weechat.config_new_option(
         colorize_config_file, section_look, "min_nick_length",
         "integer", "Minimum length nick to colorize", "",
-        2, 20, "", "", 0, "", "", "", "", "", "")
+        1, 20, "", "", 0, "", "", "", "", "", "")
     colorize_config_option["colorize_input"] = weechat.config_new_option(
         colorize_config_file, section_look, "colorize_input",
         "boolean", "Whether to colorize input", "", 0,
