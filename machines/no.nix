@@ -1,4 +1,4 @@
-{ inputs, hardware, pkgs, ... }: {
+{ inputs, hardware, lib, pkgs, ... }: with lib; {
   imports = with hardware; [
     notDetected
     lenovo-thinkpad-t14s-amd-gen1
@@ -20,7 +20,7 @@
       };
     };
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = mkForce pkgs.linuxPackages_latest;
     kernelModules = [ "kvm-amd" ];
     initrd.availableKernelModules = [ "nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
 
@@ -59,6 +59,8 @@
   services.blueman.enable = true;
 
   services.xserver.dpi = 120;
+
+  hm.services.picom.backend = "glx";
 
   keys.composeKey = "prsc";
   keys.printScreenKey = "XF86Favorites";

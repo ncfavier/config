@@ -59,8 +59,6 @@
     modesetting.enable = true;
   };
 
-  hm.services.picom.backend = "xrender";
-
   my.hashedPassword = "$6$rkmgv7prXu83oZqj$ydHDcvrUrd43Cvj38xDf6A2vQEAFIATX1O9XSRdUQbyHV/w6pc6qmAEmxZ4xAl3b3zgmVVyY5jg9QIaLndoAK/";
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''

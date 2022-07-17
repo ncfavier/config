@@ -5,8 +5,6 @@ in {
   config = mkMerge [
     (mkIf (this.isServer || this.isStation) {
       networking.firewall.trustedInterfaces = [ interface ];
-
-      systemd.network.wait-online.ignoredInterfaces = [ interface ]; # TODO remove
     })
 
     (mkIf this.isServer {
@@ -50,12 +48,6 @@ in {
     })
 
     (mkIf this.isStation {
-      nixpkgs.overlays = [ (self: super: {
-        wireguard-tools = super.wireguard-tools.override {
-          openresolv = self.systemd; # TODO remove
-        };
-      }) ];
-
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
         address = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
@@ -72,8 +64,6 @@ in {
           }
         ];
       };
-
-      systemd.network.config.networkConfig.ManageForeignRoutingPolicyRules = false; # TODO remove
 
       environment.systemPackages = with pkgs; [
         (writeShellScriptBin "wg-toggle" ''

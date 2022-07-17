@@ -95,27 +95,21 @@
         "*background" = background;
         "*foreground" = foreground;
         "*cursorColor" = foreground;
-        # TODO do i need this?
-        # "*font" = "xft:bitmap:pixelsize=10,xft:tewi:pixelsize=10,xft:Biwidth:pixelsize=12,xft:Twitter Color Emoji:size=10";
+        "*font" = "xft:bitmap:pixelsize=10";
       };
 
       services.picom = {
         enable = true;
-        vSync = true;
+        experimentalBackends = true;
+        vSync = true; # the only reason i need picom...
 
         # workaround for https://github.com/yshui/picom/issues/16#issuecomment-792739119
         fade = true;
-        # fadeSteps = [ 0.99 0.99 ];
-        fadeSteps = [ "1" "1" ];
+        fadeSteps = [ 1. 1. ];
         fadeDelta = 30;
 
         # workaround for https://github.com/yshui/picom/issues/578
-        # TODO https://github.com/nix-community/home-manager/pull/2939
-        # settings.use-damage = false;
-        # backend = "glx";
-        extraOptions = ''
-          use-damage = false;
-        '';
+        settings.use-damage = false;
       };
 
       services.redshift = {

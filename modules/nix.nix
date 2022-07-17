@@ -31,6 +31,9 @@
     };
 
     nix = {
+      package = assert versionOlder pkgs.nix.version "2.11";
+        inputs.nix.packages.${config.nixpkgs.system}.default;
+
       settings = {
         experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
         warn-dirty = false;
@@ -165,7 +168,7 @@
               set -- "''${args[@]}"
               ;;&
             repl)
-              exec nix repl ~/.nix-defexpr "$@";;
+              exec nix repl -f ~/.nix-defexpr "$@";;
             eval)
               exec nix eval -f ~/.nix-defexpr --json "$@" | jq -r .;;
             bld)

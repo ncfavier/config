@@ -11,6 +11,7 @@
       home = config.hm.programs.gpg.homedir;
       sshKeyPaths = [];
     };
+    age.sshKeyPaths = [];
 
     # GPG running as root can't find my socket dir (https://github.com/NixOS/nixpkgs/issues/57779)
     environment.SOPS_GPG_EXEC = pkgs.writeShellScript "gpg-${my.username}" ''

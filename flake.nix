@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-22.05";
+    nix.url = "nix"; # https://github.com/NixOS/nix/pull/6693
     nixos-hardware.url = "nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
