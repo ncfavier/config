@@ -16,6 +16,7 @@
           enable = true;
           logRefusedConnections = false;
           rejectPackets = true;
+          allowedUDPPorts = [ 5355 ]; # LLMNR
         };
       };
 

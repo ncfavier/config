@@ -35,6 +35,7 @@
       sudo = {
         wheelNeedsPassword = false;
         extraConfig = ''
+          Defaults env_keep+="EDITOR"
           Defaults env_keep+="SSH_CONNECTION SSH_CLIENT SSH_TTY"
         '';
       };

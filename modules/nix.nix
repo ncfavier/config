@@ -220,13 +220,13 @@
               compreply -W 'env compare update repl eval bld specialise revert home build build-vm test switch boot'
             fi
           else case ''${words[1]} in
-            compare|update) _complete_nix_cmd $cword nix flake lock "$configPath" --update-input;;
-            repl|eval|bld)  compreply -W '-w --wip';;&
-            repl)           _complete_nix_cmd 2 nix repl ~/.nix-defexpr;;
-            eval)           _complete_nix_cmd 2 nix eval -f ~/.nix-defexpr --json;;
-            bld)            _complete_nix_cmd 2 nix build -f ~/.nix-defexpr --json;;
-            home)           _complete_nix_cmd 2 nix shell "$configPath";;
-            build|switch)   _complete_nix_cmd 2 nix build "$configPath";;
+            compare|update|rev) _complete_nix_cmd $cword nix flake lock "$configPath" --update-input;;
+            repl|eval|bld)      compreply -W '-w --wip';;&
+            repl)               _complete_nix_cmd 2 nix repl ~/.nix-defexpr;;
+            eval)               _complete_nix_cmd 2 nix eval -f ~/.nix-defexpr --json;;
+            bld)                _complete_nix_cmd 2 nix build -f ~/.nix-defexpr --json;;
+            home)               _complete_nix_cmd 2 nix shell "$configPath";;
+            build|switch)       _complete_nix_cmd 2 nix build "$configPath";;
           esac fi
         }
         complete -F _config config

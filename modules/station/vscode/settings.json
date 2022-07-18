@@ -5,7 +5,6 @@
   "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
-  "workbench.colorTheme": "1984",
   "workbench.colorCustomizations": {
     "[White Night]": {
       "activityBar.foreground": "#555566",
@@ -139,4 +138,5 @@
     "**/*.agdai": true
   },
   "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
+  "workbench.colorTheme": "Lavender",
 }
