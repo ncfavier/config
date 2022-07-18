@@ -123,6 +123,15 @@
           cmd=$1
           shift
           case $cmd in
+            repl|eval|bld|rev)
+              args=() flakeArgs=()
+              for arg do case $arg in
+                -w|--wip) flakeArgs+=(--override-flake config "$configPath");;
+                *) args+=("$arg")
+              esac done
+              set -- "''${args[@]}"
+              ;;&
+
             env) # meant to be sourced
               ${toShellVars config.lib.shellEnv}
               ;;
@@ -149,31 +158,25 @@
               else
                 # https://github.com/NixOS/nix/issues/6095 prevents using config-git here
                 exec nix flake update -v "$configPath"
-              fi;;
+              fi
+              ;;
             rev)
-              nix flake metadata --json config |
-                if (( $# )); then
-                  jq -r --arg input "$1" '.locks.nodes[$input].locked.rev'
-                else
-                  jq -r '.revision // "dirty"'
-                fi
+              if (( $# )); then
+                expr=inputs.''${1//'/'/.inputs.}.rev
+              else
+                expr=self.revision
+              fi
+              nix eval "''${flakeArgs[@]}" -f ~/.nix-defexpr --raw "$expr"
+              echo
               ;;
 
-            repl|eval|bld)
-              args=()
-              for arg do case $arg in
-                -w|--wip) args+=(--override-flake config "$configPath");;
-                *) args+=("$arg")
-              esac done
-              set -- "''${args[@]}"
-              ;;&
             repl)
-              exec nix repl -f ~/.nix-defexpr "$@";;
+              exec nix repl "''${flakeArgs[@]}" -f ~/.nix-defexpr "$@";;
             eval)
-              exec nix eval -f ~/.nix-defexpr --json "$@" | jq -r .;;
+              exec nix eval "''${flakeArgs[@]}" -f ~/.nix-defexpr --json "$@" | jq -r .;;
             bld)
               # https://github.com/NixOS/nix/issues/6661
-              exec nix-build ~/.nix-defexpr -A "$@";;
+              exec nix-build "''${flakeArgs[@]}" ~/.nix-defexpr -A "$@";;
 
             specialise)
               name=$1
