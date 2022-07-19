@@ -25,7 +25,16 @@
           name = "agda-mode";
           publisher = "banacorn";
           version = "0.3.9";
-          sha256 = "sha256-qzpAtEDcAwE6viqW1sHc0HtW6gEtymE/gX112mhNF0c=";
+          sha256 = "0iqp9mldlxbxh4zn3jid07m5cyyhvk0xd5iapqx020yw82s40fmb";
+          postPatch = ''
+            sed -i '/agda-mode-body {/,/font-size/{/font-size/d}' dist/style.css
+          '';
+        }
+        {
+          name = "codercoder-dark-theme";
+          publisher = "CoderCoder";
+          version = "1.2.2";
+          sha256 = "1zlfv5l3sd7xag23i8i5zfh4p08p1nyy09rb2mm5m1nnflb84zas";
         }
         {
           name = "night-owl-light-bold";
@@ -34,16 +43,16 @@
           sha256 = "19yrbkp0jpzv0rd0c5bxzkaa2xr76wq70zc9dfl79mb05h1spl69";
         }
         {
+          name = "synthax";
+          publisher = "foxhoundn";
+          version = "0.1.13";
+          sha256 = "029p1grrhaha9q8c5s5jvanbcajisrgpj0cna2pmx1xzsk7fw61z";
+        }
+        {
           name = "Theme-Lavender";
           publisher = "gerane";
           version = "0.0.5";
           sha256 = "0zaqm8x3pgjhsjlppi7ln5l66j150cr7m9m23xgmsix1xaqms0fd";
-        }
-        {
-          name = "theme-github-bold";
-          publisher = "gustavo";
-          version = "0.0.4";
-          sha256 = "0rcnhz26b78p4scm7yvdrixk46rs7ygh9hx2fgdjkqq7wy9fww4y";
         }
         {
           name = "white-winter";
@@ -58,6 +67,12 @@
           sha256 = "0qv1h5cp6jdmay7s17nn5drna5qzmh3jgvx5qc5qp1kdrqr957j5";
         }
         {
+          name = "vscode-theme-mr-pink";
+          publisher = "juanmnl";
+          version = "1.0.1";
+          sha256 = "1i5wh0znhb7shr2lwfby14arlhnqa5l37ncbp2xn8ws45jwm1cvv";
+        }
+        {
           name = "vscoq";
           publisher = "maximedenes";
           version = "0.3.6";
@@ -68,6 +83,12 @@
           publisher = "sallar";
           version = "0.3.3";
           sha256 = "1d7s49j2m4ga590iqnhb0ayafrz9f9lkl3warp8a1898767a1wrq";
+        }
+        {
+          name = "lilac";
+          publisher = "shubham-saudolla";
+          version = "1.3.0";
+          sha256 = "0bwwhvmm6k3rdlh17cafi9fqhy171j4dwbnipi9gy66s2z0kpz5h";
         }
       ];
     };

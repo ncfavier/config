@@ -2,7 +2,8 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    # nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:ncfavier/nixpkgs/vscode-extension-attrs";
     nixpkgs-stable.url = "nixpkgs/nixos-22.05";
     nix.url = "nix"; # https://github.com/NixOS/nix/pull/6693
     nixos-hardware.url = "nixos-hardware";

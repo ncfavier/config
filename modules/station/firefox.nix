@@ -4,6 +4,7 @@ in {
   hm = {
     programs.firefox = {
       enable = true;
+      package = pkgs.firefox-bin;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         french-dictionary
         ublock-origin

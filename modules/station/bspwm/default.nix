@@ -28,7 +28,7 @@ in {
           desktop = "web";
           follow = true;
         };
-        Thunderbird = {
+        thunderbird = {
           desktop = "mail";
           follow = true;
         };

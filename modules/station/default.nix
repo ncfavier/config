@@ -42,6 +42,16 @@
         standard-library
         cubical
       ]))
+      # (pkgs.haskell.lib.overrideSrc (pkgs.haskell.lib.overrideCabal haskellPackages.agda-language-server {
+      #   broken = false;
+      # }) {
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "ncfavier";
+      #     repo = "agda-language-server";
+      #     rev = "agda-2.6";
+      #     hash = "sha256-OQR1FrRsFG3QteVKTBH7IK/BwYSocPo2hXDfzM6DGwY=";
+      #   };
+      # })
       racket
       audacity
       gimp

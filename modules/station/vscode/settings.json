@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "Iosevka",
+  "editor.fontFamily": "JuliaMono",
   "files.trimTrailingWhitespace": true,
   "keyboard.dispatch": "keyCode",
   "latex-workshop.latex.recipe.default": "lastUsed",
@@ -51,7 +51,7 @@
   "editor.tokenColorCustomizations": {
     "[White Night]": {
       "comments": "#dd00ff"
-    }
+    },
   },
   "vim.normalModeKeyBindingsNonRecursive": [
     {
@@ -111,7 +111,6 @@
   "window.menuBarVisibility": "hidden",
   "extensions.autoUpdate": false,
   "agdaMode.view.panelMountPosition": "right",
-  "agdaMode.highlighting.getHighlightWithThemeColors": false,
   "editor.codeLensFontFamily": "monospace",
   "files.insertFinalNewline": true,
   "editor.renderFinalNewline": false,
@@ -138,5 +137,9 @@
     "**/*.agdai": true
   },
   "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
-  "workbench.colorTheme": "Lavender",
+  "editor.semanticHighlighting.enabled": true,
+  "workbench.colorTheme": "Mr Pink",
+  "editor.fontSize": 12,
+  "editor.bracketPairColorization.enabled": false,
+  "editor.guides.bracketPairs": "active",
 }
