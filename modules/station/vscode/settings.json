@@ -136,10 +136,11 @@
   "files.exclude": {
     "**/*.agdai": true
   },
-  "agdaMode.connection.agdaPath": "/etc/profiles/per-user/n/bin/agda",
   "editor.semanticHighlighting.enabled": true,
   "workbench.colorTheme": "Mr Pink",
   "editor.fontSize": 12,
   "editor.bracketPairColorization.enabled": false,
   "editor.guides.bracketPairs": "active",
+  "agdaMode.connection.agdaPath": "/etc/agda-in-path",
+  "extensions.autoCheckUpdates": false,
 }

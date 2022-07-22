@@ -4,7 +4,7 @@ in {
   hm = {
     programs.firefox = {
       enable = true;
-      package = pkgs.firefox-bin;
+      package = pkgs.firefox-bin; # https://github.com/NixOS/nixpkgs/pull/119434#issuecomment-1188433605
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         french-dictionary
         ublock-origin

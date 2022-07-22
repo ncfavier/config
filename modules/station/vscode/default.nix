@@ -98,4 +98,9 @@
       "VSCodium/User/keybindings.json".source = config.lib.meta.mkMutableSymlink ./keybindings.json;
     };
   };
+
+  environment.etc.agda-in-path.source = pkgs.writeShellScript "agda-in-path" ''
+    # needed because of https://github.com/banacorn/agda-mode-vscode/pull/112
+    exec agda "$@"
+  '';
 }
