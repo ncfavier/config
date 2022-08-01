@@ -147,5 +147,4 @@
   "extensions.autoCheckUpdates": false,
   "editor.minimap.enabled": false,
   "editor.selectionClipboard": false,
-  "editor.fontLigatures": true,
 }

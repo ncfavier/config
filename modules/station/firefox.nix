@@ -282,6 +282,15 @@ in {
               width: 75em !important;
             }
           }
+
+          @-moz-document url-prefix(https://1lab.dev) {
+            @media (prefers-color-scheme: dark) {
+              :root {
+                --text-bg: #000000 !important;
+                --text-fg: #ffffff !important;
+              }
+            }
+          }
         '';
       };
     };

@@ -54,21 +54,4 @@ in {
   environment.systemPackages = with pkgs; [ lolcat ];
 
   lib.shellEnv.weechat_fifo = "${config.hm.xdg.cacheHome}/weechat/weechat_fifo";
-
-  nixpkgs.overlays = [ (self: super: {
-    weechat-unwrapped = super.weechat-unwrapped.overrideAttrs (o: {
-      patches = o.patches or [] ++ [
-        (self.fetchpatch {
-          url = "https://github.com/weechat/weechat/commit/d4d8117461c20b075332bb3d2a1fc8493d92a9d7.patch";
-          excludes = [ "ChangeLog.adoc" ];
-          hash = "sha256-hMti1TGbtduxx6JoyG7gFGBROTa8bF0e44k+v5kIWRk=";
-        })
-        (self.fetchpatch {
-          url = "https://github.com/weechat/weechat/commit/4d8df89bb5b56bd3ca7b281726722f9d21fefdf8.patch";
-          excludes = [ "ChangeLog.adoc" ];
-          hash = "sha256-Ew94eJnEYRcLWzazbC3mXp3NxzwQ/nYKdGCnBsGAvRQ=";
-        })
-      ];
-    });
-  }) ];
 }

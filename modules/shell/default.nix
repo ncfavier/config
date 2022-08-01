@@ -47,7 +47,7 @@
       ll = "ls -la";
       nwd = "nix why-depends";
       o = "xdg-open";
-      pr = "gh pr create --web";
+      pr = "NO_ALARM=1; gh pr create --web";
       rgs = "rg --sort path";
       tall = "tail -f -n +1";
       s = "sudo systemctl";
