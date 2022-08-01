@@ -260,7 +260,7 @@ in {
           }
 
           @-moz-document url-prefix(https://github.com/), url-prefix(https://gist.github.com/) {
-            .blob-num, .blob-code-inner {
+            .blob-num, .blob-code-inner, .highlight pre {
               font-family: monospace !important;
               font-size: 13px !important;
               vertical-align: middle !important;

@@ -1,11 +1,12 @@
 { lib, this, config, pkgs, ... }: with lib; let
   relayPort = 6642;
   scripts = [
-    "color_popup.pl"
-    "highmon.pl"
     "autosort.py"
     "buffer_autoset.py"
+    "color_popup.pl"
+    "colorize_nicks.py"
     "go.py"
+    "highmon.pl"
     "screen_away.py"
     "title.py"
   ];
@@ -15,7 +16,6 @@
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
         /script update
         /script install ${concatStringsSep " " scripts}
-        /script load ${./colorize_nicks.py}
         /set sec.crypt.passphrase_command "cat ${config.secrets.weechat.path}"
         /set relay.network.bind_address ${this.wireguard.ipv4}
         /set relay.port.weechat ${toString relayPort}

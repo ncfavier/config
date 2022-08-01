@@ -7,7 +7,7 @@
       }) ];
     });
   }) ];
-  cachix.derivationsToPush = [ pkgs.ibus ];
+  cachix.derivationsToPush = [ pkgs.ibus ] ++ config.i18n.inputMethod.ibus.engines;
 
   i18n.inputMethod = {
     enabled = "ibus";

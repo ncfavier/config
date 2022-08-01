@@ -38,7 +38,7 @@
           defaultFonts = {
             serif     = [ "Source Serif Pro" "Source Han Serif" ];
             sansSerif = [ "Source Sans Pro" "Source Han Sans" ];
-            monospace = [ "Source Code Pro" "Source Han Mono" ];
+            monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" ];
             emoji     = [ "Twemoji" "Noto Color Emoji" "Symbola" ];
           };
           localConf = ''

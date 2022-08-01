@@ -49,6 +49,7 @@
     }
   },
   "editor.tokenColorCustomizations": {
+    "comments": "#aaaaaa",
     "[White Night]": {
       "comments": "#dd00ff"
     },
@@ -79,6 +80,7 @@
   "nix.enableLanguageServer": true,
   "search.useIgnoreFiles": false,
   "search.exclude": {
+    "**/_build": true,
     "**/result": true,
     "**/result-*": true
   },
@@ -143,4 +145,7 @@
   "editor.guides.bracketPairs": "active",
   "agdaMode.connection.agdaPath": "/etc/agda-in-path",
   "extensions.autoCheckUpdates": false,
+  "editor.minimap.enabled": false,
+  "editor.selectionClipboard": false,
+  "editor.fontLigatures": true,
 }

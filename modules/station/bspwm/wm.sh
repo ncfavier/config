@@ -35,7 +35,7 @@ focus-window() {
 }
 
 get-workspaces() {
-    readarray -t workspaces < <(bspc query --desktops --names)
+    readarray -t workspaces < <(bspc query --desktops --names "$@")
     n=0
     for w in "${workspaces[@]}"; do
         (( w > n )) && (( n = w ))
@@ -103,7 +103,7 @@ case $cmd in
     move-window-to-workspace)
         bspc node -d "$@" -f;;
     remove-workspace)
-        get-workspaces
+        get-workspaces --desktop '.!occupied'
         (( n )) && bspc desktop "$n" -r;;
     add-workspace)
         get-workspaces

@@ -107,5 +107,10 @@
     {
         "key": "ctrl+k ctrl+pageup",
         "command": "-workbench.action.previousEditorInGroup"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-extension.vim_ctrl+o",
+        "when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
     }
 ]

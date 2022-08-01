@@ -19,5 +19,9 @@ lib: prev: with lib; {
   collectFlakeInputs = input:
     [ input ] ++ concatMap collectFlakeInputs (builtins.attrValues (input.inputs or {}));
 
+  # Gets all the outputs of a derivation as a list.
+  getAllOutputs = drv:
+    if drv ? outputs then attrVals drv.outputs drv else [ drv ];
+
   my = import ./my.nix lib;
 }
