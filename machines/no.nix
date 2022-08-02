@@ -60,8 +60,6 @@
 
   services.xserver.dpi = 120;
 
-  hm.services.picom.backend = "glx";
-
   keys.composeKey = "prsc";
   keys.printScreenKey = "XF86Favorites";
 

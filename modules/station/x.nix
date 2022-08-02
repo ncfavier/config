@@ -101,6 +101,7 @@
       services.picom = {
         enable = true;
         experimentalBackends = true;
+        backend = mkDefault "glx";
         vSync = true; # the only reason i need picom...
 
         # workaround for https://github.com/yshui/picom/issues/16#issuecomment-792739119
