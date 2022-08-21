@@ -63,6 +63,7 @@
       <Multi_key> <c> <a> <p> : "∩"
       <Multi_key> <s> <q> <c> <u> <p> : "⊔"
       <Multi_key> <s> <q> <c> <a> <p> : "⊓"
+      <Multi_key> <U> <plus> : "⊎"
       <Multi_key> <slash> <0> : "∅"
       <Multi_key> <i> <n> <f> : "∞"
       <Multi_key> <a> <l> <e> <p> <h> : "ℵ"
@@ -162,6 +163,8 @@
       <Multi_key> <B> <8> : "𝟠"
       <Multi_key> <B> <9> : "𝟡"
       <Multi_key> <e> <l> : "ℓ"
+      <Multi_key> <d> <e> <e> : "∂"
+      <Multi_key> <n> <a> <b> : "∇"
       <Multi_key> <y> <o> : "よ"
 
       # Misc
@@ -191,6 +194,8 @@
       <Multi_key> <f> <l> <r> : "⌋"
       <Multi_key> <c> <e> <l> : "⌈"
       <Multi_key> <c> <e> <r> : "⌉"
+      <dead_circumflex> <bracketleft> : "⌜"
+      <dead_circumflex> <bracketright> : "⌝"
       <Multi_key> <2> <exclam> : "‼"
       <Multi_key> <2> <question> : "⁇"
       <Multi_key> <z> <w> : "​"
