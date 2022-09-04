@@ -43,12 +43,7 @@ in {
       CAA = letsEncrypt (my.emailFor "dns+caa");
 
       subdomains = rec {
-        ${this.hostname} = here;
-
-        www = here; # → @
-        f   = here;
-        up  = here; # → f
-        git = here; # → github
+        "*" = here;
 
         github.CNAME = [ "${my.githubUsername}.github.io." ];
         glam = github;
