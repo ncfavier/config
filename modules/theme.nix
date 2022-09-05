@@ -11,12 +11,12 @@
 
   config = {
     theme = with config.theme; {
-      black         = "#000000";
+      black         = "#00000d";
       darkGrey      = if dark then "#444444" else "#aaaaaa";
       lightGrey     = if dark then "#666666" else "#cccccc";
       white         = "#ffffff";
-      hot           = "#ff00dd";
-      cold          = if dark then "#4bebef" else "#33aacc";
+      hot           = "#ff00cb";
+      cold          = if dark then "#4befdb" else "#33aacc";
       background    = if dark then black else white;
       foreground    = if dark then white else black;
       backgroundAlt = darkGrey;

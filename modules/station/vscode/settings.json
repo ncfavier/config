@@ -81,6 +81,8 @@
   "search.useIgnoreFiles": false,
   "search.exclude": {
     "**/_build": true,
+    "**/*.hi": true,
+    "**/*.o": true,
     "**/result": true,
     "**/result-*": true
   },
@@ -143,8 +145,8 @@
   "editor.fontSize": 12,
   "editor.bracketPairColorization.enabled": false,
   "editor.guides.bracketPairs": "active",
-  "agdaMode.connection.agdaPath": "/etc/agda-in-path",
   "extensions.autoCheckUpdates": false,
   "editor.minimap.enabled": false,
   "editor.selectionClipboard": false,
+  "haskell.manageHLS": "PATH",
 }

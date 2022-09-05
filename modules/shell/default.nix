@@ -40,9 +40,8 @@
       C = "LC_ALL=C ";
       diff = "git diff --no-index --no-prefix";
       dp = "declare -p";
-      drv = "nix show-derivation";
       fc-grep = "fc-list | rg -i";
-      http = "python -m http.server";
+      serve = "python -m http.server --directory";
       l = "ls -l";
       ll = "ls -la";
       nwd = "nix why-depends";

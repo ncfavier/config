@@ -42,6 +42,19 @@ get-workspaces() {
     done
 }
 
+renumber-workspaces() {
+    get-workspaces
+    local i=1 new_workspaces=()
+    for w in "${workspaces[@]}"; do
+        if (( w )); then
+            new_workspaces+=("$((i++))")
+        else
+            new_workspaces+=("$w")
+        fi
+    done
+    bspc monitor -d "${new_workspaces[@]}"
+}
+
 terminal() {
     if [[ $instance || $focus_title ]]; then
         class=alacritty instance="$instance" title="$focus_title" focus-window && return
@@ -104,7 +117,10 @@ case $cmd in
         bspc node -d "$@" -f;;
     remove-workspace)
         get-workspaces --desktop '.!occupied'
-        (( n )) && bspc desktop "$n" -r;;
+        if (( n )); then
+            bspc desktop "$n" -r
+            renumber-workspaces
+        fi;;
     add-workspace)
         get-workspaces
         bspc monitor -a "$((n + 1))"

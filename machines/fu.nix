@@ -50,20 +50,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
-    # TODO https://github.com/NixOS/nixpkgs/pull/184654
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_390.overrideAttrs (o: {
-      passthru = o.passthru // {
-        settings = o.passthru.settings.overrideAttrs (_: {
-          patches = [
-            (pkgs.fetchpatch {
-              # fixes "multiple definition of `VDPAUDeviceFunctions'" linking errors
-              url = "https://github.com/NVIDIA/nvidia-settings/commit/a7c1f5fce6303a643fadff7d85d59934bd0cf6b6.patch";
-              hash = "sha256-ZwF3dRTYt/hO8ELg9weoz1U/XcU93qiJL2d1aq1Jlak=";
-            })
-          ];
-        });
-      };
-    });
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
     modesetting.enable = true;
   };
 

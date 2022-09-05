@@ -5,7 +5,7 @@
 
       console.font = pkgs.runCommandLocal "dina.psf" {} ''
         cd ${pkgs.bdf2psf}/share/bdf2psf
-        sed 's/POINT_SIZE/AVERAGE_WIDTH/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-8.bdf |
+        sed 's/POINT_SIZE 100/AVERAGE_WIDTH 80/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-10.bdf |
         ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 512 "$out"
       '';
     }
@@ -32,13 +32,14 @@
           tewi-font
           efont-unicode
           siji
+          babelstone-han
         ];
         fontconfig = {
           enable = true;
           defaultFonts = {
             serif     = [ "Source Serif Pro" "Source Han Serif" ];
             sansSerif = [ "Source Sans Pro" "Source Han Sans" ];
-            monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" ];
+            monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" "Twitter Color Emoji" ];
             emoji     = [ "Twemoji" "Noto Color Emoji" "Symbola" ];
           };
           localConf = ''
@@ -67,28 +68,6 @@
                   <family>sans-serif</family>
                 </prefer>
               </alias>
-              <match target="scan">
-                <test name="family"><string>Twitter Color Emoji</string></test>
-                <edit name="charset" mode="assign">
-                  <minus>
-                    <name>charset</name>
-                    <charset>
-                      <int>0x2122</int> <!-- ™ -->
-                    </charset>
-                  </minus>
-                </edit>
-              </match>
-              <match target="font">
-                <test name="family"><string>Twitter Color Emoji</string></test>
-                <edit name="charset" mode="assign">
-                  <minus>
-                    <name>charset</name>
-                    <charset>
-                      <int>0x2122</int> <!-- ™ -->
-                    </charset>
-                  </minus>
-                </edit>
-              </match>
               <selectfont>
                 <rejectfont>
                   <pattern>

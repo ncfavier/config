@@ -68,7 +68,6 @@ in {
               --toolbar-non-lwt-bgcolor: var(--bg) !important;
               --toolbar-non-lwt-bgimage: none !important;
               --toolbar-non-lwt-textcolor: var(--fg) !important;
-              --tabs-border-color: transparent !important;
               --toolbar-field-focus-border-color: var(--cold) !important;
               --autocomplete-popup-highlight-background: var(--cold) !important;
               --autocomplete-popup-highlight-color: var(--bg) !important;
@@ -130,6 +129,7 @@ in {
 
             #nav-bar {
               color: var(--fg) !important;
+              box-shadow: none !important;
             }
 
             #back-button {

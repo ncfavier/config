@@ -35,10 +35,10 @@
       config.hm.lib.file.mkOutOfStoreSymlink "${config.synced.saves.path}/df";
   };
 
-  nix.settings = {
-    substituters = mkAfter [ "https://nix-gaming.cachix.org" ];
-    trusted-public-keys = mkAfter [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
-  };
+  # nix.settings = {
+  #   substituters = mkAfter [ "https://nix-gaming.cachix.org" ];
+  #   trusted-public-keys = mkAfter [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
+  # };
 
   nixpkgs.overlays = [ (pkgs: prev: {
     zcatch = with pkgs; stdenv.mkDerivation rec {

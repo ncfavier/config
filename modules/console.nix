@@ -1,7 +1,12 @@
-{ lib, ... }: with lib; {
+{ lib, config, ... }: with lib; {
   console = {
     earlySetup = true;
     useXkbConfig = true;
+
+    colors = with config.theme; map (removePrefix "#") [
+      background    hot cold hot cold hot cold foregroundAlt
+      backgroundAlt hot cold hot cold hot cold foreground
+    ];
   };
 
   environment.etc.issue = mkForce {

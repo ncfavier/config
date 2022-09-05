@@ -1,5 +1,6 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ inputs, lib, config, pkgs, ... }: with lib; {
   documentation = {
+    nixos.enable = inputs.nixpkgs ? rev;
     dev.enable = true;
     man.generateCaches = true;
     man.man-db.manualPages = (pkgs.buildEnv {
@@ -13,7 +14,7 @@
     });
   };
 
-  environment.localBinInPath = true;
+  programs.bcc.enable = true;
 
   environment.systemPackages = with pkgs; [
     man-pages
@@ -35,7 +36,6 @@
     usbutils
     zip
     unzip
-    config.boot.kernelPackages.bcc
     binutils
     gcc
     gnumake

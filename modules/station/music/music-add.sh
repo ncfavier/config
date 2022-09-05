@@ -5,7 +5,7 @@ die() {
     exit 1
 }
 
-ask() {
+ask() { # TODO get this from functions.bash
     local prompt=$1 default=${2:-y}
     read -rp "$prompt " -n 1 answer
     if [[ $answer ]]; then echo; else answer=$default; fi

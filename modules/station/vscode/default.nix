@@ -24,8 +24,8 @@
         {
           name = "agda-mode";
           publisher = "banacorn";
-          version = "0.3.9";
-          sha256 = "0iqp9mldlxbxh4zn3jid07m5cyyhvk0xd5iapqx020yw82s40fmb";
+          version = "0.3.11";
+          sha256 = "0lp5vjwm9ss9925kac0rnhb0z2maa76k1g1g7bzfz45gvahgfwcf";
           postPatch = ''
             sed -i '/agda-mode-body {/,/font-size/{/font-size/d}' dist/style.css
           '';
@@ -98,9 +98,4 @@
       "VSCodium/User/keybindings.json".source = config.lib.meta.mkMutableSymlink ./keybindings.json;
     };
   };
-
-  environment.etc.agda-in-path.source = pkgs.writeShellScript "agda-in-path" ''
-    # needed because of https://github.com/banacorn/agda-mode-vscode/pull/112
-    exec agda "$@"
-  '';
 }

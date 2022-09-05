@@ -22,4 +22,6 @@ else
 fi
 
 id=0x1F3B5 # 🎵
+album=${album//'\'/'\\'}
+title=${title//'\'/'\\'}
 dunstify "${icon[@]}" -r "$id" "$artist" "<i>$album</i>\n$title\n$progress"

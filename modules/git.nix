@@ -42,6 +42,7 @@
         l = "log --graph --oneline";
         la = "log --graph --oneline --all";
         sw = "switch";
+        cat = "cat-file -p";
       };
 
       extraConfig = {

@@ -83,8 +83,8 @@
         "*color4" = cold;
         "*color5" = hot;
         "*color6" = cold;
-        "*color7" = darkGrey;
-        "*color8" = lightGrey;
+        "*color7" = foregroundAlt;
+        "*color8" = backgroundAlt;
         "*color9" = hot;
         "*color10" = cold;
         "*color11" = hot;
@@ -106,7 +106,7 @@
 
         # workaround for https://github.com/yshui/picom/issues/16#issuecomment-792739119
         fade = true;
-        fadeSteps = [ 1. 1. ];
+        fadeSteps = [ 1.0 1.0 ];
         fadeDelta = 30;
 
         # workaround for https://github.com/yshui/picom/issues/578
@@ -119,8 +119,8 @@
         longitude = 2.0;
       };
       systemd.user.services.redshift.Service.ExecStop =
-        let term = "${pkgs.util-linux}/bin/kill $MAINPID";
-        in "${term} ; ${term}"; # don't wait for the fade-out
+        let terminate = "${pkgs.util-linux}/bin/kill $MAINPID";
+        in "${terminate} ; ${terminate}"; # don't wait for the fade-out
     };
   };
 }

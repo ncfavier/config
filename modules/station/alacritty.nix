@@ -17,8 +17,8 @@
         decorations = "none";
       };
       font = {
-        normal.family = font;
-        size = fontSize;
+        normal.family = "monospace";
+        size = 7;
       };
       colors = {
         primary = {
@@ -32,10 +32,10 @@
           blue    = cold;
           magenta = hot;
           cyan    = cold;
-          white   = darkGrey;
+          white   = foregroundAlt;
         };
         bright = {
-          black   = lightGrey;
+          black   = backgroundAlt;
           red     = hot;
           green   = cold;
           yellow  = hot;

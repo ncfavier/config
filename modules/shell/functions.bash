@@ -1,9 +1,9 @@
 ask() {
     local prompt=$1 default=${2:-y}
-    read -rp "$prompt " -n 1 answer
-    if [[ $answer ]]; then echo; else answer=$default; fi
+    read -rp "$prompt " answer
+    answer=${answer:-$default}
     answer=${answer,,}
-    [[ $answer == y ]]
+    [[ $answer == y* ]]
 }
 
 compreply() {
@@ -66,7 +66,7 @@ rm() ( # rm, but more resilient to completion failures
     shopt -s nullglob extglob
     for arg do
         if [[ $arg != -* && $arg != */ && ! -L $arg && -d $arg ]] && matches=("$arg"!()) && (( ${#matches[@]} )); then
-            ask "do you really want to remove '$arg'?" n || return 1
+            ask "do you really want to remove '$arg'? (add a / to dismiss)" n || return 1
         fi
     done
     exec rm "$@"
@@ -336,6 +336,10 @@ pkgs() {
     config bld pkgs."$1" --no-out-link
 }
 complete_alias pkgs _complete_nix nix build -f /etc/nixpkgs
+
+drv() {
+    nix show-derivation "$@" | less
+}
 
 what() {
     local p=$(type -P "$1")
