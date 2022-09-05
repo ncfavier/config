@@ -1,6 +1,7 @@
 { lib, modulesPath, ... }: with lib; {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
+    modules/theme.nix
     modules/networking.nix
     modules/home-manager.nix
     modules/users.nix
@@ -28,7 +29,6 @@
     services.getty.autologinUser = mkForce my.username;
 
     # reduce size
-    i18n.supportedLocales = [ "en_GB.UTF-8/UTF-8" ];
     documentation.doc.enable = false;
     security.polkit.enable = false;
     services.udisks2.enable = false;
