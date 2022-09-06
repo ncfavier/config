@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
   nixpkgs.overlays = [ (self: super: {
+    # TODO
     ibus = super.ibus.overrideAttrs (old: {
       patches = old.patches or [] ++ [ (pkgs.fetchpatch {
         url = "https://patch-diff.githubusercontent.com/raw/ibus/ibus/pull/2425.patch";

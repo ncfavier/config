@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }: with lib; let
   bar = with pkgs; shellScriptWith "bar" ./bar.sh {
     deps = [
-      lemonbar-xft xtitle xkb-switch
+      config-cli lemonbar-xft xtitle xkb-switch
     ];
   };
 in {

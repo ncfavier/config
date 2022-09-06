@@ -267,11 +267,11 @@ in {
             }
           }
 
-          @-moz-document url-prefix(https://github.com/${my.githubUsername}) {
+          /*@-moz-document url-prefix(https://github.com/${my.githubUsername}) {
             .user-status-container {
               display: none;
             }
-          }
+          }*/
 
           @-moz-document url-prefix(https://adventofcode.com/) {
             body {

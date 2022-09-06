@@ -17,8 +17,8 @@
         decorations = "none";
       };
       font = {
-        normal.family = "monospace";
-        size = 7;
+        normal.family = "bitmap";
+        size = 8;
       };
       colors = {
         primary = {
