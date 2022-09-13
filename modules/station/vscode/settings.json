@@ -149,4 +149,7 @@
   "editor.minimap.enabled": false,
   "editor.selectionClipboard": false,
   "haskell.manageHLS": "PATH",
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "latex-workshop.view.pdf.color.dark.backgroundColor": "",
+  "latex-workshop.view.pdf.color.light.backgroundColor": "",
 }

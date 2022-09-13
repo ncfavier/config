@@ -3,7 +3,7 @@
 prompt_git() {
     local branch=$(__git_ps1 %s)
     if [[ $branch && $branch != @(master|main) ]]; then
-        printf ' \1%s\2%s\1%s\2' "$(tput setaf 4)" "$branch" "$(tput sgr0)"
+        printf ' \1\e[34m\2%s\1\e[0m\2' "$branch"
     fi
 }
 

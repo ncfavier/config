@@ -10,6 +10,7 @@
         haskell.haskell
         justusadam.language-haskell
         eugleo.magic-racket
+        rust-lang.rust-analyzer
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
       ]

@@ -16,6 +16,30 @@
         "type": "gitlab"
       }
     },
+    "dns": {
+      "inputs": {
+        "flake-utils": [
+          "home-manager",
+          "utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1635273082,
+        "narHash": "sha256-EHiDP2jEa7Ai5ZwIf5uld9RVFcV77+2SUxjQXwJsJa0=",
+        "owner": "kirelagin",
+        "repo": "dns.nix",
+        "rev": "c7b9645da9c0ddce4f9de4ef27ec01bb8108039a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kirelagin",
+        "repo": "dns.nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -34,30 +58,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "nix-dns": {
-      "inputs": {
-        "flake-utils": [
-          "home-manager",
-          "utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1635273082,
-        "narHash": "sha256-EHiDP2jEa7Ai5ZwIf5uld9RVFcV77+2SUxjQXwJsJa0=",
-        "owner": "kirelagin",
-        "repo": "nix-dns",
-        "rev": "c7b9645da9c0ddce4f9de4ef27ec01bb8108039a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kirelagin",
-        "repo": "nix-dns",
         "type": "github"
       }
     },
@@ -152,8 +152,8 @@
     },
     "root": {
       "inputs": {
+        "dns": "dns",
         "home-manager": "home-manager",
-        "nix-dns": "nix-dns",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",

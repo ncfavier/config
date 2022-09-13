@@ -14,8 +14,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "nur";
-    nix-dns = {
-      url = "github:kirelagin/nix-dns";
+    dns = {
+      url = "github:kirelagin/dns.nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "home-manager/utils";
     };

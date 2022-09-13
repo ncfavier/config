@@ -55,6 +55,7 @@
       racket
       audacity
       gimp
+      inkscape
       transmission-gtk
       qemu
       (writeShellScriptBin "power" ''

@@ -1,4 +1,15 @@
 { lib, config, pkgs, ... }: with lib; {
+  nixpkgs.overlays = [ (self: super: {
+    rofi-unwrapped = super.rofi-unwrapped.overrideAttrs (o: {
+      patches = o.patches or [] ++ [
+        (pkgs.fetchpatch {
+          url = "https://github.com/davatorium/rofi/commit/0f097f29988078ddae2799f6c3ab5beb81aaafc3.patch";
+          hash = "sha256-7DAt61kfuLrn+Ca5Te51225euNVo37ElZHVkht9hHA0=";
+        })
+      ];
+    });
+  }) ];
+
   hm = {
     programs.rofi = with config.theme; {
       enable = true;

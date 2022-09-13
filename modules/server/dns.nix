@@ -1,7 +1,7 @@
 { inputs, lib, this, config, ... }: with lib; let
-  dns = inputs.nix-dns.lib;
+  dns = inputs.dns.lib;
 in {
-  system.extraDependencies = collectFlakeInputs inputs.nix-dns;
+  system.extraDependencies = collectFlakeInputs inputs.dns;
 
   services.nsd = {
     enable = true;
