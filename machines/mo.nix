@@ -56,7 +56,6 @@
   ];
 
   services.xserver.videoDrivers = [ "intel" ];
-  services.xserver.useGlamor = true;
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----

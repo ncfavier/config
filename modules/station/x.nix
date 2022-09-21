@@ -27,6 +27,9 @@
         };
       };
       dpi = mkDefault 96;
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
     };
 
     lib.shellEnv = {
@@ -99,7 +102,7 @@
       };
 
       services.picom = {
-        enable = true;
+        enable = mkDefault true;
         experimentalBackends = true;
         backend = mkDefault "glx";
         vSync = true; # the only reason i need picom...

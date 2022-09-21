@@ -2,7 +2,7 @@
   "editor.fontFamily": "JuliaMono",
   "files.trimTrailingWhitespace": true,
   "keyboard.dispatch": "keyCode",
-  "latex-workshop.latex.recipe.default": "lastUsed",
+  "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
   "workbench.colorCustomizations": {
@@ -136,7 +136,6 @@
   },
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "vim.useSystemClipboard": true,
-  "magic-racket.lsp.enabled": false,
   "files.exclude": {
     "**/*.agdai": true
   },
@@ -152,4 +151,5 @@
   "rust-analyzer.inlayHints.parameterHints.enable": false,
   "latex-workshop.view.pdf.color.dark.backgroundColor": "",
   "latex-workshop.view.pdf.color.light.backgroundColor": "",
+  "magicRacket.languageServer.enabled": false,
 }

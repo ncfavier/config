@@ -27,6 +27,7 @@
       discord
       element-desktop
       tdesktop
+      signal-desktop
       amfora
       libreoffice
       (texlive.combine {

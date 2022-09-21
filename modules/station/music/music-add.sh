@@ -75,6 +75,7 @@ done
 (( ${#files[@]} > 0 )) || die "No files given."
 
 artist= album= cover_src=
+echo "Fetching album information..."
 if [[ ${srcs[0]} == http?(s)://*bandcamp.com/* ]]; then
     bandcamp_json=$(curl -fsSL "${srcs[0]}" | htmlq -t 'script[type="application/ld+json"]')
     jq -r '.byArtist.name, .name, (.image | if type == "array" then .[0] else . end)' <<< "$bandcamp_json" |
