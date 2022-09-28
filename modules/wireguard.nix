@@ -57,7 +57,7 @@ in {
         ];
         peers = [
           {
-            endpoint = "${head (my.server.ipv4 ++ [ my.domain ])}:${toString port}";
+            endpoint = "${my.domain}:${toString port}";
             inherit (my.server.wireguard) publicKey;
             allowedIPs = [ "0.0.0.0/0" "::/0" ];
             persistentKeepalive = 21;

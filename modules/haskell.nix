@@ -108,6 +108,7 @@
       bind: up meta-k
       bind: down meta-j
       maxhistorysize: Just 5000
+      historyDuplicates: IgnoreAll
     '';
   };
 }

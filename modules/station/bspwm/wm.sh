@@ -88,7 +88,7 @@ go() {
         mail)
             class=thunderbird focus-window || exec thunderbird &;;
         files)
-            class=thunar focus-window || exec thunar &;;
+            class=dolphin focus-window || exec dolphin &;;
         music)
             exec rofi -show music;;
         video)

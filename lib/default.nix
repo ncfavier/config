@@ -23,5 +23,7 @@ lib: prev: with lib; {
   getAllOutputs = drv:
     if drv ? outputs then attrVals drv.outputs drv else [ drv ];
 
+  versionAtMost = a: b: versionAtLeast b a;
+
   my = import ./my.nix lib;
 }

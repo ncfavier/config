@@ -11,7 +11,7 @@
 
   config = {
     theme = with config.theme; {
-      black         = "#00000d";
+      black         = "#000000";
       darkGrey      = if dark then "#444444" else "#aaaaaa";
       lightGrey     = if dark then "#666666" else "#cccccc";
       white         = "#ffffff";

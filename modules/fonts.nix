@@ -33,6 +33,7 @@
           efont-unicode
           siji
           babelstone-han
+          eb-garamond
         ];
         fontconfig = {
           enable = true;

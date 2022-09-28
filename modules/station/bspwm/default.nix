@@ -41,6 +41,10 @@ in {
           desktop = "files";
           follow = true;
         };
+        dolphin = {
+          desktop = "files";
+          follow = true;
+        };
       } // genAttrs [
         "feh"
         "mpv"

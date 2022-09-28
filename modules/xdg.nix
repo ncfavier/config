@@ -33,7 +33,7 @@
               firefox = dirs ++ text ++ images ++ media;
             });
             defaultApplications = mkMerge (mapAttrsToList (n: ms: genAttrs ms (_: [ "${n}.desktop" ])) {
-              thunar = dirs;
+              dolphin = dirs;
               vim = text;
               firefox = [
                 "application/pdf"

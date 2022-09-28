@@ -1,11 +1,15 @@
 { lib, config, pkgs, ... }: with lib; {
-  config.hm = {
+  nixpkgs.overlays = [ (self: super: {
+    feh = super.feh.override {
+      imlib2 = self.imlib2Full; # TODO https://github.com/NixOS/nixpkgs/pull/193096
+    };
+  }) ];
+
+  hm = {
     programs.feh = {
       enable = true;
 
       buttons = {
-        zoom = null;
-        pan = 2;
         prev_img = null;
         zoom_in = 4;
         next_img = null;
