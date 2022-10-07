@@ -1,4 +1,6 @@
 { inputs, lib, config, pkgs, ... }: with lib; {
+  system.extraDependencies = collectFlakeInputs inputs.plasma-manager;
+
   hm = {
     imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
 
@@ -18,10 +20,12 @@
       ''))
     ];
 
+    # TODO bookmarks (user-places.xbel), toolbar & shortcuts (kxmlgui5), user actions (https://develop.kde.org/docs/extend/dolphin/service-menus/)
     programs.plasma.files = {
       "dolphinrc"."MainWindow"."MenuBar" = "Disabled";
       "kdeglobals"."Colors:View"."BackgroundNormal" = config.theme.background;
-      "ktrashrc"."${config.hm.xdg.dataHome}/Trash" = {
+      "ktrashrc"."${config.hm.xdg.dataHome}/Trash" = { name, ... }: {
+        configGroupNesting = [ name ];
         UseSizeLimit = false;
         UseTimeLimit = false;
       };
@@ -33,16 +37,17 @@
       "dolphinrc"."General"."RememberOpenedTabs" = false;
       "dolphinrc"."General"."ShowSelectionToggle" = false;
       "dolphinrc"."General"."ShowZoomSlider" = false;
-      "dolphinrc"."IconsMode"."IconSize" = 176;
-      "dolphinrc"."IconsMode"."PreviewSize" = 176;
+      "dolphinrc"."IconsMode"."IconSize" = 256;
+      "dolphinrc"."IconsMode"."PreviewSize" = 256;
       "dolphinrc"."IconsMode"."TextWidthIndex" = 0;
       "dolphinrc"."KFileDialog Settings"."Places Icons Auto-resize" = false;
-      "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 32;
-      "dolphinrc"."PlacesPanel"."IconSize" = 32;
+      "dolphinrc"."KFileDialog Settings"."Places Icons Static Size" = 48;
+      "dolphinrc"."PlacesPanel"."IconSize" = 48;
       "dolphinrc"."PreviewSettings"."Plugins" = "audiothumbnail,blenderthumbnail,comicbookthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,svgthumbnail,ffmpegthumbs";
       "dolphinrc"."Search"."Location" = "Everywhere";
       "dolphinrc"."VersionControl"."enabledPlugins" = "Git";
       "ffmpegthumbsrc"."General"."filmstrip" = false;
+      "kdeglobals"."General"."TerminalApplication" = "alacritty";
       "kdeglobals"."KDE"."ShowDeleteCommand" = false;
       "kdeglobals"."PreviewSettings"."MaximumRemoteSize" = 0;
       "kiorc"."Confirmations"."ConfirmDelete" = true;

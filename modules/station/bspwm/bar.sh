@@ -159,7 +159,7 @@ cleanup_on_exit
         systemctl --user list-units --failed --plain --no-legend |
         while read -r unit _; do failed_user_units+=("$unit"); done
         printf 'Y%s:%s\n' "${failed_system_units[*]}" "${failed_user_units[*]}"
-        read -r -t 60
+        read -r -t 60 || (( $? > 128 ))
     do :; done &
 
     # dunst

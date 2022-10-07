@@ -18,7 +18,6 @@
         plugins = [
           rofi-calc
           rofi-emoji
-          rofi-file-browser
         ];
       };
 

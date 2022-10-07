@@ -4,6 +4,8 @@
       enable = true;
       musicDirectory = config.hm.xdg.userDirs.music;
       extraConfig = ''
+        auto_update "yes"
+
         audio_output {
           type "pulse"
           name "PulseAudio"

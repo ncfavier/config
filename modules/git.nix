@@ -29,9 +29,8 @@
         ca = "commit --amend";
         ce = "commit --edit";
         fixup = "commit --fixup";
-        cf = ''!git commit -m "$(git-random-commit-message)"'';
-        caf = ''!git commit --amend -m "$(git-random-commit-message)"'';
         co = "checkout";
+        cr = ''!git commit -m "$(git-random-commit-message)"'';
         r = "reset";
         p = "push";
         pa = "push --all";
@@ -90,10 +89,11 @@
 
     home.packages = with pkgs; [
       (writeShellScriptBin "git-random-commit-message" ''
-        ${fortune}/bin/fortune -esn 100 \
-            definitions disclaimer education goedel humorists magic miscellaneous \
-            pets science songs-poems translate-me zippy |
-        tr -s '[:space:]' '[ *]'
+        set -eo pipefail
+        url=$(${curl}/bin/curl -fsSw '%{redirect_url}' https://en.wiktionary.org/wiki/Special:Random)
+        title=$(${curl}/bin/curl -fsSL "$url" | ${htmlq}/bin/htmlq --text title)
+        title=''${title% - Wiktionary}
+        printf '%s\n\n%s\n' "$title" "$url"
       '')
       (writeShellScriptBin "gh-default-branch" ''
         gh api graphql -F owner='{owner}' -F repo='{repo}' -f query='

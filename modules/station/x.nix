@@ -109,7 +109,7 @@
 
         # workaround for https://github.com/yshui/picom/issues/16#issuecomment-792739119
         fade = true;
-        fadeSteps = [ 1.0 1.0 ];
+        fadeSteps = [ 1 1 ];
         fadeDelta = 30;
 
         # workaround for https://github.com/yshui/picom/issues/578

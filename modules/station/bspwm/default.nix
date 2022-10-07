@@ -167,8 +167,6 @@ in {
           "rofi -show calc";
         "super + o" =
           ''rofi -show emoji -theme-str 'configuration \{ font: "sans 14"; \}' '';
-        "super + ctrl + f" =
-          "rofi -show file-browser";
         "super + ctrl + Return" =
           "rofi -show ssh";
         "super + {_,shift} + Return" =
