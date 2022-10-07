@@ -50,6 +50,12 @@
 
   networking.wireless.interfaces = [ "wlp3s0" ];
 
+  networking.sharing = {
+    enable = true;
+    internalInterface = "enp2s0f0";
+    externalInterface = "wlp3s0";
+  };
+
   environment.systemPackages = with pkgs; [
     efibootmgr
     v4l-utils

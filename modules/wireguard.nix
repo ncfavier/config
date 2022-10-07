@@ -63,18 +63,28 @@ in {
             persistentKeepalive = 21;
           }
         ];
+        # TODO https://github.com/NixOS/nixpkgs/pull/194758
+        # Exempt forwarded packets from the tunnel so that Internet sharing can work.
+        # The rule is added after the --restore-mark rule because it will "restore" an empty mark (bug),
+        # and before the rpfilter chain.
+        postUp = [
+          "iptables  -t mangle -I PREROUTING 2 -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
+          "ip6tables -t mangle -I PREROUTING 2 -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
+        ];
+        preDown = [
+          "iptables  -t mangle -D PREROUTING -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
+          "ip6tables -t mangle -D PREROUTING -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
+        ];
       };
 
       environment.systemPackages = with pkgs; [
         (writeShellScriptBin "wg-toggle" ''
           ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }
           fwmark=$(sudo wg show ${interface} fwmark) || exit
-          if ip -j rule list lookup "$fwmark" | jq -e 'length > 0' > /dev/null; then
-              ip46 rule del lookup main suppress_prefixlength 0
-              ip46 rule del lookup "$fwmark"
+          if ip -j route list default dev ${interface} table "$fwmark" | jq -e 'length > 0' > /dev/null; then
+              ip46 route del default dev ${interface} table "$fwmark"
           else
-              ip46 rule add not fwmark "$fwmark" lookup "$fwmark"
-              ip46 rule add lookup main suppress_prefixlength 0
+              ip46 route add default dev ${interface} table "$fwmark"
           fi
         '')
         (writeShellScriptBin "wg-exempt" ''

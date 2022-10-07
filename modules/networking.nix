@@ -15,6 +15,7 @@
         firewall = {
           enable = true;
           logRefusedConnections = false;
+          logReversePathDrops = true;
           rejectPackets = true;
           allowedUDPPorts = [ 5355 ]; # LLMNR
         };
