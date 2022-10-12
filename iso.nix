@@ -41,5 +41,7 @@
         outputHash = null;
       });
     }) ];
+
+    jfizrfoihf = true;
   };
 }
