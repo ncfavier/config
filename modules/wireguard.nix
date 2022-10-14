@@ -1,7 +1,12 @@
 { lib, this, config, pkgs, ... }: with lib; let
-  interface = "wg42";
+  interface = config.networking.wireguard.interface;
   port = 500;
 in {
+  options.networking.wireguard.interface = mkOption {
+    type = types.str;
+    default = "wg42";
+  };
+
   config = mkMerge [
     (mkIf (this.isServer || this.isStation) {
       networking.firewall.trustedInterfaces = [ interface ];
@@ -48,6 +53,17 @@ in {
     })
 
     (mkIf this.isStation {
+      nixpkgs.overlays = [ (self: super: {
+        wireguard-tools = super.wireguard-tools.overrideAttrs (old: {
+          src = pkgs.fetchFromGitHub {
+            owner = my.githubUsername;
+            repo = "wireguard-tools";
+            rev = "rpfilter-doc";
+            hash = "sha256-vxtxGI0kOUYj5otLicdVURni0wUewwbc68tFuukrI2A=";
+          };
+        });
+      }) ];
+
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
         address = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
@@ -55,26 +71,12 @@ in {
           my.server.wireguard.ipv4 my.server.wireguard.ipv6
           interface # search domain
         ];
-        peers = [
-          {
-            endpoint = "${my.domain}:${toString port}";
-            inherit (my.server.wireguard) publicKey;
-            allowedIPs = [ "0.0.0.0/0" "::/0" ];
-            persistentKeepalive = 21;
-          }
-        ];
-        # TODO https://github.com/NixOS/nixpkgs/pull/194758
-        # Exempt forwarded packets from the tunnel so that Internet sharing can work.
-        # The rule is added after the --restore-mark rule because it will "restore" an empty mark (bug),
-        # and before the rpfilter chain.
-        postUp = [
-          "iptables  -t mangle -I PREROUTING 2 -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
-          "ip6tables -t mangle -I PREROUTING 2 -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
-        ];
-        preDown = [
-          "iptables  -t mangle -D PREROUTING -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
-          "ip6tables -t mangle -D PREROUTING -m addrtype ! --dst-type LOCAL -j MARK --set-mark 0xca6c"
-        ];
+        peers = [ {
+          endpoint = "${my.domain}:${toString port}";
+          inherit (my.server.wireguard) publicKey;
+          allowedIPs = [ "0.0.0.0/0" "::/0" ];
+          persistentKeepalive = 21;
+        } ];
       };
 
       environment.systemPackages = with pkgs; [

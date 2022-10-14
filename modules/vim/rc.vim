@@ -148,9 +148,16 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " set filetype to bash when editing bash dotfiles
 autocmd BufNewFile,BufRead ~/.dots/bash/* call dist#ft#SetFileTypeSH("bash")
 
+fun! StripTrailingWhitespace()
+    if &ft =~ 'gitcommit\|gitsendemail'
+        return
+    endif
+    %s/\s\+$//e
+endfun
+
 augroup mangle " disable these when making patches
   " delete trailing whitespace on write
-  autocmd BufWritePre * %s/\s\+$//e
+  autocmd BufWritePre * call StripTrailingWhitespace()
 
   " auto-chmod files with a shebang
   autocmd BufWritePost * if getline(1) =~ '^#!' && !executable(expand('%:p')) | silent execute '!chmod +x -- '.shellescape(@%) | endif

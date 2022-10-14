@@ -45,18 +45,10 @@
       };
 
       extraConfig = {
-        credential.helper = "store";
         advice = {
           detachedHead = false;
           pushNonFFCurrent = false;
         };
-        init.defaultBranch = "main";
-        pull.rebase = true;
-        rebase = {
-          autoStash = true;
-          autoSquash = true;
-        };
-        diff.submodule = "log";
         color = {
           status = {
             added = "green bold";
@@ -69,12 +61,23 @@
             old = "red";
           };
         };
+        commit.verbose = 1;
+        credential.helper = "store";
+        diff.submodule = "log";
         format.signOff = true;
+        init.defaultBranch = "main";
+        pull.rebase = true;
+        push.autoSetupRemote = true;
+        rebase = {
+          autoStash = true;
+          autoSquash = true;
+        };
         sendemail = {
           smtpServer = my.domain;
           smtpUser = my.email;
           smtpEncryption = "ssl";
           smtpServerPort = 465;
+          annotate = true;
           confirm = "always";
         };
       };

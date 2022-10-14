@@ -327,6 +327,10 @@ nix-time() { # get a lower bound on the build time of a derivation (best if buil
 }
 complete_alias nix-time _complete_nix nix show-derivation
 
+nix-closure-size() {
+    nix path-info -rsSh "$@"
+}
+
 nix-clear-cache() {
     rm ~/.cache/nix/binary-cache-v*.sqlite*
     sudo sh -c 'rm ~/.cache/nix/binary-cache-v*.sqlite*'

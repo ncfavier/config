@@ -31,7 +31,7 @@
       };
 
       # rc2nix
-      "dolphinrc"."General"."BrowseThroughArchives" = true;
+      "dolphinrc"."General"."BrowseThroughArchives" = false;
       "dolphinrc"."General"."ConfirmClosingMultipleTabs" = false;
       "dolphinrc"."General"."EditableUrl" = true;
       "dolphinrc"."General"."RememberOpenedTabs" = false;

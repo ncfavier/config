@@ -141,7 +141,7 @@ in {
 
   nixpkgs.overlays = [ (pkgs: prev: let
     lambdabot = pkgs.fetchFromGitHub {
-      owner = "ncfavier";
+      owner = my.githubUsername;
       repo = "lambdabot";
       rev = "live";
       sha256 = "Ssnzfxai+1rB47URKp45+4GaVA+ZfQ3x4sMOfX5KVY4=";

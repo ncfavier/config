@@ -68,7 +68,7 @@ print_time() {
 }
 
 debounce() {
-    local delay=${1:-0.1} IFS=
+    local delay=${1:-0.1} IFS= line line_
     while read -r line; do
         while read -rt "$delay" line_; do
             line=$line_
@@ -203,6 +203,7 @@ cleanup_on_exit
 
     # network
     ip -o monitor address route rule |
+    debounce 0.2 |
     while
         sleep 0.1
         parts=()

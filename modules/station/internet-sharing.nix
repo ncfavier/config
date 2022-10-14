@@ -33,6 +33,17 @@ in {
       };
     };
 
+    # Exempt forwarded packets from the WireGuard tunnel
+    # TODO https://github.com/NixOS/nixpkgs/pull/194758
+    networking.wg-quick.interfaces.${config.networking.wireguard.interface} = {
+      postUp = [
+        "iptables -t mangle -I PREROUTING -m addrtype ! --dst-type LOCAL -j CONNMARK --set-mark 0xca6c"
+      ];
+      preDown = [
+        "iptables -t mangle -D PREROUTING -m addrtype ! --dst-type LOCAL -j CONNMARK --set-mark 0xca6c || true"
+      ];
+    };
+
     services.dhcpd4 = {
       enable = true;
       interfaces = [ cfg.internalInterface ];
