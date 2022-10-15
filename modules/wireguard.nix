@@ -31,13 +31,13 @@ in {
         firewall = {
           allowedUDPPorts = [ port ];
           extraCommands = ''
-            ip46tables -P FORWARD DROP
-            ip46tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
             ip46tables -A FORWARD -i ${interface} -j ACCEPT
+            ip46tables -A FORWARD -o ${interface} -j ACCEPT
+            ip46tables -P FORWARD DROP
           '';
           extraStopCommands = ''
-            ip46tables -P FORWARD ACCEPT
             ip46tables -F FORWARD
+            ip46tables -P FORWARD ACCEPT
           '';
         };
 

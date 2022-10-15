@@ -144,13 +144,28 @@ in {
       owner = my.githubUsername;
       repo = "lambdabot";
       rev = "live";
-      sha256 = "Ssnzfxai+1rB47URKp45+4GaVA+ZfQ3x4sMOfX5KVY4=";
+      sha256 = "sha256-miIm+1Ti/irE9av6ZtUPVpQtW2XTWSLWK2bs9AyDZM8=";
+    };
+    dice = pkgs.fetchFromGitHub {
+      owner = my.githubUsername;
+      repo = "dice";
+      rev = "ghc9";
+      sha256 = "sha256-PqBX5Qzx2HiTmlUcuDCMPQlaSi3NZbDI+D3sJNaw6Mg=";
+    };
+    html-charset = pkgs.fetchFromGitHub {
+      owner = my.githubUsername;
+      repo = "html-charset";
+      rev = "maintenance";
+      sha256 = "sha256-5px0cvroYmG4IJs30fgvIrUTDTCejGnq6P115fCdV78=";
     };
   in {
     haskell = prev.haskell // {
-      packageOverrides = hpkgs: hprev: {
-        lambdabot-core = hprev.lambdabot-core.overrideAttrs (_: { src = "${lambdabot}/lambdabot-core"; });
+      packageOverrides = hpkgs: hprev: with pkgs.haskell.lib; {
+        lambdabot-core = hpkgs.callCabal2nix "lambdabot-core" "${lambdabot}/lambdabot-core" {};
         lambdabot-reference-plugins = hpkgs.callCabal2nix "lambdabot-reference-plugins" "${lambdabot}/lambdabot-reference-plugins" {};
+        dice = hpkgs.callCabal2nix "dice" dice {};
+        html-charset = hpkgs.callCabal2nix "html-charset" html-charset {};
+        gnuidn = markUnbroken (doJailbreak hprev.gnuidn);
       };
     };
   }) ];
