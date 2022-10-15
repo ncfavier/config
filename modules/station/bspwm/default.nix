@@ -32,7 +32,7 @@ in {
           desktop = "mail";
           follow = true;
         };
-        "Alacritty:irc" = {
+        irc = {
           desktop = "chat";
           follow = true;
           state = "pseudo_tiled";
@@ -51,7 +51,7 @@ in {
         "File-roller"
         "Lxappearance"
         "Pavucontrol"
-        "Alacritty:calendar"
+        "calendar"
         "Qemu-system-x86_64"
         "Gucharmap"
         "Xfd"

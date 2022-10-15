@@ -56,12 +56,12 @@ renumber-workspaces() {
 }
 
 terminal() {
-    if [[ $instance || $focus_title ]]; then
-        class=alacritty instance="$instance" title="$focus_title" focus-window && return
+    if [[ $class || $focus_title ]]; then
+        class="$class" title="$focus_title" focus-window && return
     fi
     . /etc/set-environment # reset PATH
     exec alacritty \
-        ${instance:+--class "$instance"} \
+        ${class:+--class "$class"} \
         ${title:+--title "$title"} \
         ${columns:+-o window.dimensions.columns="$columns"} \
         ${lines:+-o window.dimensions.lines="$lines"} \
@@ -80,7 +80,7 @@ go() {
         term|terminal)
             terminal "$@" &;;
         chat|irc)
-            instance=irc lines=100 columns=140 terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
+            class=irc lines=100 columns=140 terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
         editor)
             focus_title='- VIM$' terminal vim &;;
         web|browser)
@@ -96,7 +96,7 @@ go() {
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)
-            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal cal -3 &;;
+            class=calendar title=calendar columns=64 lines=9 hold=1 terminal cal -3 &;;
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
         *)

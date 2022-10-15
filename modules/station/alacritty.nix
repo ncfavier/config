@@ -1,4 +1,4 @@
-{ lib, config, pkgs, pkgsPR, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   hm.programs.alacritty = {
     enable = true;
     settings = with config.theme; {
