@@ -33,6 +33,8 @@ in {
       };
     };
 
+    systemd.network.networks."40-${cfg.internalInterface}".networkConfig.ConfigureWithoutCarrier = true;
+
     # Exempt forwarded packets from the WireGuard tunnel
     # TODO https://github.com/NixOS/nixpkgs/pull/194758
     networking.wg-quick.interfaces.${config.networking.wireguard.interface} = {

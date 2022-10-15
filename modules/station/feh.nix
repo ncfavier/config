@@ -1,10 +1,4 @@
 { lib, config, pkgs, ... }: with lib; {
-  nixpkgs.overlays = [ (self: super: {
-    feh = super.feh.override {
-      imlib2 = self.imlib2Full; # TODO https://github.com/NixOS/nixpkgs/pull/193096
-    };
-  }) ];
-
   hm = {
     programs.feh = {
       enable = true;

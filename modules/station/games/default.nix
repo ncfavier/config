@@ -12,9 +12,9 @@
       legendary-gl
       teeworlds
       ddnet
-      (writeShellScriptBin "zcatch" ''
-        exec ${zcatch}/bin/zcatch_srv -f zcatch.cfg "$@"
-      '')
+      # (writeShellScriptBin "zcatch" ''
+      #   exec ${zcatch}/bin/zcatch_srv -f zcatch.cfg "$@"
+      # '')
       dwarf-fortress
     ];
 
