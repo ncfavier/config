@@ -8,7 +8,6 @@
     "go.py"
     "highmon.pl"
     "screen_away.py"
-    "title.py"
   ];
   weechat = pkgs.weechat.override {
     configure = { availablePlugins, ... }: {

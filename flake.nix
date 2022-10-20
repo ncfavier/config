@@ -33,6 +33,11 @@
       url = "github:ncfavier/monade.li";
       flake = false;
     };
+    bothendieck = {
+      url = "github:ncfavier/bothendieck";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "home-manager/utils";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: let
