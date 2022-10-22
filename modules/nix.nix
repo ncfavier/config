@@ -189,9 +189,9 @@
             @*)
               host=''${cmd#@}
               hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
-              exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@";;
+              exec nixos-rebuild -v -L --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@";;
             *)
-              exec nixos-rebuild -v --flake "$configPath" --use-remote-sudo "$cmd" "$@";;
+              exec nixos-rebuild -v -L --flake "$configPath" --use-remote-sudo "$cmd" "$@";;
           esac
         '');
       })

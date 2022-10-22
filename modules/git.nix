@@ -35,7 +35,7 @@
         p = "push";
         pa = "push --all";
         pf = "push --force-with-lease";
-        pl = "pull --all --autostash";
+        pl = "pull --all --recurse-submodules --autostash";
         cl = "clone";
         cl1 = "clone --depth=1";
         l = "log --graph --oneline";

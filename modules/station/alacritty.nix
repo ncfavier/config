@@ -46,7 +46,10 @@
         };
       };
       selection.save_to_clipboard = true;
-      cursor.style.blinking = "Always";
+      cursor = {
+        style.blinking = "Always";
+        blink_timeout = 0;
+      };
       key_bindings = [
         { key =  3; mods = "Alt"; chars = "\\e2"; }
         { key =  8; mods = "Alt"; chars = "\\e7"; }

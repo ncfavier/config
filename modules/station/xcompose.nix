@@ -242,6 +242,8 @@
       <Multi_key> <degree> <C> : "℃"
       <Multi_key> <degree> <F> : "℉"
       <Multi_key> <m> <u> : "無"
+      <Multi_key> <e> <t> : "ꝫ"
+      <Multi_key> <E> <T> : "Ꝫ"
     '';
 
     onChange = ''

@@ -9,10 +9,12 @@
         jnoortheen.nix-ide
         haskell.haskell
         justusadam.language-haskell
+        dhall.dhall-lang
         eugleo.magic-racket
         rust-lang.rust-analyzer
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
+        bungcip.better-toml
       ]
       # to update: nixpkgs/pkgs/applications/editors/vscode/extensions/update_installed_exts.sh
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [

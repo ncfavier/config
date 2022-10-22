@@ -26,6 +26,7 @@
       environment.systemPackages = with pkgs; [
         traceroute
         dnsutils
+        ldns
         whois
         nethogs
         socat
