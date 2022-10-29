@@ -1,7 +1,11 @@
-{ inputs, lib, this, config, ... }: with lib; let
+{ inputs, lib, this, config, pkgsRev, ... }: with lib; let
   dns = inputs.dns.lib;
 in {
   system.extraDependencies = collectFlakeInputs inputs.dns;
+
+  nixpkgs.overlays = [ (self: super: {
+    bind = (pkgsRev "bea64c8d594d0074d17a4513a2d2d856b1b0fee0" "sha256-X7cClFjpVm5emaEg9eABeXvG6yx7HCoTIqOE04ICjxA=").bind;
+  }) ];
 
   services.nsd = {
     enable = true;
@@ -9,46 +13,49 @@ in {
     ipTransparent = true;
     ratelimit.enable = true;
 
-    zones.${my.domain}.data = with dns.combinators; let
-      here = {
-        A = map a this.ipv4;
-        AAAA = map aaaa this.ipv6;
-      };
-    in dns.toString my.domain (here // {
-      TTL = 60 * 60;
+    zones.${my.domain} = {
+      dnssec = true; # TODO
+      data = with dns.combinators; let
+        here = {
+          A = map a this.ipv4;
+          AAAA = map aaaa this.ipv6;
+        };
+      in dns.toString my.domain (here // {
+        TTL = 60 * 60;
 
-      SOA = {
-        nameServer = "@";
-        adminEmail = my.emailFor "dns";
-        serial = 0;
-      };
-      NS = [ "@" ];
+        SOA = {
+          nameServer = "@";
+          adminEmail = my.emailFor "dns";
+          serial = 0;
+        };
+        NS = [ "@" ];
 
-      MX = [ (mx.mx 10 "@") ];
-      DKIM = [ {
-        selector = "mail";
-        p = config.lib.dkim.pk;
-      } ];
-      DMARC = [ {
-        p = "quarantine";
-        sp = "quarantine";
-        rua = "mailto:${my.emailFor "dmarc"}";
-      } ];
+        MX = [ (mx.mx 10 "@") ];
+        DKIM = [ {
+          selector = "mail";
+          p = config.lib.dkim.pk;
+        } ];
+        DMARC = [ {
+          p = "quarantine";
+          sp = "quarantine";
+          rua = "mailto:${my.emailFor "dmarc"}";
+        } ];
 
-      TXT = [
-        (spf.strict [ "mx" ])
-        "google-site-verification=yIwF9ILuYq54P151RraAs06TuJQMLZXKPRXSdn8FJWc"
-      ];
+        TXT = [
+          (spf.strict [ "mx" ])
+          "google-site-verification=yIwF9ILuYq54P151RraAs06TuJQMLZXKPRXSdn8FJWc"
+        ];
 
-      CAA = letsEncrypt (my.emailFor "dns+caa");
+        CAA = letsEncrypt (my.emailFor "dns+caa");
 
-      subdomains = rec {
-        "*" = here;
+        subdomains = rec {
+          "*" = here;
 
-        github.CNAME = [ "${my.githubUsername}.github.io." ];
-        glam = github;
-      };
-    });
+          github.CNAME = [ "${my.githubUsername}.github.io." ];
+          glam = github;
+        };
+      });
+    };
   };
 
   services.unbound = {

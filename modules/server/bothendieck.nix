@@ -24,10 +24,14 @@ in {
 
     systemd.services.bothendieck = let
       bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieck.override {
-        evaluators = (inputs.bothendieck.inputs.qeval.legacyPackages.${pkgs.system}.override {
+        evaluators = ((inputs.bothendieck.inputs.qeval.legacyPackages.${pkgs.system}.override {
+          baseKernelPackages = pkgs.linuxPackages_latest;
           enableKVM = false;
+          suspensionUseCompression = false; # favour speed
           timeout = 30;
-        }).evaluators.all;
+        }).evaluators.override {
+          filterEvaluators = all: builtins.removeAttrs all [ "kotlin" ];
+        }).all;
       };
       configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;
     in {
@@ -72,6 +76,7 @@ in {
         nick = "|||";
         realName = "bothendieck";
         channels = [ "##nf" ];
+        commandPrefix = ".";
       };
       passwordFile = config.secrets.bothendieck.path;
     };

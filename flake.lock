@@ -26,14 +26,16 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "qeval": "qeval"
+        "qeval": [
+          "qeval"
+        ]
       },
       "locked": {
-        "lastModified": 1666273538,
-        "narHash": "sha256-TQzBky1OaEttrwS6+Sm288/oMFIYGwdgDL64c3TqxOQ=",
+        "lastModified": 1666816753,
+        "narHash": "sha256-un1ACQya7NJluJ0AXBqavF9ILyzAZgcFd8HeMeXP/R8=",
         "owner": "ncfavier",
         "repo": "bothendieck",
-        "rev": "8699daa632c11511195cf688205d9c68413f9a50",
+        "rev": "baccaa362161de4635416c1ad57e0663cfd10e1b",
         "type": "github"
       },
       "original": {
@@ -196,21 +198,6 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1666162734,
-        "narHash": "sha256-XFgV2TlQ7q2j1yjfgB/mayfORcKtmIAY2BGXTNRqNTs=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "15e8a12e8793e845708c17921f1985f486400c2b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
-      }
-    },
-    "nur_2": {
-      "locked": {
         "lastModified": 1666257306,
         "narHash": "sha256-BCTZJF7xdq1JqudDPh3EMsxS69AOlgBozkaEe3++QBY=",
         "owner": "nix-community",
@@ -249,22 +236,23 @@
     "qeval": {
       "inputs": {
         "flake-utils": [
-          "bothendieck",
-          "flake-utils"
+          "home-manager",
+          "utils"
         ],
         "nixpkgs": [
-          "bothendieck",
           "nixpkgs"
         ],
         "nixpkgs-mozilla": "nixpkgs-mozilla",
-        "nur": "nur"
+        "nur": [
+          "nur"
+        ]
       },
       "locked": {
-        "lastModified": 1666273245,
-        "narHash": "sha256-067j6brP2YK8ROSSi8/XNhQrhjcfwmUkEPIOUR8eAso=",
+        "lastModified": 1666730573,
+        "narHash": "sha256-BD8QgUg6iwGuk4aF5phqNRoQvFAvHTzZXZD6cTvUooo=",
         "owner": "ncfavier",
         "repo": "qeval",
-        "rev": "cecd35e51a28617b10d6cf5830727a7bbbebf286",
+        "rev": "7c82304aaf5e1f2c8fd00fe139359de5d0430d9e",
         "type": "github"
       },
       "original": {
@@ -281,8 +269,9 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "nur": "nur_2",
+        "nur": "nur",
         "plasma-manager": "plasma-manager",
+        "qeval": "qeval",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "www": "www"

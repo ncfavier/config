@@ -37,6 +37,13 @@
       url = "github:ncfavier/bothendieck";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "home-manager/utils";
+      inputs.qeval.follows = "qeval";
+    };
+    qeval = {
+      url = "github:ncfavier/qeval";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "home-manager/utils";
+      inputs.nur.follows = "nur";
     };
   };
 
