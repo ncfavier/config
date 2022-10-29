@@ -7,7 +7,7 @@
       <Multi_key> <y> <y> : "☯"
       <Multi_key> <O> <O> : "👀"
       <Multi_key> <greater> <less> : "👉👈"
-      <Multi_key> <s> <h> : "¯\\_(ツ)_/¯"
+      <Multi_key> <backslash> <slash> : "¯\\_(ツ)_/¯"
       <Multi_key> <s> <2> <h> : "┐('~'; )┌"
       <Multi_key> <l> <e> : "( ͡° ͜ʖ ͡°)"
       <Multi_key> <m> <e> <h> : "ಠ_ಠ"
@@ -244,6 +244,7 @@
       <Multi_key> <m> <u> : "無"
       <Multi_key> <e> <t> : "ꝫ"
       <Multi_key> <E> <T> : "Ꝫ"
+      <Multi_key> <s> <h> : "ʃ"
     '';
 
     onChange = ''

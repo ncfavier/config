@@ -110,20 +110,20 @@ writeiso() { # write an ISO file to a block device
     sudo dd if="$file" of="$device" bs=1M oflag=sync status=progress
 }
 
-grep() { # page output
-    local args=()
-    [[ -t 1 ]] && args+=(--color=always)
-    command grep "${args[@]}" "$@" | less
-    return "${PIPESTATUS[0]}"
-}
-
-rg() { # page output
-    local args=()
-    [[ -t 0 ]] && args+=(--line-number)
-    [[ -t 1 ]] && args+=(--color always --heading)
-    command rg "${args[@]}" "$@" | less
-    return "${PIPESTATUS[0]}"
-}
+# grep() { # page output
+#     local args=()
+#     [[ -t 1 ]] && args+=(--color=always)
+#     command grep "${args[@]}" "$@" | less
+#     return "${PIPESTATUS[0]}"
+# }
+#
+# rg() { # page output
+#     local args=()
+#     [[ -t 0 ]] && args+=(--line-number)
+#     [[ -t 1 ]] && args+=(--color always --heading)
+#     command rg "${args[@]}" "$@" | less
+#     return "${PIPESTATUS[0]}"
+# }
 
 sponge() {
     local tmp

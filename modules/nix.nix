@@ -30,6 +30,11 @@
         (config.lib.meta.configPath + removePrefix (toString inputs.self) (toString path));
     };
 
+    secrets.nix-access-tokens = {
+      mode = "0440";
+      group = config.users.groups.keys.name;
+    };
+
     nix = {
       settings = {
         experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
@@ -37,6 +42,10 @@
         keep-outputs = true;
         trusted-users = [ "root" "@wheel" ];
       };
+
+      extraOptions = ''
+        !include ${config.secrets.nix-access-tokens.path}
+      '';
 
       registry = {
         config.flake = inputs.self;

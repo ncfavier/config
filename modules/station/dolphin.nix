@@ -60,18 +60,4 @@
       "kservicemenurc"."Show"."tagsfileitemaction" = true;
     };
   };
-
-  nixpkgs.overlays = [ (self: super: {
-    libsForQt515 = super.libsForQt515.overrideScope' (qself: qsuper: {
-      ffmpegthumbs = qsuper.ffmpegthumbs.overrideAttrs (attrs:
-      assert versionAtMost attrs.version "22.08.1"; {
-        src = pkgs.fetchFromGitHub {
-          owner = "KDE";
-          repo = "ffmpegthumbs";
-          rev = "6efa4c1a6257010f2925d1714d84a17ce23d2176";
-          hash = "sha256-4lxPfqJhUJbQUauMy+CPnPYJHUyF6Bt3sfZn0VTVkrg=";
-        };
-      });
-    });
-  }) ];
 }

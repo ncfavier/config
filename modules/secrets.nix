@@ -31,6 +31,8 @@
     }) (builtins.readDir secretsDir);
   };
 
+  my.extraGroups = [ "keys" ];
+
   environment = {
     systemPackages = [ pkgs.sops ];
     sessionVariables.SOPS_PGP_FP = my.pgpFingerprint;
