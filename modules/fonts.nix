@@ -1,4 +1,4 @@
-{ lib, this, pkgs, ... }: with lib; {
+{ lib, this, pkgs, pkgsPR, ... }: with lib; {
   config = mkMerge [
     {
       fonts.fontconfig.enable = mkDefault false;
@@ -11,7 +11,7 @@
     }
 
     (mkIf this.isStation {
-      nixpkgs.config.allowUnfree = true; # for symbola
+      nixpkgs.config.allowUnfree = true;
 
       fonts = {
         fonts = with pkgs; [
@@ -34,14 +34,18 @@
           siji
           babelstone-han
           eb-garamond
+          (pkgsPR 198951 "sha256-R5gkvYVvbJ+KiOQ57rV9rQSxGgppI4CXnsHFpKljTfM=").crimson-pro
+          (pkgsPR 198964 "sha256-l1m8ZkWW6uHHtKOp62c09OL+YDmAhDW7Ymzn9ebUxAQ=").alice
+          libre-baskerville
+          libertinus
         ];
         fontconfig = {
           enable = true;
           defaultFonts = {
-            serif     = [ "Source Serif Pro" "Source Han Serif" ];
-            sansSerif = [ "Source Sans Pro" "Source Han Sans" ];
+            serif     = [ "Libertinus Serif" "Source Serif 4" "Source Han Serif" ];
+            sansSerif = [ "Source Han Sans" ]; # Source Han Sans includes most glyphs from Source Sans and is slightly larger
             monospace = [ "JuliaMono" "Twitter Color Emoji" "Source Code Pro" "Source Han Mono" ];
-            emoji     = [ "Twemoji" "Noto Color Emoji" "Symbola" ];
+            emoji     = [ "Twitter Color Emoji" "Noto Color Emoji" "Symbola" ];
           };
           localConf = ''
             <?xml version='1.0'?>

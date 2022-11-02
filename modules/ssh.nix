@@ -2,7 +2,7 @@
   services.openssh = {
     enable = true;
     ports = mkIf (this.sshPort != null) [ this.sshPort ];
-    passwordAuthentication = !this.isServer;
+    passwordAuthentication = false;
     forwardX11 = true;
   };
 

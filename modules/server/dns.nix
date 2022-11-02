@@ -95,7 +95,7 @@ in {
     };
   };
 
-  networking.nameservers = [ "127.0.0.1" "::1" ]; # use unbound for local queries
+  networking.nameservers = [ "127.0.0.1" "::1" ]; # use unbound for local queries; TODO fix useLocalResolver + resolved
 
   networking.firewall = rec {
     allowedTCPPorts = [ 53 ];

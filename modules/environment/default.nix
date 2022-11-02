@@ -61,6 +61,13 @@
     settings = {
       color_scheme = 1;
       tree_view = true;
+      hide_kernel_threads = true;
+      hide_userland_threads = true;
+      show_thread_names = true;
+      highlight_base_name = true;
+      show_cpu_frequency = true;
+      show_cpu_temperature = true;
+      screen_tabs = true;
     };
   };
 

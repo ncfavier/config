@@ -1,4 +1,4 @@
-{ inputs, lib, this, config, pkgs, ... }: with lib; {
+{ inputs, lib, this, config, pkgs, pkgsRev, ... }: with lib; {
   config = {
     system.extraDependencies = concatMap collectFlakeInputs (with inputs; [
       nixpkgs nixpkgs-stable nixos-hardware nur
@@ -41,6 +41,7 @@
         warn-dirty = false;
         keep-outputs = true;
         trusted-users = [ "root" "@wheel" ];
+        log-lines = 30;
       };
 
       extraOptions = ''
@@ -198,9 +199,9 @@
             @*)
               host=''${cmd#@}
               hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
-              exec nixos-rebuild -v -L --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@";;
+              exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@";;
             *)
-              exec nixos-rebuild -v -L --flake "$configPath" --use-remote-sudo "$cmd" "$@";;
+              exec nixos-rebuild -v --fast --flake "$configPath" --use-remote-sudo "$cmd" "$@";;
           esac
         '');
       })

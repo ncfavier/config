@@ -33,7 +33,7 @@ in {
     # create a user manager so that /run/user/$uid exists and hence SSH_AUTH_SOCK gets set correctly
     wants = [ "user@${toString config.my.uid}.service" "network-online.target" ];
     after = wants ++ [ "nss-lookup.target" ];
-    wantedBy = [ "default.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       User = my.username;
       Type = "forking";

@@ -4,6 +4,7 @@
     ibus.engines = with pkgs.ibus-engines; [
       mozc
       hangul
+      typing-booster # TODO why doesn't this work?
     ];
   };
 
@@ -27,7 +28,7 @@
     dconf.settings = {
       "desktop/ibus/general" = {
         use-system-keyboard-layout = true;
-        preload-engines = [ "xkb:fr:oss:fra" "mozc-jp" "hangul" ];
+        preload-engines = [ "xkb:fr:oss:fra" "mozc-jp" "hangul" "typing-booster" ];
       };
       "desktop/ibus/general/hotkey".triggers = [ "<Super>i" ];
       "desktop/ibus/panel" = {
