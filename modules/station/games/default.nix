@@ -59,7 +59,7 @@
     };
   }) ];
   cachix.derivationsToPush = with pkgs; [
-    zcatch
+    # zcatch
     dwarf-fortress
   ];
 }

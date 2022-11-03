@@ -27,6 +27,16 @@ complete_alias() { # completion function for aliases
     complete -F "$function_name" "$alias_name"
 }
 
+diff-json() {
+    local old new
+    old=$(mktemp --suffix .old)
+    new=$(mktemp --suffix .new)
+    jq -M . "$1" > "$old"
+    jq -M . "$2" > "$new"
+    diff "$old" "$new"
+    rm -f "$old" "$new"
+}
+
 cat() { # cat directories to list them
     if (( $# == 1 )) && [[ -d $1 ]]; then
         ll "$1"

@@ -29,7 +29,7 @@
       tdesktop
       signal-desktop
       amfora
-      libreoffice
+      libreoffice-fresh
       (texlive.combine {
         inherit (texlive)
           scheme-medium

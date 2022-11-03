@@ -9,9 +9,7 @@
     ];
   };
 
-  environment.etc.issue = mkForce {
-    text = " \\e{magenta}\\n\\e{reset} | \\e{reset}\\l\\e{reset} | \\d \\t\n\n";
-  };
+  environment.etc.issue.text = " \\e{magenta}\\n\\e{reset} | \\e{reset}\\l\\e{reset} | \\d \\t\n\n";
 
   services.getty.extraArgs = [ "--nohostname" ];
 }

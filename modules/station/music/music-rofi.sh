@@ -40,9 +40,7 @@ elif [[ ! -v album ]]; then
         opt message "<b>$artist_esc</b>"
     fi
     mpc list album ${artist:+artist "$artist"} | readarray -t albums
-    if (( ${#albums[@]} > 1 )); then
-        album=; row '*'
-    fi
+    album=; row '*'
     for album in "${albums[@]}"; do
         escape album
         row "<i>$album_esc</i>"

@@ -27,7 +27,6 @@
     tree
     ncdu
     lsof
-    iotop
     lm_sensors
     dosfstools
     mtools
@@ -45,6 +44,7 @@
     imagemagick
     ffmpeg-full
     (yt-dlp.override { withAlias = true; })
+    jq
     htmlq
     python3
     neofetch
@@ -59,8 +59,6 @@
   hm.programs.htop = {
     enable = true;
     settings = {
-      color_scheme = 1;
-      tree_view = true;
       hide_kernel_threads = true;
       hide_userland_threads = true;
       show_thread_names = true;

@@ -1,4 +1,4 @@
-{ lib, this, pkgs, pkgsPR, ... }: with lib; {
+{ lib, this, pkgs, ... }: with lib; {
   config = mkMerge [
     {
       fonts.fontconfig.enable = mkDefault false;
@@ -34,8 +34,8 @@
           siji
           babelstone-han
           eb-garamond
-          (pkgsPR 198951 "sha256-R5gkvYVvbJ+KiOQ57rV9rQSxGgppI4CXnsHFpKljTfM=").crimson-pro
-          (pkgsPR 198964 "sha256-l1m8ZkWW6uHHtKOp62c09OL+YDmAhDW7Ymzn9ebUxAQ=").alice
+          crimson-pro
+          alice
           libre-baskerville
           libertinus
         ];

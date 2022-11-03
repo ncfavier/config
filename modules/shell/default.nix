@@ -1,6 +1,5 @@
 { lib, pkgs, ... }: with lib; {
   environment.systemPackages = with pkgs; [
-    jq
     alacritty.terminfo
   ];
 
@@ -52,6 +51,7 @@
       s = "sudo systemctl";
       u = "systemctl --user";
       j = "journalctl";
+      top = "htop";
       vim-patch = "vim -c 'au! mangle'";
 
       # Force alias expansion after these commands
