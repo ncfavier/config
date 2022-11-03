@@ -22,9 +22,9 @@ jobs:
           pathsToPush: nixos.iso
       # disabled for now because of https://github.com/cachix/cachix-action/issues/89
       # - name: Check flake
-      #   run: nix -v flake check
+      #   run: nix flake check
       - name: Build ISO
-        run: nix -vL build .#iso -o nixos.iso
+        run: nix -L build .#iso -o nixos.iso
       - name: Create release
         id: release
         uses: ncfavier/action-gh-release@delete-existing
