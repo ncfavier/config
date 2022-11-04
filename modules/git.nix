@@ -42,6 +42,7 @@
         la = "log --graph --oneline --all";
         sw = "switch";
         cat = "cat-file -p";
+        yeet = "restore";
       };
 
       extraConfig = {
