@@ -26,11 +26,12 @@ in {
       bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieck.override {
         evaluators = ((inputs.bothendieck.inputs.qeval.legacyPackages.${pkgs.system}.override {
           baseKernelPackages = pkgs.linuxPackages_latest;
+          qemu = pkgs.qemu_kvm;
           enableKVM = false;
           suspensionUseCompression = false; # favour speed
           timeout = 30;
         }).evaluators.override {
-          filterEvaluators = all: builtins.removeAttrs all [ "kotlin" ];
+          filterEvaluators = all: builtins.removeAttrs all [ "java" "kotlin" ];
         }).all;
       };
       configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;

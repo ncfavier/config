@@ -15,10 +15,10 @@
       init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
         /script update
         /script install ${concatStringsSep " " scripts}
-        /set sec.crypt.passphrase_command "cat ${config.secrets.weechat.path}"
-        /set relay.network.bind_address ${this.wireguard.ipv4}
-        /set relay.port.weechat ${toString relayPort}
-        /set logger.file.path ${config.synced.irc-logs.path}
+        /mute set sec.crypt.passphrase_command "cat ${config.secrets.weechat.path}"
+        /mute set relay.network.bind_address ${this.wireguard.ipv4}
+        /mute set relay.port.weechat ${toString relayPort}
+        /mute set logger.file.path ${config.synced.irc-logs.path}
       ''}";
     };
   };
