@@ -74,8 +74,8 @@ in {
           "fd42::/16" "10.42.0.0/16"
         ];
         local-data = concatLists (mapAttrsToList (n: m: [
-          ''"${n}.wg42. A ${m.wireguard.ipv4}"''
-          ''"${n}.wg42. AAAA ${m.wireguard.ipv6}"''
+          ''"${n}.${config.networking.wireguard.interface}. A ${m.wireguard.ipv4}"''
+          ''"${n}.${config.networking.wireguard.interface}. AAAA ${m.wireguard.ipv6}"''
         ]) my.machines) ++ [
           ''"fu.home. A 192.168.1.2"''
           ''"mo.home. A 192.168.1.3"''
@@ -84,8 +84,8 @@ in {
           ''"printer.home. A 192.168.1.63"''
         ];
         local-data-ptr = concatLists (mapAttrsToList (n: m: [
-          ''"${m.wireguard.ipv4} ${n}.wg42."''
-          ''"${m.wireguard.ipv6} ${n}.wg42."''
+          ''"${m.wireguard.ipv4} ${n}.${config.networking.wireguard.interface}."''
+          ''"${m.wireguard.ipv6} ${n}.${config.networking.wireguard.interface}."''
         ]) my.machines);
       };
       forward-zone = [ {
