@@ -10,10 +10,10 @@ in {
       };
       default = {};
     };
-    passwordFile = mkOption {
+    secretsFile = mkOption {
       type = with types; nullOr path;
       default = null;
-      description = "File containing the NickServ password to use.";
+      description = "File containing extra configuration (secrets).";
     };
   };
 
@@ -42,8 +42,8 @@ in {
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         DynamicUser = true;
-        LoadCredential = mkIf (cfg.passwordFile != null) "password:${cfg.passwordFile}";
-        ExecStart = "${bothendieck}/bin/bothendieck --config ${configFile} ${lib.optionalString (cfg.passwordFile != null) "--password-file \${CREDENTIALS_DIRECTORY}/password"}";
+        LoadCredential = mkIf (cfg.secretsFile != null) "secrets:${cfg.secretsFile}";
+        ExecStart = "${bothendieck}/bin/bothendieck --config ${configFile} ${lib.optionalString (cfg.secretsFile != null) "--extra-config \${CREDENTIALS_DIRECTORY}/secrets"}";
 
         DevicePolicy = "closed";
         LockPersonality = true;
@@ -79,7 +79,7 @@ in {
         channels = [ "##nf" ];
         commandPrefix = ".";
       };
-      passwordFile = config.secrets.bothendieck.path;
+      secretsFile = config.secrets.bothendieck.path;
     };
   };
 }

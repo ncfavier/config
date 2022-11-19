@@ -1,4 +1,4 @@
-{ lib, this, pkgs, ... }: with lib; optionalAttrs this.isServer {
+{ lib, this, ... }: with lib; optionalAttrs this.isServer {
   imports = attrValues (modulesIn ./.);
 
   networking.firewall.allowedTCPPorts = [

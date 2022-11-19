@@ -118,6 +118,7 @@
           LINK = "target";
           ORPHAN = "3;31";
           EXEC = "1;35";
+          OTHER_WRITABLE = "37;42";
         };
       };
     };
