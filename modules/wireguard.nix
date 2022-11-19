@@ -85,8 +85,10 @@ in {
           fwmark=$(sudo wg show ${interface} fwmark) || exit
           if ip -j route list default dev ${interface} table "$fwmark" | jq -e 'length > 0' > /dev/null; then
               ip46 route del default dev ${interface} table "$fwmark"
+              resolvectl domain ${interface} ${interface}
           else
               ip46 route add default dev ${interface} table "$fwmark"
+              resolvectl domain ${interface} ${interface} '~.' # ~. means "use this interface exclusively"
           fi
         '')
         (writeShellScriptBin "wg-exempt" ''

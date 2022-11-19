@@ -23,7 +23,6 @@
     hm.home.packages = with pkgs; [
       chromium
       thunderbird
-      github-desktop
       discord
       element-desktop
       tdesktop

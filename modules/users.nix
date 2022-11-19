@@ -6,6 +6,7 @@
       options.shellPath = mkOption {
         type = str;
         default = utils.toShellPath config.shell;
+        defaultText = literalExpression "utils.toShellPath shell";
         readOnly = true;
       };
     }));

@@ -44,9 +44,10 @@
           defaultFonts = {
             serif     = [ "Libertinus Serif" "Source Serif 4" "Source Han Serif" ];
             sansSerif = [ "Source Han Sans" ]; # Source Han Sans includes most glyphs from Source Sans and is slightly larger
-            monospace = [ "JuliaMono" "Twitter Color Emoji" "Source Code Pro" "Source Han Mono" ];
+            monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" ];
             emoji     = [ "Twitter Color Emoji" "Noto Color Emoji" "Symbola" ];
           };
+          # test: ™ ´ ” ☺ 🦢
           localConf = ''
             <?xml version='1.0'?>
             <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
@@ -55,9 +56,8 @@
                 <family>bitmap</family>
                 <prefer>
                   <family>Dina</family>
-                  <family>Twitter Color Emoji</family>
-                  <family>tewi</family>
                   <family>Biwidth</family>
+                  <family>Twitter Color Emoji</family>
                   <family>Symbola</family>
                 </prefer>
               </alias>

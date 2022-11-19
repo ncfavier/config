@@ -20,6 +20,7 @@
         normal.family = "bitmap";
         size = 8;
       };
+      draw_bold_text_with_bright_colors = true;
       colors = {
         primary = {
           inherit background foreground;

@@ -152,4 +152,5 @@
   "latex-workshop.view.pdf.color.dark.backgroundColor": "",
   "latex-workshop.view.pdf.color.light.backgroundColor": "",
   "magicRacket.languageServer.enabled": false,
+  "editor.wordWrap": "on",
 }

@@ -13,6 +13,7 @@
       <Multi_key> <m> <e> <h> : "ಠ_ಠ"
       <Multi_key> <t> <f> : "(╯°□°）╯︵ ┻━┻"
       <Multi_key> <q> <t> : "(◕‿◕)"
+      <Multi_key> <s> <a> <d> : "(｡•́︿•̀｡)"
       <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
 
       # Math
@@ -41,7 +42,6 @@
       <Multi_key> <greater> <greater> : "≫"
       <Multi_key> <bar> <bar> : "∥"
       <Multi_key> <slash> <backslash> : "∧"
-      <Multi_key> <backslash> <slash> : "∨"
       <Multi_key> <l> <a> <n> <d> : "∧"
       <Multi_key> <l> <o> <r> : "∨"
       <Multi_key> <i> <f> <f> : "⇔"

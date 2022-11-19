@@ -41,6 +41,7 @@
         warn-dirty = false;
         keep-outputs = true;
         trusted-users = [ "root" "@wheel" ];
+        max-jobs = "auto";
         log-lines = 30;
       };
 
