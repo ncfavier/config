@@ -18,9 +18,9 @@
       settings.lyrics_directory = "${config.hm.xdg.dataHome}/lyrics";
     };
 
-    programs.rofi.extraConfig.modi = "music:${
+    programs.rofi.extraConfig.modes = [ "music:${
       pkgs.shellScriptWith "music-rofi" ./music-rofi.sh {}
-    }/bin/music-rofi";
+    }/bin/music-rofi" ];
 
     home.packages = with pkgs; [
       mpc_cli

@@ -50,6 +50,16 @@
     neofetch
     lesspass-cli
     tmsu
+    (writeShellScriptBin "mutate" ''
+      # replace a read-only symlink with a mutable copy
+      f=''${1%/}
+      if [[ -L $f ]]; then
+        r=$(realpath -- "$f")
+        rm -f -- "$f"
+        cp -Tr --remove-destination --preserve=mode -- "$r" "$f"
+      fi
+      chmod -R u+w -- "$f"
+    '')
     (shellScriptWith "upload" ./upload.sh {})
     (shellScriptWith "order" ./order.sh {})
   ];
@@ -71,8 +81,7 @@
 
   nixpkgs.overlays = [ (pkgs: prev: {
     shellScriptWith = name: src: { deps ? [], vars ? {} }:
-      pkgs.writeScriptBin name ''
-        #!${config.my.shellPath}
+      pkgs.writeShellScriptBin name ''
         ${optionalString (deps != []) ''
         PATH=${makeBinPath deps}''${PATH+:$PATH}
         ''}

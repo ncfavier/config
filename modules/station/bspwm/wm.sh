@@ -99,6 +99,9 @@ go() {
             class=calendar title=calendar columns=64 lines=9 hold=1 terminal cal -3 &;;
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
+        emoji)
+            rofi_args=(-theme-str 'configuration { font: "sans 14"; }')
+            exec rofimoji --selector-args "${rofi_args[*]@Q}";;
         *)
             die "unknown application $app";;
     esac

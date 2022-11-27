@@ -103,7 +103,6 @@
 
       services.picom = {
         enable = mkDefault true;
-        experimentalBackends = true;
         backend = mkDefault "glx";
         vSync = true; # the only reason i need picom...
 

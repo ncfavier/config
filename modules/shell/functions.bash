@@ -82,17 +82,6 @@ rm() ( # rm, but more resilient to completion failures
     exec rm "$@"
 )
 
-mutate() { # replace a read-only symlink with a mutable copy
-    local sudo=
-    if [[ $1 == -r ]]; then
-        shift
-        sudo=sudo
-    fi
-    local f=$1
-    [[ -L $f ]] && command $sudo cp --remove-destination --preserve=mode -- "$(realpath -- "$f")" "$f"
-    $sudo chmod u+w -- "$f"
-}
-
 readlinks() { # print a chain of symlinks
     local f=$1
     while [[ -L $f ]]; do

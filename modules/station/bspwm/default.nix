@@ -86,7 +86,7 @@ in {
         if (( cword == 1 )); then
           compreply -W 'go focus-window focus-workspace move-window-to-workspace remove-workspace add-workspace lock quit'
         elif [[ ''${words[1]} == go ]]; then
-          compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi'
+          compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi emoji'
         fi
       }
       complete -F _wm wm
@@ -162,11 +162,11 @@ in {
         "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + ${config.keys.printScreenKey}" =
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + {_,shift,ctrl} + space" =
-          "rofi -sidebar-mode -show-icons -modi drun,run,window -show {drun,run,window}";
+          "rofi -sidebar-mode -show-icons -modes drun,run,window -show {drun,run,window}";
         "super + asterisk" =
           "rofi -show calc";
         "super + o" =
-          ''rofi -show emoji -theme-str 'configuration \{ font: "sans 14"; \}' '';
+          "wm go emoji";
         "super + ctrl + Return" =
           "rofi -show ssh";
         "super + {_,shift} + Return" =

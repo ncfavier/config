@@ -4,6 +4,8 @@
     lenovo-thinkpad-t14s-amd-gen1
   ];
 
+  services.fwupd.enable = true;
+
   services.tlp.settings = {
     RUNTIME_PM_DENYLIST = "02:00.0"; # otherwise the Ethernet adapter doesn't work on battery mode
     START_CHARGE_THRESH_BAT0 = 75;

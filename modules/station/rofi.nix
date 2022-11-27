@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, pkgs, pkgsPR, ... }: with lib; {
   nixpkgs.overlays = [ (self: super: {
     rofi-unwrapped = super.rofi-unwrapped.overrideAttrs (o: {
       patches = o.patches or [] ++ [
@@ -17,7 +17,6 @@
         symlink-dmenu = true;
         plugins = [
           rofi-calc
-          rofi-emoji
         ];
       };
 
@@ -60,5 +59,12 @@
         kb-mode-previous = "Super+Shift+space,Control+ISO_Left_Tab";
       };
     };
+
+    home.packages = [ (pkgsPR 202516 "sha256-jp/LHQUs1x9PXXKHTZ2i1QHlDPevmZj2ySg1Ss2SX5w=").rofimoji ];
+
+    xdg.configFile."rofimoji.rc".text = ''
+      skin-tone = neutral
+      max-recent = 0
+    '';
   };
 }

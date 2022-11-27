@@ -6,7 +6,7 @@
       console.font = pkgs.runCommandLocal "dina.psf" {} ''
         cd ${pkgs.bdf2psf}/share/bdf2psf
         sed 's/POINT_SIZE 100/AVERAGE_WIDTH 80/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-10.bdf |
-        ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 512 "$out"
+        ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 256 "$out"
       '';
     }
 
@@ -42,12 +42,12 @@
         fontconfig = {
           enable = true;
           defaultFonts = {
-            serif     = [ "Libertinus Serif" "Source Serif 4" "Source Han Serif" ];
-            sansSerif = [ "Source Han Sans" ]; # Source Han Sans includes most glyphs from Source Sans and is slightly larger
-            monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" ];
+            serif     = [ "Libertinus Serif" "Source Serif 4" "Source Han Serif" "emoji" ];
+            sansSerif = [ "Source Han Sans" "Source Sans 3" "emoji" ]; # Source Han Sans includes most glyphs from Source Sans and is slightly larger
+            monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" "emoji" ];
             emoji     = [ "Twitter Color Emoji" "Noto Color Emoji" "Symbola" ];
           };
-          # test: ™ ´ ” ☺ 🦢
+          # test: ™ ´ ” ☺ 🦢 π œuf →
           localConf = ''
             <?xml version='1.0'?>
             <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
@@ -57,8 +57,7 @@
                 <prefer>
                   <family>Dina</family>
                   <family>Biwidth</family>
-                  <family>Twitter Color Emoji</family>
-                  <family>Symbola</family>
+                  <family>emoji</family>
                 </prefer>
               </alias>
               <alias binding="same">
