@@ -250,7 +250,7 @@
           inherit (self) inputs lib;
           inherit (lib) my;
           this = my.machines.${strings.escapeNixIdentifier this.hostname};
-          inherit (local) config;
+          inherit (local) config options;
           inherit (local.config.system.build) toplevel vm vmWithBootLoader manual;
         } // machines // local._module.args
       '';

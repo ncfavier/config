@@ -9,6 +9,7 @@
       };
 
       config = {
+        ao = "pulse"; # https://github.com/mpv-player/mpv/issues/10959
         autofit = "80%x80%";
         sub-auto = "fuzzy";
         sub-border-size = 1;

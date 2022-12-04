@@ -47,7 +47,7 @@ cat() { # cat directories to list them
 
 cd() { # ls after cd
     builtin cd "$@" &&
-    if (( ${#FUNCNAME[@]} == 1 )); then ls; fi
+    if [[ -t 1 ]] && (( ${#FUNCNAME[@]} == 1 )); then ls; fi
 }
 
 mkcd() { # create a directory and move into it
@@ -370,6 +370,20 @@ hm() {
     fi
 }
 complete_alias hm _systemctl systemctl
+
+pr() {
+    NO_ALARM=1
+    local origin
+    origin=$(git remote get-url origin) || return
+    if [[ $origin == *'github.com'* ]]; then
+        gh pr create --web
+    elif [[ $origin == *'gitlab.com'* ]]; then
+        glab mr create --web --push --fill
+    else
+        echo "unknown repository type"
+        return 1
+    fi
+}
 
 command_not_found_handle() {
     local IFS=$' \t\n'

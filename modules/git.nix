@@ -43,12 +43,16 @@
         sw = "switch";
         cat = "cat-file -p";
         yeet = "restore";
+        w = "worktree";
       };
+
+      ignores = [ ".direnv" ".envrc" ];
 
       extraConfig = {
         advice = {
           detachedHead = false;
           pushNonFFCurrent = false;
+          statusUoption = false;
         };
         color = {
           status = {
@@ -73,6 +77,7 @@
           autoStash = true;
           autoSquash = true;
         };
+        submodule.recurse = true;
         sendemail = {
           smtpServer = my.domain;
           smtpUser = my.email;
@@ -92,6 +97,7 @@
     };
 
     home.packages = with pkgs; [
+      glab
       (writeShellScriptBin "git-random-commit-message" ''
         set -eo pipefail
         url=$(${curl}/bin/curl -fsSw '%{redirect_url}' https://en.wiktionary.org/wiki/Special:Random)

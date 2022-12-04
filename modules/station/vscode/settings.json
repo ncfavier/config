@@ -6,6 +6,9 @@
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
   "workbench.colorCustomizations": {
+    "[Lilac]": {
+      "editorInlayHint.background": "#511b72"
+    },
     "[White Night]": {
       "activityBar.foreground": "#555566",
       "editorLineNumber.foreground": "#333333",
@@ -140,7 +143,6 @@
     "**/*.agdai": true
   },
   "editor.semanticHighlighting.enabled": true,
-  "workbench.colorTheme": "Mr Pink",
   "editor.fontSize": 12,
   "editor.bracketPairColorization.enabled": false,
   "editor.guides.bracketPairs": "active",
@@ -153,4 +155,5 @@
   "latex-workshop.view.pdf.color.light.backgroundColor": "",
   "magicRacket.languageServer.enabled": false,
   "editor.wordWrap": "on",
+  "workbench.colorTheme": "Lilac",
 }

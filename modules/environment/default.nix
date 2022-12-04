@@ -14,8 +14,6 @@
     });
   };
 
-  programs.bcc.enable = true;
-
   environment.systemPackages = with pkgs; [
     man-pages
     man-pages-posix
@@ -63,6 +61,8 @@
     (shellScriptWith "upload" ./upload.sh {})
     (shellScriptWith "order" ./order.sh {})
   ];
+
+  programs.bcc.enable = true; # for execsnoop
 
   environment.etc.topdefaultrc.source = config.lib.meta.mkMutableSymlink ./toprc;
 
