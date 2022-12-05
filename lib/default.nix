@@ -25,5 +25,11 @@ lib: prev: with lib; {
 
   versionAtMost = a: b: versionAtLeast b a;
 
+  # Creates a simple module with an `enable` option.
+  mkEnableModule = name: cfg: {
+    options = setAttrByPath name { enable = mkEnableOption (last name); };
+    imports = [ ({ config, ... }: { config = mkIf (getAttrFromPath name config).enable cfg; }) ];
+  };
+
   my = import ./my.nix lib;
 }

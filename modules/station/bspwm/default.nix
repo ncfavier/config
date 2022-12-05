@@ -194,6 +194,13 @@ in {
           rev = "1560df35be303807052c235634eb8d59415c37ff";
           sha256 = "Ga3vLenEWM2pioRc/U4i4LW5wj97ekvKdJnyAOCjiHI=";
         };
+        patches = o.patches or [] ++ [
+          (pkgs.fetchpatch {
+            # hide_by_moving, useful for broadcasting windows
+            url = "https://github.com/ncfavier/bspwm/commit/9e84eaa6eebe7faff7c7d0d2a911ed6a0d0b0296.patch";
+            hash = "sha256-2SDGO3Q+/VXtagoqipBjaP0F4pQQl3qam/uKDchZO3I=";
+          })
+        ];
       });
 
       lemonbar-xft = prev.lemonbar-xft.overrideAttrs (o: {

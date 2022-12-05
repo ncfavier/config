@@ -8,7 +8,7 @@ prompt_git() {
 }
 
 prompt_nix_shell() {
-    if [[ -v IN_NIX_SHELL || -v DIRENV_DIR ]]; then
+    if [[ -v IN_NIX_SHELL ]]; then
         printf +
     fi
 }
