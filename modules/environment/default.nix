@@ -81,13 +81,24 @@
 
   nixpkgs.overlays = [ (pkgs: prev: {
     shellScriptWith = name: src: { deps ? [], vars ? {} }:
-      pkgs.writeShellScriptBin name ''
-        ${optionalString (deps != []) ''
-        PATH=${makeBinPath deps}''${PATH+:$PATH}
-        ''}
-        ${toShellVars vars}
-        ${readFile src}
-      '';
+      # can't use `writeScriptBin` because no check phase,
+      # can't use `writeShellScriptBin` because no interactive shell
+      pkgs.writeTextFile {
+        inherit name;
+        executable = true;
+        destination = "/bin/${name}";
+        text = ''
+          #!${config.my.shellPath}
+          ${optionalString (deps != []) ''
+          PATH=${makeBinPath deps}''${PATH+:$PATH}
+          ''}
+          ${toShellVars vars}
+          ${readFile src}
+        '';
+        checkPhase = ''
+          ${pkgs.stdenv.shellDryRun} "$target"
+        '';
+      };
 
     pythonScriptWithDeps = name: src: deps:
       pkgs.stdenv.mkDerivation {

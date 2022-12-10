@@ -18,6 +18,8 @@ in {
           "browser.download.alwaysOpenPanel" = false;
           "browser.download.always_ask_before_handling_new_types" = true;
           "browser.fixup.alternate.enabled" = false;
+          "browser.gesture.swipe.left" = "";
+          "browser.gesture.swipe.right" = "";
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
           "browser.newtabpage.activity-stream.feeds.snippets" = false;
           "browser.newtabpage.activity-stream.showSearch" = false;

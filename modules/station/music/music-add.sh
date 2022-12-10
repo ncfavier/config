@@ -75,12 +75,13 @@ done
 (( ${#files[@]} > 0 )) || die "No files given."
 
 artist= album= cover_src=
-echo "Fetching album information..."
 if [[ ${srcs[0]} == http?(s)://*bandcamp.com/* ]]; then
+    echo "Fetching album information from bandcamp..."
     bandcamp_json=$(curl -fsSL "${srcs[0]}" | htmlq -t 'script[type="application/ld+json"]')
     jq -r '.byArtist.name, .name, (.image | if type == "array" then .[0] else . end)' <<< "$bandcamp_json" |
     { read -r artist; read -r album; read -r cover_src; }
 elif [[ ${srcs[0]} == http?(s)://music.youtube.com/* ]]; then
+    echo "Fetching album information from YouTube Music..."
     ytmusic_json=$(yt-dlp -J "${srcs[0]}")
     jq -r '.entries[0] | .artist, .album, limit(1; .thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))' <<< "$ytmusic_json" |
     { read -r artist; read -r album; read -r cover_src; }
