@@ -1,8 +1,8 @@
-{ lib, config, pkgs, pkgsMine, ... }: with lib; let
+{ lib, config, pkgs, ... }: with lib; let
   wsPort = 4321;
   password = "quineapple"; # not meant to be secure
 
-  df = (pkgsMine "df" "sha256-guV8zJvKDcDDdCZQnnio14XAbpP7WgLKNQM1KLeg4u8=").dwarf-fortress-packages.dwarf-fortress_0_47_04.override (oldArgs: let
+  df = pkgs.dwarf-fortress-packages.dwarf-fortress_0_47_04.override (oldArgs: let
     dfplex = pkgs.fetchFromGitHub {
       owner = "ncfavier";
       repo = "dfplex";

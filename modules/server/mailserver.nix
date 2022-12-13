@@ -27,7 +27,7 @@ in {
     keyFile = "${cert.directory}/key.pem";
     dkimKeyDirectory = "/etc/dkim";
     loginAccounts.${my.email} = {
-      hashedPassword = "$2y$10$CBwz0/CVZ/N0w0yvSCBhoOvKR6J79zd42kdHPZtXwW44yglL.rfLa";
+      hashedPassword = "$2b$05$1YO805N1yn2vVM/c4K8nRuNix1ruHc4SJDDbWREgrcAaamxiqCYKS";
       aliases = [ "@${my.domain}" ];
     };
     lmtpSaveToDetailMailbox = "no";

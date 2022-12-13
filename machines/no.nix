@@ -1,8 +1,13 @@
-{ inputs, hardware, lib, pkgs, ... }: with lib; {
+{ inputs, hardware, lib, pkgs, pkgsStable, ... }: with lib; {
   imports = with hardware; [
     notDetected
     lenovo-thinkpad-t14s-amd-gen1
   ];
+
+  nixpkgs.overlays = [ (self: super: {
+    # TODO https://nixpk.gs/pr-tracker.html?pr=204378
+    inherit (pkgsStable) rocm-opencl-icd rocm-opencl-runtime;
+  }) ];
 
   services.fwupd.enable = true;
 
@@ -77,7 +82,7 @@
 
   broadcasting.enable = true;
 
-  my.hashedPassword = "$6$R44ADtNdZEuHgWMz$STSpgn6SA/hTSdy/zOhnezmOIht5c99OXIzezemIrzxxWDGyv.CznmfW/RHNOwOY4Wbj/ue5NANralDWmlvw40";
+  my.hashedPassword = "$y$j9T$Z68zdBJVmsTe5BneXrjFH1$jGJpIx5jFgUo8FSjrAqh.O4daLKNsybkUPoWJawPcX.";
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----

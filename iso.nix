@@ -16,7 +16,7 @@
   options = {
     secrets = mkSinkUndeclaredOptions {};
     boot.supportedFilesystems = mkOption {
-      apply = subtractLists [ "zfs" "btrfs" "reiserfs" "xfs" "cifs" "f2fs" ];
+      apply = subtractLists [ "reiserfs" "xfs" "cifs" "f2fs" ];
     };
   };
 
@@ -28,15 +28,11 @@
 
     services.getty.autologinUser = mkForce my.username;
 
-    # reduce size
-    documentation.doc.enable = false;
-    security.polkit.enable = false;
-    services.udisks2.enable = false;
-    xdg.sounds.enable = false;
+    # reduce size by removing unneeded firmware
     nixpkgs.overlays = [ (pkgs: prev: {
       linux-firmware = prev.linux-firmware.overrideAttrs (o: {
         postInstall = ''
-          rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl}
+          rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl,ath11k}
         '';
         outputHash = null;
       });

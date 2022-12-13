@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-22.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-22.11";
     nixos-hardware.url = "nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -64,11 +64,14 @@
 
     nixosConfigurations = mapAttrs (hostname: localConfig:
       mkSystem my.machines.${hostname} (attrValues (modulesIn ./modules) ++ [ localConfig ])
-    ) (modulesIn ./machines);
+    ) (modulesIn ./machines) // {
+      iso = mkSystem {} [ ./iso.nix ];
+    };
 
-    packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
+    packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel)
+      (builtins.removeAttrs self.nixosConfigurations [ "iso" ]) // {
       iso = let
-        inherit (mkSystem {} [ ./iso.nix ]) config;
+        inherit (self.nixosConfigurations.iso) config;
 
         # horrible hack, see https://github.com/NixOS/nix/issues/5633
         involution = name: file: pkgs.runCommand name {} ''

@@ -51,7 +51,7 @@ in {
 
   networking.nat.externalInterface = interface;
 
-  my.hashedPassword = "$6$SVHTxpoS0lwPgSjI$q9PATa2ObrGrU0ARBHQsJFK7O3T2fvtaMuzXQ8q4B1QAti7O5F.YGU./q9a0dmAK953Mbm2R/O2/TiXmaSEEH.";
+  my.hashedPassword = "$y$j9T$rksnGUkW.ykeSovIaFxEr/$73iWg3Xzj86ulWnNzGj1AXEZD4QYhb9vN3Cxx2RC6q0";
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----

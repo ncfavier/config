@@ -1,4 +1,4 @@
-{ lib, config, pkgs, pkgsPR, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
   nixpkgs.overlays = [ (self: super: {
     rofi-unwrapped = super.rofi-unwrapped.overrideAttrs (o: {
       patches = o.patches or [] ++ [
@@ -60,7 +60,7 @@
       };
     };
 
-    home.packages = [ (pkgsPR 202516 "sha256-jp/LHQUs1x9PXXKHTZ2i1QHlDPevmZj2ySg1Ss2SX5w=").rofimoji ];
+    home.packages = with pkgs; [ rofimoji ];
 
     xdg.configFile."rofimoji.rc".text = ''
       skin-tone = neutral

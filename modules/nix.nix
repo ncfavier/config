@@ -37,10 +37,11 @@
 
     nix = {
       settings = {
-        experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+        experimental-features = [ "nix-command" "flakes" "ca-derivations" "auto-allocate-uids" ];
         warn-dirty = false;
         keep-outputs = true;
         trusted-users = [ "root" "@wheel" ];
+        auto-allocate-uids = true;
         max-jobs = "auto";
         log-lines = 30;
       };

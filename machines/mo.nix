@@ -57,6 +57,8 @@
 
   services.xserver.videoDrivers = [ "intel" ];
 
+  my.hashedPassword = "$y$j9T$qOTfNGYwzLlwcvYq8OwdR1$br09oz/1NqEPjpPz8LsKyCTve9tv4.k5hkfOlxS53C5";
+
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----
     MIIBmjCCASCgAwIBAgIIU2Crk9b6ZekwCgYIKoZIzj0EAwMwFDESMBAGA1UEAxMJ

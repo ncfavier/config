@@ -54,6 +54,7 @@
         "2EBD4F5F9AAAE5BCC8FB0A3CC9BE73CAACA66D33"
         "D10BD70AF981C671C8EE4D288F23BAE560675CA3"
       ];
+      pinentryFlavor = null;
     };
   };
 }

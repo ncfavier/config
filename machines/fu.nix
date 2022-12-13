@@ -54,7 +54,7 @@
     modesetting.enable = true;
   };
 
-  my.hashedPassword = "$6$rkmgv7prXu83oZqj$ydHDcvrUrd43Cvj38xDf6A2vQEAFIATX1O9XSRdUQbyHV/w6pc6qmAEmxZ4xAl3b3zgmVVyY5jg9QIaLndoAK/";
+  my.hashedPassword = "$y$j9T$4ixQiecsV/ucuBhr6jEte1$4mQUZgQsZXNlA2rY5RfntCTPEZ7ZuZc64L1k9VO5tQ8";
 
   services.syncthing.cert = builtins.toFile "syncthing-cert" ''
     -----BEGIN CERTIFICATE-----
