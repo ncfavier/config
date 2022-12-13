@@ -26,6 +26,8 @@
       warn-dirty = false;
     };
 
+    environment.noXlibs = false; # too many rebuilds
+
     services.getty.autologinUser = mkForce my.username;
 
     # reduce size by removing unneeded firmware
