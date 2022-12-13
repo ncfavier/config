@@ -10,6 +10,7 @@ in {
   config = mkMerge [
     (mkIf (this.isServer || this.isStation) {
       networking.firewall.trustedInterfaces = [ interface ];
+      systemd.network.wait-online.ignoredInterfaces = [ interface ];
     })
 
     (mkIf this.isServer {

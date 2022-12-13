@@ -25,7 +25,7 @@ in {
 
         SOA = {
           nameServer = "@";
-          adminEmail = my.emailFor "dns";
+          adminEmail = "dns@${my.domain}";
           serial = 0;
         };
         NS = [ "@" ];
@@ -38,7 +38,7 @@ in {
         DMARC = [ {
           p = "quarantine";
           sp = "quarantine";
-          rua = "mailto:${my.emailFor "dmarc"}";
+          rua = "mailto:dmarc@${my.domain}";
         } ];
 
         TXT = [
@@ -46,7 +46,7 @@ in {
           "google-site-verification=yIwF9ILuYq54P151RraAs06TuJQMLZXKPRXSdn8FJWc"
         ];
 
-        CAA = letsEncrypt (my.emailFor "dns+caa");
+        CAA = letsEncrypt "dns+caa@${my.domain}";
 
         subdomains = rec {
           "*" = here;

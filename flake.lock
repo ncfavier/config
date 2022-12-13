@@ -247,11 +247,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1670849985,
-        "narHash": "sha256-+cggWiuhN007BQYxje3SS46xSJHFShlAevNEc+91aAo=",
+        "lastModified": 1670966418,
+        "narHash": "sha256-co/NjvEM7hAo73OTVcNYok5rScuEuIw3ymEXCczqPxw=",
         "owner": "ncfavier",
         "repo": "qeval",
-        "rev": "e371b351f11675e692569ab00f4fbbbad44c40ab",
+        "rev": "f9145e6e2fd06b5f9c2f53f7ae024145c66e2558",
         "type": "github"
       },
       "original": {

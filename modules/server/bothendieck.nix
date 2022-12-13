@@ -31,7 +31,11 @@ in {
           suspensionUseCompression = false; # favour speed
           timeout = 30;
         }).evaluators.override {
-          filterEvaluators = all: builtins.removeAttrs all [ "java" "kotlin" ];
+          filterEvaluators = evs: builtins.removeAttrs evs [ "java" "kotlin" ] // {
+            rust = evs.rust.override {
+              storeDrives.rust = with pkgs; [ rustc gcc ]; # don't use the nightly channel
+            };
+          };
         }).all;
       };
       configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;

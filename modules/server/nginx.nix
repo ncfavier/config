@@ -9,6 +9,9 @@ in {
     package = pkgs.nginxMainline;
     enableReload = true;
     recommendedTlsSettings = true;
+    recommendedProxySettings = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
     serverNamesHashBucketSize = 128;
     commonHttpConfig = ''
       charset utf-8;

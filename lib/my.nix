@@ -49,8 +49,7 @@ lib: with lib; let
         githubUsername = "ncfavier";
         realName = "Naïm Favier";
         domain = "monade.li";
-        emailFor = what: "${what}@${my.domain}";
-        email = my.emailFor my.username;
+        email = "${my.username}@${my.domain}";
         pgpFingerprint = "F3EB4BBB4E7199BC299CD4E995AFCE8211908325";
         sshKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA9Kj3Zjnou6w4tZn60SAIYvrFlFQhSiKbLxTR9sVC1I ${my.email}"

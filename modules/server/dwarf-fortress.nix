@@ -90,7 +90,7 @@ in {
 
       Type = "forking";
       ExecStart = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} -f ${tmuxConfig} new-session -d ${df}/bin/dfhack";
-      ExecStop = "${pkgs.tmux}/bin/tmux -S ${tmuxSocket} kill-server";
+      ExecStop = "-${pkgs.tmux}/bin/tmux -S ${tmuxSocket} kill-server";
 
       CapabilityBoundingSet = "";
       DevicePolicy = "closed";

@@ -1,6 +1,6 @@
 { lib, ... }: with lib; {
   security.acme = {
     acceptTerms = true;
-    defaults.email = my.emailFor "acme";
+    defaults.email = "acme@${my.domain}";
   };
 }

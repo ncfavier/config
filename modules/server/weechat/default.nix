@@ -1,4 +1,4 @@
-{ lib, this, config, pkgs, ... }: with lib; let
+{ lib, this, config, pkgs, pkgsMine, ... }: with lib; let
   relayPort = 6642;
   scripts = [
     "autosort.py"
@@ -22,6 +22,7 @@
       ''}";
     };
   };
+  unicode15Locales = (pkgsMine "glibcLocales-unicode-15" "sha256-tomjrc051DQbjt2aNrmXltvwF407Z6aWV7mTVOAsstg=").glibcLocales;
 in {
   secrets.weechat = {
     owner = my.username;
@@ -53,4 +54,7 @@ in {
   environment.systemPackages = with pkgs; [ lolcat ];
 
   lib.shellEnv.weechat_fifo = "${config.hm.xdg.cacheHome}/weechat/weechat_fifo";
+
+  i18n.glibcLocales = unicode15Locales;
+  cachix.derivationsToPush = [ unicode15Locales ];
 }
