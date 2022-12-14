@@ -2,16 +2,6 @@
   documentation = {
     nixos.enable = inputs.nixpkgs ? rev;
     dev.enable = true;
-    man.generateCaches = true;
-    man.man-db.manualPages = (pkgs.buildEnv {
-      name = "man-paths";
-      paths = config.environment.systemPackages ++ config.hm.home.packages;
-      pathsToLink = [ "/share/man" ];
-      extraOutputsToInstall = [ "man" ];
-      ignoreCollisions = true;
-    }).overrideAttrs (o: {
-      __contentAddressed = true; # avoid needlessly rebuilding the cache
-    });
   };
 
   environment.systemPackages = with pkgs; [

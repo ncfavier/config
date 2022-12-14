@@ -1,5 +1,7 @@
-{ lib, pkgs, ... }: with lib; {
-  environment.systemPackages = [ pkgs.git ];
+{ lib, config, pkgs, ... }: with lib; {
+  programs.bash.promptInit = mkBefore ''
+    . ${config.hm.programs.git.package}/share/bash-completion/completions/git-prompt.sh
+  '';
 
   hm = {
     programs.git = {

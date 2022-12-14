@@ -26,7 +26,7 @@
       warn-dirty = false;
     };
 
-    environment.noXlibs = false; # too many rebuilds
+    environment.noXlibs = false; # too many rebuilds (TODO https://github.com/NixOS/nixpkgs/pull/205318)
 
     services.getty.autologinUser = mkForce my.username;
 

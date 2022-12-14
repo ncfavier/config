@@ -1,6 +1,4 @@
 { lib, pkgs, ... }: with lib; {
-  programs.vim.defaultEditor = true;
-
   hm = {
     programs.vim = {
       enable = true;
@@ -22,9 +20,12 @@
       extraConfig = readFile ./rc.vim;
     };
 
+    home.sessionVariables.EDITOR = "vim"; # TODO https://github.com/nix-community/home-manager/pull/3496
+
     home.packages = [ pkgs.nodejs ]; # for coc
     home.file.".vim/coc-settings.json".text = builtins.toJSON {
       languageserver = {
+        disabledFeatures = [ "completion" ];
         nix = {
           command = "rnix-lsp";
           filetypes = [ "nix" ];

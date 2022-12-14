@@ -1,5 +1,3 @@
-. /run/current-system/sw/share/bash-completion/completions/git-prompt.sh
-
 prompt_git() {
     local branch=$(__git_ps1 %s)
     if [[ $branch && $branch != @(master|main) ]]; then

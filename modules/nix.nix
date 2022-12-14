@@ -40,11 +40,13 @@
         experimental-features = [ "nix-command" "flakes" "ca-derivations" "auto-allocate-uids" ];
         warn-dirty = false;
         keep-outputs = true;
+        keep-derivations = true;
         trusted-users = [ "root" "@wheel" ];
         auto-allocate-uids = true;
         max-jobs = "auto";
         log-lines = 30;
       };
+      nrBuildUsers = 0; # TODO https://github.com/NixOS/nixpkgs/pull/205933
 
       extraOptions = ''
         !include ${config.secrets.nix-access-tokens.path}

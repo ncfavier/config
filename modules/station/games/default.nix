@@ -15,7 +15,19 @@
       # (writeShellScriptBin "zcatch" ''
       #   exec ${zcatch}/bin/zcatch_srv -f zcatch.cfg "$@"
       # '')
-      dwarf-fortress
+      (dwarf-fortress.override {
+        enableTruetype = false;
+        settings.init.FONT = "Alloy_curses_12x12.png";
+        extraPackages = [
+          (pkgs.runCommand "alloy-curses" { } ''
+            mkdir -p "$out/data/art"
+            ln -s ${pkgs.fetchurl {
+              url = "https://dwarffortresswiki.org/images/0/03/Alloy_curses_12x12.png";
+              hash = "sha256-r+ossYw3BF5rp+Da1Mle0kBKFsA0/IHGD3ENe3JAyHk=";
+            }} "$out/data/art/Alloy_curses_12x12.png"
+          '')
+        ];
+      })
     ];
 
     xdg.dataFile."ddnet".source =
@@ -34,11 +46,6 @@
     xdg.dataFile."df_linux/data/save".source =
       config.hm.lib.file.mkOutOfStoreSymlink "${config.synced.saves.path}/df";
   };
-
-  # nix.settings = {
-  #   substituters = mkAfter [ "https://nix-gaming.cachix.org" ];
-  #   trusted-public-keys = mkAfter [ "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4=" ];
-  # };
 
   nixpkgs.overlays = [ (pkgs: prev: {
     zcatch = with pkgs; stdenv.mkDerivation rec {
