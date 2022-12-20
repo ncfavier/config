@@ -1,8 +1,8 @@
-" Defaults
-
-silent! source $VIMRUNTIME/defaults.vim
-
 " Plugins
+
+lua require'nvim-lastplace'.setup{}
+let g:lastplace_ignore_buftype = "quickfix,nofile,help"
+let g:lastplace_ignore_filetype = "gitcommit,gitrebase,svn,hgcommit"
 
 let NERDTreeMinimalUI = 1
 let NERDTreeRespectWildIgnore = 1
@@ -30,23 +30,18 @@ let g:agdavim_includeutf8_mappings = 0 " barely works, messes with /
 
 " Options
 
-set autoindent
-set autoread
+colors plain-cterm
+
 set breakindent
-set clipboard=unnamedplus,exclude:cons\|linux
+set clipboard+=unnamedplus
 set expandtab
-set exrc
-set formatoptions-=tro
-set hidden
-set hlsearch
 set ignorecase
-set incsearch
 set laststatus=1
 set modeline
 set mouse=a
 set nonumber
 set path=**
-set secure
+set scrolloff=5
 set shiftround
 set shiftwidth=0
 set smartindent
@@ -57,23 +52,19 @@ set suffixes+=.hi,.dyn_hi,.dyn_o,.cmi,.cmo,.bcf,.fdb_latexmk,.fls,.pdf,.xdv,.aux
 set tabstop=4
 set title
 set ttimeoutlen=10
-set ttymouse=xterm2
 set whichwrap=b,s,<,>,[,]
 set wildignore+=*.o,*.agdai,**/result/**,**/result-*/**,**/dist-newstyle/**
 set wildignorecase
 
-set visualbell
-set t_vb=
-
-if &term =~ '^rxvt-unicode'
-    set ttymouse=urxvt
+if !has('nvim')
+  set ttymouse=xterm2
 endif
 
 if &term == 'alacritty'
-    execute "set <xUp>=\e[1;*A"
-    execute "set <xDown>=\e[1;*B"
-    execute "set <xRight>=\e[1;*C"
-    execute "set <xLeft>=\e[1;*D"
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
 endif
 
 " Cursor shapes
@@ -149,10 +140,10 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd BufNewFile,BufRead ~/.dots/bash/* call dist#ft#SetFileTypeSH("bash")
 
 fun! StripTrailingWhitespace()
-    if &ft =~ 'gitcommit\|gitsendemail'
-        return
-    endif
-    %s/\s\+$//e
+  if &ft =~ 'gitcommit\|gitsendemail'
+    return
+  endif
+  %s/\s\+$//e
 endfun
 
 augroup mangle " disable these when making patches
@@ -183,53 +174,37 @@ command! ToggleTerm call ToggleTerm()
 " Terminal
 
 if v:version >= 800
-    noremap  <silent> <C-t> :ToggleTerm<Return>
-    tnoremap <silent> <C-t> <C-w>:ToggleTerm<Return>
-    tnoremap <silent> <Esc><Esc> <C-\><C-n>
+  noremap  <silent> <C-t> :ToggleTerm<Return>
+  tnoremap <silent> <C-t> <C-\><C-o>:ToggleTerm<Return>
+  tnoremap <silent> <Esc><Esc> <C-\><C-n>
 
-    function! ToggleTerm()
-        if &buftype == 'terminal'
-            close
-            return
-        endif
+  autocmd TermOpen,BufWinEnter,WinEnter term://* startinsert
+  autocmd BufLeave term://* stopinsert
+  autocmd TermClose term://* call nvim_input('<CR>') " skip the exit code
 
-        let terminal_windows = filter(getwininfo(), 'v:val.terminal')
-        if !empty(terminal_windows)
-            execute terminal_windows[0].winnr.'wincmd w'
-            return
-        endif
+  function! ToggleTerm()
+    if &buftype == 'terminal'
+      close
+      return
+    endif
 
-        let terminal_buffers = filter(getbufinfo(), 'getbufvar(v:val.bufnr, ''&buftype'') == ''terminal''')
-        if !empty(terminal_buffers)
-            execute 'botright sbuffer' terminal_buffers[0].bufnr
-            return
-        endif
+    let terminal_windows = filter(getwininfo(), 'v:val.terminal')
+    if !empty(terminal_windows)
+      execute terminal_windows[0].winnr.'wincmd w'
+      return
+    endif
 
-        botright terminal ++close ++kill=term ++norestore
-    endfunction
+    let terminal_buffers = filter(getbufinfo(), 'getbufvar(v:val.bufnr, ''&buftype'') == ''terminal''')
+    if !empty(terminal_buffers)
+      execute 'botright sbuffer' terminal_buffers[0].bufnr
+      return
+    endif
+
+    botright split | terminal
+  endfunction
 endif
 
-" Move temporary files to a secure location to protect against CVE-2017-1000382
-if exists('$XDG_CACHE_HOME')
-  let &g:directory=$XDG_CACHE_HOME
-else
-  let &g:directory=$HOME . '/.cache'
-endif
-let &g:undodir=&g:directory . '/vim/undo//'
-let &g:backupdir=&g:directory . '/vim/backup//'
-let &g:directory.='/vim/swap//'
-" Create directories if they doesn't exist
-if ! isdirectory(expand(&g:directory))
-  silent! call mkdir(expand(&g:directory), 'p', 0700)
-endif
-if ! isdirectory(expand(&g:backupdir))
-  silent! call mkdir(expand(&g:backupdir), 'p', 0700)
-endif
-if ! isdirectory(expand(&g:undodir))
-  silent! call mkdir(expand(&g:undodir), 'p', 0700)
-endif
-
-" Create inexistent directories on save
+" Create missing directories on save
 augroup vimrc-auto-mkdir
   autocmd!
   autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)

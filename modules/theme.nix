@@ -12,7 +12,7 @@
   config = {
     theme = with config.theme; {
       black         = "#000000";
-      darkGrey      = if dark then "#444444" else "#aaaaaa";
+      darkGrey      = if dark then "#666666" else "#aaaaaa";
       lightGrey     = if dark then "#666666" else "#cccccc";
       white         = "#ffffff";
       hot           = "#ff00cb";

@@ -82,7 +82,7 @@ go() {
         chat|irc)
             class=irc lines=100 columns=140 terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
         editor)
-            focus_title='- VIM$' terminal vim &;;
+            focus_title='- N?VIM$' terminal vim &;;
         web|browser)
             class='firefox|chromium-browser' focus-window || exec firefox &;;
         mail)

@@ -153,7 +153,7 @@ for file in "${files[@]}"; do
         IFS= read -rd '' "$target"
     done
     basename="$artist - $album - ${track:+$track - }$title"
-    basename=${basename//[\"\\\/:*?<>|]/_} # "]}# vim's parser is confused
+    basename=${basename//[\"\\\/:*?<>|]/_}
 
     echo "Adding file to music directory..."
     ffmpeg -nostdin -loglevel error \

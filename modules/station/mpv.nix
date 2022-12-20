@@ -13,7 +13,6 @@
         sub-auto = "fuzzy";
         sub-border-size = 1;
 
-        ao = mkIf (config.sound.backend == "pulseaudio") "pulse"; # https://github.com/mpv-player/mpv/issues/10959
         pulse-latency-hacks = mkIf (config.sound.backend == "pulseaudio") true;
       };
 

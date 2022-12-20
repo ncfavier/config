@@ -1,13 +1,8 @@
-{ inputs, hardware, lib, pkgs, pkgsStable, ... }: with lib; {
+{ inputs, hardware, lib, pkgs, ... }: with lib; {
   imports = with hardware; [
     notDetected
     lenovo-thinkpad-t14s-amd-gen1
   ];
-
-  nixpkgs.overlays = [ (self: super: {
-    # TODO https://nixpk.gs/pr-tracker.html?pr=204378
-    inherit (pkgsStable) rocm-opencl-icd rocm-opencl-runtime;
-  }) ];
 
   services.fwupd.enable = true;
 

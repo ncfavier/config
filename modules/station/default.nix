@@ -11,6 +11,16 @@
       freeSwapThreshold = 5;
     };
 
+    environment.etc."systemd/system-sleep/batenergy".source = pkgs.writeShellScript "batenergy" ''
+      PATH=${makeBinPath [ pkgs.coreutils pkgs.bc ]}
+      source ${pkgs.fetchFromGitHub {
+        owner = "equaeghe";
+        repo = "batenergy";
+        rev = "13c381f68f198af361c5bd682b32577131fbb60f";
+        hash = "sha256-4JQrSD8HuBDPbBGy2b/uzDvrBUZ8+L9lAnK95rLqASk=";
+      }}/batenergy.sh "$@"
+    '';
+
     programs.wireshark = {
       enable = true;
       package = pkgs.wireshark;

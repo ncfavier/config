@@ -1,34 +1,66 @@
 { lib, pkgs, ... }: with lib; {
+  environment.variables.EDITOR = "vim";
+
   hm = {
-    programs.vim = {
+    programs.neovim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; mkForce [
+      vimAlias = true;
+      viAlias = true;
+      extraConfig = readFile ./rc.vim;
+      plugins = with pkgs.vimPlugins; [
         ctrlp
+        nvim-lastplace
+        vim-sleuth
         nerdtree
         nerdcommenter
-        vim-sleuth
         vim-surround
         vim-easy-align
-        vim-bracketed-paste
+        vim-nix
         vim-markdown
         haskell-vim
-        vim-nix
         Coqtail
-        coc-nvim
         agda-vim
+        # TODO https://github.com/mcchrish/vim-no-color-collections
+        (pkgs.vimUtils.buildVimPluginFrom2Nix {
+          name = "vim-colors-paramount";
+          src = pkgs.fetchFromGitHub {
+            owner = "owickstrom";
+            repo = "vim-colors-paramount";
+            rev = "a5601d36fb6932e8d1a6f8b37b179a99b1456798";
+            hash = "sha256-j9nMjKYK7bqrGHprYp0ddLEWs1CNMudxXD13sOROVmY=";
+          };
+        })
+        (pkgs.vimUtils.buildVimPluginFrom2Nix {
+          name = "vim-colors-plain";
+          src = pkgs.fetchFromGitHub {
+            owner = "andreypopp";
+            repo = "vim-colors-plain";
+            rev = "master";
+            hash = "sha256-ej7UbnpwH7C4cOsaRr4+OI6iqLyx1PnySY0LTTKRMCk=";
+          };
+        })
       ];
-      extraConfig = readFile ./rc.vim;
-    };
-
-    home.sessionVariables.EDITOR = "vim"; # TODO https://github.com/nix-community/home-manager/pull/3496
-
-    home.packages = [ pkgs.nodejs ]; # for coc
-    home.file.".vim/coc-settings.json".text = builtins.toJSON {
-      languageserver = {
-        disabledFeatures = [ "completion" ];
-        nix = {
-          command = "rnix-lsp";
-          filetypes = [ "nix" ];
+      coc = {
+        enable = true;
+        settings = {
+          languageserver = {
+            nix = {
+              command = "rnix-lsp";
+              filetypes = [ "nix" ];
+            };
+            haskell = {
+              command = "haskell-language-server";
+              args = [ "--lsp" ];
+              rootPatterns = [
+                "*.cabal"
+                "stack.yaml"
+                "cabal.project"
+                "package.yaml"
+                "hie.yaml"
+              ];
+              filetypes = [ "haskell" "lhaskell" ];
+            };
+          };
         };
       };
     };

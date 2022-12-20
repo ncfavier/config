@@ -1,10 +1,10 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, pkgsPR, ... }: {
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [
       mozc
       hangul
-      typing-booster # TODO why doesn't this work?
+      (pkgsPR 206250 "sha256-D7bh1J5gGQTbdzj1G9Gi8WmXIfigPr6bBPRBZ9Y7Z6Q=").ibus-engines.typing-booster
     ];
   };
 
