@@ -1,6 +1,6 @@
 { lib, modulesPath, ... }: with lib; {
   imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
+    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     modules/theme.nix
     modules/networking.nix
     modules/home-manager.nix
