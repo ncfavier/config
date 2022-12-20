@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }: with lib; let
+{ inputs, this, lib, config, pkgs, ... }: with lib; let
   cfg = config.services.bothendieck;
   settingsFormat = pkgs.formats.toml {};
 in {
@@ -23,21 +23,77 @@ in {
     secrets.bothendieck = {};
 
     systemd.services.bothendieck = let
-      bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieck.override {
-        evaluators = ((inputs.bothendieck.inputs.qeval.legacyPackages.${pkgs.system}.override {
+      bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieck.override (old: {
+        qeval = old.qeval.override {
           baseKernelPackages = pkgs.linuxPackages_latest;
-          qemu = pkgs.qemu_kvm;
-          enableKVM = false;
+          enableKVM = this.hasKVM;
+          qemu = pkgs.qemu_kvm; # don't rebuild QEMU
           suspensionUseCompression = false; # favour speed
-          timeout = 30;
-        }).evaluators.override {
-          filterEvaluators = evs: builtins.removeAttrs evs [ "java" "kotlin" ] // {
-            rust = evs.rust.override {
+          editEvaluators = evs: builtins.removeAttrs evs [ "java" "kotlin" ] // {
+            rust = lib.recursiveUpdate evs.rust {
               storeDrives.rust = with pkgs; [ rustc gcc ]; # don't use the nightly channel
             };
+
+            haskell = evs.haskell.override {
+              packages = (p: with p; [
+                adjunctions
+                containers
+                kan-extensions
+                lens
+                split
+              ]);
+              init = ''
+                :set -XBangPatterns
+                :set -XBlockArguments
+                :set -XEmptyCase
+                :set -XImportQualifiedPost
+                :set -XLambdaCase
+                :set -XNamedFieldPuns
+                :set -XNumericUnderscores
+                :set -XOverloadedStrings
+                :set -XRankNTypes
+                :set -XRecordWildCards
+                :set -XRecursiveDo
+                :set -XScopedTypeVariables
+                :set -XTupleSections
+                :set -XTypeApplications
+                :set -XUnicodeSyntax
+                :set -XViewPatterns
+                import Control.Applicative
+                import Control.Arrow
+                import Control.Lens
+                import Control.Monad
+                import Data.Bifunctor
+                import Data.Char
+                import Data.Complex
+                import Data.Either
+                import Data.Foldable
+                import Data.Function
+                import Data.Functor
+                import Data.Functor.Identity
+                import Data.Ix
+                import Data.List
+                import Data.Map (Map)
+                import Data.Map qualified as Map
+                import Data.Maybe
+                import Data.Monoid
+                import Data.Ord
+                import Data.Ratio
+                import Data.Semigroup
+                import Data.Set (Set)
+                import Data.Set qualified as Set
+                import Data.String
+                import Data.Traversable
+                import Data.Tuple
+                import Data.Void
+                import System.Environment
+                import System.Exit
+                import System.IO
+              '';
+            };
           };
-        }).all;
-      };
+        };
+      });
       configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;
     in {
       description = "bothendieck";

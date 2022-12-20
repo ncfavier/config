@@ -4,7 +4,7 @@ lib: with lib; let
     {
       options.machines = mkOption {
         description = "My machines";
-        type = with types; attrsOf (submodule ({ name, ... }: {
+        type = with types; attrsOf (submodule ({ name, config, ... }: {
           freeformType = attrs;
           options = let
             mkMachineTypeOption = type: mkOption {
@@ -36,6 +36,11 @@ lib: with lib; let
               description = "The machine's SSH port";
               type = nullOr int;
               default = null;
+            };
+            hasKVM = mkOption {
+              description = "Whether the machine supports KVM.";
+              type = bool;
+              default = !config.isServer;
             };
           };
         }));

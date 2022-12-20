@@ -73,11 +73,12 @@
     bind -n C-q detach
   '';
   dfDir = "/run/df/state";
-in {
+in mkEnableModule [ "services" "dwarf-fortress" ] {
   nixpkgs.config.allowUnfree = true;
 
   systemd.services.dwarf-fortress = {
     description = "Dwarf Fortress + DFPlex in a tmux session";
+    wantedBy = [ "multi-user.target" ];
     environment = {
       SHELL = getExe pkgs.bashInteractive; # otherwise tmux uses nologin
       DF_DIR = dfDir;
