@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: with lib; {
-  environment.variables.EDITOR = "vim";
+  programs.vim.defaultEditor = true; # keep for xxd
 
   hm = {
     programs.neovim = {

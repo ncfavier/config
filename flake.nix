@@ -47,7 +47,8 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     mkSystem = this: modules: lib.nixosSystem {
-      inherit lib system modules;
+      inherit lib system;
+      modules = modules ++ [ { system.configurationRevision = self.rev or "dirty"; } ];
       specialArgs = {
         inherit inputs this;
         hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
