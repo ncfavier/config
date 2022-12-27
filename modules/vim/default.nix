@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: with lib; {
-  programs.vim.defaultEditor = true; # keep for xxd
+  environment.variables.EDITOR = "vim";
 
   hm = {
     programs.neovim = {
@@ -16,10 +16,11 @@
         vim-surround
         vim-easy-align
         vim-nix
+        vim-nixhash
         vim-markdown
         haskell-vim
-        Coqtail
         agda-vim
+        coq-vim
         # TODO https://github.com/mcchrish/vim-no-color-collections
         (pkgs.vimUtils.buildVimPluginFrom2Nix {
           name = "vim-colors-paramount";
@@ -37,6 +38,24 @@
             repo = "vim-colors-plain";
             rev = "master";
             hash = "sha256-ej7UbnpwH7C4cOsaRr4+OI6iqLyx1PnySY0LTTKRMCk=";
+          };
+        })
+        (pkgs.vimUtils.buildVimPluginFrom2Nix {
+          name = "colorbuddy";
+          src = pkgs.fetchFromGitHub {
+            owner = "tjdevries";
+            repo = "colorbuddy.nvim";
+            rev = "dev";
+            hash = "sha256-PjVrlW4qEnn27BA2ERtW1/AYF4RVkGqvUBV8u95bOT4=";
+          };
+        })
+        (pkgs.vimUtils.buildVimPluginFrom2Nix {
+          name = "nvim-noirbuddy";
+          src = pkgs.fetchFromGitHub {
+            owner = "jesseleite";
+            repo = "nvim-noirbuddy";
+            rev = "master";
+            hash = "sha256-fooegPQqqbnuBqHzBZU5onlDTuGcp6+Bv8pYcLnyy1E=";
           };
         })
       ];

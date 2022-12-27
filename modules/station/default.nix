@@ -56,6 +56,7 @@
       audacity
       gimp
       inkscape
+      poppler_utils
       transmission-gtk
       qemu
       (writeShellScriptBin "power" ''

@@ -156,4 +156,10 @@
   "magicRacket.languageServer.enabled": false,
   "editor.wordWrap": "on",
   "workbench.colorTheme": "Lilac",
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "/run/current-system/sw/bin/bash",
+      "icon": "terminal-bash"
+    },
+  },
 }

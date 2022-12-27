@@ -4,7 +4,6 @@
     ibus.engines = with pkgs.ibus-engines; [
       mozc
       hangul
-      (pkgsPR 206250 "sha256-D7bh1J5gGQTbdzj1G9Gi8WmXIfigPr6bBPRBZ9Y7Z6Q=").ibus-engines.typing-booster
     ];
   };
 

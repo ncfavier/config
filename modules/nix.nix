@@ -46,7 +46,7 @@
         max-jobs = "auto";
         log-lines = 30;
       };
-      nrBuildUsers = 0; # TODO https://github.com/NixOS/nixpkgs/pull/205933
+      nrBuildUsers = 0; # FIXME https://github.com/NixOS/nixpkgs/pull/205933
 
       extraOptions = ''
         !include ${config.secrets.nix-access-tokens.path}
@@ -124,7 +124,7 @@
       inputs.nur.overlay
       (pkgs: prev: {
         nix-bash-completions = prev.nix-bash-completions.overrideAttrs (o: {
-          # let nix handle completion for the nix command
+          # FIXME https://github.com/NixOS/nixpkgs/pull/207224
           postPatch = ''
             substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
           '';
@@ -165,10 +165,10 @@
               if (( $# )); then
                 args=()
                 for input do args+=(--update-input "$input"); done
-                exec nix flake lock "$configPath" "''${args[@]}"
+                exec nix flake lock --refresh "''${args[@]}" "$configPath"
               else
                 # https://github.com/NixOS/nix/issues/6095 prevents using config-git here
-                exec nix flake update -v "$configPath"
+                exec nix flake update -v --refresh "$configPath"
               fi
               ;;
             rev)

@@ -1,6 +1,4 @@
-" Plugins
-
-lua require'nvim-lastplace'.setup{}
+lua require('nvim-lastplace').setup{}
 let g:lastplace_ignore_buftype = "quickfix,nofile,help"
 let g:lastplace_ignore_filetype = "gitcommit,gitrebase,svn,hgcommit"
 
@@ -28,9 +26,8 @@ let g:haskell_enable_typeroles = 1
 
 let g:agdavim_includeutf8_mappings = 0 " barely works, messes with /
 
-" Options
-
-colors plain-cterm
+colors noirbuddy
+lua require("noirbuddy").setup { colors = { primary = "#FF00FF", background = "#000000", } }
 
 set breakindent
 set clipboard+=unnamedplus

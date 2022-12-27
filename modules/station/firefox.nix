@@ -6,6 +6,7 @@ in {
       enable = true;
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         french-dictionary
+        tree-style-tab
         ublock-origin
         i-dont-care-about-cookies
         darkreader
@@ -31,7 +32,7 @@ in {
           "browser.tabs.tabmanager.enabled" = false;
           "browser.tabs.warnOnClose" = false;
           "browser.toolbars.bookmarks.visibility" = "never";
-          "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":["ublock0_raymondhill_net-browser-action","jid1-kkzogwgsw3ao4q_jetpack-browser-action","addon_darkreader_org-browser-action","_a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad_-browser-action","_34daeb50-c2d2-4f14-886a-7160b24d66a4_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","save-to-pocket-button","bookmarks-menu-button","downloads-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["addon_darkreader_org-browser-action","jid1-kkzogwgsw3ao4q_jetpack-browser-action","ublock0_raymondhill_net-browser-action","developer-button","_a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad_-browser-action","_34daeb50-c2d2-4f14-886a-7160b24d66a4_-browser-action"],"dirtyAreaCache":["nav-bar","widget-overflow-fixed-list","toolbar-menubar","TabsToolbar","PersonalToolbar"],"currentVersion":17,"newElementCount":12}'';
+          "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":["treestyletab_piro_sakura_ne_jp-browser-action","ublock0_raymondhill_net-browser-action","addon_darkreader_org-browser-action","_a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","save-to-pocket-button","bookmarks-menu-button","downloads-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["firefox-view-button","tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["addon_darkreader_org-browser-action","jid1-kkzogwgsw3ao4q_jetpack-browser-action","ublock0_raymondhill_net-browser-action","developer-button","_a4c4eda4-fb84-4a84-b4a1-f7c1cbf2a1ad_-browser-action","_34daeb50-c2d2-4f14-886a-7160b24d66a4_-browser-action","treestyletab_piro_sakura_ne_jp-browser-action"],"dirtyAreaCache":["nav-bar","widget-overflow-fixed-list","toolbar-menubar","TabsToolbar","PersonalToolbar"],"currentVersion":18,"newElementCount":13}'';
           "browser.urlbar.clickSelectsAll" = true;
           "browser.urlbar.doubleClickSelectsAll" = false;
           "browser.urlbar.maxRichResults" = "5";

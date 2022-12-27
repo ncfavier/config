@@ -9,6 +9,7 @@
     man-pages-posix
     rlwrap
     bat
+    xxd
     ripgrep
     file
     fd
@@ -35,8 +36,6 @@
     jq
     htmlq
     python3
-    neofetch
-    lesspass-cli
     tmsu
     (writeShellScriptBin "mutate" ''
       # replace a read-only symlink with a mutable copy

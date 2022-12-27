@@ -54,17 +54,6 @@ in {
     })
 
     (mkIf this.isStation {
-      nixpkgs.overlays = [ (self: super: {
-        wireguard-tools = super.wireguard-tools.overrideAttrs (old: {
-          src = pkgs.fetchFromGitHub {
-            owner = my.githubUsername;
-            repo = "wireguard-tools";
-            rev = "rpfilter-doc";
-            hash = "sha256-vxtxGI0kOUYj5otLicdVURni0wUewwbc68tFuukrI2A=";
-          };
-        });
-      }) ];
-
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
         address = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
