@@ -22,7 +22,6 @@
           "home-manager",
           "utils"
         ],
-        "html-charset": "html-charset",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -31,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1671963564,
-        "narHash": "sha256-mktWPao2h/GgggPNQ1x0t0gB5ubhyG5DPDfbcJEHaJc=",
+        "lastModified": 1672148906,
+        "narHash": "sha256-fWQdgNBrtnPC4C69MNeOxgi+wE39zdZWq4q7rmeAibY=",
         "owner": "ncfavier",
         "repo": "bothendieck",
-        "rev": "f73c58e8e0e8554a345fa3e0b6ca0f5eff26d8cf",
+        "rev": "b801a874525d1341d100538d552d8852609ed7ef",
         "type": "github"
       },
       "original": {
@@ -86,22 +85,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "html-charset": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1670854070,
-        "narHash": "sha256-YOh8f4Lr/YJ0rDfjRYB4Q8hP6dTS1Mcqxkandg4RDXk=",
-        "owner": "dahlia",
-        "repo": "html-charset",
-        "rev": "8f9b75daf6cc8976b32cdde879f18c3b4163fd69",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dahlia",
-        "repo": "html-charset",
         "type": "github"
       }
     },
@@ -224,11 +207,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1671981077,
-        "narHash": "sha256-lHGgGO8IrrrGHA1+izYhq9tZilkSZtTrsEgbiJs8Quk=",
+        "lastModified": 1672152840,
+        "narHash": "sha256-WZi2ZyFaU8a4RKHTWpNtusoGQkvfNidbzOgt+FrLyCE=",
         "owner": "ncfavier",
         "repo": "qeval",
-        "rev": "6e874e04315e8c6ba07e18cfb46cb838dcf45261",
+        "rev": "a172f0245667f568811467e7bf467d0cb2b6261c",
         "type": "github"
       },
       "original": {

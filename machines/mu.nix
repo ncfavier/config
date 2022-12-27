@@ -71,4 +71,7 @@ in {
   '';
 
   system.stateVersion = "22.05";
+
+  services.bothendieck.enable = true;
+  services.my-lambdabot.enable = true;
 }

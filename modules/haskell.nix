@@ -23,11 +23,6 @@
     haskellPackages.haskell-language-server
   ];
 
-  # nix.settings = {
-  #   substituters = mkAfter [ "https://hydra.iohk.io" ];
-  #   trusted-public-keys = mkAfter [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
-  # };
-
   hm.home.file = {
     ".ghc/ghci.conf".text = ''
       :set prompt      "> "

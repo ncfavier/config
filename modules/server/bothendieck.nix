@@ -3,7 +3,7 @@
   settingsFormat = pkgs.formats.toml {};
 in {
   options.services.bothendieck = {
-    enable = mkEnableOption "bothendieck" // { default = true; };
+    enable = mkEnableOption "bothendieck";
     settings = mkOption {
       type = types.submodule {
         freeformType = settingsFormat.type;
@@ -39,8 +39,13 @@ in {
                 adjunctions
                 containers
                 kan-extensions
-                lens
-                split
+                random
+                # bloats the closure too much (?)
+                # (pkgs.haskell.lib.overrideCabal free-theorems {
+                #   version = "0.3.2.1";
+                #   sha256 = "sha256-CAr7TPC6E9EZpH0cjTP2if6mAE0/VclBSXkxlkBzcWo=";
+                #   broken = false;
+                # })
               ]);
               init = ''
                 :set -XBangPatterns
@@ -61,8 +66,9 @@ in {
                 :set -XViewPatterns
                 import Control.Applicative
                 import Control.Arrow
-                import Control.Lens
+                import Control.Concurrent
                 import Control.Monad
+                import Control.Monad.Codensity
                 import Data.Bifunctor
                 import Data.Char
                 import Data.Complex
@@ -70,7 +76,11 @@ in {
                 import Data.Foldable
                 import Data.Function
                 import Data.Functor
+                import Data.Functor.Adjunction
+                import Data.Functor.Day
                 import Data.Functor.Identity
+                import Data.Functor.Yoneda
+                import Data.Functor.Coyoneda
                 import Data.Ix
                 import Data.List
                 import Data.Map (Map)
@@ -89,6 +99,20 @@ in {
                 import System.Environment
                 import System.Exit
                 import System.IO
+                import System.Random
+                -- import Language.Haskell.FreeTheorems
+                -- import Language.Haskell.FreeTheorems.Parser.Haskell98
+                -- :{
+                -- free input = let (p, pe) = runChecks (parse input)
+                --                  (d, ce) = runChecks (check p)
+                --                  s = case filterSignatures d of
+                --                    [] -> error (show (mconcat (pe <> ce)))
+                --                    s:_ -> s
+                --                  Just i = interpret d BasicSubset s
+                --                  t = simplify $ asTheorem $ foldl' specialise i (relationVariables i)
+                --              in prettyTheorem [OmitLanguageSubsets, OmitTypeInstantiations] t
+                -- :}
+                -- :def free \ input -> "" <$ print (free input)
               '';
             };
           };
