@@ -4,6 +4,7 @@
     ibus.engines = with pkgs.ibus-engines; [
       mozc
       hangul
+      typing-booster
     ];
   };
 

@@ -22,6 +22,10 @@
   <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
   <property name="hidden-bookmarks" type="array">
     <value type="string" value="network:///"/>
+    <value type="string" value="recent:///"/>
   </property>
   <property name="tree-icon-size" type="string" value="THUNAR_ICON_SIZE_32"/>
+  <property name="misc-middle-click-in-tab" type="bool" value="true"/>
+  <property name="misc-full-path-in-tab-title" type="bool" value="true"/>
+  <property name="misc-show-delete-action" type="bool" value="true"/>
 </channel>
