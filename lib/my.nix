@@ -22,6 +22,10 @@ lib: with lib; let
             isServer  = mkMachineTypeOption "server";
             isStation = mkMachineTypeOption "station";
             isPhone   = mkMachineTypeOption "phone";
+            isISO = mkOption {
+              type = bool;
+              default = false;
+            };
             ipv4 = mkOption {
               description = "The machine's public IPv4 addresses";
               type = listOf str;

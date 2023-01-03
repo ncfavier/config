@@ -26,6 +26,8 @@ let g:haskell_enable_typeroles = 1
 
 let g:agdavim_includeutf8_mappings = 0 " barely works, messes with /
 
+au FileType gitcommit,gitsendemail let b:EditorConfig_disable = 1
+
 colors noirbuddy
 lua require("noirbuddy").setup { colors = { primary = "#FF00FF", background = "#000000", } }
 
@@ -133,26 +135,10 @@ noremap  <silent> <Leader>d        :execute 'write !diff - '.shellescape(@%)<Ret
 " quit if NERDTree is the last buffer open
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | quit | endif
 
-" set filetype to bash when editing bash dotfiles
-autocmd BufNewFile,BufRead ~/.dots/bash/* call dist#ft#SetFileTypeSH("bash")
-
-fun! StripTrailingWhitespace()
-  if &ft =~ 'gitcommit\|gitsendemail'
-    return
-  endif
-  %s/\s\+$//e
-endfun
-
-augroup mangle " disable these when making patches
-  " delete trailing whitespace on write
-  autocmd BufWritePre * call StripTrailingWhitespace()
-
+augroup mangle " disable this group when making patches
   " auto-chmod files with a shebang
   autocmd BufWritePost * if getline(1) =~ '^#!' && !executable(expand('%:p')) | silent execute '!chmod +x -- '.shellescape(@%) | endif
 augroup END
-
-" source vimrc after writing it
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " edit ix.io URLs
 autocmd BufWriteCmd http://ix.io/* write !curl -F 'f:1=<-' ix.io | tee >(clip)
@@ -160,12 +146,8 @@ autocmd BufWriteCmd http://ix.io/* write !curl -F 'f:1=<-' ix.io | tee >(clip)
 " balance windows when the terminal is resized
 autocmd VimResized * wincmd =
 
-" indent haskell with 2 spaces
-autocmd Filetype haskell setlocal tabstop=2 softtabstop=2
-
 " Commands
 
-command! Reload source $MYVIMRC
 command! ToggleTerm call ToggleTerm()
 
 " Terminal
@@ -213,3 +195,7 @@ augroup vimrc-auto-mkdir
     endif
   endfunction
 augroup END
+
+fun! StripTrailingWhitespace()
+  %s/\s\+$//e
+endfun

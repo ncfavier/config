@@ -10,6 +10,7 @@
       plugins = with pkgs.vimPlugins; [
         ctrlp
         nvim-lastplace
+        editorconfig-vim
         vim-sleuth
         nerdtree
         nerdcommenter
@@ -81,6 +82,15 @@
             };
           };
         };
+      };
+    };
+
+    editorconfig = {
+      enable = true;
+      settings."*" = {
+        trim_trailing_whitespace = true;
+        insert_final_newline = true;
+        indent_style = "space";
       };
     };
   };

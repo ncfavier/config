@@ -1,4 +1,4 @@
-{ lib, this, pkgs, ... }: with lib; {
+{ lib, this, pkgs, pkgsPR, ... }: with lib; {
   config = mkMerge [
     {
       fonts.fontconfig.enable = mkDefault false;
@@ -28,7 +28,7 @@
           twitter-color-emoji
           noto-fonts-emoji
           symbola
-          dina-font
+          (pkgsPR 208535 "sha256-wyuscmONv/l76IXuv2N/72YPWd7tAJnlXz/wf+ma90c=").dina-font # FIXME
           tewi-font
           efont-unicode
           siji
@@ -47,7 +47,7 @@
             monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" "emoji" ];
             emoji     = [ "Twitter Color Emoji" "Noto Color Emoji" "Symbola" ];
           };
-          # test: ™ ´ ” ☺ 🦢 π œuf →
+          # test: ™ ´ ” ☺ 🦢 🪿 π œuf → ∀
           localConf = ''
             <?xml version='1.0'?>
             <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
@@ -56,6 +56,7 @@
                 <family>bitmap</family>
                 <prefer>
                   <family>Dina</family>
+                  <family>tewi</family>
                   <family>Biwidth</family>
                   <family>emoji</family>
                 </prefer>

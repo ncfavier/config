@@ -91,6 +91,12 @@ in {
               color: var(--bg) !important;
             }
 
+            #tabbrowser-tabs {
+              border-inline-start: none !important;
+              padding-inline-start: 0 !important;
+              margin-inline-start: 0 !important;
+            }
+
             .tabbrowser-tab {
               color: var(--fg-alt) !important;
               font-family: var(--font) !important;

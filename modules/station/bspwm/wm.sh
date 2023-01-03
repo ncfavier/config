@@ -80,7 +80,7 @@ go() {
         term|terminal)
             terminal "$@" &;;
         chat|irc)
-            class=irc lines=100 columns=140 terminal autossh -M 0 -- -qt "$server_hostname" tmux -L weechat attach -d &;;
+            class=irc lines=100 columns=140 terminal mosh -- "$server_hostname" tmux -L weechat attach -d &;;
         editor)
             focus_title='- N?VIM$' terminal vim &;;
         web|browser)
