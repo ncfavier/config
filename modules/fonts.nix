@@ -47,7 +47,7 @@
             monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" "emoji" ];
             emoji     = [ "Twitter Color Emoji" "Noto Color Emoji" "Symbola" ];
           };
-          # test: ™ ´ ” ☺ 🦢 🪿 π œuf → ∀
+          # test: ™ ´ ” ☺ 🦢 🪿 π œuf → ∀  ⬛🟩
           localConf = ''
             <?xml version='1.0'?>
             <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
@@ -73,24 +73,24 @@
                   <family>sans-serif</family>
                 </prefer>
               </alias>
-              <match target="scan">
-                <test name="family"><string>Twitter Color Emoji</string></test>
+              <match target="scan"> <!-- TODO module -->
+                <test name="family"><string>tewi</string></test>
                 <edit name="charset" mode="assign">
                   <minus>
                     <name>charset</name>
                     <charset>
-                      <int>0x2122</int> <!-- ™ -->
+                      <int>0x2B1B</int> <!-- ⬛ -->
                     </charset>
                   </minus>
                 </edit>
               </match>
               <match target="font">
-                <test name="family"><string>Twitter Color Emoji</string></test>
+                <test name="family"><string>tewi</string></test>
                 <edit name="charset" mode="assign">
                   <minus>
                     <name>charset</name>
                     <charset>
-                      <int>0x2122</int> <!-- ™ -->
+                      <int>0x2B1B</int> <!-- ⬛ -->
                     </charset>
                   </minus>
                 </edit>
