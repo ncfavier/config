@@ -45,6 +45,7 @@
         auto-allocate-uids = true;
         max-jobs = "auto";
         log-lines = 30;
+        connect-timeout = 5;
       };
       nrBuildUsers = 0; # FIXME https://github.com/NixOS/nixpkgs/pull/205933
 

@@ -16,6 +16,8 @@
       };
 
       aliases = {
+        good = "bisect good";
+        bad = "bisect bad";
         i = "init";
         s = "status";
         d = "diff --no-prefix";

@@ -39,13 +39,6 @@
       signal-desktop
       amfora
       libreoffice-fresh
-      (texlive.combine {
-        inherit (texlive)
-          scheme-medium
-          collection-latexextra
-          collection-fontsextra
-          collection-bibtexextra;
-      })
       pandoc
       coq_8_14
       (agda.withPackages (p: with p; [
@@ -76,6 +69,17 @@
         ];
       })
     ];
+
+    hm.programs.texlive = {
+      enable = true;
+      extraPackages = tpkgs: {
+        inherit (tpkgs)
+          scheme-medium
+          collection-latexextra
+          collection-fontsextra
+          collection-bibtexextra;
+      };
+    };
 
     hm.home.file.".agda/defaults".text = ''
       standard-library

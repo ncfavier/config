@@ -76,11 +76,12 @@
 
             complete -F _command C cxa cxan
             complete -v dp
-            complete_alias drv _complete_nix nix show-derivation
-            complete_alias nwd _complete_nix nix why-depends
-            complete_alias s _systemctl systemctl
-            complete_alias u _systemctl systemctl --user
-            complete_alias j _journalctl journalctl
+            complete_alias diff git diff
+            complete_alias drv nix show-derivation
+            complete_alias nwd nix why-depends
+            complete_alias s systemctl
+            complete_alias u systemctl --user
+            complete_alias j journalctl
           ''
           (mkAfter ''
             if [[ $BASH_STARTUP ]]; then eval "$BASH_STARTUP"; fi

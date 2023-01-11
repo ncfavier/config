@@ -15,14 +15,21 @@ compreply() {
 
 complete_alias() { # completion function for aliases
     local alias_name=$1
-    local base_function=$2
     local function_name=_alias_$alias_name
-    shift 2
+    shift 1
+    local cmd=$1
     eval "$function_name() {
+        local c i
         COMP_WORDS=( ${*@Q} \"\${COMP_WORDS[@]:1}\" )
         (( COMP_CWORD += $# - 1 ))
-        _completion_loader $1
-        $base_function
+        _completion_loader $cmd
+        read -ra c < <(complete -p $cmd)
+        for (( i = 0; i < \${#c[@]}; i++ )) do
+            if [[ \${c[i]} == -F ]]; then
+                \"\${c[i+1]}\"
+                break
+            fi
+        done
     }"
     complete -F "$function_name" "$alias_name"
 }
@@ -194,7 +201,7 @@ sshesc() { # ssh opts -- argv...
     done
     ssh "${args[@]}" -- "${*@Q}"
 }
-complete_alias sshesc _ssh ssh
+complete_alias sshesc ssh
 
 weechat_fifo() {
     . config env
@@ -306,7 +313,7 @@ nix-shell() {
 nix-build-delete() { # useful for running NixOS tests
     sudo nix-store --delete --ignore-liveness "$(nix-build --no-out-link "$@")"
 }
-complete_alias nix-build-delete _nix_completion nix-build
+complete_alias nix-build-delete nix-build
 
 nbe() {
     local expr=$1
@@ -324,7 +331,7 @@ nix-time() { # get a lower bound on the build time of a derivation (best if buil
     read -r birth mod < <(stat -c '%W %Y' "$log")
     python -c "import datetime; print(datetime.timedelta(seconds=$((mod - birth))))"
 }
-complete_alias nix-time _complete_nix nix show-derivation
+complete_alias nix-time nix show-derivation
 
 nix-closure-size() {
     nix path-info -rsSh "$@"
@@ -338,10 +345,14 @@ nix-clear-cache() {
 pkgs() {
     config bld pkgs."$1" --no-out-link
 }
-complete_alias pkgs _complete_nix nix build -f /etc/nixpkgs
+complete_alias pkgs nix build -f /etc/nixpkgs
 
 drv() {
-    nix show-derivation "$@" | less
+    nix show-derivation "$@" | if [[ -t 1 ]]; then
+        less
+    else
+        jq -r 'keys[0]'
+    fi
 }
 
 what() {
@@ -369,7 +380,7 @@ hm() {
         sudo systemctl "$@" home-manager-"$USER".service
     fi
 }
-complete_alias hm _systemctl systemctl
+complete_alias hm systemctl
 
 pr() {
     NO_ALARM=1
