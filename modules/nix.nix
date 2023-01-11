@@ -47,7 +47,6 @@
         log-lines = 30;
         connect-timeout = 5;
       };
-      nrBuildUsers = 0; # FIXME https://github.com/NixOS/nixpkgs/pull/205933
 
       extraOptions = ''
         !include ${config.secrets.nix-access-tokens.path}
@@ -124,12 +123,6 @@
     nixpkgs.overlays = [
       inputs.nur.overlay
       (pkgs: prev: {
-        nix-bash-completions = prev.nix-bash-completions.overrideAttrs (o: {
-          # FIXME https://github.com/NixOS/nixpkgs/pull/207224
-          postPatch = ''
-            substituteInPlace _nix --replace 'nix nixos-option' 'nixos-option'
-          '';
-        });
         config-cli = hiPrio (pkgs.writeShellScriptBin "config" ''
           configPath=${escapeShellArg config.lib.meta.configPath}
           cmd=$1

@@ -1,4 +1,4 @@
-{ lib, this, pkgs, pkgsPR, ... }: with lib; {
+{ lib, this, pkgs, ... }: with lib; {
   config = mkMerge [
     {
       fonts.fontconfig.enable = mkDefault false;
@@ -28,7 +28,7 @@
           twitter-color-emoji
           noto-fonts-emoji
           symbola
-          (pkgsPR 208535 "sha256-wyuscmONv/l76IXuv2N/72YPWd7tAJnlXz/wf+ma90c=").dina-font # FIXME
+          dina-font
           tewi-font
           efont-unicode
           siji

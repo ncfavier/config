@@ -26,8 +26,6 @@
       warn-dirty = false;
     };
 
-    environment.noXlibs = false; # FIXME https://github.com/NixOS/nixpkgs/pull/207105
-
     services.getty.autologinUser = mkForce my.username;
 
     # reduce size by removing unneeded firmware
