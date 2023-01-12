@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1673129243,
-        "narHash": "sha256-uPvqwhEFYCUI6A/ipP0lgYlRTUH2rvWu9RI6aeRHyOw=",
+        "lastModified": 1673472254,
+        "narHash": "sha256-abUElHO0yXtUWSsBKuwCGGTG4vvHJAhVEkYaO0zg954=",
         "owner": "ncfavier",
         "repo": "bothendieck",
-        "rev": "1c23f09b93ab667b449479c5a51b35753237ae61",
+        "rev": "a5bac8fbc7fa0b912af5a29b6eaf053d43861420",
         "type": "github"
       },
       "original": {
@@ -194,6 +194,21 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1673363027,
+        "narHash": "sha256-nuPLEsEUvERI+gwmqknerUVHhdzDiZHKZ18Ibkvo7VQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d3b4150929d4fed7eb626695c4f78881cfcbeb9e",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1673442346,
@@ -214,20 +229,18 @@
           "home-manager",
           "utils"
         ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-mozilla": "nixpkgs-mozilla",
         "nur": [
           "nur"
         ]
       },
       "locked": {
-        "lastModified": 1673457143,
-        "narHash": "sha256-3vzvJOaTFcABtG+At874mTjjJdmnbcrRt5VtHivYJI8=",
+        "lastModified": 1673534070,
+        "narHash": "sha256-Pef0TmHFxScflZ65upNKjM6WIWKehfJPNWdz1gsbZuQ=",
         "owner": "ncfavier",
         "repo": "qeval",
-        "rev": "01c496643f2835d4ab2eed4c17d3923e1aae34c5",
+        "rev": "f64fc532e0ca5afd2d3a22ab21ac1b90593deea4",
         "type": "github"
       },
       "original": {

@@ -9,6 +9,7 @@ in {
     loader.grub = {
       enable = true;
       device = "/dev/sda";
+      configurationLimit = 3;
     };
 
     kernelPackages = pkgs.linuxPackages_latest;

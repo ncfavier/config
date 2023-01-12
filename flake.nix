@@ -36,7 +36,6 @@
     };
     qeval = {
       url = "github:ncfavier/qeval";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "home-manager/utils";
       inputs.nur.follows = "nur";
     };
