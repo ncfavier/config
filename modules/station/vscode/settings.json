@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "JuliaMono",
+  "editor.fontFamily": "monospace",
   "files.trimTrailingWhitespace": true,
   "keyboard.dispatch": "keyCode",
   "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
@@ -115,7 +115,6 @@
     "*.vrb",
     "*.synctex.gz"
   ],
-  "window.menuBarVisibility": "hidden",
   "extensions.autoUpdate": false,
   "agdaMode.view.panelMountPosition": "right",
   "editor.codeLensFontFamily": "monospace",
@@ -143,7 +142,7 @@
     "**/*.agdai": true
   },
   "editor.semanticHighlighting.enabled": true,
-  "editor.fontSize": 12,
+  "editor.fontSize": 13,
   "editor.bracketPairColorization.enabled": false,
   "editor.guides.bracketPairs": "active",
   "extensions.autoCheckUpdates": false,
@@ -162,4 +161,6 @@
       "icon": "terminal-bash"
     },
   },
+  "window.menuBarVisibility": "toggle",
+  "nix.serverPath": "nil",
 }

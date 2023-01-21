@@ -87,7 +87,8 @@ battery=(/sys/class/power_supply/BAT*)
 read -r default_layout < <(xkb-switch -l)
 bold=3
 
-xft_fonts=("siji:pixelsize=10" "${theme[font]}:size=${theme[fontSize]}" "${theme[font]}:bold:size=${theme[fontSize]}" "tewi:size=${theme[fontSize]}" "Biwidth:size=${theme[fontSize]}")
+# ℕ
+xft_fonts=("siji:pixelsize=10" "${theme[font]}:size=${theme[fontSize]}" "${theme[font]}:bold:size=${theme[fontSize]}" "tewi:size=${theme[fontSize]}" "Biwidth:size=9")
 font_args=()
 for f in "${xft_fonts[@]}"; do
     case $f in

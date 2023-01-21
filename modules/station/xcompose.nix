@@ -22,6 +22,7 @@
       <Multi_key> <o> <o> : "∘"
       <Multi_key> <asterisk> <asterisk> : "⋆"
       <Multi_key> <asterisk> <period> : "∙"
+      <Multi_key> <asterisk> <comma> : "·"
       <Multi_key> <asterisk> <o> : "∘"
       <Multi_key> <equal> <equal> : "≡"
       <Multi_key> <equal> <3> : "≡"

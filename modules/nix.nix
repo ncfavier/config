@@ -111,7 +111,7 @@
       nixpkgs-fmt
       nixpkgs-review
       nixfmt
-      rnix-lsp
+      nil
     ];
 
     lib.shellEnv = {

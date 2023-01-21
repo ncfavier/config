@@ -1,6 +1,9 @@
 lua require('nvim-lastplace').setup{}
-let g:lastplace_ignore_buftype = "quickfix,nofile,help"
-let g:lastplace_ignore_filetype = "gitcommit,gitrebase,svn,hgcommit"
+
+lua require('lspconfig').nil_ls.setup{}
+lua require('lspconfig').hls.setup{filetypes = { 'haskell', 'lhaskell', 'cabal' }}
+autocmd CursorHold * lua vim.diagnostic.open_float()
+set updatetime=300
 
 let NERDTreeMinimalUI = 1
 let NERDTreeRespectWildIgnore = 1

@@ -2,7 +2,7 @@ mpc() {
     command mpc -q "$@"
 }
 
-music=$(xdg-user-dir MUSIC)
+music=$(realpath "$(xdg-user-dir MUSIC)")
 files=()
 for f do
     f=$(realpath "$f")

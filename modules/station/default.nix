@@ -1,4 +1,4 @@
-{ lib, this, pkgs, ... }: with lib; optionalAttrs this.isStation {
+{ lib, this, pkgs, pkgsPR, ... }: with lib; optionalAttrs this.isStation {
   imports = attrValues (modulesIn ./.);
 
   config = {
@@ -43,7 +43,7 @@
       coq_8_14
       (agda.withPackages (p: with p; [
         standard-library
-        cubical
+        (pkgsPR 203947 "sha256-3UKqWbGw5XX8kvAd+73kZtj4Y2Jmi804MRBgCHkxcKY=").agdaPackages.cubical # FIXME
       ]))
       racket
       audacity

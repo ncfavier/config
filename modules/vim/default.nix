@@ -12,6 +12,7 @@
         nvim-lastplace
         editorconfig-vim
         vim-sleuth
+        nvim-lspconfig
         nerdtree
         nerdcommenter
         vim-surround
@@ -60,29 +61,6 @@
           };
         })
       ];
-      coc = {
-        enable = true;
-        settings = {
-          languageserver = {
-            nix = {
-              command = "rnix-lsp";
-              filetypes = [ "nix" ];
-            };
-            haskell = {
-              command = "haskell-language-server";
-              args = [ "--lsp" ];
-              rootPatterns = [
-                "*.cabal"
-                "stack.yaml"
-                "cabal.project"
-                "package.yaml"
-                "hie.yaml"
-              ];
-              filetypes = [ "haskell" "lhaskell" ];
-            };
-          };
-        };
-      };
     };
 
     editorconfig = {
