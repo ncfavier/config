@@ -23,6 +23,7 @@
           source-han-mono
           iosevka
           julia-mono
+          jetbrains-mono
           roboto
           inriafonts
           twitter-color-emoji

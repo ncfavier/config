@@ -18,6 +18,7 @@
 
       # Math
       <Multi_key> <bar> <greater> : "▸"
+      <Multi_key> <bar> <Right> : "↦"
       <Multi_key> <q> <e> <d> : "∎"
       <Multi_key> <o> <o> : "∘"
       <Multi_key> <asterisk> <asterisk> : "⋆"

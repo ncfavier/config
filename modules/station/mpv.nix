@@ -10,6 +10,7 @@
 
       config = {
         autofit = "80%x80%";
+        volume-max = 200;
         sub-auto = "fuzzy";
         sub-border-size = 1;
 

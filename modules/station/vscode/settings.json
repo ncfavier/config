@@ -163,4 +163,6 @@
   },
   "window.menuBarVisibility": "toggle",
   "nix.serverPath": "nil",
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "rust-analyzer.inlayHints.chainingHints.enable": false,
 }

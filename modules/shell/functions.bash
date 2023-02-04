@@ -40,7 +40,8 @@ diff-json() {
     new=$(mktemp --suffix .new)
     jq -M . "$1" > "$old"
     jq -M . "$2" > "$new"
-    diff "$old" "$new"
+    shift 2
+    diff "$@" "$old" "$new"
     rm -f "$old" "$new"
 }
 

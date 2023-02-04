@@ -48,7 +48,7 @@
   };
 
   nixpkgs.overlays = [ (pkgs: prev: {
-    zcatch = with pkgs; stdenv.mkDerivation rec {
+    zcatch = with pkgs; stdenv.mkDerivation {
       pname = "zcatch";
       version = "0.3.5";
       src = fetchFromGitHub {
