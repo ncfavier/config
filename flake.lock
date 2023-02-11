@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1673472254,
-        "narHash": "sha256-abUElHO0yXtUWSsBKuwCGGTG4vvHJAhVEkYaO0zg954=",
+        "lastModified": 1675283276,
+        "narHash": "sha256-Cd8NUlgENdO0ipvyERj3FbgXufxIuU7927Yg5ySEBPU=",
         "owner": "ncfavier",
         "repo": "bothendieck",
-        "rev": "a5bac8fbc7fa0b912af5a29b6eaf053d43861420",
+        "rev": "8b0b9c6da14b7b6557bd1d2187422867ccccc3a5",
         "type": "github"
       },
       "original": {
@@ -236,11 +236,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1673534070,
-        "narHash": "sha256-Pef0TmHFxScflZ65upNKjM6WIWKehfJPNWdz1gsbZuQ=",
+        "lastModified": 1674349244,
+        "narHash": "sha256-5UoZWhKu0+Ra2cBhLObHrI2OtxebiZ1/dqy7MKCedBg=",
         "owner": "ncfavier",
         "repo": "qeval",
-        "rev": "f64fc532e0ca5afd2d3a22ab21ac1b90593deea4",
+        "rev": "63c8ea1262a45e9351ca676f66854466a6d589aa",
         "type": "github"
       },
       "original": {

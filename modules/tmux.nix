@@ -2,6 +2,7 @@
   hm.programs.tmux = {
     enable = true;
 
+    # Having the socket in /tmp is fine; piping TMUX_TMPDIR to the weechat service is annoying.
     secureSocket = false;
 
     shortcut = "a";

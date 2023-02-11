@@ -21,6 +21,7 @@
             containers
             kan-extensions
             random
+            NumInstances
             # bloats the closure too much (?)
             # (pkgs.haskell.lib.overrideCabal free-theorems {
             #   version = "0.3.2.1";
@@ -35,6 +36,7 @@
             :set -XImportQualifiedPost
             :set -XLambdaCase
             :set -XNamedFieldPuns
+            :set -XNegativeLiterals
             :set -XNumericUnderscores
             :set -XOverloadedStrings
             :set -XRankNTypes
@@ -68,6 +70,7 @@
             import Data.Map qualified as Map
             import Data.Maybe
             import Data.Monoid
+            import Data.NumInstances
             import Data.Ord
             import Data.Ratio
             import Data.Semigroup
