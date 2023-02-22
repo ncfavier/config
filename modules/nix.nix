@@ -1,28 +1,12 @@
-{ inputs, lib, this, config, pkgs, pkgsRev, ... }: with lib; {
+{ inputs, lib, this, config, pkgs, ... }: with lib; let
+  importNixpkgs = nixpkgs: import nixpkgs {
+    inherit (config.nixpkgs) localSystem crossSystem config;
+  };
+in {
   config = {
     system.extraDependencies = concatMap collectFlakeInputs (with inputs; [
       nixpkgs nixpkgs-stable nixos-hardware nur
     ]);
-
-    _module.args = let
-      importNixpkgs = nixpkgs: import nixpkgs {
-        inherit (config.nixpkgs) localSystem crossSystem config;
-      };
-    in {
-      pkgsStable = importNixpkgs inputs.nixpkgs-stable;
-      pkgsRev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
-        owner = "NixOS";
-        repo = "nixpkgs";
-        inherit rev sha256;
-      });
-      pkgsPR = pr: pkgsRev "refs/pull/${toString pr}/head";
-      pkgsMine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
-        owner = my.githubUsername;
-        repo = "nixpkgs";
-        inherit rev sha256;
-      });
-      pkgsLocal = importNixpkgs "${config.my.home}/git/nixpkgs"; # only available in --impure mode
-    };
 
     lib.meta = {
       configPath = "${config.my.home}/git/config";
@@ -122,6 +106,20 @@
     nixpkgs.overlays = [
       inputs.nur.overlay
       (pkgs: prev: {
+        stable = importNixpkgs inputs.nixpkgs-stable;
+        rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+          owner = "NixOS";
+          repo = "nixpkgs";
+          inherit rev sha256;
+        });
+        pr = n: pkgs.rev "refs/pull/${toString n}/head";
+        mine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+          owner = my.githubUsername;
+          repo = "nixpkgs";
+          inherit rev sha256;
+        });
+        local = importNixpkgs "${config.my.home}/git/nixpkgs"; # needs --impure
+
         config-cli = hiPrio (pkgs.writeShellScriptBin "config" ''
           configPath=${escapeShellArg config.lib.meta.configPath}
           cmd=$1

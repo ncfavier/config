@@ -4,17 +4,17 @@ in {
   hm = {
     programs.firefox = {
       enable = true;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        french-dictionary
-        tree-style-tab
-        ublock-origin
-        i-dont-care-about-cookies
-        darkreader
-        refined-github
-        redirector # ^https:\/\/(.*?)\.m\.wikipedia\.org\/(.*) → https://$1.wikipedia.org/$2
-        youtube-shorts-block
-      ];
       profiles.${profile} = with config.theme; {
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          french-dictionary
+          tree-style-tab
+          ublock-origin
+          i-dont-care-about-cookies
+          darkreader
+          refined-github
+          redirector # ^https:\/\/(.*?)\.m\.wikipedia\.org\/(.*) → https://$1.wikipedia.org/$2
+          youtube-shorts-block
+        ];
         settings = {
           "apz.gtk.touchpad_pinch.enabled" = false;
           "browser.download.alwaysOpenPanel" = false;

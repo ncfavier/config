@@ -119,7 +119,7 @@
   "agdaMode.view.panelMountPosition": "right",
   "editor.codeLensFontFamily": "monospace",
   "files.insertFinalNewline": true,
-  "editor.renderFinalNewline": false,
+  "editor.renderFinalNewline": "off",
   "files.trimFinalNewlines": true,
   "workbench.editor.untitled.hint": "hidden",
   "security.workspace.trust.enabled": false,

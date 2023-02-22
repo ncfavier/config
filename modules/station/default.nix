@@ -1,4 +1,4 @@
-{ lib, this, pkgs, pkgsPR, ... }: with lib; optionalAttrs this.isStation {
+{ lib, this, pkgs, ... }: with lib; optionalAttrs this.isStation {
   imports = attrValues (modulesIn ./.);
 
   config = {
@@ -40,10 +40,10 @@
       amfora
       libreoffice-fresh
       pandoc
-      coq_8_14
+      coq
       (agda.withPackages (p: with p; [
         standard-library
-        (pkgsPR 203947 "sha256-3UKqWbGw5XX8kvAd+73kZtj4Y2Jmi804MRBgCHkxcKY=").agdaPackages.cubical # FIXME
+        cubical
       ]))
       racket
       audacity

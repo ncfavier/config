@@ -2,8 +2,8 @@
   services.openssh = {
     enable = true;
     ports = mkIf (this.sshPort != null) [ this.sshPort ];
-    passwordAuthentication = false;
-    forwardX11 = true;
+    settings.PasswordAuthentication = false;
+    settings.X11Forwarding = true;
   };
 
   programs.ssh.extraConfig = ''

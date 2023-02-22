@@ -1,5 +1,5 @@
-{ lib, this, pkgsMine, ... }: with lib; let
-  unicode15Locales = (pkgsMine "glibcLocales-unicode-15" "sha256-tomjrc051DQbjt2aNrmXltvwF407Z6aWV7mTVOAsstg=").glibcLocales; # FIXME
+{ lib, this, pkgs, ... }: with lib; let
+  unicode15Locales = (pkgs.mine "glibcLocales-unicode-15" "sha256-tomjrc051DQbjt2aNrmXltvwF407Z6aWV7mTVOAsstg=").glibcLocales; # FIXME
 in {
   hm.disabledModules = [ "config/i18n.nix" ];
 

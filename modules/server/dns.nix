@@ -1,10 +1,10 @@
-{ inputs, lib, this, config, pkgsRev, ... }: with lib; let
+{ inputs, lib, this, config, pkgs, ... }: with lib; let
   dns = inputs.dns.lib;
 in {
   system.extraDependencies = collectFlakeInputs inputs.dns;
 
   nixpkgs.overlays = [ (self: super: {
-    bind = (pkgsRev "bea64c8d594d0074d17a4513a2d2d856b1b0fee0" "sha256-X7cClFjpVm5emaEg9eABeXvG6yx7HCoTIqOE04ICjxA=").bind;
+    bind = (pkgs.rev "bea64c8d594d0074d17a4513a2d2d856b1b0fee0" "sha256-X7cClFjpVm5emaEg9eABeXvG6yx7HCoTIqOE04ICjxA=").bind;
   }) ];
 
   services.nsd = {

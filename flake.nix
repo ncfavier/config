@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-22.11";
-    nixos-hardware.url = "nixos-hardware";
+    nixos-hardware.url = "github:ncfavier/nixos-hardware/remove-rtw89"; # FIXME
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
