@@ -71,7 +71,7 @@ elif [[ ! -v index ]]; then
         format='[%artist% - ]'$format
     fi
     mpc playlist -f "$format" | readarray -t tracks
-    if [[ ! $album ]] && (( ${#tracks[@]} > 1 )); then
+    if (( ${#tracks[@]} > 1 )); then
         index=; row random
     fi
     index=1

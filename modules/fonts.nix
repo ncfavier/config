@@ -48,7 +48,7 @@
             monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" "emoji" ];
             emoji     = [ "Twitter Color Emoji" "Noto Color Emoji" "Symbola" ];
           };
-          # test: ™ ´ ” ☺ 🦢 🪿 π œuf ✓ → ∀  ⬛🟩
+          # test: ™ ´ ” ☺ 🦢 🪿 π œuf ✓ → ∀ ⬛🟩
           localConf = ''
             <?xml version='1.0'?>
             <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>

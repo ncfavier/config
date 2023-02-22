@@ -6,6 +6,10 @@
           url = "https://github.com/davatorium/rofi/commit/0f097f29988078ddae2799f6c3ab5beb81aaafc3.patch";
           hash = "sha256-7DAt61kfuLrn+Ca5Te51225euNVo37ElZHVkht9hHA0=";
         })
+        (pkgs.fetchpatch {
+          url = "https://github.com/davatorium/rofi/commit/f6248c6ea9f3243986798f8fb1b48fb582d64517.patch";
+          hash = "sha256-BIqe2kA9C7PA1nfTJJazcX0c8iB74wRhF6CPIKOXN0o=";
+        })
       ];
     });
   }) ];

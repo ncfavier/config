@@ -39,7 +39,6 @@
       settings = {
         experimental-features = [ "nix-command" "flakes" "ca-derivations" "auto-allocate-uids" ];
         warn-dirty = false;
-        keep-outputs = true;
         keep-derivations = true;
         trusted-users = [ "root" "@wheel" ];
         auto-allocate-uids = true;

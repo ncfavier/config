@@ -388,9 +388,9 @@ pr() {
     local origin
     origin=$(git remote get-url origin) || return
     if [[ $origin == *'github.com'* ]]; then
-        gh pr create --web
+        gh pr create --web "$@"
     elif [[ $origin == *'gitlab.com'* ]]; then
-        glab mr create --web --push --fill
+        glab mr create --web --push --fill "$@"
     else
         echo "unknown repository type"
         return 1

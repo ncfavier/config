@@ -51,7 +51,7 @@
       u = "systemctl --user";
       j = "journalctl";
       top = "htop";
-      vim-patch = "vim -c 'au! mangle'";
+      vim-patch = "vim -c 'au! mangle' --cmd 'let b:EditorConfig_disable = 1'";
 
       # Force alias expansion after these commands
       exec = "exec ";
@@ -87,6 +87,9 @@
             if [[ $BASH_STARTUP ]]; then eval "$BASH_STARTUP"; fi
           '')
         ];
+        logoutExtra = ''
+          pkill xsel # prevents SSH connections from hanging
+        '';
       };
 
       readline = {

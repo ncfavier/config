@@ -34,7 +34,7 @@
             });
             defaultApplications = mkMerge (mapAttrsToList (n: ms: genAttrs ms (_: [ "${n}.desktop" ])) {
               thunar = dirs;
-              vim = text;
+              nvim = text;
               firefox = [
                 "application/pdf"
                 "application/x-extension-htm"
