@@ -1,6 +1,4 @@
-{ inputs, lib, config, ... }: with lib; let
-  cert = config.security.acme.certs.${my.domain};
-in {
+{ inputs, lib, config, ... }: with lib; {
   imports = [ inputs.simple-nixos-mailserver.nixosModule ];
 
   system.extraDependencies = collectFlakeInputs inputs.simple-nixos-mailserver;
@@ -22,9 +20,8 @@ in {
     localDnsResolver = false;
     fqdn = my.domain;
     domains = [ my.domain ];
-    certificateScheme = 1;
-    certificateFile = "${cert.directory}/fullchain.pem";
-    keyFile = "${cert.directory}/key.pem";
+    certificateScheme = "acme";
+    certificateACMEConfigureNginx = false;
     dkimKeyDirectory = "/etc/dkim";
     loginAccounts.${my.email} = {
       hashedPassword = "$2b$05$1YO805N1yn2vVM/c4K8nRuNix1ruHc4SJDDbWREgrcAaamxiqCYKS";

@@ -20,7 +20,7 @@
       inputs.flake-utils.follows = "home-manager/utils";
     };
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      url = "gitlab:ncfavier/nixos-mailserver/certificate-schemes";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "home-manager/utils";
     };

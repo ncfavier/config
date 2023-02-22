@@ -6,7 +6,7 @@
       enable = true;
       vimAlias = true;
       viAlias = true;
-      extraConfig = readFile ./rc.vim;
+      extraConfig = readFile ./init.vim;
       plugins = with pkgs.vimPlugins; [
         ctrlp
         nvim-lastplace
