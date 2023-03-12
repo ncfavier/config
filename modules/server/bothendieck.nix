@@ -10,11 +10,10 @@
       enableKVM = this.hasKVM;
       qemu = pkgs.qemu_kvm; # don't rebuild QEMU
       suspensionUseCompression = false; # favour speed
-      editEvaluators = evs: builtins.removeAttrs evs [ "java" "kotlin" "rust" ] // {
-        # FIXME too slow
-        # rust = lib.recursiveUpdate evs.rust {
-        #   storeDrives.rust = with pkgs; [ rustc gcc ]; # don't use the nightly channel
-        # };
+      editEvaluators = evs: builtins.removeAttrs evs [ "java" "kotlin" ] // {
+        rust = lib.recursiveUpdate evs.rust {
+          storeDrives.rust = with pkgs; [ rustc gcc ]; # don't use the nightly channel
+        };
 
         haskell = evs.haskell.override {
           packages = (p: with p; [
