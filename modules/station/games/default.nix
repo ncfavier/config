@@ -15,7 +15,7 @@
       # (writeShellScriptBin "zcatch" ''
       #   exec ${zcatch}/bin/zcatch_srv -f zcatch.cfg "$@"
       # '')
-      ((pkgs.pr 217677 "sha256-m6L2plFYT6fTbbUFsqGozU10Sqb9IRhhCy4Zc9vU0TA=").dwarf-fortress.override { # FIXME
+      (pkgs.dwarf-fortress.override {
         enableTruetype = false;
         settings.init.FONT = "Alloy_curses_12x12.png";
         extraPackages = [

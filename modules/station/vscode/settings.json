@@ -1,6 +1,5 @@
 {
   "editor.fontFamily": "monospace",
-  "files.trimTrailingWhitespace": true,
   "keyboard.dispatch": "keyCode",
   "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
   "latex-workshop.view.pdf.viewer": "browser",
@@ -86,6 +85,8 @@
     "**/_build": true,
     "**/*.hi": true,
     "**/*.o": true,
+    "**/dist": true,
+    "**/dist-newstyle": true,
     "**/result": true,
     "**/result-*": true
   },
@@ -154,7 +155,6 @@
   "latex-workshop.view.pdf.color.light.backgroundColor": "",
   "magicRacket.languageServer.enabled": false,
   "editor.wordWrap": "on",
-  "workbench.colorTheme": "Lilac",
   "terminal.integrated.profiles.linux": {
     "bash": {
       "path": "/run/current-system/sw/bin/bash",
@@ -165,4 +165,6 @@
   "nix.serverPath": "nil",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
+  "workbench.colorTheme": "Lilac",
+  "files.trimTrailingWhitespace": true,
 }

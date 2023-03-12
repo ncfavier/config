@@ -17,6 +17,7 @@
       <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
 
       # Math
+      <Multi_key> <less> <bar> : "◂"
       <Multi_key> <bar> <greater> : "▸"
       <Multi_key> <bar> <Right> : "↦"
       <Multi_key> <q> <e> <d> : "∎"
