@@ -35,7 +35,7 @@
       (writeTextDir "share/thumbnailers/ffmpegthumbnailer.thumbnailer" ''
         [Thumbnailer Entry]
         MimeType=${concatStringsSep ";" config.lib.mimeTypes.media}
-        Exec=${thumbnailerScript "ffmpeg" ''${ffmpegthumbnailer}/bin/ffmpegthumbnailer -i "$i" -o "$o" -s "$s" -m''}
+        Exec=${thumbnailerScript "ffmpeg" ''${ffmpegthumbnailer}/bin/ffmpegthumbnailer -i "$i" -o "$o" -s "$s" -t 30 -m''}
       '')
       (writeTextDir "share/thumbnailers/webp.thumbnailer" ''
         [Thumbnailer Entry]

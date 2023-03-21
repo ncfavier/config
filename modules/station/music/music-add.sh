@@ -75,15 +75,15 @@ done
 (( ${#files[@]} > 0 )) || die "No files given."
 
 artist= album= cover_src=
-if [[ ${srcs[0]} == http?(s)://*bandcamp.com/* ]]; then
-    echo "Fetching album information from bandcamp..."
-    bandcamp_json=$(curl -fsSL "${srcs[0]}" | htmlq -t 'script[type="application/ld+json"]')
-    jq -r '.byArtist.name, .name, (.image | if type == "array" then .[0] else . end)' <<< "$bandcamp_json" |
+if [[ ${srcs[0]} == http?(s)://*(bandcamp.com|soundcloud.com)/* ]]; then
+    echo "Fetching album information..."
+    info_json=$(yt-dlp -J "${srcs[0]}")
+    jq -r '(if has("entries") then .entries[0] else . end) | (.artist//.uploader), (.album//.title), .thumbnail' <<< "$info_json" |
     { read -r artist; read -r album; read -r cover_src; }
 elif [[ ${srcs[0]} == http?(s)://music.youtube.com/* ]]; then
     echo "Fetching album information from YouTube Music..."
-    ytmusic_json=$(yt-dlp -J "${srcs[0]}")
-    jq -r '.entries[0] | .artist, .album, limit(1; .thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))' <<< "$ytmusic_json" |
+    info_json=$(yt-dlp -J "${srcs[0]}")
+    jq -r '.entries[0] | .artist, .album, limit(1; .thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))' <<< "$info_json" |
     { read -r artist; read -r album; read -r cover_src; }
 fi
 
@@ -133,11 +133,8 @@ for file in "${files[@]}"; do
     title=
     track=
     echo "File: $basename ($(( ++i ))/${#files[@]})"
-    if [[ $bandcamp_json ]]; then
-        jq -r --argjson i "$i" '(if has("track") then .track.itemListElement[] | select(.position == $i).item else . end).name' <<< "$bandcamp_json" |
-        read -r title
-    elif [[ $ytmusic_json ]]; then
-        jq -r --argjson i "$i" '.entries[]? | select(.playlist_index == $i).title' <<< "$ytmusic_json" |
+    if [[ $info_json ]]; then
+        jq -r --argjson i "$i" '(if has("entries") then .entries[] | select(.playlist_index == $i) else . end).title' <<< "$info_json" |
         read -r title
     else
         title=${basename#*' - '}

@@ -68,8 +68,6 @@
 
   services.xserver.dpi = 120;
 
-  hm.services.picom.enable = false; # TearFree is enough
-
   keys.composeKey = "prsc";
   keys.printScreenKey = "XF86Favorites";
 

@@ -27,9 +27,6 @@
         };
       };
       dpi = mkDefault 96;
-      deviceSection = ''
-        Option "TearFree" "true"
-      '';
     };
 
     lib.shellEnv = {
