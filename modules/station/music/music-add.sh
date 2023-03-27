@@ -75,15 +75,10 @@ done
 (( ${#files[@]} > 0 )) || die "No files given."
 
 artist= album= cover_src=
-if [[ ${srcs[0]} == http?(s)://*(bandcamp.com|soundcloud.com)/* ]]; then
+if [[ ${srcs[0]} == http?(s)://@(?(*.)bandcamp.com|soundcloud.com|music.youtube.com)/* ]]; then
     echo "Fetching album information..."
     info_json=$(yt-dlp -J "${srcs[0]}")
-    jq -r '(if has("entries") then .entries[0] else . end) | (.artist//.uploader), (.album//.title), .thumbnail' <<< "$info_json" |
-    { read -r artist; read -r album; read -r cover_src; }
-elif [[ ${srcs[0]} == http?(s)://music.youtube.com/* ]]; then
-    echo "Fetching album information from YouTube Music..."
-    info_json=$(yt-dlp -J "${srcs[0]}")
-    jq -r '.entries[0] | .artist, .album, limit(1; .thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))' <<< "$info_json" |
+    jq -r '.entries[0]//. | .artist//.uploader, .album//.title, limit(1; .thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))//.thumbnail' <<< "$info_json" |
     { read -r artist; read -r album; read -r cover_src; }
 fi
 
@@ -134,7 +129,7 @@ for file in "${files[@]}"; do
     track=
     echo "File: $basename ($(( ++i ))/${#files[@]})"
     if [[ $info_json ]]; then
-        jq -r --argjson i "$i" '(if has("entries") then .entries[] | select(.playlist_index == $i) else . end).title' <<< "$info_json" |
+        jq -r --argjson i "$i" '(if has("entries") then .entries[] | select(.playlist_index == $i) else . end) | .track//.title' <<< "$info_json" |
         read -r title
     else
         title=${basename#*' - '}
