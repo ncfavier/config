@@ -125,7 +125,7 @@ in {
 
     systemd.services.bothendieck = {
       description = "bothendieck";
-      after = [ "network.target" "network-online.target" ];
+      after = [ "network.target" "network-online.target" "nss-lookup.target" ];
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {

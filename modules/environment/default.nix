@@ -37,7 +37,6 @@
     jq
     htmlq
     python3
-    tmsu
     (writeShellScriptBin "mutate" ''
       # replace a read-only symlink with a mutable copy
       f=''${1%/}
@@ -123,6 +122,4 @@
       '') ];
     });
   }) ];
-
-  cachix.derivationsToPush = [ pkgs.tmsu ];
 }

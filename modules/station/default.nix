@@ -68,6 +68,7 @@
           slop imagemagick ffmpeg-full ffmpegthumbnailer
         ];
       })
+      tmsu
     ];
 
     hm.programs.texlive = {
@@ -87,5 +88,7 @@
     '';
 
     my.extraGroups = [ "audio" "video" "wireshark" ];
+
+    cachix.derivationsToPush = [ pkgs.tmsu ];
   };
 }

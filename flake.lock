@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1676767151,
-        "narHash": "sha256-vI1avI5gKMKdtyCuGFedUX50PHKZ9+57IqaynfhO2Xg=",
+        "lastModified": 1680037646,
+        "narHash": "sha256-TAK3zITLEmxsSyIlHglssieOusi6wCGcbWnQEIv5UxI=",
         "owner": "ncfavier",
         "repo": "bothendieck",
-        "rev": "e968df70c9088d01e5558e049a89dd1d00413764",
+        "rev": "ef730e44c746abf72021202a6584f94717c6def4",
         "type": "github"
       },
       "original": {
