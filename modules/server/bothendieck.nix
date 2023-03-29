@@ -4,7 +4,7 @@
   settingsFormat = pkgs.formats.toml {};
   configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;
 
-  bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieck.override (old: {
+  bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieckWithEvaluators.override (old: {
     qeval = old.qeval.override {
       baseKernelPackages = pkgs.linuxPackages_latest;
       enableKVM = this.hasKVM;
@@ -22,12 +22,6 @@
             kan-extensions
             random
             NumInstances
-            # bloats the closure too much (?)
-            # (pkgs.haskell.lib.overrideCabal free-theorems {
-            #   version = "0.3.2.1";
-            #   sha256 = "sha256-CAr7TPC6E9EZpH0cjTP2if6mAE0/VclBSXkxlkBzcWo=";
-            #   broken = false;
-            # })
           ]);
           init = ''
             :set -XBangPatterns
@@ -84,19 +78,6 @@
             import System.Exit
             import System.IO
             import System.Random
-            -- import Language.Haskell.FreeTheorems
-            -- import Language.Haskell.FreeTheorems.Parser.Haskell98
-            -- :{
-            -- free input = let (p, pe) = runChecks (parse input)
-            --                  (d, ce) = runChecks (check p)
-            --                  s = case filterSignatures d of
-            --                    [] -> error (show (mconcat (pe <> ce)))
-            --                    s:_ -> s
-            --                  Just i = interpret d BasicSubset s
-            --                  t = simplify $ asTheorem $ foldl' specialise i (relationVariables i)
-            --              in prettyTheorem [OmitLanguageSubsets, OmitTypeInstantiations] t
-            -- :}
-            -- :def free \ input -> "" <$ print (free input)
           '';
         };
       };
