@@ -4,11 +4,20 @@ mpc() {
     command mpc -q "$@"
 }
 
+mpc_load() {
+    mpc clear
+    if [[ $artist || $album ]]; then
+        mpc findadd ${artist:+artist "$artist"} ${album:+album "$album"}
+    else
+        mpc add /
+    fi
+}
+
 opt() {
     printf '\0%s\x1f%s\n' "$1" "$2"
 }
 
-row() { # artist, album, index shouldn't be environment variables
+row() {
     printf '%s\0info\x1f%s\n' "$1" "${artist@A} ${album@A} ${index@A}"
 }
 
@@ -21,9 +30,10 @@ escape() {
 
 [[ $ROFI_INFO ]] && eval "$ROFI_INFO"
 
-if (( ROFI_RETV == 0 )); then
+if (( ROFI_RETV == 0 )); then # initial invocation
     opt prompt artist
     opt markup-rows true
+    opt use-hot-keys true
     opt no-custom true
     mpc list artist | readarray -t artists
     if (( ${#artists[@]} > 1 )); then
@@ -33,6 +43,12 @@ if (( ROFI_RETV == 0 )); then
         escape artist
         row "<b>$artist_esc</b>"
     done
+elif (( ROFI_RETV >= 10 )); then # custom keybinding: shuffle
+    if [[ ! -v index ]]; then
+        mpc_load
+    fi
+    mpc shuffle
+    mpc play
 elif [[ ! -v album ]]; then
     opt prompt album
     if [[ $artist ]]; then
@@ -40,7 +56,9 @@ elif [[ ! -v album ]]; then
         opt message "<b>$artist_esc</b>"
     fi
     mpc list album ${artist:+artist "$artist"} | readarray -t albums
-    album=; row '*'
+    if (( ${#albums[@]} > 1 )); then
+        album=; row '*'
+    fi
     for album in "${albums[@]}"; do
         escape album
         row "<i>$album_esc</i>"
@@ -56,12 +74,6 @@ elif [[ ! -v index ]]; then
     elif [[ $album ]]; then
         opt message "<i>$album_esc</i>"
     fi
-    mpc clear
-    if [[ $artist || $album ]]; then
-        mpc findadd ${artist:+artist "$artist"} ${album:+album "$album"}
-    else
-        mpc add /
-    fi
     format='%title%|%file%'
     if [[ $album ]]; then
         format='[%track% - ]'$format
@@ -70,20 +82,13 @@ elif [[ ! -v index ]]; then
     else
         format='[%artist% - ]'$format
     fi
+    mpc_load
     mpc playlist -f "$format" | readarray -t tracks
-    if (( ${#tracks[@]} > 1 )); then
-        index=; row random
-    fi
     index=1
     for track in "${tracks[@]}"; do
         row "$track"
         (( index++ ))
     done
 else
-    if [[ ! $index ]]; then
-        mpc shuffle
-        mpc play
-    else
-        mpc play "$index"
-    fi
+    mpc play "$index"
 fi

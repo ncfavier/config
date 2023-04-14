@@ -48,6 +48,7 @@
         cat = "cat-file -p";
         yeet = "restore";
         w = "worktree";
+        rebuild = "clean -Xd";
       };
 
       ignores = [ ".direnv" ".envrc" ];

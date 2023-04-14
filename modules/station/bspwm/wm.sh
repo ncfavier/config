@@ -90,7 +90,7 @@ go() {
         files)
             class='thunar|dolphin' focus-window || exec thunar &;;
         music)
-            exec rofi -show music;;
+            exec rofi -kb-custom-1 'Control+r' -show music;;
         video)
             class='mpv|feh' focus-window;;
         volume)

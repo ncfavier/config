@@ -19,6 +19,7 @@
       # Math
       <Multi_key> <less> <bar> : "◂"
       <Multi_key> <bar> <greater> : "▸"
+      <Multi_key> <b> <o> <x> : "□"
       <Multi_key> <bar> <Right> : "↦"
       <Multi_key> <q> <e> <d> : "∎"
       <Multi_key> <o> <o> : "∘"
@@ -41,6 +42,8 @@
       <Multi_key> <greater> <parenright> : "⟩"
       <Multi_key> <parenleft> <less> : "⟨"
       <Multi_key> <parenright> <greater> : "⟩"
+      <Multi_key> <braceleft> <bar> : "⦃"
+      <Multi_key> <bar> <braceright> : "⦄"
       <Multi_key> <less> <less> : "≪"
       <Multi_key> <greater> <greater> : "≫"
       <Multi_key> <bar> <bar> : "∥"

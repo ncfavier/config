@@ -80,7 +80,6 @@
   "haskell.plugin.hlint.diagnosticsOn": false,
   "editor.tabSize": 2,
   "nix.enableLanguageServer": true,
-  "search.useIgnoreFiles": false,
   "search.exclude": {
     "**/_build": true,
     "**/*.hi": true,
@@ -167,4 +166,19 @@
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   "workbench.colorTheme": "Lilac",
   "files.trimTrailingWhitespace": true,
+  "editor.occurrencesHighlight": false,
+  "vim.handleKeys": {
+    "<C-b>": false,
+    "<C-c>": false,
+    "<C-d>": true,
+    "<C-f>": false,
+    "<C-k>": false,
+    "<C-q>": false,
+    "<C-s>": false,
+    "<C-w>": false,
+    "<C-z>": false,
+  },
+  "explorer.excludeGitIgnore": true,
+  "search.useGlobalIgnoreFiles": true,
+  "search.useParentIgnoreFiles": true,
 }

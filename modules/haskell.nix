@@ -14,6 +14,7 @@
       profunctors
       QuickCheck
       random
+      recursion-schemes
       split
       unordered-containers
       vector

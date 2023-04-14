@@ -40,6 +40,12 @@ pad_right() {
     var="$var   "
 }
 
+left_pad() {
+    local width=$1
+    local -n var=$2
+    printf -v var '%*s' "$width" "$var"
+}
+
 icon_ramp() {
     local value=$1 index
     shift
@@ -283,7 +289,9 @@ while read -rn 1 event; do
         B) # backlight
             read -r percentage
             percentage=${percentage%.*}
-            brightness="$(icon_ramp "$percentage"  10  50 ) $percentage%%"
+            icon=$(icon_ramp "$percentage"  10  50 )
+            left_pad 2 percentage # prevent the scrolling area from shrinking as you scroll under 10%
+            brightness="$icon $percentage%%"
             pad_right brightness
             brightness="%{A:light -S 100:}%{A3:light -S 0.8:}%{A4:backlight +:}%{A5:backlight -:}$brightness%{A}%{A}%{A}%{A}"
             ;;
@@ -404,7 +412,9 @@ while read -rn 1 event; do
             if [[ $mute == yes ]]; then
                 sound=
             else
-                sound="$(icon_ramp "$percentage"  10  50 ) $percentage%%"
+                icon=$(icon_ramp "$percentage"  10  50 )
+                left_pad 2 percentage # prevent the scrolling area from shrinking as you scroll under 10%
+                sound="$icon $percentage%%"
             fi
             pad_right sound
             sound="%{A:wm go volume:}%{A3:volume toggle:}%{A4:volume +2:}%{A5:volume -2:}$sound%{A}%{A}%{A}%{A}"
