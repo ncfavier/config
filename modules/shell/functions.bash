@@ -436,7 +436,7 @@ command_not_found_handle() {
             readarray -t pkgs < <(nix-locate-program "$1")
             (( n = ${#pkgs[@]} ))
         }; then
-            echo "It is provided by the following attributes:"
+            echo "It is provided by the following packages:"
             for (( i = 0; i < n; i++ )); do
                 pkgs[i]=${pkgs[i]%.out}
                 printf '%*d %s\n' "${#n}" "$((i+1))" "${pkgs[i]}"

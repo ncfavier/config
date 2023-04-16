@@ -77,7 +77,7 @@
   "haskell.plugin.tactics.globalOn": false,
   "haskell.updateBehavior": "never-check",
   "haskell.plugin.ghcide-type-lenses.globalOn": false,
-  "haskell.plugin.hlint.diagnosticsOn": false,
+  "haskell.plugin.hlint.globalOn": false,
   "editor.tabSize": 2,
   "nix.enableLanguageServer": true,
   "search.exclude": {
@@ -181,4 +181,5 @@
   "search.useGlobalIgnoreFiles": true,
   "search.useParentIgnoreFiles": true,
   "workbench.colorTheme": "Lilac",
+  "window.openFilesInNewWindow": "default",
 }
