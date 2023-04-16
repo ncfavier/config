@@ -1,17 +1,21 @@
-{ lib, this, pkgs, ... }: with lib; {
+{ lib, this, config, pkgs, ... }: with lib; {
   config = mkMerge [
     {
       fonts.fontconfig.enable = mkDefault false;
-
-      console.font = pkgs.runCommandLocal "dina.psf" {} ''
-        cd ${pkgs.bdf2psf}/share/bdf2psf
-        sed 's/POINT_SIZE 100/AVERAGE_WIDTH 80/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-10.bdf |
-        ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 256 "$out"
-      '';
     }
 
     (mkIf this.isStation {
       nixpkgs.config.allowUnfree = true;
+
+      console.font = pkgs.runCommandLocal "dina.psf" {} ''
+        cd ${pkgs.bdf2psf}/share/bdf2psf
+        ${if config.services.xserver.dpi != null && config.services.xserver.dpi >= 100 then
+          "sed 's/POINT_SIZE 100/AVERAGE_WIDTH 80/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-10.bdf"
+        else
+          "sed 's/POINT_SIZE 80/AVERAGE_WIDTH 70/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-8.bdf"
+        } |
+        ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 256 "$out"
+      '';
 
       fonts = {
         fonts = with pkgs; [

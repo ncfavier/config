@@ -1,7 +1,7 @@
 { hardware, pkgs, ... }: {
   imports = with hardware; [
     notDetected
-    common-cpu-intel-sandy-bridge
+    common-cpu-intel-cpu-only
   ];
 
   boot = {
@@ -15,6 +15,7 @@
     };
 
     kernelModules = [ "kvm-intel" ];
+    initrd.kernelModules = [ "nouveau" ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   };
 
