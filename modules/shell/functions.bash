@@ -209,6 +209,28 @@ weechat_fifo() {
     ssh "$server_hostname" '. config env; cat > "$weechat_fifo"'
 }
 
+todo() {
+    local f=$1 fs
+    . config env
+    if [[ ! $f ]]; then
+        if remote=$(git config --get remote.origin.url); then
+            f=$(basename -s .git "$remote")
+        else
+            f=main
+        fi
+    fi
+    shopt -s nullglob
+    fs=("${synced[my]}/todo/$f"* "${synced[my]}/todo/$f")
+    ${EDITOR:-vim} "${fs[0]}"
+}
+_todo() {
+    . config env
+    compreply -f -- "${synced[my]}/todo/$2"
+    COMPREPLY=("${COMPREPLY[@]#"${synced[my]}/todo/"}")
+    COMPREPLY=("${COMPREPLY[@]%.md}")
+}
+complete -F _todo todo
+
 irg() ( # search IRC logs
     shopt -s extglob
     . config env

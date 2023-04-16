@@ -1,10 +1,7 @@
-{ lib, this, pkgs, ... }: with lib; let
-  unicode15Locales = (pkgs.mine "glibcLocales-unicode-15" "sha256-tomjrc051DQbjt2aNrmXltvwF407Z6aWV7mTVOAsstg=").glibcLocales; # FIXME
-in {
+{ lib, ... }: with lib; {
   hm.disabledModules = [ "config/i18n.nix" ];
 
   i18n.defaultLocale = "en_GB.UTF-8";
-  i18n.glibcLocales = mkIf (!this.isISO) unicode15Locales;
 
   services.xserver = {
     layout = "fr,us,ru,gr";

@@ -1,15 +1,6 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, ... }: with lib; {
   hm.services.dunst = {
     enable = true;
-    package = pkgs.dunst.overrideAttrs (o: {
-      version = "unstable";
-      src = pkgs.fetchFromGitHub {
-        owner = "dunst-project";
-        repo = "dunst";
-        rev = "6c9f83bcdd8e9eb5d81c3f6c43e2dfa5afd72fe7";
-        sha256 = "sha256-hGsSPNODNPgGoZZAvAXo8OzFsOvn9bFwa0p1VMWfpTE=";
-      };
-    });
 
     settings = with config.theme; rec {
       global = {

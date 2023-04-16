@@ -1,5 +1,5 @@
 { inputs, lib, config, ... }: with lib; {
-  imports = [ inputs.simple-nixos-mailserver.nixosModule ];
+  imports = [ inputs.simple-nixos-mailserver.nixosModules.default ];
 
   system.extraDependencies = collectFlakeInputs inputs.simple-nixos-mailserver;
 

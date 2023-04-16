@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   nixpkgs.overlays = [ (self: super: {
-    mpd = super.mpd.overrideAttrs (o: { # FIXME
+    mpd = super.mpd.overrideAttrs (o: {
       patches = o.patches or [] ++ [ (pkgs.fetchpatch {
         url = "https://github.com/MusicPlayerDaemon/MPD/commit/9bcba41cd66a33df9e0267f352640ed3925c292e.patch";
         hash = "sha256-riw+BAkoOk2NyLcRZUNXiEdYAnU73KGlFDwKffo68ns=";

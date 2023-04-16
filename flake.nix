@@ -17,12 +17,10 @@
     dns = {
       url = "github:kirelagin/dns.nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "home-manager/utils";
     };
     simple-nixos-mailserver = {
       url = "gitlab:ncfavier/nixos-mailserver/certificate-schemes";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "home-manager/utils";
     };
     www = {
       url = "github:ncfavier/monade.li";
@@ -31,12 +29,10 @@
     bothendieck = {
       url = "github:ncfavier/bothendieck";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "home-manager/utils";
       inputs.qeval.follows = "qeval";
     };
     qeval = {
       url = "github:ncfavier/qeval";
-      inputs.flake-utils.follows = "home-manager/utils";
       inputs.nur.follows = "nur";
     };
   };

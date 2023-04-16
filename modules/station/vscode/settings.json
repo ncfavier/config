@@ -164,7 +164,6 @@
   "nix.serverPath": "nil",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
-  "workbench.colorTheme": "Lilac",
   "files.trimTrailingWhitespace": true,
   "editor.occurrencesHighlight": false,
   "vim.handleKeys": {
@@ -181,4 +180,5 @@
   "explorer.excludeGitIgnore": true,
   "search.useGlobalIgnoreFiles": true,
   "search.useParentIgnoreFiles": true,
+  "workbench.colorTheme": "Lilac",
 }

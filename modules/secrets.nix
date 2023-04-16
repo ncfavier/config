@@ -1,6 +1,6 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; {
   imports = [
-    inputs.sops-nix.nixosModule
+    inputs.sops-nix.nixosModules.default
     (mkAliasOptionModule [ "secrets" ] [ "sops" "secrets" ])
   ];
 

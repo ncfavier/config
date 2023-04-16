@@ -26,6 +26,8 @@ in {
         ];
       };
 
+      firewall.allowedUDPPorts = [ 67 ]; # DHCP
+
       nat = {
         enable = true;
         externalInterface = cfg.externalInterface;
@@ -33,7 +35,18 @@ in {
       };
     };
 
-    systemd.network.networks."40-${cfg.internalInterface}".networkConfig.ConfigureWithoutCarrier = true;
+    systemd.network.networks."40-${cfg.internalInterface}" = {
+      networkConfig = {
+        ConfigureWithoutCarrier = true;
+        DHCPServer = true;
+      };
+      dhcpServerConfig = {
+        ServerAddress = "192.168.42.1/24";
+        EmitDNS = false;
+        EmitNTP = false;
+        EmitTimezone = false;
+      };
+    };
 
     # Exempt forwarded packets from the WireGuard tunnel
     networking.wg-quick.interfaces.${config.networking.wireguard.interface} = let
@@ -52,16 +65,5 @@ in {
         };
       });
     }) ];
-
-    services.dhcpd4 = {
-      enable = true;
-      interfaces = [ cfg.internalInterface ];
-      extraConfig = ''
-        option routers 192.168.42.1;
-        subnet 192.168.42.0 netmask 255.255.255.0 {
-          range 192.168.42.20 192.168.42.100;
-        }
-      '';
-    };
   };
 }
