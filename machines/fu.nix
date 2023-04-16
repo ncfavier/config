@@ -1,4 +1,4 @@
-{ inputs, hardware, config, pkgs, ... }: {
+{ hardware, pkgs, ... }: {
   imports = with hardware; [
     notDetected
     common-cpu-intel-sandy-bridge
@@ -47,11 +47,9 @@
     efibootmgr
   ];
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
-    modesetting.enable = true;
+  hm.services.picom = {
+    backend = "xrender";
+    settings.unredir-if-possible = true;
   };
 
   my.hashedPassword = "$y$j9T$4ixQiecsV/ucuBhr6jEte1$4mQUZgQsZXNlA2rY5RfntCTPEZ7ZuZc64L1k9VO5tQ8";
