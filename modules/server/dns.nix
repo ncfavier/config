@@ -1,11 +1,7 @@
-{ inputs, lib, this, config, pkgs, ... }: with lib; let
+{ inputs, lib, this, config, ... }: with lib; let
   dns = inputs.dns.lib;
 in {
   system.extraDependencies = collectFlakeInputs inputs.dns;
-
-  nixpkgs.overlays = [ (self: super: {
-    bind = (pkgs.rev "bea64c8d594d0074d17a4513a2d2d856b1b0fee0" "sha256-X7cClFjpVm5emaEg9eABeXvG6yx7HCoTIqOE04ICjxA=").bind;
-  }) ];
 
   services.nsd = {
     enable = true;
@@ -14,7 +10,6 @@ in {
     ratelimit.enable = true;
 
     zones.${my.domain} = {
-      dnssec = true; # TODO
       data = with dns.combinators; let
         here = {
           A = map a this.ipv4;
@@ -48,6 +43,21 @@ in {
 
         CAA = letsEncrypt "dns+caa@${my.domain}";
 
+        SRV = [
+          {
+            proto = "tcp";
+            service = "imaps";
+            target = "@";
+            port = 993;
+          }
+          {
+            proto = "tcp";
+            service = "submission";
+            target = "@";
+            port = 465;
+          }
+        ];
+
         subdomains = rec {
           "*" = here;
 
@@ -62,6 +72,7 @@ in {
     enable = true;
     settings = {
       server = {
+        tls-system-cert = true;
         interface = [
           "127.0.0.1" "::1"
           this.wireguard.ipv4 this.wireguard.ipv6
@@ -91,14 +102,15 @@ in {
       forward-zone = [ {
         name = ".";
         forward-addr = config.services.resolved.fallbackDns;
+        forward-tls-upstream = true;
       } ];
     };
   };
 
-  networking.nameservers = [ "127.0.0.1" "::1" ]; # use unbound for local queries; TODO fix useLocalResolver + resolved
+  networking.nameservers = [ "127.0.0.1" "::1" ];
 
-  networking.firewall = rec {
+  networking.firewall = {
     allowedTCPPorts = [ 53 ];
-    allowedUDPPorts = allowedTCPPorts;
+    allowedUDPPorts = [ 53 ];
   };
 }
