@@ -42,6 +42,8 @@
       <Multi_key> <greater> <parenright> : "⟩"
       <Multi_key> <parenleft> <less> : "⟨"
       <Multi_key> <parenright> <greater> : "⟩"
+      <Multi_key> <bracketleft> <bar> : "⟦"
+      <Multi_key> <bar> <bracketright> : "⟧"
       <Multi_key> <braceleft> <bar> : "⦃"
       <Multi_key> <bar> <braceright> : "⦄"
       <Multi_key> <less> <less> : "≪"

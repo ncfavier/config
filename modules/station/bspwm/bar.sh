@@ -214,13 +214,12 @@ cleanup_on_exit
     while
         sleep 0.1
         parts=()
-        networkctl list --no-legend |
-        while read -r _ interface type status _; do
-            [[ $status == routable ]] || continue
-            case $type in
-            ether)
+        ip -j route show default table all | jq -r 'map(.dev) | unique[]' |
+        while read -r interface; do
+            case $interface in
+            en*|eth*)
                 parts+=("D$interface");;
-            wlan)
+            wl*)
                 ssid=
                 iw dev "$interface" info | while read -r field value; do
                     if [[ $field == ssid ]]; then
@@ -229,7 +228,7 @@ cleanup_on_exit
                     fi
                 done
                 parts+=("L$interface,$ssid");;
-            wireguard)
+            wg*)
                 parts+=("G$interface");;
             esac
         done
@@ -338,20 +337,20 @@ while read -rn 1 event; do
             ;;
         N) # network
             IFS= read -r parts
-            network=
+            network= wired= wireless= wireguard=
             if [[ $parts ]]; then
                 while read -rn 1 type; do case $type in
-                    D) # wired
+                    D)
                         read -d : interface
-                        network+=""
+                        wired+=""
                         ;;
-                    L) # wireless
+                    L)
                         IFS=, read -d : interface ssid
                         trunc ssid 15
                         escape ssid
-                        network+="%{A:wm go wifi:}%{A}"
+                        wireless+="%{A:wm go wifi:}%{A}"
                         ;;
-                    G) # wireguard
+                    G)
                         read -d : interface
                         wg=""
                         outDev4=$(ip -j route get 1.1.1.1 | jq -r '.[0].dev')
@@ -360,9 +359,10 @@ while read -rn 1 event; do
                             wg="%{F${theme[hot]}}$wg%{F-}"
                         fi
                         wg="%{A3:wg-toggle:}$wg%{A}"
-                        network+=$wg
+                        wireguard+=$wg
                         ;;
                 esac done <<< "$parts:"
+                network=$wired$wireless$wireguard
                 pad_right network
             fi
             ;;
