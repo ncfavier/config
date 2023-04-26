@@ -85,6 +85,7 @@
       <Multi_key> <s> <q> : "√"
       <Multi_key> <3> <s> <q> : "∛"
       <Multi_key> <4> <s> <q> : "∜"
+      <Multi_key> <i> <n> <t> : "∫"
       <Multi_key> <1> <slash> <4> : "¼"
       <Multi_key> <1> <slash> <2> : "½"
       <Multi_key> <3> <slash> <4> : "¾"

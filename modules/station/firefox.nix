@@ -273,7 +273,7 @@ in {
             }
           }
 
-          @-moz-document url-prefix(https://github.com/), url-prefix(https://gist.github.com/) {
+          @-moz-document domain(github.com) {
             .blob-num, .blob-code-inner, .highlight pre {
               font-family: monospace !important;
               font-size: 13px !important;
@@ -281,13 +281,7 @@ in {
             }
           }
 
-          /*@-moz-document url-prefix(https://github.com/${my.githubUsername}) {
-            .user-status-container {
-              display: none;
-            }
-          }*/
-
-          @-moz-document url-prefix(https://adventofcode.com/) {
+          @-moz-document domain(adventofcode.com) {
             body {
               font-size: 12pt !important;
             }
@@ -297,12 +291,31 @@ in {
             }
           }
 
-          @-moz-document url-prefix(https://1lab.dev) {
+          @-moz-document domain(1lab.dev) {
             @media (prefers-color-scheme: dark) {
               :root {
                 --text-bg: #000000 !important;
                 --text-fg: #ffffff !important;
               }
+            }
+          }
+
+          @-moz-document domain(ncatlab.org) {
+            body {
+              font-family: serif !important;
+            }
+
+
+            h1, h2, h3, h4, h5, h6 {
+              font-family: Alice, serif !important;
+            }
+
+            math, mtext {
+              font-family: serif !important;
+            }
+
+            :target {
+              background-color: #ddd !important;
             }
           }
         '';
