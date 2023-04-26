@@ -82,10 +82,13 @@
   "nix.enableLanguageServer": true,
   "search.exclude": {
     "**/_build": true,
+    "**/.direnv": true,
+    "**/.stack-work": true,
+    "**/*.agdai": true,
     "**/*.hi": true,
     "**/*.o": true,
     "**/dist": true,
-    "**/dist-newstyle": true,
+    "**/dist-*": true,
     "**/result": true,
     "**/result-*": true
   },
@@ -138,9 +141,6 @@
   },
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "vim.useSystemClipboard": true,
-  "files.exclude": {
-    "**/*.agdai": true
-  },
   "editor.semanticHighlighting.enabled": true,
   "editor.fontSize": 13,
   "editor.bracketPairColorization.enabled": false,
@@ -179,7 +179,7 @@
   },
   "explorer.excludeGitIgnore": true,
   "search.useGlobalIgnoreFiles": true,
-  "search.useParentIgnoreFiles": true,
   "workbench.colorTheme": "Lilac",
   "window.openFilesInNewWindow": "default",
+  "search.useIgnoreFiles": false,
 }
