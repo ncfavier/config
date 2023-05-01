@@ -46,6 +46,14 @@ left_pad() {
     printf -v var '%*s' "$width" "$var"
 }
 
+dim_if_not() {
+    local cond=$1
+    local -n var=$2
+    if (( ! cond )); then
+        var="%{F${theme[foregroundAlt]}}$var%{F-}"
+    fi
+}
+
 icon_ramp() {
     local value=$1 index
     shift
@@ -214,12 +222,19 @@ cleanup_on_exit
     while
         sleep 0.1
         parts=()
-        ip -j route show default table all | jq -r 'map(.dev) | unique[]' |
+        declare -A have_routes=()
+        ip -j route show default table all | jq -r '.[].dev' |
         while read -r interface; do
-            case $interface in
-            en*|eth*)
-                parts+=("D$interface");;
-            wl*)
+            have_routes[$interface]=1
+        done
+        networkctl list --no-legend |
+        while read -r _ interface type status _; do
+            [[ $status == routable ]] || continue
+            has_route=$(( have_routes[$interface] ))
+            case $type in
+            ether)
+                parts+=("D$has_route$interface");;
+            wlan)
                 ssid=
                 iw dev "$interface" info | while read -r field value; do
                     if [[ $field == ssid ]]; then
@@ -227,9 +242,9 @@ cleanup_on_exit
                         break
                     fi
                 done
-                parts+=("L$interface,$ssid");;
-            wg*)
-                parts+=("G$interface");;
+                parts+=("L$has_route$interface,$ssid");;
+            wireguard)
+                parts+=("G$has_route$interface");;
             esac
         done
         (IFS=:; printf 'N%s\n' "${parts[*]}")
@@ -339,25 +354,23 @@ while read -rn 1 event; do
             IFS= read -r parts
             network= wired= wireless= wireguard=
             if [[ $parts ]]; then
-                while read -rn 1 type; do case $type in
+                while read -rn 1 type; read -rn 1 has_route; do case $type in
                     D)
                         read -d : interface
                         wired+=""
+                        dim_if_not "$has_route" wired
                         ;;
                     L)
                         IFS=, read -d : interface ssid
                         trunc ssid 15
                         escape ssid
                         wireless+="%{A:wm go wifi:}%{A}"
+                        dim_if_not "$has_route" wireless
                         ;;
                     G)
                         read -d : interface
                         wg=""
-                        outDev4=$(ip -j route get 1.1.1.1 | jq -r '.[0].dev')
-                        outDev6=$(ip -j route get 2606:4700:4700::1111 | jq -r '.[0].dev')
-                        if [[ $outDev4 != "$interface" || $outDev6 != "$interface" ]]; then
-                            wg="%{F${theme[hot]}}$wg%{F-}"
-                        fi
+                        dim_if_not "$has_route" wg
                         wg="%{A3:wg-toggle:}$wg%{A}"
                         wireguard+=$wg
                         ;;

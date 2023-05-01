@@ -5,6 +5,7 @@
       package = pkgs.mpv.override {
         scripts = with pkgs.mpvScripts; [
           autoload
+          youtube-quality
         ];
       };
 

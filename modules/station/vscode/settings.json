@@ -179,7 +179,8 @@
   },
   "explorer.excludeGitIgnore": true,
   "search.useGlobalIgnoreFiles": true,
-  "workbench.colorTheme": "Lilac",
   "window.openFilesInNewWindow": "default",
   "search.useIgnoreFiles": false,
+  "markdown.extension.toc.updateOnSave": false,
+  "workbench.colorTheme": "Lilac",
 }

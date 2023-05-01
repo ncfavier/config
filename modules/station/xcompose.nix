@@ -116,6 +116,7 @@
       <Multi_key> <underscore> <t> : "ₜ"
       <Multi_key> <underscore> <u> : "ᵤ"
       <Multi_key> <underscore> <x> : "ₓ"
+      <dead_circumflex> <f> : "ᶠ"
       <dead_circumflex> <n> : "ⁿ"
       <dead_circumflex> <apostrophe> : "′"
       <Multi_key> <C> <A> : "𝒜"
