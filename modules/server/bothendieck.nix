@@ -10,7 +10,11 @@
       enableKVM = this.hasKVM;
       qemu = pkgs.qemu_kvm; # don't rebuild QEMU
       suspensionUseCompression = false; # favour speed
-      editEvaluators = evs: builtins.removeAttrs evs [ "java" "kotlin" ] // {
+      editEvaluators = evs: builtins.removeAttrs evs [
+        "java" "kotlin" # too slow
+        "python2" # EOL, don't feel like compiling it
+        "go" # TODO why are you broken?
+      ] // {
         rust = lib.recursiveUpdate evs.rust {
           storeDrives.rust = with pkgs; [ rustc gcc ]; # don't use the nightly channel
         };
@@ -147,8 +151,20 @@ in {
         realName = "bothendieck";
         channels = [ "##nf" ];
         commandPrefix = ".";
+        twitterAlternative = "http://${config.services.nitter.server.hostname}:${toString config.services.nitter.server.port}";
       };
       secretsFile = config.secrets.bothendieck.path;
+    };
+
+    services.nitter = {
+      enable = true;
+      openFirewall = false;
+      server.hostname = my.domain;
+      server.address = head this.ipv4; # can't use a local address because bothendieck blocks those
+      server.port = 8099;
+      server.httpMaxConnections = 2;
+      config.tokenCount = 1;
+      cache.redisConnections = 1;
     };
   };
 }

@@ -67,7 +67,6 @@ in mkEnableModule [ "services" "my-lambdabot" ] {
           "FlexibleContexts",
           "FlexibleInstances",
           "GADTs",
-          "GeneralisedNewtypeDeriving",
           "HexFloatLiterals",
           "ImplicitPrelude",
           "ImportQualifiedPost",
