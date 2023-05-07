@@ -85,6 +85,10 @@ in {
         globalRedirect = "f.${my.domain}";
       };
 
+      "nix.${my.domain}" = ssl // {
+        locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
+      };
+
       "git.${my.domain}" = ssl // {
         globalRedirect = "github.com/${my.githubUsername}";
       };

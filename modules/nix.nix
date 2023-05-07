@@ -29,6 +29,8 @@ in {
         max-jobs = "auto";
         log-lines = 30;
         connect-timeout = 5;
+        substituters = optional (!this.isServer) "https://nix.${my.domain}";
+        trusted-public-keys = optional (!this.isServer) "nix.${my.domain}:2Zgy59ai/edDBizXByHMqiGgaHlE04G6Nzuhx1RPFgo=";
       };
 
       extraOptions = ''
