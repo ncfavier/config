@@ -180,7 +180,7 @@ in {
               exec nix eval "''${flakeArgs[@]}" -f ~/.nix-defexpr --json "$@" | jq -r .;;
             bld)
               # https://github.com/NixOS/nix/issues/6661
-              exec nix-build "''${flakeArgs[@]}" ~/.nix-defexpr -A "$@";;
+              exec nix-build --log-format bar-with-logs "''${flakeArgs[@]}" ~/.nix-defexpr -A "$@";;
 
             specialise)
               name=$1

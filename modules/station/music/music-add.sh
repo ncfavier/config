@@ -78,7 +78,7 @@ artist= album= cover_src=
 if [[ ${srcs[0]} == http?(s)://@(?(*.)bandcamp.com|soundcloud.com|music.youtube.com)/* ]]; then
     echo "Fetching album information..."
     info_json=$(yt-dlp -J "${srcs[0]}")
-    jq -r '.entries[0]//. | .artist//.uploader, .album//.title, limit(1; .thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))//.thumbnail' <<< "$info_json" |
+    jq -r '.entries[0]//. | .artist//.uploader, .album//.title, first(.thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))//.thumbnail' <<< "$info_json" |
     { read -r artist; read -r album; read -r cover_src; }
 fi
 

@@ -107,9 +107,6 @@
         fade = true;
         fadeSteps = [ 1 1 ];
         fadeDelta = 30;
-
-        # workaround for https://github.com/yshui/picom/issues/578
-        # settings.use-damage = false; # TODO still needed?
       };
 
       services.redshift = {

@@ -4,6 +4,7 @@ in {
   hm = {
     programs.firefox = {
       enable = true;
+      # package = (pkgs.rev "64c27498901f104a11df646278c4e5c9f4d642db" "sha256-mU4mJeb1fRSvCDALe57vIKfhECvYroB4J4s0L2TR/iE=").firefox;
       profiles.${profile} = with config.theme; {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
@@ -324,32 +325,34 @@ in {
 
     home.sessionVariables.MOZ_USE_XINPUT2 = "1";
 
+    # https://firefox-source-docs.mozilla.org/devtools/backend/protocol.html
+    # https://searchfox.org/mozilla-central/source/devtools/server/actors/style-sheets.js
     home.file.".mozilla/firefox/${profile}/chrome/userChrome.css".onChange = ''
-      if cd ~/.mozilla/firefox/${profile} && pgrep -f ${config.hm.programs.firefox.package} > /dev/null; then
-          shopt -s lastpipe
-          port=6001
-          firefox --start-debugger-server "$port" || exit
-          exec {ff}<>/dev/tcp/localhost/"$port"
-          while read -u "$ff" -rd : len && IFS= LC_ALL=C read -u "$ff" -rd "" -n "$len" json; do
-              printf '%s\n' "$json"
-          done |
-          jq -cn --unbuffered --arg text "$(< chrome/userChrome.css)" \
-              '{to: "root", type: "getProcess", id: 0}, (
-               limit(1; inputs | .processDescriptor.actor//empty) as $processDescriptor |
-               {to: $processDescriptor, type: "getTarget"}, (
-               limit(1; inputs | .process.styleSheetsActor//empty) as $styleSheetsActor |
-               {to: $styleSheetsActor, type: "getStyleSheets"}, (
-               limit(1; inputs | .styleSheets[]? | select(.href//empty | endswith("userChrome.css")).actor) as $userChromeActor |
-               {to: $styleSheetsActor, type: "update", resourceId: $userChromeActor, $text, transition: true}, (
-               inputs | select(.type == "styleApplied") | halt
-               ))))' |
-          {
-              while IFS= read -r json; do
-                  printf '%s:%s' "''${#json}" "$json"
-              done >& "$ff"
-              kill $(jobs -p)
-          }
-      fi &
+      if cd ~/.mozilla/firefox/${profile} && pgrep firefox > /dev/null; then
+        port=6001
+        firefox --start-debugger-server "$port" || exit
+        exec {ff}<>/dev/tcp/localhost/"$port"
+        shopt -s lastpipe # for `jobs`
+        while read -u "$ff" -rd : len && IFS= LC_ALL=C read -u "$ff" -rd "" -n "$len" json; do
+          printf '%s\n' "$json"
+        done |
+        jq -cn --unbuffered --rawfile css chrome/userChrome.css '
+          def expect(f): first(inputs | if has("error") then "error \(.error): \(.message)\n" | halt_error(1) else . end | f);
+          {to: "root", type: "getProcess", id: 0},
+          {to: expect(.processDescriptor.actor | values), type: "getTarget"}, (
+          expect(.process.styleSheetsActor | values) as $styleSheetsActor |
+          {to: $styleSheetsActor, type: "getStyleSheets"}, (
+          expect(.styleSheets[]? | select(.href | values | endswith("userChrome.css")).actor) as $userChromeActor |
+          {to: $styleSheetsActor, type: "update", resourceId: $userChromeActor, $css, transition: true}, (
+          expect(select(.type == "styleApplied")) | halt
+          )))
+        ' | {
+          while IFS= read -r json; do
+            printf '%s:%s' "''${#json}" "$json"
+          done >& "$ff"
+          kill $(jobs -p)
+        }
+      fi || true
     '';
   };
 

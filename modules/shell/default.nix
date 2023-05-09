@@ -33,7 +33,7 @@
       ls = "ls -h --color=auto --group-directories-first";
       lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
       mv = "mv -i";
-      nix = "nix -v";
+      nix = "nix -vL";
 
       # Shorthands
       C = "LC_ALL=C ";

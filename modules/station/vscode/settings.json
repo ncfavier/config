@@ -181,6 +181,6 @@
   "search.useGlobalIgnoreFiles": true,
   "window.openFilesInNewWindow": "default",
   "search.useIgnoreFiles": false,
-  "markdown.extension.toc.updateOnSave": false,
   "workbench.colorTheme": "Lilac",
+  "markdown.extension.toc.levels": "2..6",
 }
