@@ -4,7 +4,6 @@ in {
   hm = {
     programs.firefox = {
       enable = true;
-      # package = (pkgs.rev "64c27498901f104a11df646278c4e5c9f4d642db" "sha256-mU4mJeb1fRSvCDALe57vIKfhECvYroB4J4s0L2TR/iE=").firefox;
       profiles.${profile} = with config.theme; {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
@@ -328,31 +327,35 @@ in {
     # https://firefox-source-docs.mozilla.org/devtools/backend/protocol.html
     # https://searchfox.org/mozilla-central/source/devtools/server/actors/style-sheets.js
     home.file.".mozilla/firefox/${profile}/chrome/userChrome.css".onChange = ''
-      if cd ~/.mozilla/firefox/${profile} && pgrep firefox > /dev/null; then
+      if cd ~/.mozilla/firefox/${profile} && pgrep firefox > /dev/null; then (
         port=6001
-        firefox --start-debugger-server "$port" || exit
+        firefox --start-debugger-server "$port" || exit 0
         exec {ff}<>/dev/tcp/localhost/"$port"
         shopt -s lastpipe # for `jobs`
         while read -u "$ff" -rd : len && IFS= LC_ALL=C read -u "$ff" -rd "" -n "$len" json; do
           printf '%s\n' "$json"
         done |
-        jq -cn --unbuffered --rawfile css chrome/userChrome.css '
+        jq -cn --unbuffered --rawfile text chrome/userChrome.css '
           def expect(f): first(inputs | if has("error") then "error \(.error): \(.message)\n" | halt_error(1) else . end | f);
-          {to: "root", type: "getProcess", id: 0},
-          {to: expect(.processDescriptor.actor | values), type: "getTarget"}, (
-          expect(.process.styleSheetsActor | values) as $styleSheetsActor |
-          {to: $styleSheetsActor, type: "getStyleSheets"}, (
-          expect(.styleSheets[]? | select(.href | values | endswith("userChrome.css")).actor) as $userChromeActor |
-          {to: $styleSheetsActor, type: "update", resourceId: $userChromeActor, $css, transition: true}, (
-          expect(select(.type == "styleApplied")) | halt
-          )))
+          {to: "root", type: "getProcess", id: 0}, (
+          expect(.processDescriptor.actor | values) as $process |
+          {to: $process, type: "getTarget"}, (
+          expect(.process.styleSheetsActor | values) as $styleSheets |
+          {to: $process, type: "getWatcher"}, (
+          expect(select(.from == $process) | .actor | values) as $watcher |
+          {to: $watcher, type: "watchResources", resourceTypes: ["stylesheet"]}, (
+          expect(.resources[]? | select(.href | values | endswith("/userChrome.css")).resourceId) as $userChrome |
+          {to: $styleSheets, type: "update", resourceId: $userChrome, $text, transition: false}, (
+          expect(.resources[]? | select(.updateType == "style-applied" and .resourceId == $userChrome)) |
+          halt
+          )))))
         ' | {
           while IFS= read -r json; do
             printf '%s:%s' "''${#json}" "$json"
           done >& "$ff"
-          kill $(jobs -p)
-        }
-      fi || true
+          kill $(jobs -p) 2> /dev/null
+        } || (( ! PIPESTATUS[1] ))
+      ) fi
     '';
   };
 
