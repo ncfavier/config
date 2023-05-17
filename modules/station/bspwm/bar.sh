@@ -217,7 +217,7 @@ cleanup_on_exit
     do :; done &
 
     # network
-    ip -o monitor address route rule |
+    ip -o monitor link address route rule |
     debounce 0.2 |
     while
         sleep 0.1
@@ -307,7 +307,7 @@ while read -rn 1 event; do
             left_pad 2 percentage # prevent the scrolling area from shrinking as you scroll under 10%
             brightness="$icon $percentage%%"
             pad_right brightness
-            brightness="%{A:light -S 100:}%{A3:light -S 0.8:}%{A4:backlight +:}%{A5:backlight -:}$brightness%{A}%{A}%{A}%{A}"
+            brightness="%{A3:light -S 0.8:}%{A4:backlight +:}%{A5:backlight -:}$brightness%{A}%{A}%{A}"
             ;;
         C) # clock
             read -r toggle

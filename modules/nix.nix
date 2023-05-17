@@ -87,8 +87,7 @@ in {
       config-cli
       nix-bash-completions
       nix-index-unwrapped # use the system-wide nix
-      nix-prefetch-git
-      nix-prefetch-github
+      nurl
       nix-diff
       nix-top
       nix-output-monitor
