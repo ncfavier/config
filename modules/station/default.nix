@@ -21,10 +21,14 @@
       }}/batenergy.sh "$@"
     '';
 
+    programs.adb.enable = true;
+
     programs.wireshark = {
       enable = true;
       package = pkgs.wireshark;
     };
+
+    my.extraGroups = [ "audio" "video" "wireshark" "adbusers" ];
 
     environment.systemPackages = with pkgs; [
       gparted
@@ -86,8 +90,6 @@
       standard-library
       cubical
     '';
-
-    my.extraGroups = [ "audio" "video" "wireshark" ];
 
     cachix.derivationsToPush = [ pkgs.tmsu ];
   };

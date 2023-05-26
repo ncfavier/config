@@ -58,6 +58,7 @@ basename=${basename##*/}
 
 if [[ ! $source || $source == - ]]; then
     tmpdir
+    basename=stdin
     printf -v source '%s/stdin-%(%F-%H%M%S)T' "$tmpdir" -1
     cat > "$source"
 elif [[ $source == +([[:alpha:]])://* ]]; then

@@ -23,7 +23,7 @@ in {
         pointer_action2 = "resize_side";
         pointer_action3 = "resize_corner";
       };
-      rules = rec {
+      rules = {
         firefox = {
           desktop = "web";
           follow = true;
@@ -55,6 +55,7 @@ in {
         "Qemu-system-x86_64"
         "Gucharmap"
         "Xfd"
+        "zenity"
       ] (_: { state = "floating"; });
       extraConfig = ''
         bspc desktop web -l monocle
@@ -161,6 +162,8 @@ in {
           "backlight {-,+}";
         "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + ${config.keys.printScreenKey}" =
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
+        "super + p" =
+          "xsel -bo | upload -";
         "super + {_,shift,ctrl} + space" =
           "rofi -sidebar-mode -show-icons -modes drun,run,window -show {drun,run,window}";
         "super + asterisk" =

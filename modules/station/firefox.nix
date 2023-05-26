@@ -30,6 +30,8 @@ in {
           "browser.newtabpage.activity-stream.showTopSites" = false;
           "browser.newtabpage.enhanced" = false;
           "browser.onboarding.enabled" = false;
+          "browser.sessionstore.restore_on_demand" = false;
+          "browser.sessionstore.restore_tabs_lazily" = false;
           "browser.startup.homepage" = "about:home";
           "browser.tabs.firefox-view" = false;
           "browser.tabs.tabmanager.enabled" = false;

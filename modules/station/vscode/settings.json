@@ -181,6 +181,7 @@
   "search.useGlobalIgnoreFiles": true,
   "window.openFilesInNewWindow": "default",
   "search.useIgnoreFiles": false,
-  "workbench.colorTheme": "Lilac",
   "markdown.extension.toc.levels": "2..6",
+  "haskell.formattingProvider": "fourmolu",
+  "workbench.colorTheme": "Lilac",
 }

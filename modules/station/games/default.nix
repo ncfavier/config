@@ -19,7 +19,7 @@
         enableTruetype = false;
         settings.init.FONT = "Alloy_curses_12x12.png";
         extraPackages = [
-          (pkgs.runCommand "alloy-curses" { } ''
+          (pkgs.runCommandLocal "alloy-curses" { } ''
             mkdir -p "$out/data/art"
             ln -s ${pkgs.fetchurl {
               url = "https://dwarffortresswiki.org/images/0/03/Alloy_curses_12x12.png";

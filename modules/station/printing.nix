@@ -25,6 +25,8 @@
     simple-scan
   ];
 
+  programs.system-config-printer.enable = true;
+
   services.avahi = {
     enable = true;
     nssmdns = true;
