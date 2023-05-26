@@ -1,5 +1,6 @@
 { inputs, lib, config, pkgs, ... }: with lib; let
   uploadsRoot = "/run/nginx/uploads";
+  glamRoot = "/run/nginx/glam";
   maxUploadSize = "256M";
 in {
   system.extraDependencies = collectFlakeInputs inputs.www;
@@ -34,6 +35,8 @@ in {
     in {
       ${my.domain} = ssl // {
         root = inputs.www;
+        locations."= /glam.pdf".alias = "${glamRoot}/report/report.pdf";
+        locations."= /glam-slides.pdf".alias = "${glamRoot}/report/slides.pdf";
       };
 
       "www.${my.domain}" = ssl // {
@@ -101,7 +104,10 @@ in {
     };
   };
 
-  systemd.services.nginx.serviceConfig.BindReadOnlyPaths = [ "${config.synced.uploads.path}:${uploadsRoot}" ];
+  systemd.services.nginx.serviceConfig.BindReadOnlyPaths = [
+    "${config.synced.my.path}/work/internship-glam:${glamRoot}"
+    "${config.synced.uploads.path}:${uploadsRoot}"
+  ];
 
   services.phpfpm.pools.upload = {
     user = my.username;

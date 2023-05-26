@@ -58,7 +58,7 @@ in {
 
       nixPath = [ "nixpkgs=/etc/nixpkgs" ];
 
-      gc = {
+      gc = mkIf (!this.isServer) {
         automatic = true;
         options = "--delete-older-than 30d";
       };
