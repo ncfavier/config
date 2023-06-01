@@ -20,6 +20,7 @@ in {
     };
 
     nix = {
+      package = pkgs.nixVersions.nix_2_15;
       settings = {
         experimental-features = [ "nix-command" "flakes" "ca-derivations" "auto-allocate-uids" ];
         warn-dirty = false;

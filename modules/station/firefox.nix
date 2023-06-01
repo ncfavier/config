@@ -293,15 +293,6 @@ in {
             }
           }
 
-          @-moz-document domain(1lab.dev) {
-            @media (prefers-color-scheme: dark) {
-              :root {
-                --text-bg: #000000 !important;
-                --text-fg: #ffffff !important;
-              }
-            }
-          }
-
           @-moz-document domain(ncatlab.org) {
             body {
               font-family: serif !important;

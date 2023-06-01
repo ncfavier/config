@@ -1,4 +1,13 @@
 { config, pkgs, ... }: {
+  nixpkgs.overlays = [ (self: super: {
+    ibus = super.ibus.overrideAttrs (old: {
+      patches = old.patches or [] ++ [ (self.fetchpatch {
+        url = "https://github.com/ibus/ibus/commit/8f706d160631f1ffdbfa16543a38b9d5f91c16ad.patch";
+        hash = "sha256-YzS9TmUWW0OmheDeCeU00kFK2U2QEmKYMSRJAbu14ec=";
+      }) ];
+    });
+  }) ];
+
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [
