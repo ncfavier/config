@@ -84,8 +84,6 @@ in mkEnableModule [ "pleroma" ] {
   services.nginx.virtualHosts = {
     "fedi.${my.domain}" = {
       http2 = true;
-      enableACME = true;
-      forceSSL = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString port}";
         extraConfig = ''

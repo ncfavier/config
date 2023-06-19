@@ -10,10 +10,10 @@
       enableKVM = this.hasKVM;
       qemu = pkgs.qemu_kvm; # don't rebuild QEMU
       suspensionUseCompression = false; # favour speed
+      suspensionTimeout = 300;
       editEvaluators = evs: builtins.removeAttrs evs [
         "java" "kotlin" # too slow
         "python2" # EOL, don't feel like compiling it
-        "go" # TODO why are you broken?
       ] // {
         rust = lib.recursiveUpdate evs.rust {
           storeDrives.rust = with pkgs; [ rustc gcc ]; # don't use the nightly channel
@@ -151,7 +151,8 @@ in {
         realName = "bothendieck";
         channels = [ "##nf" ];
         commandPrefix = ".";
-        twitterAlternative = "http://${config.services.nitter.server.hostname}:${toString config.services.nitter.server.port}";
+        # twitterAlternative = "http://${config.services.nitter.server.hostname}:${toString config.services.nitter.server.port}"; # TODO
+        twitterAlternative = "https://nitter.net";
       };
       secretsFile = config.secrets.bothendieck.path;
     };

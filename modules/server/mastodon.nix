@@ -19,8 +19,6 @@ in mkEnableModule [ "mastodon" ] {
   services.nginx.virtualHosts = {
     ${webDomain} = {
       root = "${cfg.package}/public/";
-      forceSSL = true; # mastodon only supports https
-      enableACME = true;
 
       locations."/system/".alias = "/var/lib/mastodon/public-system/";
 
