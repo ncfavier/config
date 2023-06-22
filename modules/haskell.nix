@@ -10,6 +10,7 @@
       lens
       linear
       megaparsec
+      MemoTrie
       mtl
       profunctors
       QuickCheck

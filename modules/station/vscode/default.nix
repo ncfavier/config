@@ -9,6 +9,7 @@
         jnoortheen.nix-ide
         haskell.haskell
         justusadam.language-haskell
+        elmtooling.elm-ls-vscode
         dhall.dhall-lang
         eugleo.magic-racket
         rust-lang.rust-analyzer

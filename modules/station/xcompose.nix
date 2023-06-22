@@ -28,6 +28,8 @@
       <Multi_key> <asterisk> <comma> : "·"
       <Multi_key> <asterisk> <o> : "∘"
       <Multi_key> <less> <asterisk> <greater> : "⊛"
+      <Multi_key> <x> <bar> : "⋊"
+      <Multi_key> <w> <r> : "≀"
       <Multi_key> <equal> <equal> : "≡"
       <Multi_key> <equal> <3> : "≡"
       <Multi_key> <equal> <slash> <equal> : "≢"

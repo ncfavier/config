@@ -5,7 +5,7 @@
 in {
   config = {
     system.extraDependencies = concatMap collectFlakeInputs (with inputs; [
-      nixpkgs nixpkgs-stable nixos-hardware nur
+      nixpkgs nixpkgs-stable nixos-hardware nur # TODO nixd
     ]);
 
     lib.meta = {
@@ -20,7 +20,7 @@ in {
     };
 
     nix = {
-      package = pkgs.nixVersions.nix_2_15;
+      package = pkgs.nixVersions.nix_2_15; # TODO
       settings = {
         experimental-features = [ "nix-command" "flakes" "ca-derivations" "auto-allocate-uids" ];
         warn-dirty = false;
@@ -96,7 +96,7 @@ in {
       nixpkgs-fmt
       nixpkgs-review
       nixfmt
-      nil
+      inputs.nixd.packages.${pkgs.system}.nixd
     ];
 
     lib.shellEnv = {

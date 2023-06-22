@@ -138,6 +138,12 @@
           }
         ' | jq -r --arg file "$file" '.data.repository.pullRequests.nodes[] | select(.files.nodes | any(.path | test("^\($file)$"; ""))).number'
       '')
+      (writeShellScriptBin "gh-gist-clone-all" ''
+        cd ~/git/gist
+        gh gist list -L 10000 | while read -r id _; do
+          gh gist clone "$id"
+        done
+      '')
     ];
   };
 }
