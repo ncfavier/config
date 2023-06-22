@@ -1,9 +1,7 @@
 lua << EOF
 require('nvim-lastplace').setup{}
 
-require('lspconfig').nil_ls.setup{ -- TODO
-  cmd = { 'nixd' }
-}
+require('lspconfig').nixd.setup{}
 
 require('lspconfig').hls.setup {
   filetypes = { 'haskell', 'lhaskell', 'cabal' },
