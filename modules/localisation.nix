@@ -1,6 +1,4 @@
 { lib, ... }: with lib; {
-  hm.disabledModules = [ "config/i18n.nix" ];
-
   i18n.defaultLocale = "en_GB.UTF-8";
 
   services.xserver = {

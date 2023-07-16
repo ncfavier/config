@@ -427,7 +427,7 @@ command_not_found_handle() {
         if (( $# )); then
             sshesc -qt "$host" -- bash -ilc "${*@Q}"
         else
-            ssh -q "$host"
+            ssh -qt "$host" -- tmux new-session -A
         fi
     else # look for a package providing the command in nixpkgs
         local pkgs=() i n action

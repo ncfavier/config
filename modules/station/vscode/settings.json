@@ -182,6 +182,6 @@
   "search.useIgnoreFiles": false,
   "markdown.extension.toc.levels": "2..6",
   "haskell.formattingProvider": "fourmolu",
-  "workbench.colorTheme": "Lilac",
   "explorer.excludeGitIgnore": true,
+  "workbench.colorTheme": "Lilac",
 }

@@ -1,7 +1,6 @@
 { inputs, lib, config, pkgs, ... }: with lib; {
   documentation = {
     nixos.enable = inputs.nixpkgs ? rev;
-    nixos.options.allowDocBook = false;
     dev.enable = true;
   };
 

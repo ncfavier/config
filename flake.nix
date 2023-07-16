@@ -14,7 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur.url = "nur";
-    nixd.url = "github:nix-community/nixd";
     dns = {
       url = "github:kirelagin/dns.nix";
       inputs.nixpkgs.follows = "nixpkgs";

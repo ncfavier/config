@@ -38,7 +38,6 @@
       chromium
       thunderbird
       discord
-      element-desktop
       tdesktop
       signal-desktop
       amfora

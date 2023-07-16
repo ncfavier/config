@@ -5,7 +5,7 @@
 in {
   config = {
     system.extraDependencies = concatMap collectFlakeInputs (with inputs; [
-      nixpkgs nixpkgs-stable nixos-hardware nur # TODO nixd
+      nixpkgs nixpkgs-stable nixos-hardware nur
     ]);
 
     lib.meta = {
@@ -95,7 +95,7 @@ in {
       nixpkgs-fmt
       nixpkgs-review
       nixfmt
-      inputs.nixd.packages.${pkgs.system}.nixd
+      nil
     ];
 
     lib.shellEnv = {
