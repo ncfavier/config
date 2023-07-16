@@ -144,28 +144,15 @@ in {
 
     services.bothendieck = {
       settings = {
-        server = "irc.libera.chat";
+        server = "irc.eu.libera.chat";
         tls = true;
         port = 6697;
         nick = "|||";
         realName = "bothendieck";
-        channels = [ "##nf" ];
+        channels = [ "##nf" "#tendra" ];
         commandPrefix = ".";
-        # twitterAlternative = "http://${config.services.nitter.server.hostname}:${toString config.services.nitter.server.port}"; # TODO
-        twitterAlternative = "https://nitter.net";
       };
       secretsFile = config.secrets.bothendieck.path;
-    };
-
-    services.nitter = {
-      enable = true;
-      openFirewall = false;
-      server.hostname = my.domain;
-      server.address = head this.ipv4; # can't use a local address because bothendieck blocks those
-      server.port = 8099;
-      server.httpMaxConnections = 2;
-      config.tokenCount = 1;
-      cache.redisConnections = 1;
     };
   };
 }

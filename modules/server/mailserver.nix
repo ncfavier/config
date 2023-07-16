@@ -37,4 +37,11 @@
       chmod -R g=u ${config.mailserver.mailDirectory}
     '';
   };
+
+  services.rspamd.overrides."whitelist.conf".text = ''
+    whitelist_from {
+      zulip.com = true;
+      zulipchat.com = true;
+    }
+  '';
 }

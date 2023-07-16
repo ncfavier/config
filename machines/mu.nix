@@ -75,4 +75,9 @@ in {
 
   services.bothendieck.enable = true;
   services.my-lambdabot.enable = true;
+
+  swapDevices = [ {
+    device = "/swap";
+    size = 8192;
+  } ];
 }
