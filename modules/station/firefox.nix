@@ -96,6 +96,10 @@ in {
               color: var(--bg) !important;
             }
 
+            #titlebar {
+              background-color: transparent !important;
+            }
+
             #tabbrowser-tabs {
               border-inline-start: none !important;
               padding-inline-start: 0 !important;
