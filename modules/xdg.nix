@@ -60,7 +60,7 @@
                 "x-scheme-handler/rss+xml"
                 "x-scheme-handler/x-extension-rss"
               ];
-              feh = images;
+              imv-dir = images;
               mpv = media;
               "org.gnome.Fileroller" = archives;
               transmission-gtk = [
@@ -100,6 +100,7 @@
         ];
         images = [
           "image/bmp"
+          "image/gif"
           "image/jpeg"
           "image/jpg"
           "image/pjpeg"
@@ -199,7 +200,6 @@
           "audio/x-vorbis+ogg"
           "audio/x-wav"
           "audio/x-wavpack"
-          "image/gif"
           "video/3gp"
           "video/3gpp"
           "video/3gpp2"

@@ -47,6 +47,7 @@ in {
         };
       } // genAttrs [
         "feh"
+        "imv"
         "mpv"
         "File-roller"
         "Lxappearance"

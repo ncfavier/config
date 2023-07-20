@@ -58,9 +58,6 @@
         options = splitString "," xkbOptions;
       };
 
-      systemd.user.services.setxkbmap.Service.ExecStartPost =
-        "${pkgs.xorg.xmodmap}/bin/xmodmap -e 'keycode 49 = grave twosuperior'";
-
       home.pointerCursor = {
         package = pkgs.gnome.adwaita-icon-theme;
         name = "Adwaita";

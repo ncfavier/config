@@ -9,13 +9,16 @@ echo "$$" > "$pidfile"
 
 # Functions
 
-desktop_label() case $1 in
-    web) printf ;;
-    mail) printf ;;
-    chat) printf ;;
-    files) printf ;;
-    *) printf '⬤';;
-esac
+desktop_label() {
+    local -n var=$1
+    case $var in
+        web) var='';;
+        mail) var='';;
+        chat) var='';;
+        files) var='';;
+        *) var='⬤';;
+    esac
+}
 
 escape() {
     local -n var=$1
@@ -91,6 +94,16 @@ debounce() {
     done
 }
 
+dedup() {
+    local line last_line
+    while read -r line; do
+        if [[ $line != "$last_line" ]]; then
+            printf '%s\n' "$line"
+        fi
+        last_line=$line
+    done
+}
+
 cleanup_on_exit() {
     trap 'kill $(jobs -p) 2> /dev/null' EXIT
 }
@@ -139,7 +152,7 @@ cleanup_on_exit
     bspc subscribe report &
 
     # window title
-    xtitle -sf 'T%s\n' | debounce 0.1 &
+    xtitle -sf 'T%s\n' | dedup &
 
     # X keyboard layout
     {
@@ -450,7 +463,7 @@ while read -rn 1 event; do
                 item=${part:1}
                 if [[ ${type,,} == [fou] ]]; then
                     desktop=$item
-                    item=$(desktop_label "$item")
+                    desktop_label item
                     pad item
                     item="%{A:wm focus-workspace $desktop:}%{A2:wm move-window-to-workspace $desktop:}$item%{A}%{A}"
                     if [[ $desktop =~ ^[[:alpha:]]+$ ]]; then
@@ -483,6 +496,10 @@ while read -rn 1 event; do
                     systemd+=" %{A3:systemctl --user restart $unit:}${unit%.service}%{A}"
                 done
             fi
+            ;;
+        *) # garbage
+            read -r
+            continue
             ;;
     esac
 

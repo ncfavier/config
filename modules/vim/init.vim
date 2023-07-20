@@ -68,6 +68,7 @@ set smartindent
 set softtabstop=4
 set splitbelow
 set splitright
+set startofline
 set suffixes+=.hi,.dyn_hi,.dyn_o,.cmi,.cmo,.bcf,.fdb_latexmk,.fls,.pdf,.xdv,.aux,.blg,.bbl,.run.xml,.lock
 set tabstop=4
 set title

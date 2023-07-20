@@ -92,7 +92,7 @@ go() {
         music)
             exec rofi -kb-custom-1 'Control+r' -show music;;
         video)
-            class='mpv|feh' focus-window;;
+            class='mpv|feh|imv' focus-window;;
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)
