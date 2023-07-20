@@ -37,6 +37,8 @@ index f354ea5..749a572 100644
         "<Shift+period>" = "next_frame";
         "<less>" = "prev";
         "<Shift+greater>" = "next";
+        "<space>" = "next";
+        "p" = "toggle_playing";
       };
     };
   };

@@ -44,7 +44,30 @@
     pkgs = nixpkgs.legacyPackages.${system};
     mkSystem = this: modules: lib.nixosSystem {
       inherit lib system;
-      modules = modules ++ [ { system.configurationRevision = self.rev or "dirty"; } ];
+      modules = modules ++ [ ({ config, ... }: {
+        nixpkgs.overlays = let
+          importNixpkgs = nixpkgs: import nixpkgs {
+            inherit (config.nixpkgs) localSystem crossSystem config;
+          };
+        in [
+          (pkgs: prev: {
+            stable = importNixpkgs inputs.nixpkgs-stable;
+            rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+              owner = "NixOS";
+              repo = "nixpkgs";
+              inherit rev sha256;
+            });
+            pr = n: pkgs.rev "refs/pull/${toString n}/head";
+            mine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+              owner = lib.my.githubUsername;
+              repo = "nixpkgs";
+              inherit rev sha256;
+            });
+            local = importNixpkgs "${config.my.home}/git/nixpkgs";
+          })
+        ];
+        system.configurationRevision = self.rev or "dirty";
+      }) ];
       specialArgs = {
         inherit inputs this;
         hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
