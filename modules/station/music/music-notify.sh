@@ -8,23 +8,21 @@ escape() {
     o=${o//'>'/'&gt;'}
 }
 
-mpc current -f $'%file%\n%artist%\n%album%\n%title%' | {
-    IFS= read -r file
+mpc current -f $'%artist%\n%album%\n%title%' | {
     IFS= read -r artist
     IFS= read -r album
     IFS= read -r title
 }
-[[ $file ]] || exit
+[[ $title ]] || exit
 mpc status | {
     read -r _
     read -r progress
 }
 
-file=$(xdg-user-dir MUSIC)/$file
-thumbnail=$(mktemp --suffix .png) || exit
-trap 'rm -f "$thumbnail"' exit
-if ffmpegthumbnailer -i "$file" -o "$thumbnail" -s 500 -m; then
-    icon=(-I "$thumbnail")
+if artUrl=$(playerctl -p mpd metadata mpris:artUrl 2> /dev/null); then
+    artUrl=${artUrl#file://}
+    printf -v artFile '%b' "${artUrl//%//\\x}"
+    icon=(-I "$artFile")
 else
     icon=(-i application-audio)
 fi

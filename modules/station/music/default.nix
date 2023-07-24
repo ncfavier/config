@@ -20,9 +20,12 @@
       '';
     };
 
+    services.mpd-mpris.enable = true;
+    services.playerctld.enable = true;
+
     programs.ncmpcpp = {
       enable = true;
-      settings.lyrics_directory = "${config.hm.xdg.dataHome}/lyrics";
+      settings.lyrics_directory = "${config.hm.xdg.dataHome}/lyrics"; # don't pollute ~
     };
 
     programs.rofi.extraConfig.modes = [ "music:${
@@ -30,17 +33,16 @@
     }/bin/music-rofi" ];
 
     home.packages = with pkgs; [
+      playerctl
       mpc_cli
-      (shellScriptWith "music-play" ./music-play.sh {})
+      (shellScriptWith "music-play" ./music-play.sh {
+        deps = [ mpc_cli ];
+      })
       (shellScriptWith "music-notify" ./music-notify.sh {
-        deps = [
-          ffmpegthumbnailer xxd glib.bin
-        ];
+        deps = [ mpc_cli playerctl dunst ];
       })
       (shellScriptWith "music-add" ./music-add.sh {
-        deps = [
-          htmlq imagemagick ffmpeg-full audacity mpc_cli
-        ];
+        deps = [ imagemagick ffmpeg-full audacity mpc_cli ];
       })
       songrec
     ];

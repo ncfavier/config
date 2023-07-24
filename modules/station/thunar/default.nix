@@ -27,20 +27,12 @@
       xfce.xfconf
       glib.bin
       gnome.zenity
-      (linkFarm "glib-default-terminal" [ {
-        # workaround for https://gitlab.gnome.org/GNOME/glib/-/issues/338
-        name = "bin/tilix";
-        path = "${alacritty}/bin/alacritty";
-      } ])
+      webp-pixbuf-loader
+      (pr 244723 "sha256-qtFhiU/LtZrxpWyBMe3kto5QAe2BnVKQeADwProxNHs=").libavif # TODO
       (writeTextDir "share/thumbnailers/ffmpegthumbnailer.thumbnailer" ''
         [Thumbnailer Entry]
         MimeType=${concatStringsSep ";" config.lib.mimeTypes.media}
         Exec=${thumbnailerScript "ffmpeg" ''${ffmpegthumbnailer}/bin/ffmpegthumbnailer -i "$i" -o "$o" -s "$s" -t 30 -m''}
-      '')
-      (writeTextDir "share/thumbnailers/webp.thumbnailer" ''
-        [Thumbnailer Entry]
-        MimeType=image/webp
-        Exec=${thumbnailerScript "webp" ''${imagemagick}/bin/convert -thumbnail "$s" "$i" "$o"''}
       '')
       (pythonScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
         with ps; [ dbus-python pygobject3 pyxdg ]))

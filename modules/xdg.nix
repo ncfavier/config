@@ -99,6 +99,8 @@
           "text/x-tex"
         ];
         images = [
+          "image/avif"
+          "image/avif-sequence"
           "image/bmp"
           "image/gif"
           "image/jpeg"

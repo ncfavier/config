@@ -67,9 +67,7 @@
         esac
       '')
       (shellScriptWith "shoot" ./shoot.sh {
-        deps = [
-          slop imagemagick ffmpeg-full ffmpegthumbnailer
-        ];
+        deps = [ slop imagemagick ffmpeg-full ffmpegthumbnailer ];
       })
       tmsu
     ];

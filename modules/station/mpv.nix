@@ -5,6 +5,7 @@
       package = pkgs.mpv.override {
         scripts = with pkgs.mpvScripts; [
           autoload
+          mpris
           quality-menu
         ];
       };
@@ -20,11 +21,9 @@
       };
 
       profiles = {
-        "extension.gif" = {
+        "loop" = {
           loop-file = "inf";
-        };
-        "extension.gifv" = {
-          profile = "extension.gif";
+          profile-cond = "p.duration<=20";
         };
       };
 

@@ -346,7 +346,7 @@ nbe() {
 
 nix-time() { # get a lower bound on the build time of a derivation (best if build wasn't interrupted) https://github.com/NixOS/nix/issues/1710
     local drv name prefix log birth mod
-    drv=$(nix show-derivation "$1" | jq -r 'keys[0]')
+    drv=$(nix derivation show "$1" | jq -r 'keys[0]')
     [[ $drv == /nix/store/* ]] || return
     name=${drv#/nix/store/} prefix=${name::2}
     log=(/nix/var/log/nix/drvs/$prefix/${name#"$prefix"}*)
@@ -354,7 +354,7 @@ nix-time() { # get a lower bound on the build time of a derivation (best if buil
     read -r birth mod < <(stat -c '%W %Y' "$log")
     python -c "import datetime; print(datetime.timedelta(seconds=$((mod - birth))))"
 }
-complete_alias nix-time nix show-derivation
+complete_alias nix-time nix derivation show
 
 nix-closure-size() {
     nix path-info -rsSh "$@"
@@ -371,7 +371,7 @@ pkgs() {
 complete_alias pkgs nix build -f /etc/nixpkgs
 
 drv() {
-    nix show-derivation "$@" | if [[ -t 1 ]]; then
+    nix derivation show "$@" | if [[ -t 1 ]]; then
         less
     else
         jq -r 'keys[0]'

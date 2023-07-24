@@ -17,9 +17,6 @@ index f354ea5..749a572 100644
      }
      bmp = FreeImage_ConvertTo24Bits(frame);
       '') ];
-      postPatch = ''
-        sed -i 's/level >= IMV_INFO/1/g' src/imv.c
-      '';
     });
   }) ];
 

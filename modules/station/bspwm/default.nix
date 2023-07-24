@@ -148,10 +148,14 @@ in {
           "dunstctl {close,close-all,set-paused toggle}";
         "super + grave" =
           "dunstctl history-pop";
-        "super + alt + {space,Left,Right,Down,Up,r,z,y,c,b,f,u}" =
-          "mpc -q {toggle,prev,next,volume -2,volume +2,repeat,random,single,stop,seek -3,seek +3,update}";
+        "super + alt + {space,Left,Right}" =
+          "playerctl {play-pause,previous,next}";
+        "super + alt + BackSpace" =
+          "playerctld shift";
+        "super + alt + {Down,Up,r,z,y,c,b,f,u}" =
+          "mpc -q {volume -2,volume +2,repeat,random,single,stop,seek -3,seek +3,update}";
         "XF86Audio{Play,Prev,Next,Stop}" =
-          "mpc -q {toggle,prev,next,stop}";
+          "playerctl {play-pause,previous,next,stop";
         "{_,super + alt} + XF86Audio{Lower,Raise}Volume" =
           "{_,mpc} volume {-,+}2";
         "XF86AudioMute" =

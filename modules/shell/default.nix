@@ -77,7 +77,7 @@
             complete -F _command C cxa cxan
             complete -v dp
             complete_alias diff git diff
-            complete_alias drv nix show-derivation
+            complete_alias drv nix derivation show
             complete_alias nwd nix why-depends
             complete_alias s systemctl
             complete_alias u systemctl --user
