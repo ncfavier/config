@@ -161,7 +161,7 @@
     },
   },
   "window.menuBarVisibility": "toggle",
-  "nix.serverPath": "nixd",
+  "nix.serverPath": "nil",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   "files.trimTrailingWhitespace": true,

@@ -6,7 +6,12 @@
 
     (mkIf this.isStation {
       hm = {
-        home.packages = with pkgs; [ xdg-user-dirs ];
+        home.packages = with pkgs; [
+          xdg-user-dirs
+          (writeShellScriptBin "xdg-terminal-exec" ''
+            wm go terminal "$@"
+          '')
+        ];
 
         home.file = genAttrs [ "music" "pictures" "my" ] (dir: {
           source = config.hm.lib.file.mkOutOfStoreSymlink config.synced.${dir}.path;

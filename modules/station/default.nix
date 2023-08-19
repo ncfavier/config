@@ -47,6 +47,7 @@
       (agda.withPackages (p: with p; [
         standard-library
         cubical
+        agda-categories
       ]))
       racket
       audacity
@@ -86,6 +87,7 @@
     hm.home.file.".agda/defaults".text = ''
       standard-library
       cubical
+      agda-categories
     '';
 
     cachix.derivationsToPush = [ pkgs.tmsu ];

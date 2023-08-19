@@ -47,7 +47,7 @@ let g:haskell_enable_typeroles = 1
 
 let g:agdavim_includeutf8_mappings = 0 " barely works, messes with /
 
-au FileType gitcommit,gitsendemail let b:EditorConfig_disable = 1
+au FileType diff,gitcommit,gitsendemail let b:EditorConfig_disable = 1
 
 colors noirbuddy
 lua require("noirbuddy").setup { colors = { primary = "#FF00FF", background = "#000000", } }

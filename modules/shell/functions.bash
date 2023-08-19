@@ -333,6 +333,20 @@ nix-shell() {
     history -n
 }
 
+ghcWithPackages() {
+    nix-shell -p "ghc.withPackages (ps: with ps; [$*])"
+}
+_ghcWithPackages() {
+    local cur prev words cword prefix=haskellPackages.
+    _init_completion
+    COMP_WORDS=(nix build -f /etc/nixpkgs "$prefix$cur")
+    COMP_CWORD=4
+    _completion_loader nix
+    _complete_nix
+    COMPREPLY=("${COMPREPLY[@]#"$prefix"}")
+}
+complete -F _ghcWithPackages ghcWithPackages
+
 nix-build-delete() { # useful for running NixOS tests
     sudo nix-store --delete --ignore-liveness "$(nix-build --no-out-link "$@")"
 }

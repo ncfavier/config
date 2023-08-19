@@ -24,6 +24,7 @@
         dh = "d HEAD";
         dc = "d --cached";
         du = "d @{upstream}";
+        edit = "add -e";
         b = "branch";
         a = "add";
         aa = "add -A";
@@ -107,7 +108,7 @@
         set -eo pipefail
         url=$(${curl}/bin/curl -fsSw '%{redirect_url}' https://en.wiktionary.org/wiki/Special:Random)
         title=$(${curl}/bin/curl -fsSL "$url" | ${htmlq}/bin/htmlq --text title)
-        title=''${title% - Wiktionary}
+        title=''${title% - Wiktionary*}
         printf '%s\n\n%s\n' "$title" "$url"
       '')
       (writeShellScriptBin "gh-default-branch" ''

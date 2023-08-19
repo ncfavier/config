@@ -2,12 +2,14 @@
   environment.systemPackages = with pkgs; [
     (haskellPackages.ghcWithHoogle (p: with p; [
       adjunctions
+      aeson
       arithmoi
       array
       comonad
       containers
       kan-extensions
       lens
+      lens-aeson
       linear
       megaparsec
       MemoTrie
@@ -20,9 +22,10 @@
       unordered-containers
       vector
     ]))
-    haskellPackages.cabal-install
-    haskellPackages.stack
-    haskellPackages.haskell-language-server
+    cabal-install
+    cabal2nix
+    stack
+    haskell-language-server
   ];
 
   hm.home.file = {
