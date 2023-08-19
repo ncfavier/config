@@ -210,13 +210,6 @@ in {
         ];
       });
 
-      sxhkd = prev.sxhkd.overrideAttrs (old: {
-        patches = old.patches or [] ++ [ (pkgs.fetchpatch {
-          url = "https://github.com/baskerville/sxhkd/pull/307/commits/35e64f1d7b54c97ccc02e84e278012dae9bc3941.patch";
-          hash = "sha256-bvXWEEITbHC/h0nXQx99SXjvkI/KO36XXNSa1O8KSY0=";
-        }) ];
-      });
-
       lemonbar-xft = prev.lemonbar-xft.overrideAttrs (o: {
         src = pkgs.fetchFromGitLab {
           owner = "protesilaos";

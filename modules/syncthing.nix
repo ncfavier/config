@@ -1,6 +1,6 @@
 { lib, config, ... }: with lib; {
   imports = [
-    (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "folders" ])
+    (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "settings" "folders" ])
   ];
 
   lib.shellEnv.synced = mapAttrs (_: v: v.path) config.synced;
@@ -10,88 +10,88 @@
     user = my.username;
     inherit (config.my) group;
     dataDir = config.my.home;
+    overrideDevices = true;
+    overrideFolders = true;
 
     guiAddress = "0.0.0.0:8384";
     openDefaultPorts = false;
 
     key = config.secrets.syncthing.path;
 
-    overrideDevices = true;
-    devices = mapAttrs (_: m: {
-      inherit (m.syncthing) id;
-      introducer = m.isServer;
-    }) my.machines;
-
-    overrideFolders = true;
-    folders = let
-      trashcan = {
-        type = "trashcan";
-        params.cleanoutDays = "0";
-      };
-      simple = {
-        type = "simple";
-        params = {
-          keep = "5";
-          cleanoutDays = "0";
-        };
-      };
-      allDevices = attrNames my.machines;
-      allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) my.machines);
-    in {
-      my = {
-        path = "${config.my.home}/sync/my";
-        devices = allDevices;
-        versioning = simple;
-      };
-      pictures = {
-        path = "${config.my.home}/sync/pictures";
-        devices = allDevices;
-        versioning = trashcan;
-      };
-      music = {
-        path = "${config.my.home}/sync/music";
-        devices = allDevices;
-        versioning = trashcan;
-      };
-      camera = {
-        path = "${config.my.home}/sync/camera";
-        devices = allDevices;
-        versioning = trashcan;
-      };
-      saves = {
-        path = "${config.my.home}/sync/saves";
-        devices = allDevicesExceptPhone;
-        watch = false;
-        versioning = trashcan;
-      };
-      irc-logs = {
-        path = "${config.my.home}/sync/irc-logs";
-        devices = allDevicesExceptPhone;
-        watch = false;
-        versioning = trashcan;
-      };
-      uploads = {
-        path = "${config.my.home}/sync/uploads";
-        devices = allDevicesExceptPhone;
-        versioning = trashcan;
-      };
-      password-store = {
-        path = "${config.my.home}/sync/password-store";
-        devices = allDevices;
-        versioning = simple;
-      };
-      mail = {
-        path = if config.mailserver.enable or false
-          then config.mailserver.mailDirectory
-          else "${config.my.home}/sync/mail";
-        devices = allDevicesExceptPhone;
-        versioning = simple;
-      };
-    };
-
-    extraOptions = {
+    settings = {
       gui.theme = "default";
       options.urAccepted = -1;
+
+      devices = mapAttrs (_: m: {
+        inherit (m.syncthing) id;
+        introducer = m.isServer;
+      }) my.machines;
+
+      folders = let
+        trashcan = {
+          type = "trashcan";
+          params.cleanoutDays = "0";
+        };
+        simple = {
+          type = "simple";
+          params = {
+            keep = "5";
+            cleanoutDays = "0";
+          };
+        };
+        allDevices = attrNames my.machines;
+        allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) my.machines);
+      in {
+        my = {
+          path = "${config.my.home}/sync/my";
+          devices = allDevices;
+          versioning = simple;
+        };
+        pictures = {
+          path = "${config.my.home}/sync/pictures";
+          devices = allDevices;
+          versioning = trashcan;
+        };
+        music = {
+          path = "${config.my.home}/sync/music";
+          devices = allDevices;
+          versioning = trashcan;
+        };
+        camera = {
+          path = "${config.my.home}/sync/camera";
+          devices = allDevices;
+          versioning = trashcan;
+        };
+        saves = {
+          path = "${config.my.home}/sync/saves";
+          devices = allDevicesExceptPhone;
+          fsWatcherEnabled = false;
+          versioning = trashcan;
+        };
+        irc-logs = {
+          path = "${config.my.home}/sync/irc-logs";
+          devices = allDevicesExceptPhone;
+          fsWatcherEnabled = false;
+          versioning = trashcan;
+        };
+        uploads = {
+          path = "${config.my.home}/sync/uploads";
+          devices = allDevicesExceptPhone;
+          versioning = trashcan;
+        };
+        password-store = {
+          path = "${config.my.home}/sync/password-store";
+          devices = allDevices;
+          versioning = simple;
+        };
+        mail = {
+          path = if config.mailserver.enable or false
+            then config.mailserver.mailDirectory
+            else "${config.my.home}/sync/mail";
+          devices = allDevicesExceptPhone;
+          versioning = simple;
+        };
+      };
     };
   };
 

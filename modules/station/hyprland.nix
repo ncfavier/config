@@ -1,5 +1,5 @@
-{ inputs, lib, config, pkgs, ... }: with lib; {
-  # programs.hyprland.enable = true;
+{ inputs, lib, config, pkgs, ... }: with lib; mkEnableModule [ "hyprland" ] {
+  programs.hyprland.enable = true;
 
   hm = {
     imports = [ inputs.hyprland.homeManagerModules.default ];

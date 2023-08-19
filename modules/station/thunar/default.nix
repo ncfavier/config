@@ -28,7 +28,7 @@
       glib.bin
       gnome.zenity
       webp-pixbuf-loader
-      (pr 244723 "sha256-Jf7tZU40i6bamM7weEyvsVyNXooDxdrIAr9leXA84W0=").libavif # TODO
+      libavif
       (writeTextDir "share/thumbnailers/ffmpegthumbnailer.thumbnailer" ''
         [Thumbnailer Entry]
         MimeType=${concatStringsSep ";" config.lib.mimeTypes.media}
