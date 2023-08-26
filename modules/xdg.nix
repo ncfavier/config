@@ -67,7 +67,7 @@
               ];
               imv-dir = images;
               mpv = media;
-              "org.gnome.Fileroller" = archives;
+              "org.gnome.FileRoller" = archives;
               transmission-gtk = [
                 "application/x-bittorrent"
                 "x-scheme-handler/magnet"

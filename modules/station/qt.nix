@@ -1,7 +1,7 @@
 {
-  hm.qt = {
+  qt = {
     enable = true;
-    platformTheme = "gtk";
-    style.name = "gtk2";
+    platformTheme = "gtk2";
+    style = "gtk2";
   };
 }
