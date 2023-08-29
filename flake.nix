@@ -13,7 +13,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
     nur.url = "nur";
     dns = {
       url = "github:kirelagin/dns.nix";
@@ -34,6 +33,7 @@
     };
     qeval = {
       url = "github:ncfavier/qeval";
+      inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
       inputs.nur.follows = "nur";
     };
   };

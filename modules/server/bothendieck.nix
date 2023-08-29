@@ -5,7 +5,7 @@
   configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;
 
   bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieckWithEvaluators.override (old: {
-    qeval = old.qeval.override {
+    qeval = old.qeval.override ({ pkgs, ... }: {
       baseKernelPackages = pkgs.linuxPackages_latest;
       enableKVM = this.hasKVM;
       qemu = pkgs.qemu_kvm; # don't rebuild QEMU
@@ -85,7 +85,7 @@
           '';
         };
       };
-    };
+    });
   });
 in {
   options.services.bothendieck = {
@@ -139,6 +139,13 @@ in {
         RestrictNamespaces = true;
         RestrictRealtime = true;
         RestrictSUIDSGID = true;
+
+        Restart = "on-failure";
+        RestartSec = "10s";
+      };
+      unitConfig = {
+        StartLimitIntervalSec = "1min";
+        StartLimitBurst = 5;
       };
     };
 
@@ -151,8 +158,31 @@ in {
         realName = "bothendieck";
         channels = [ "##nf" "#tendra" ];
         commandPrefix = ".";
+        urlAlternativeHosts = {
+          "twitter.com" = "https://nitter.d420.de";
+          "m.twitter.com" = "https://nitter.d420.de";
+        };
       };
       secretsFile = config.secrets.bothendieck.path;
     };
+
+    # services.nitter = {
+    #   enable = true;
+    #   package = pkgs.nitter.overrideAttrs (o: {
+    #     src = pkgs.fetchFromGitHub {
+    #       owner = "zedeus";
+    #       repo = "nitter";
+    #       rev = "d7ca353a55ea3440a2ec1f09155951210a374cc7";
+    #       hash = "sha256-nlpUzbMkDzDk1n4X+9Wk7+qQk+KOfs5ID6euIfHBoa8=";
+    #     };
+    #   });
+    #   openFirewall = false;
+    #   server.hostname = my.domain;
+    #   server.address = head this.ipv4; # can't use a local address because bothendieck blocks those
+    #   server.port = 8099;
+    #   # server.httpMaxConnections = 2;
+    #   # config.tokenCount = 1;
+    #   # cache.redisConnections = 1;
+    # };
   };
 }

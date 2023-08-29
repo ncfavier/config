@@ -80,6 +80,7 @@ in mkEnableModule [ "services" "my-lambdabot" ] {
           "MultiWayIf",
           "NamedFieldPuns",
           "NamedWildCards",
+          "NoGeneralisedNewtypeDeriving",
           "NoMonomorphismRestriction",
           "NumericUnderscores",
           "OverloadedStrings",
