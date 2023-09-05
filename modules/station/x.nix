@@ -92,7 +92,6 @@
         "*background" = background;
         "*foreground" = foreground;
         "*cursorColor" = foreground;
-        "*font" = "xft:bitmap:pixelsize=10";
       };
 
       services.picom = {

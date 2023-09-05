@@ -21,6 +21,8 @@
         vim-nixhash
         vim-markdown
         haskell-vim
+        agda-vim
+        coq-vim
         # TODO https://github.com/mcchrish/vim-no-color-collections
         colorbuddy-nvim
         (pkgs.vimUtils.buildVimPluginFrom2Nix {

@@ -58,11 +58,6 @@
         "command": "-workbench.action.closeWindow"
     },
     {
-        "key": "ctrl+8",
-        "command": "agda-mode.input-symbol[Activate]",
-        "when": "editorLangId == 'agda'"
-    },
-    {
         "key": "\\",
         "command": "-agda-mode.input-symbol[Activate]",
         "when": "editorLangId == 'agda'"
@@ -92,5 +87,15 @@
         "key": "ctrl+o",
         "command": "-workbench.action.files.openFile",
         "when": "true"
+    },
+    {
+        "key": "ctrl+8",
+        "command": "agda-mode.input-symbol[Activate]",
+        "when": "editorLangId == 'agda' || editorLangId == 'lagda-md' || editorLangId == 'lagda-rst' || editorLangId == 'lagda-tex'"
+    },
+    {
+        "key": "\\",
+        "command": "-agda-mode.input-symbol[Activate]",
+        "when": "editorLangId == 'agda' || editorLangId == 'lagda-md' || editorLangId == 'lagda-rst' || editorLangId == 'lagda-tex'"
     }
 ]

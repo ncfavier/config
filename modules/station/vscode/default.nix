@@ -12,8 +12,8 @@
         sed -i '/agda-mode-body {/,/font-size/{/font-size/d}' dist/style.css
       '';
       publisher = "banacorn";
-      sha256 = "18xvrjqgzslgwkymvz4mqdm8gqhk7xc2j9560wab1i1wvvwxgb25";
-      version = "0.3.12";
+      sha256 = "1c61p22kivl1h54lsi1d007hls66gfwdflm946d73l22v5l61w8z";
+      version = "0.4.0";
     }
     {
       name = "codercoder-dark-theme";
@@ -60,8 +60,8 @@
     {
       name = "vscoq";
       publisher = "maximedenes";
-      sha256 = "12qyvc0d1m0i5mxmjp1swq7sd6ch6yi9v0f14hz64lig3clgjmfh";
-      version = "0.3.8";
+      sha256 = "09kkvzjwcgfrvjqhyzb0ygm21kmx73lbw268iq6lbj4nmsg1cngi";
+      version = "1.9.3";
     }
     {
       name = "vscode-duotone-dark";
