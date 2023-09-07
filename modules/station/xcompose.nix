@@ -3,20 +3,6 @@
     text = ''
       include "%L"
 
-      # Emotes
-      <Multi_key> <y> <y> : "☯"
-      <Multi_key> <O> <O> : "👀"
-      <Multi_key> <greater> <less> : "👉👈"
-      <Multi_key> <backslash> <slash> : "¯\\_(ツ)_/¯"
-      <Multi_key> <s> <2> <h> : "┐('~'; )┌"
-      <Multi_key> <l> <e> : "( ͡° ͜ʖ ͡°)"
-      <Multi_key> <m> <e> <h> : "ಠ_ಠ"
-      <Multi_key> <t> <f> : "(╯°□°）╯︵ ┻━┻"
-      <Multi_key> <q> <t> : "(◕‿◕)"
-      <Multi_key> <s> <a> <d> : "(｡•́︿•̀｡)"
-      <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
-
-      # Math
       <Multi_key> <less> <bar> : "◂"
       <Multi_key> <bar> <greater> : "▸"
       <Multi_key> <b> <o> <x> : "□"
@@ -296,8 +282,6 @@
       <Multi_key> <d> <e> <e> : "∂"
       <Multi_key> <n> <a> <b> : "∇"
       <Multi_key> <y> <o> : "よ"
-
-      # Misc
       <Multi_key> <space> <space> : "␣"
       <Multi_key> <Up> : "↑"
       <Multi_key> <Down> : "↓"
@@ -349,6 +333,17 @@
       <Multi_key> <e> <t> : "ꝫ"
       <Multi_key> <E> <T> : "Ꝫ"
       <Multi_key> <s> <h> : "ʃ"
+      <Multi_key> <y> <y> : "☯"
+      <Multi_key> <O> <O> : "👀"
+      <Multi_key> <greater> <less> : "👉👈"
+      <Multi_key> <backslash> <slash> : "¯\\_(ツ)_/¯"
+      <Multi_key> <s> <2> <h> : "┐('~'; )┌"
+      <Multi_key> <l> <e> : "( ͡° ͜ʖ ͡°)"
+      <Multi_key> <m> <e> <h> : "ಠ_ಠ"
+      <Multi_key> <t> <f> : "(╯°□°）╯︵ ┻━┻"
+      <Multi_key> <q> <t> : "(◕‿◕)"
+      <Multi_key> <s> <a> <d> : "(｡•́︿•̀｡)"
+      <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
     '';
 
     onChange = ''
