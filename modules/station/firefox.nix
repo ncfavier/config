@@ -52,6 +52,7 @@ in {
           "general.warnOnAboutConfig" = false;
           "gfx.color_management.mode" = "0";
           "layers.acceleration.force-enabled" = true;
+          "middlemouse.paste" = false;
           "network.trr.mode" = "5";
           "places.history.expiration.max_pages" = "9999999";
           "privacy.donottrackheader.enabled" = true;

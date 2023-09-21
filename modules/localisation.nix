@@ -13,6 +13,7 @@
         xkb_symbols "fr-my" {
           include "fr(oss)"
           key <TLDE> { [ grave, twosuperior ] };
+          key <BKSL> { [ asterisk, dead_greek, dead_grave, dead_macron ] };
         };
       '';
     };

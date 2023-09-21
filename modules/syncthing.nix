@@ -1,4 +1,4 @@
-{ lib, config, ... }: with lib; {
+{ lib, this, config, ... }: with lib; {
   imports = [
     (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "settings" "folders" ])
   ];
@@ -13,13 +13,16 @@
     overrideDevices = true;
     overrideFolders = true;
 
-    guiAddress = "0.0.0.0:8384";
+    guiAddress = "${this.wireguard.ipv4}:8384";
     openDefaultPorts = false;
 
     key = config.secrets.syncthing.path;
 
     settings = {
-      gui.theme = "default";
+      gui = {
+        theme = "default";
+        insecureAdminAccess = true;
+      };
       options.urAccepted = -1;
 
       devices = mapAttrs (_: m: {
