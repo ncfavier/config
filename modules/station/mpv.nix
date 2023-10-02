@@ -48,9 +48,5 @@
         "Alt+f" = "script-binding quality_menu/audio_formats_toggle";
       };
     };
-
-    home.packages = with pkgs; [
-      syncplay
-    ];
   };
 }

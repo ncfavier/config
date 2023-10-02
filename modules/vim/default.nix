@@ -25,7 +25,7 @@
         coq-vim
         # TODO https://github.com/mcchrish/vim-no-color-collections
         colorbuddy-nvim
-        (pkgs.vimUtils.buildVimPluginFrom2Nix {
+        (pkgs.vimUtils.buildVimPlugin {
           name = "nvim-noirbuddy";
           src = pkgs.fetchFromGitHub {
             owner = "jesseleite";

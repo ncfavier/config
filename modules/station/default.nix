@@ -48,7 +48,6 @@
         cubical
         agda-categories
       ]))
-      racket
       audacity
       gimp
       inkscape

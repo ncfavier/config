@@ -186,7 +186,6 @@
   "editor.rulers": [
     85
   ],
-  "workbench.colorTheme": "Lilac",
   "latex-workshop.latex.tools": [
     {
       "name": "latexmk",
@@ -313,4 +312,5 @@
       "env": {}
     }
   ],
+  "workbench.colorTheme": "Lilac",
 }
