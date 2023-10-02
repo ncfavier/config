@@ -17,6 +17,8 @@
     kernelModules = [ "kvm-intel" ];
     initrd.kernelModules = [ "nouveau" ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+
+    swraid.enable = false;
   };
 
   fileSystems = {

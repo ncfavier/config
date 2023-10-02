@@ -1,4 +1,6 @@
-{ lib, config, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; {
+  hm.home.packages = [ pkgs.libnotify ];
+
   hm.services.dunst = {
     enable = true;
 

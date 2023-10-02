@@ -66,23 +66,27 @@ terminal() {
         ${columns:+-o window.dimensions.columns="$columns"} \
         ${lines:+-o window.dimensions.lines="$lines"} \
         ${hold:+--hold} \
-        ${*:+-e "$@"}
+        "$@"
 }
 
 go() {
+    new= not_new=1
     if [[ $1 == -n ]]; then
         shift
+        new=1 not_new=
         focus-window() { return 1; }
     fi
     app=$1
     shift
     case $app in
         term|terminal)
-            terminal "$@" &;;
+            terminal ${*:+-e "$@"} &;;
         chat|irc)
-            class=irc lines=100 columns=140 terminal mosh -- "$server_hostname" tmux -L weechat attach -d &;;
+            class=irc lines=100 columns=140 terminal \
+                -o bell.command.program=notify-send -o bell.command.args='["-i","0","-r","0x1F4AC","💬"]' \
+                -e mosh -- "$server_hostname" tmux -L weechat attach ${not_new:+-d} &;;
         editor)
-            focus_title='- N?VIM$' terminal vim &;;
+            focus_title='- N?VIM$' terminal -e vim &;;
         web|browser)
             class='firefox|chromium-browser' focus-window || exec firefox &;;
         mail)
@@ -96,7 +100,7 @@ go() {
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)
-            class=calendar title=calendar columns=64 lines=9 hold=1 terminal cal -3 &;;
+            class=calendar title=calendar columns=64 lines=9 hold=1 terminal -e cal -3 &;;
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
         emoji)

@@ -40,7 +40,6 @@
       discord
       tdesktop
       signal-desktop
-      amfora
       libreoffice-fresh
       pandoc
       coq

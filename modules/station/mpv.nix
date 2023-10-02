@@ -1,4 +1,13 @@
 { lib, config, pkgs, ... }: with lib; {
+  nixpkgs.overlays = [ (pkgs: prev: {
+    mpv-unwrapped = prev.mpv-unwrapped.overrideAttrs (o: {
+      patches = o.patches or [] ++ [ (pkgs.fetchpatch {
+        url = "https://github.com/mpv-player/mpv/pull/12511.patch";
+        hash = "sha256-IoL/e7PGNQjadornkFu9GRKmWnVJsPm0PpnveiVuYqM=";
+      }) ];
+    });
+  }) ];
+
   hm = {
     programs.mpv = {
       enable = true;
@@ -16,6 +25,8 @@
         volume-max = 200;
         sub-auto = "fuzzy";
         sub-border-size = 1;
+
+        hwdec = "auto-safe";
 
         pulse-latency-hacks = mkIf (config.sound.backend == "pulseaudio") true;
       };

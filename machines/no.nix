@@ -31,6 +31,8 @@
       allowDiscards = true;
       bypassWorkqueues = true;
     };
+
+    swraid.enable = false;
   };
 
   fileSystems = {

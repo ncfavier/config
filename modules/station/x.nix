@@ -33,6 +33,8 @@
       inherit (config.services.xserver) dpi;
     };
 
+    services.autorandr.enable = true;
+
     hm = {
       xsession = {
         enable = true;

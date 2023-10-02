@@ -28,6 +28,8 @@ in {
         hostKeys = map (k: k.path) config.services.openssh.hostKeys;
       };
     };
+
+    swraid.enable = false;
   };
 
   fileSystems = {

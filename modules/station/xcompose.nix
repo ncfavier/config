@@ -284,6 +284,7 @@
       <Multi_key> <n> <a> <b> : "∇"
       <Multi_key> <y> <o> : "よ"
       <Multi_key> <space> <space> : "␣"
+      <Multi_key> <BackSpace> : "⌫"
       <Multi_key> <Up> : "↑"
       <Multi_key> <Down> : "↓"
       <Multi_key> <Left> : "←"
