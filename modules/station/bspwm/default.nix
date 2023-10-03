@@ -101,6 +101,8 @@ in {
           "${config.hm.xdg.configHome}/bspwm/bspwmrc";
         "super + {_,shift} + {_,ctrl} + {ampersand,eacute,quotedbl,apostrophe,parenleft,minus,egrave,underscore,ccedilla}" =
           "wm {focus-workspace,move-window-to-workspace} {_,^}{1-9}";
+        "super + {_,shift} + {_,ctrl} + KP_{1-9}" =
+          "wm {focus-workspace,move-window-to-workspace} {_,^}{1-9}";
         "super + {_,shift} + {button4,button5,Left,Right}" =
           "wm {focus-workspace,move-window-to-workspace} {prev,next,prev,next}";
         "super + {_,shift} + {a,z}" =
@@ -108,6 +110,8 @@ in {
         "super + ctrl + {_,shift} + z" =
           "wm {focus-workspace,move-window-to-workspace} last.occupied";
         "super + {plus,equal}" =
+          "wm {add,remove}-workspace";
+        "super + KP_{Add,Subtract}" =
           "wm {add,remove}-workspace";
         "super + {_,shift} + Tab" =
           "bspc desktop -l {next,prev}";
@@ -177,6 +181,8 @@ in {
         "super + ctrl + Return" =
           "rofi -show ssh";
         "super + {_,shift} + Return" =
+          "{_,BASH_STARTUP=@${my.server.hostname}} wm go terminal";
+        "super + {_,shift} + KP_Enter" =
           "{_,BASH_STARTUP=@${my.server.hostname}} wm go terminal";
         "super + {_,shift} + {w,x,c,f,e,v,m}" =
           "wm go {_,-n} {web,mail,chat,files,editor,video,music}";
