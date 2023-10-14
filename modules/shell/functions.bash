@@ -384,6 +384,13 @@ pkgs() {
 }
 complete_alias pkgs nix build -f /etc/nixpkgs
 
+exe() {
+    local attr=$1
+    shift
+    config run pkgs."$attr" "$@"
+}
+complete_alias exe nix run -f /etc/nixpkgs
+
 drv() {
     nix derivation show "$@" | if [[ -t 1 ]]; then
         less

@@ -62,6 +62,7 @@
 
   environment.systemPackages = with pkgs; [
     efibootmgr
+    radeontop
     v4l-utils
   ];
 

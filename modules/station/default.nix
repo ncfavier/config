@@ -32,6 +32,7 @@
 
     environment.systemPackages = with pkgs; [
       gparted
+      gnome.gnome-system-monitor
     ];
 
     hm.home.packages = with pkgs; [

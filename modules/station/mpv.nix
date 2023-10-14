@@ -34,7 +34,7 @@
       profiles = {
         "loop" = {
           loop-file = "inf";
-          profile-cond = "p.duration<=20";
+          profile-cond = "p.duration<=30";
         };
       };
 

@@ -49,7 +49,8 @@
       };
 
       programs.bash.profileExtra = ''
-        if [[ ! $DISPLAY && $XDG_VTNR == 1 ]]; then
+        if [[ ! $DISPLAY && $XDG_VTNR == ${toString config.services.xserver.tty} ]]; then
+            export XDG_SESSION_TYPE=x11
             exec systemd-cat -t xsession startx
         fi
       '';

@@ -105,10 +105,11 @@
       (pkgs: prev: {
         config-cli = hiPrio (pkgs.writeShellScriptBin "config" ''
           configPath=${escapeShellArg config.lib.meta.configPath}
+          defexpr=${escapeShellArg "${config.hm.home.homeDirectory}/.nix-defexpr"}
           cmd=$1
           shift
           case $cmd in
-            repl|eval|bld|rev)
+            repl|eval|bld|run|rev)
               args=() flakeArgs=()
               for arg do case $arg in
                 -w|--wip) flakeArgs+=(--override-flake config "$configPath");;
@@ -151,17 +152,19 @@
               else
                 expr=self.revision
               fi
-              nix eval "''${flakeArgs[@]}" -f ~/.nix-defexpr --raw "$expr"
+              nix eval "''${flakeArgs[@]}" -f "$defexpr" --raw "$expr"
               echo
               ;;
 
             repl)
-              exec nix repl "''${flakeArgs[@]}" -f ~/.nix-defexpr "$@";;
+              exec nix repl "''${flakeArgs[@]}" -f "$defexpr" "$@";;
             eval)
-              exec nix eval "''${flakeArgs[@]}" -f ~/.nix-defexpr --json "$@" | jq -r .;;
+              exec nix eval "''${flakeArgs[@]}" -f "$defexpr" --json "$@" | jq -r .;;
             bld)
               # https://github.com/NixOS/nix/issues/6661
-              exec nix-build --log-format bar-with-logs "''${flakeArgs[@]}" ~/.nix-defexpr -A "$@";;
+              exec nix-build --log-format bar-with-logs "''${flakeArgs[@]}" "$defexpr" -A "$@";;
+            run)
+              exec nix run "''${flakeArgs[@]}" -f "$defexpr" "$@";;
 
             specialise)
               name=$1
@@ -202,14 +205,15 @@
             if [[ $cur == @* ]]; then
               _known_hosts_real -a -- "$cur"
             else
-              compreply -W 'env compare update repl eval bld specialise revert home build build-vm test switch boot'
+              compreply -W 'env compare update repl eval bld run specialise revert home build build-vm test switch boot'
             fi
           else case ''${words[1]} in
             compare|update|rev) _complete_nix_cmd $cword nix flake lock "$configPath" --update-input;;
-            repl|eval|bld)      compreply -W '-w --wip';;&
+            repl|eval|bld|run)  compreply -W '-w --wip';;&
             repl)               _complete_nix_cmd 2 nix repl ~/.nix-defexpr;;
             eval)               _complete_nix_cmd 2 nix eval -f ~/.nix-defexpr --json;;
             bld)                _complete_nix_cmd 2 nix build -f ~/.nix-defexpr --json;;
+            run)                _complete_nix_cmd 2 nix run -f ~/.nix-defexpr --json;;
             home)               _complete_nix_cmd 2 nix shell "$configPath";;
             build|switch)       _complete_nix_cmd 2 nix build "$configPath";;
           esac fi
