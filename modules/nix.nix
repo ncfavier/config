@@ -198,7 +198,7 @@
           _complete_nix
         }
         _config() {
-          local cur prev words cword
+          local cur prev words cword args_offset flakeArgs
           local configPath=${escapeShellArg config.lib.meta.configPath}
           _init_completion -n ':=&'
           if [[ $cword == 1 ]] || [[ $cword == 2 && $prev == @* ]]; then
@@ -207,16 +207,26 @@
             else
               compreply -W 'env compare update repl eval bld run specialise revert home build build-vm test switch boot'
             fi
-          else case ''${words[1]} in
-            compare|update|rev) _complete_nix_cmd $cword nix flake lock "$configPath" --update-input;;
-            repl|eval|bld|run)  compreply -W '-w --wip';;&
-            repl)               _complete_nix_cmd 2 nix repl ~/.nix-defexpr;;
-            eval)               _complete_nix_cmd 2 nix eval -f ~/.nix-defexpr --json;;
-            bld)                _complete_nix_cmd 2 nix build -f ~/.nix-defexpr --json;;
-            run)                _complete_nix_cmd 2 nix run -f ~/.nix-defexpr --json;;
-            home)               _complete_nix_cmd 2 nix shell "$configPath";;
-            build|switch)       _complete_nix_cmd 2 nix build "$configPath";;
-          esac fi
+          else
+            args_offset=2
+            flakeArgs=()
+            case ''${words[1]} in
+              repl|eval|bld|run|rev)
+                compreply -W '-w --wip'
+                while [[ ''${words[args_offset]} == @(-w|--wip) ]]; do
+                  (( args_offset++ ))
+                  flakeArgs+=(--override-flake config "$configPath")
+                done
+                ;;&
+              compare|update|rev) _complete_nix_cmd $cword nix flake lock "$configPath" --update-input;;
+              repl)               _complete_nix_cmd $args_offset nix repl "''${flakeArgs[@]}" ~/.nix-defexpr;;
+              eval)               _complete_nix_cmd $args_offset nix eval "''${flakeArgs[@]}" -f ~/.nix-defexpr;;
+              bld)                _complete_nix_cmd $args_offset nix build "''${flakeArgs[@]}" -f ~/.nix-defexpr;;
+              run)                _complete_nix_cmd $args_offset nix run "''${flakeArgs[@]}" -f ~/.nix-defexpr;;
+              home)               _complete_nix_cmd $args_offset nix shell "$configPath";;
+              build|switch)       _complete_nix_cmd $args_offset nix build "$configPath";;
+            esac
+          fi
         }
         complete -F _config config
       '';

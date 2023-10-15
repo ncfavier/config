@@ -104,6 +104,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    lib = { inherit bothendieck; };
+
     system.extraDependencies = collectFlakeInputs inputs.bothendieck ++ collectFlakeInputs inputs.qeval ++ [ bothendieck.cabal2nixDeriver pkgs.nur.repo-sources.tilpner ];
 
     secrets.bothendieck = {};

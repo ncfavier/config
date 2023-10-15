@@ -18,6 +18,8 @@ in {
           youtube-shorts-block
         ];
         settings = {
+          "accessibility.typeaheadfind.autostart" = false;
+          "accessibility.typeaheadfind.manual" = false;
           "apz.gtk.touchpad_pinch.enabled" = false;
           "browser.download.alwaysOpenPanel" = false;
           "browser.download.always_ask_before_handling_new_types" = true;
