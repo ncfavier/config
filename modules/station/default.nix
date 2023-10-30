@@ -5,12 +5,6 @@
     boot.kernelParams = [ "mitigations=off" ];
     boot.kernel.sysctl."kernel.sysrq" = 1;
 
-    services.earlyoom = {
-      enable = true;
-      freeMemThreshold = 5;
-      freeSwapThreshold = 5;
-    };
-
     environment.etc."systemd/system-sleep/batenergy".source = pkgs.writeShellScript "batenergy" ''
       PATH=${makeBinPath [ pkgs.coreutils pkgs.bc ]}
       source ${pkgs.fetchFromGitHub {

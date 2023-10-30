@@ -11,6 +11,41 @@
     bat
     xxd
     ripgrep
+    (igrep.overrideAttrs (o: {
+      patches = o.patches or [] ++ [
+        (builtins.toFile "igrep-less.patch" ''
+diff --git a/src/ui/editor.rs b/src/ui/editor.rs
+index b799b70..da17f82 100644
+--- a/src/ui/editor.rs
++++ b/src/ui/editor.rs
+@@ -13,6 +13,7 @@ use strum_macros::Display;
+ #[derive(Display, Default, PartialEq, Eq, Copy, Clone, Debug, ArgEnum)]
+ #[strum(serialize_all = "lowercase")]
+ pub enum Editor {
++    Less,
+     #[default]
+     Vim,
+     Neovim,
+@@ -83,6 +84,7 @@ impl EditorCommand {
+
+     fn program(editor: Editor) -> String {
+         match editor {
++            Editor::Less => "less".into(),
+             Editor::Vim => "vim".into(),
+             Editor::Neovim | Editor::Nvim => "nvim".into(),
+             Editor::Nano => "nano".into(),
+@@ -102,7 +104,7 @@ impl EditorCommand {
+
+     fn args(editor: Editor, file_name: &str, line_number: u64) -> Box<dyn Iterator<Item = String>> {
+         match editor {
+-            Editor::Vim | Editor::Neovim | Editor::Nvim | Editor::Nano | Editor::Micro => {
++            Editor::Less | Editor::Vim | Editor::Neovim | Editor::Nvim | Editor::Nano | Editor::Micro => {
+                 Box::new([format!("+{line_number}"), file_name.into()].into_iter())
+             }
+             Editor::Code | Editor::Vscode | Editor::CodeInsiders => {
+        '')
+      ];
+    }))
     file
     fd
     tree
