@@ -89,10 +89,6 @@ in {
 
         "up.${my.domain}".globalRedirect = "f.${my.domain}";
 
-        "nix.${my.domain}" = {
-          locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
-        };
-
         "git.${my.domain}".globalRedirect = "github.com/${my.githubUsername}";
 
         default = {

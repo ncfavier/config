@@ -63,6 +63,7 @@ in {
 
           github.CNAME = [ "${my.githubUsername}.github.io." ];
           glam = github;
+          agda = github;
         };
       });
     };
@@ -70,6 +71,7 @@ in {
 
   services.unbound = {
     enable = true;
+    localControlSocketPath = "/run/unbound/unbound.ctl";
     settings = {
       server = {
         tls-system-cert = true;
@@ -106,6 +108,8 @@ in {
       } ];
     };
   };
+
+  my.extraGroups = [ config.services.unbound.group ];
 
   networking.nameservers = [ "127.0.0.1" "::1" ];
 
