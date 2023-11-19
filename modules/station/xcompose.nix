@@ -293,6 +293,7 @@
       <Multi_key> <minus> <slash> <greater> : "↛"
       <Multi_key> <less> <slash> <minus> : "↚"
       <Multi_key> <2> <Right> : "⇉"
+      <Multi_key> <3> <Right> : "⇶"
       <Multi_key> <Tab> : "⇥"
       <Multi_key> <Return> : "↵"
       <Multi_key> <f> <l> : "❧"

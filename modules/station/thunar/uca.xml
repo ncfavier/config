@@ -26,7 +26,7 @@
 	<icon>code-block</icon>
 	<name>Order</name>
 	<unique-id>1546822886812187-1</unique-id>
-	<command>order &quot;$(zenity --file-selection --directory --filename=&quot;$HOME&quot;)&quot; %F</command>
+	<command>order &quot;$(zenity --file-selection --directory)&quot; %F</command>
 	<description></description>
 	<patterns>*</patterns>
 	<audio-files/>

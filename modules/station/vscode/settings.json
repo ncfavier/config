@@ -124,7 +124,6 @@
   "files.insertFinalNewline": true,
   "editor.renderFinalNewline": "off",
   "files.trimFinalNewlines": true,
-  "workbench.editor.untitled.hint": "hidden",
   "security.workspace.trust.enabled": false,
   "editor.unicodeHighlight.allowedCharacters": {
     "ℕ": true,
@@ -172,6 +171,7 @@
     "<C-d>": true,
     "<C-f>": false,
     "<C-k>": false,
+    "<C-p>": false,
     "<C-q>": false,
     "<C-s>": false,
     "<C-w>": false,
@@ -312,5 +312,6 @@
       "env": {}
     }
   ],
+  "workbench.editor.empty.hint": "hidden",
   "workbench.colorTheme": "Lilac",
 }

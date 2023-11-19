@@ -3,7 +3,7 @@
 
   services.xserver = {
     layout = "fr-my,us,ru,gr";
-    xkbVariant = ",,phonetic_fr,";
+    xkbVariant = ",,phonetic_azerty,";
     xkbOptions = "grp:shifts_toggle";
 
     extraLayouts.fr-my = {
@@ -14,6 +14,7 @@
           include "fr(oss)"
           key <TLDE> { [ grave, twosuperior ] };
           key <BKSL> { [ asterisk, dead_greek, dead_grave, dead_macron ] };
+          key <AB08> { [ semicolon, period, multiply, U00B7 ] };
         };
       '';
     };
