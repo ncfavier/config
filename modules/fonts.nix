@@ -30,7 +30,7 @@
           jetbrains-mono
           roboto
           inriafonts
-          twitter-color-emoji
+          (assert versionOlder twitter-color-emoji.version "15"; (pr 272078 "sha256-knBUacuhDSbY755uEYYXARsHo/TSEuHveLUuv74mu7Y=").twitter-color-emoji)
           noto-fonts-emoji
           symbola
           dina-font

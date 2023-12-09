@@ -8,12 +8,9 @@
     }
     {
       name = "agda-mode";
-      postPatch = ''
-        sed -i '/agda-mode-body {/,/font-size/{/font-size/d}' dist/style.css
-      '';
       publisher = "banacorn";
-      sha256 = "1c61p22kivl1h54lsi1d007hls66gfwdflm946d73l22v5l61w8z";
-      version = "0.4.0";
+      sha256 = "0kik11fwi87fwchjj3axwjy0m93bh9d2zlyxsccybq9kmabkvj9n";
+      version = "0.4.4";
     }
     {
       name = "codercoder-dark-theme";
@@ -60,8 +57,8 @@
     {
       name = "vscoq";
       publisher = "maximedenes";
-      sha256 = "09kkvzjwcgfrvjqhyzb0ygm21kmx73lbw268iq6lbj4nmsg1cngi";
-      version = "1.9.3";
+      sha256 = "1fdag6hc4d23h6x2x6v10ics3inq5ngq3nnnb86cxig657axqsx6";
+      version = "2.0.2";
     }
     {
       name = "vscode-duotone-dark";

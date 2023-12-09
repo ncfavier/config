@@ -5,11 +5,12 @@
   ];
 
   services.fwupd.enable = true;
+  systemd.timers.fwupd-refresh.enable = false; # https://github.com/NixOS/nixpkgs/issues/271834
 
   services.tlp.settings = {
     RUNTIME_PM_DENYLIST = "02:00.0"; # otherwise the Ethernet adapter doesn't work on battery mode
     START_CHARGE_THRESH_BAT0 = 75;
-    STOP_CHARGE_THRESH_BAT0 = 80;
+    STOP_CHARGE_THRESH_BAT0 = 81;
     RESTORE_THRESHOLDS_ON_BAT = 1;
   };
 

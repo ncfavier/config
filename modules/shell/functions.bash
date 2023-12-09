@@ -222,6 +222,9 @@ todo() {
     shopt -s nullglob
     fs=("${synced[my]}/todo/$f"* "${synced[my]}/todo/$f")
     ${EDITOR:-vim} "${fs[0]}"
+    if [[ -e "${fs[0]}" && ! -s "${fs[0]}" ]]; then
+        rm -- "${fs[0]}"
+    fi
 }
 _todo() {
     . config env

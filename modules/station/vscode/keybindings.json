@@ -117,5 +117,10 @@
     {
         "key": "ctrl+=",
         "command": "-workbench.action.zoomIn"
+    },
+    {
+        "key": "\\",
+        "command": "-agda-mode.input-symbol[Activate]",
+        "when": "editorTextFocus && editorLangId == 'agda' || editorTextFocus && editorLangId == 'lagda-md' || editorTextFocus && editorLangId == 'lagda-rst' || editorTextFocus && editorLangId == 'lagda-tex'"
     }
 ]

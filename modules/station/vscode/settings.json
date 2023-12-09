@@ -171,6 +171,7 @@
     "<C-d>": true,
     "<C-f>": false,
     "<C-k>": false,
+    "<C-n>": false,
     "<C-p>": false,
     "<C-q>": false,
     "<C-s>": false,
