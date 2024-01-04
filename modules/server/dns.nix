@@ -9,13 +9,25 @@ in {
     ipTransparent = true;
     ratelimit.enable = true;
 
-    zones.${my.domain} = {
-      data = with dns.combinators; let
-        here = {
-          A = map a this.ipv4;
-          AAAA = map aaaa this.ipv6;
+    zones = with dns.combinators; let
+      here = {
+        A = map a this.ipv4;
+        AAAA = map aaaa this.ipv6;
+      };
+    in {
+      "yoneda.ninja".data = dns.toString "yoneda.ninja" (here // {
+        TTL = 60;
+        SOA = {
+          nameServer = "@";
+          adminEmail = "dns@${my.domain}";
+          serial = 0;
         };
-      in dns.toString my.domain (here // {
+        NS = [ "@" ];
+        CAA = letsEncrypt "dns+caa@${my.domain}";
+        subdomains."*" = here;
+      });
+
+      ${my.domain}.data = dns.toString my.domain (here // {
         TTL = 60 * 60;
 
         SOA = {

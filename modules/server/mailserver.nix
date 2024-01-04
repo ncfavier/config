@@ -38,10 +38,30 @@
     '';
   };
 
-  services.rspamd.overrides."whitelist.conf".text = ''
-    whitelist_from {
-      zulip.com = true;
-      zulipchat.com = true;
-    }
-  '';
+  services.rspamd = {
+    overrides."whitelist.conf".text = ''
+      whitelist_from {
+        zulip.com = true;
+        zulipchat.com = true;
+      }
+    '';
+
+    locals."groups.conf".text = ''
+      symbols "FORGED_RECIPIENTS" {
+        weight = 10;
+      }
+    '';
+
+    locals."settings.conf".text = ''
+      forged_rcpt {
+        rcpt = "znc";
+        apply {
+          FORCED_RECIPIENTS_2 = 100.0;
+        }
+        symbols [
+          "FORGED_RECIPIENT_2"
+        ]
+      }
+    '';
+  };
 }
