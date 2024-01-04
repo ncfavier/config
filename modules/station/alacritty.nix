@@ -1,6 +1,7 @@
 { lib, config, pkgs, ... }: with lib; {
   hm.programs.alacritty = {
     enable = true;
+    package = assert versionOlder pkgs.alacritty.version "0.13"; (pkgs.pr 277316 "sha256-7EyJo9gK3hTz+T8B69JBxxF7lER52y5qNYpAqPOy+Y0=").alacritty;
     settings = with config.theme; {
       window = {
         dimensions = {
@@ -18,10 +19,10 @@
       };
       font = {
         normal.family = "bitmap";
-        size = 8;
+        size = 9;
       };
-      draw_bold_text_with_bright_colors = true;
       colors = {
+        draw_bold_text_with_bright_colors = true;
         primary = {
           inherit background foreground;
         };
@@ -51,11 +52,15 @@
         style.blinking = "Always";
         blink_timeout = 0;
       };
-      key_bindings = [
-        { key =  3; mods = "Alt"; chars = "\\e2"; }
-        { key =  8; mods = "Alt"; chars = "\\e7"; }
-        { key = 10; mods = "Alt"; chars = "\\e9"; }
-        { key = 11; mods = "Alt"; chars = "\\e0"; }
+      keyboard.bindings = let
+        # https://github.com/nix-community/home-manager/pull/611#discussion_r1115932168
+        # https://github.com/nix-community/home-manager/pull/4817#discussion_r1441726084
+        esc = (builtins.fromTOML ''c = "\u001b"'').c;
+      in [
+        { key =  3; mods = "Alt"; chars = "${esc}2"; }
+        { key =  8; mods = "Alt"; chars = "${esc}7"; }
+        { key = 10; mods = "Alt"; chars = "${esc}9"; }
+        { key = 11; mods = "Alt"; chars = "${esc}0"; }
       ];
     };
   };

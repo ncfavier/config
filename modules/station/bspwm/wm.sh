@@ -83,7 +83,7 @@ go() {
             terminal ${*:+-e "$@"} &;;
         chat|irc)
             class=irc lines=100 columns=140 terminal \
-                -o bell.command.program=notify-send -o bell.command.args='["-i","0","-r","0x1F4AC","💬"]' \
+                -o bell.command='{program = "notify-send", args = ["-i", "0", "-r", "0x1F4AC", "💬"]}' \
                 -e mosh -- "$server_hostname" tmux -L weechat attach ${not_new:+-d} &;;
         editor)
             focus_title='- N?VIM$' terminal -e vim &;;

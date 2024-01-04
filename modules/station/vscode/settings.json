@@ -164,7 +164,7 @@
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   "files.trimTrailingWhitespace": true,
-  "editor.occurrencesHighlight": false,
+  "editor.occurrencesHighlight": "off",
   "vim.handleKeys": {
     "<C-b>": false,
     "<C-c>": false,
