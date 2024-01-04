@@ -31,6 +31,7 @@
           roboto
           inriafonts
           (assert versionOlder twitter-color-emoji.version "15"; (pr 272078 "sha256-knBUacuhDSbY755uEYYXARsHo/TSEuHveLUuv74mu7Y=").twitter-color-emoji)
+          noto-fonts
           noto-fonts-emoji
           symbola
           dina-font

@@ -36,6 +36,7 @@ in {
           "browser.sessionstore.restore_tabs_lazily" = false;
           "browser.startup.homepage" = "about:home";
           "browser.tabs.firefox-view" = false;
+          "browser.tabs.firefox-view-next" = false;
           "browser.tabs.tabmanager.enabled" = false;
           "browser.tabs.warnOnClose" = false;
           "browser.toolbars.bookmarks.visibility" = "never";
@@ -126,7 +127,7 @@ in {
               border: none !important;
             }
 
-            .tabbrowser-tab[visuallyselected="true"] {
+            .tabbrowser-tab[visuallyselected] {
               color: var(--fg) !important;
             }
 
@@ -194,12 +195,7 @@ in {
               transition: border-color 0.1s ease-in-out;
             }
 
-            #urlbar[focused="true"] {
-              /*border-color: var(--cold) !important;
-              transition: border-color 0.1s ease-in-out;*/
-            }
-
-            #urlbar:not(:-moz-lwtheme):not([focused="true"]) > #urlbar-background, #searchbar:not(:-moz-lwtheme):not(:focus-within) {
+            #urlbar:not(:-moz-lwtheme):not([focused]) > #urlbar-background, #searchbar:not(:-moz-lwtheme):not(:focus-within) {
               border: none !important;
             }
 

@@ -58,6 +58,7 @@
         advice = {
           detachedHead = false;
           pushNonFFCurrent = false;
+          skippedCherryPicks = false;
           statusUoption = false;
         };
         color = {

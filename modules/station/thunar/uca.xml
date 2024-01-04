@@ -4,10 +4,15 @@
 	<icon>utilities-terminal</icon>
 	<name>Open a terminal here</name>
 	<unique-id>1631819606206187-1</unique-id>
-	<command>alacritty --working-directory %f</command>
+	<command>alacritty --working-directory %d</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
 </action>
 <action>
 	<icon>up</icon>
