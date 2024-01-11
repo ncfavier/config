@@ -7,8 +7,9 @@
   hm = {
     home.packages = with pkgs; let
       thumbnailerScript = name: script: "${writeShellScript "${name}-script" ''
-        o=$1 s=$2 i=$3
+        o=$1 s=$2 i=$3 u=$4
         if [[ $i != /* ]]; then
+          i=$u
           [[ $i == trash://* ]] &&
               i=file://''${XDG_DATA_HOME:-~/.local/share}/Trash/files''${i#trash://}
           i=''${i#file://}

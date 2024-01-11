@@ -29,6 +29,14 @@
       gnome.gnome-system-monitor
     ];
 
+    nixpkgs.overlays = [ (self: super: {
+      haskell = super.haskell // {
+        packageOverrides = self: super: {
+          Agda = pkgs.haskell.lib.appendConfigureFlag super.Agda "-fdebug";
+        };
+      };
+    }) ];
+
     hm.home.packages = with pkgs; [
       chromium
       thunderbird
@@ -77,7 +85,7 @@
       };
     };
 
-    hm.home.file.".agda/defaults".text = ''
+    hm.xdg.configFile."agda/defaults".text = ''
       standard-library
       cubical
       agda-categories

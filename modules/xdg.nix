@@ -65,7 +65,7 @@
                 "x-scheme-handler/rss+xml"
                 "x-scheme-handler/x-extension-rss"
               ];
-              imv-dir = images;
+              feh = images;
               mpv = media;
               "org.gnome.FileRoller" = archives;
               transmission-gtk = [
