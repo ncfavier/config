@@ -30,6 +30,13 @@
       gnome.zenity
       webp-pixbuf-loader
       libavif
+      (writeShellScriptBin "closest-dir" ''
+        if [[ -d $1 ]]; then
+          printf '%s\n' "$1"
+        else
+          printf '%s\n' "''${1%/*}"
+        fi
+      '')
       (writeTextDir "share/thumbnailers/ffmpegthumbnailer.thumbnailer" ''
         [Thumbnailer Entry]
         MimeType=${concatStringsSep ";" config.lib.mimeTypes.media}

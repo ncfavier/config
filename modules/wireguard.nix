@@ -53,7 +53,45 @@ in {
       services.resolved.domains = [ interface ];
     })
 
-    (mkIf this.isStation {
+    (mkIf this.isStation (let
+      wg-toggle = pkgs.shellScriptWith "wg-toggle" (builtins.toFile "wg-toggle" ''
+        PATH=/run/wrappers/bin:$PATH
+        ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }
+        fwmark=$(sudo wg show ${interface} fwmark) || exit
+        if ip -j route list default dev ${interface} table "$fwmark" | jq -e 'length > 0' > /dev/null; then
+            ip46 route del default dev ${interface} table "$fwmark"
+            resolvectl domain ${interface} ${interface}
+        else
+            ip46 route add default dev ${interface} table "$fwmark"
+            resolvectl domain ${interface} ${interface} '~.' # ~. means "use this interface exclusively"
+        fi
+      '') { deps = with pkgs; [ iproute2 jq systemd ]; };
+      wg-exempt = pkgs.shellScriptWith "wg-exempt" (builtins.toFile "wg-exempt" ''
+        PATH=/run/wrappers/bin:$PATH
+        v4=() v6=() action=add
+        for arg do
+            if [[ $arg == -d ]]; then
+                action=del
+            elif [[ $arg == +([0-9]).+([0-9]).+([0-9]).+([0-9]) ]]; then
+                v4+=("$arg")
+            elif [[ $arg == *:*:* && $arg == +([[:xdigit:]:]) ]]; then
+                v6+=("$arg")
+            else
+                v4+=($(dig +short "$arg" A))
+                v6+=($(dig +short "$arg" AAAA))
+            fi
+        done
+        for ip in "''${v4[@]}"; do
+            sudo ip rule "$action" from "$ip" lookup main
+            sudo ip rule "$action" to "$ip" lookup main
+        done
+        for ip in "''${v6[@]}"; do
+            sudo ip -6 rule "$action" from "$ip" lookup main
+            sudo ip -6 rule "$action" to "$ip" lookup main
+        done
+      '') { deps = with pkgs; [ dnsutils iproute2 ]; };
+      exceptions = [ "wikipedia.org" ];
+    in {
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
         address = [ "${this.wireguard.ipv4}/16" "${this.wireguard.ipv6}/16" ];
@@ -67,44 +105,15 @@ in {
           allowedIPs = [ "0.0.0.0/0" "::/0" ];
           persistentKeepalive = 21;
         } ];
+        postUp = ''
+          ${getExe wg-exempt} ${escapeShellArgs exceptions}
+        '';
+        preDown = ''
+          ${getExe wg-exempt} -d ${escapeShellArgs exceptions}
+        '';
       };
 
-      environment.systemPackages = with pkgs; [
-        (writeShellScriptBin "wg-toggle" ''
-          ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }
-          fwmark=$(sudo wg show ${interface} fwmark) || exit
-          if ip -j route list default dev ${interface} table "$fwmark" | jq -e 'length > 0' > /dev/null; then
-              ip46 route del default dev ${interface} table "$fwmark"
-              resolvectl domain ${interface} ${interface}
-          else
-              ip46 route add default dev ${interface} table "$fwmark"
-              resolvectl domain ${interface} ${interface} '~.' # ~. means "use this interface exclusively"
-          fi
-        '')
-        (writeShellScriptBin "wg-exempt" ''
-          v4=() v6=() action=add
-          for arg do
-              if [[ $arg == -d ]]; then
-                  action=del
-              elif [[ $arg == +([0-9]).+([0-9]).+([0-9]).+([0-9]) ]]; then
-                  v4+=("$arg")
-              elif [[ $arg == *:*:* && $arg == +([[:xdigit:]:]) ]]; then
-                  v6+=("$arg")
-              else
-                  v4+=($(${dnsutils}/bin/dig +short "$arg" A))
-                  v6+=($(${dnsutils}/bin/dig +short "$arg" AAAA))
-              fi
-          done
-          for ip in "''${v4[@]}"; do
-              sudo ip rule "$action" from "$ip" lookup main
-              sudo ip rule "$action" to "$ip" lookup main
-          done
-          for ip in "''${v6[@]}"; do
-              sudo ip -6 rule "$action" from "$ip" lookup main
-              sudo ip -6 rule "$action" to "$ip" lookup main
-          done
-        '')
-      ];
-    })
+      environment.systemPackages = [ wg-toggle wg-exempt ];
+    }))
   ];
 }

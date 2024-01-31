@@ -18,8 +18,8 @@
         decorations = "none";
       };
       font = {
-        normal.family = "bitmap";
-        size = 9;
+        normal.family = font;
+        size = fontSize;
       };
       colors = {
         draw_bold_text_with_bright_colors = true;

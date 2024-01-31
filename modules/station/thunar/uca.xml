@@ -3,9 +3,11 @@
 <action>
 	<icon>utilities-terminal</icon>
 	<name>Open a terminal here</name>
+	<submenu></submenu>
 	<unique-id>1631819606206187-1</unique-id>
-	<command>alacritty --working-directory %d</command>
+	<command>alacritty --working-directory &quot;$(closest-dir %f)&quot;</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 	<audio-files/>
@@ -17,9 +19,11 @@
 <action>
 	<icon>up</icon>
 	<name>Upload</name>
+	<submenu></submenu>
 	<unique-id>1536344904961360-1</unique-id>
-    <command>name=$(zenity --entry --title upload --text &quot;Name? (leave empty for random)&quot;) &amp;&amp; upload %f &quot;$name&quot;</command>
+	<command>name=$(zenity --entry --title upload --text &quot;Name? (leave empty for random)&quot;) &amp;&amp; upload %f &quot;$name&quot;</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<audio-files/>
 	<image-files/>
@@ -30,9 +34,11 @@
 <action>
 	<icon>code-block</icon>
 	<name>Order</name>
+	<submenu></submenu>
 	<unique-id>1546822886812187-1</unique-id>
 	<command>order &quot;$(zenity --file-selection --directory)&quot; %F</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<audio-files/>
 	<image-files/>
@@ -43,36 +49,44 @@
 <action>
 	<icon>media-play</icon>
 	<name>Play</name>
+	<submenu></submenu>
 	<unique-id>1623285145974202-1</unique-id>
 	<command>music-play %F</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<audio-files/>
 </action>
 <action>
 	<icon>mpv</icon>
 	<name>MPV shuffle</name>
+	<submenu></submenu>
 	<unique-id>1614296264720169-1</unique-id>
 	<command>mpv --shuffle %f</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
 	<icon>wallpaper</icon>
 	<name>Set as wallpaper (fill)</name>
+	<submenu></submenu>
 	<unique-id>1548521467613563-1</unique-id>
 	<command>feh --bg-fill %F</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<image-files/>
 </action>
 <action>
 	<icon>wallpaper</icon>
 	<name>Set as wallpaper (tile)</name>
+	<submenu></submenu>
 	<unique-id>1548521561824976-2</unique-id>
 	<command>feh --bg-tile %F</command>
 	<description></description>
+	<range></range>
 	<patterns>*</patterns>
 	<image-files/>
 </action>

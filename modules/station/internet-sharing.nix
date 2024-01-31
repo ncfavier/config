@@ -57,12 +57,11 @@ in {
     };
     nixpkgs.overlays = [ (self: super: {
       wireguard-tools = super.wireguard-tools.overrideAttrs (old: {
-        src = pkgs.fetchFromGitHub {
-          owner = my.githubUsername;
-          repo = "wireguard-tools";
-          rev = "rpfilter-doc";
-          hash = "sha256-vxtxGI0kOUYj5otLicdVURni0wUewwbc68tFuukrI2A=";
-        };
+        patches = old.patches or [] ++ [ (self.fetchpatch {
+          url = "https://github.com/ncfavier/wireguard-tools/commit/a67eb77a11be418f1a7699bbb28e8674a4d3fe89.patch";
+          relative = "src";
+          hash = "sha256-bLuSOGHs1toCHyFCaA4qkeyFj5vTjlaPITliMJownt0=";
+        }) ];
       });
     }) ];
   };
