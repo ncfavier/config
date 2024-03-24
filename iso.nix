@@ -32,7 +32,8 @@
     nixpkgs.overlays = [ (pkgs: prev: {
       linux-firmware = prev.linux-firmware.overrideAttrs (o: {
         postInstall = ''
-          rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl,ath11k}
+          rm -rf "$out"/lib/firmware/{netronome,qcom,mellanox,mrvl,ath11k,ath10k,libertas}
+          find -L "$out" -type l -delete # remove dangling symlinks so that compressFirmwareXz doesn't complain
         '';
         outputHash = null;
       });
