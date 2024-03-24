@@ -37,6 +37,7 @@
         "b" = ''cycle-values background "#000000" "#ffffff"'';
         "F" = "script-binding quality_menu/video_formats_toggle";
         "Alt+f" = "script-binding quality_menu/audio_formats_toggle";
+        "k" = "cycle pause";
       };
     };
   };

@@ -382,6 +382,12 @@ nix-clear-cache() {
     sudo sh -c 'rm ~/.cache/nix/binary-cache-v*.sqlite*'
 }
 
+nix-mv() {
+    local src=$1 dest=$2
+    mv -- "$src" "$dest" &&
+    nix-store --realise "$dest" --add-root "$dest"
+}
+
 pkgs() {
     config bld pkgs."$1" --no-out-link
 }
@@ -430,13 +436,22 @@ hm() {
 complete_alias hm systemctl
 
 pr() {
-    NO_ALARM=1
     local origin
     origin=$(git remote get-url origin) || return
     if [[ $origin == *'github.com'* ]]; then
-        gh pr create --web "$@"
-    elif [[ $origin == *'gitlab.com'* ]]; then
-        glab mr create --web --push --fill "$@"
+        if (( $1 > 0 )); then
+            gh pr checkout "$@"
+        else
+            NO_ALARM=1
+            gh pr create --web "$@"
+        fi
+    elif [[ $origin == *'gitlab'* ]]; then
+        if (( $1 > 0 )); then
+            glab mr checkout "$@"
+        else
+            NO_ALARM=1
+            glab mr create --web --push --fill "$@"
+        fi
     else
         echo "unknown repository type"
         return 1

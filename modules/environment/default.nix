@@ -102,6 +102,8 @@ index b799b70..da17f82 100644
     };
   };
 
+  hm.xdg.configFile."htop/htoprc".force = true;
+
   nixpkgs.overlays = [ (pkgs: prev: {
     shellScriptWith = name: src: { deps ? [], vars ? {} }:
       # can't use `writeScriptBin` because no check phase,

@@ -1,7 +1,6 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, ... }: with lib; {
   hm.programs.alacritty = {
     enable = true;
-    package = assert versionOlder pkgs.alacritty.version "0.13"; (pkgs.pr 279625 "sha256-8X2EF4I9A4qfN6uCBGwvgsJEDSQntYo8rqhtNzHFzpo=").alacritty;
     settings = with config.theme; {
       window = {
         dimensions = {

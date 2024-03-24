@@ -26,7 +26,7 @@
     };
 
     xdg.configFile."feh/themes".text = ''
-      feh -B ${config.theme.background} -g 1200x800 -. --action9 ';bspc node -t ~fullscreen' --sort mtime --reverse
+      feh -B ${config.theme.background} -g 1200x800 -Z -. --action9 ';bspc node -t ~fullscreen' --sort mtime --reverse
     '';
 
     home.packages = with pkgs; [

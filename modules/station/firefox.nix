@@ -282,10 +282,9 @@ in {
           }
 
           @-moz-document domain(github.com) {
-            .blob-num, .blob-code-inner, .highlight pre {
+            .blob-num, .blob-code-inner, .highlight pre, .react-code-text {
               font-family: monospace !important;
               font-size: 13px !important;
-              vertical-align: middle !important;
             }
           }
 

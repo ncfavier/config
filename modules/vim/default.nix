@@ -23,6 +23,7 @@
         haskell-vim
         agda-vim
         coq-vim
+        kotlin-vim
         # TODO https://github.com/mcchrish/vim-no-color-collections
         colorbuddy-nvim
         (pkgs.vimUtils.buildVimPlugin {

@@ -27,15 +27,8 @@
     environment.systemPackages = with pkgs; [
       gparted
       gnome.gnome-system-monitor
+      gnome.gnome-disk-utility
     ];
-
-    nixpkgs.overlays = [ (self: super: {
-      haskell = super.haskell // {
-        packageOverrides = self: super: {
-          Agda = pkgs.haskell.lib.appendConfigureFlag super.Agda "-fdebug";
-        };
-      };
-    }) ];
 
     hm.home.packages = with pkgs; [
       chromium
@@ -81,7 +74,8 @@
           scheme-medium
           collection-latexextra
           collection-fontsextra
-          collection-bibtexextra;
+          collection-bibtexextra
+          ;
       };
     };
 

@@ -7,7 +7,7 @@ die() {
 
 ask() { # TODO get this from functions.bash
     local prompt=$1 default=${2:-y}
-    read -rp "$prompt " -n 1 answer
+    read -rp "$prompt " answer
     if [[ $answer ]]; then echo; else answer=$default; fi
     answer=${answer,,}
     [[ $answer == y ]]

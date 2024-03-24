@@ -66,7 +66,7 @@
                 "x-scheme-handler/x-extension-rss"
               ];
               feh = images;
-              mpv = media;
+              mpv = media ++ gif;
               "org.gnome.FileRoller" = archives;
               transmission-gtk = [
                 "application/x-bittorrent"
@@ -107,7 +107,6 @@
           "image/avif"
           "image/avif-sequence"
           "image/bmp"
-          "image/gif"
           "image/jpeg"
           "image/jpg"
           "image/pjpeg"
@@ -123,6 +122,9 @@
           "image/x-portable-pixmap"
           "image/x-tga"
           "image/x-xbitmap"
+        ];
+        gif = [
+          "image/gif"
         ];
         media = [
           "application/mxf"

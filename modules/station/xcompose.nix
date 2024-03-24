@@ -3,8 +3,11 @@
     text = ''
       include "%L"
 
-      <Multi_key> <less> <bar> : "◂"
-      <Multi_key> <bar> <greater> : "▸"
+      <Multi_key> <less> <bar> <s> : "◂"
+      <Multi_key> <bar> <greater> <s> : "▸"
+      <Multi_key> <bar> <greater> <w> : "▹"
+      <Multi_key> <less> <bar> <b> : "◀"
+      <Multi_key> <bar> <greater> <b> : "▶"
       <Multi_key> <b> <o> <x> : "□"
       <Multi_key> <bar> <Right> : "↦"
       <Multi_key> <q> <e> <d> : "∎"
@@ -131,6 +134,7 @@
       <dead_circumflex> <x> : "ˣ"
       <Multi_key> <asciicircum> <y> : "ʸ"
       <dead_circumflex> <apostrophe> : "′"
+      <dead_circumflex> <quotedbl> : "″"
       <Multi_key> <C> <A> : "𝒜"
       <Multi_key> <C> <B> : "ℬ"
       <Multi_key> <C> <C> : "𝒞"

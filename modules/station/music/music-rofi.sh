@@ -1,12 +1,16 @@
 shopt -s lastpipe
 
+music_dir=$(xdg-user-dir MUSIC)
+
 mpc() {
     command mpc -q "$@"
 }
 
 mpc_load() {
     mpc clear
-    if [[ $artist || $album ]]; then
+    if [[ $1 == random ]]; then
+        find -L "$music_dir" -maxdepth 1 -type f -mtime -500 -printf '%f\n' | mpc add
+    elif [[ $artist || $album ]]; then
         mpc findadd ${artist:+artist "$artist"} ${album:+album "$album"}
     else
         mpc add /
@@ -45,7 +49,7 @@ if (( ROFI_RETV == 0 )); then # initial invocation
     done
 elif (( ROFI_RETV >= 10 )); then # custom keybinding: shuffle
     if [[ ! -v index ]]; then
-        mpc_load
+        mpc_load random
     fi
     mpc shuffle
     mpc play

@@ -2,7 +2,7 @@
   i18n.inputMethod = {
     enabled = "ibus";
     ibus.engines = with pkgs.ibus-engines; [
-      mozc
+      # (pkgs.pr 282148 "sha256-TdVQnGCXGqVpRRlBophmXiVFLY2+UY9ixk4NoS1RexM=").ibus-engines.mozc # TODO
       hangul
       typing-booster
       table table-others
