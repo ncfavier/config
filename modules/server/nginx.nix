@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }: with lib; let
+{ inputs, lib, this, config, pkgs, ... }: with lib; let
   uploadsRoot = "/run/nginx/uploads";
   glamRoot = "/run/nginx/glam";
   maxUploadSize = "256M";
@@ -33,13 +33,15 @@ in {
           default 0;
           ${concatMapStrings (r: ''
           ${r} 1;
-          '') (with config.networking.nat; internalIPs ++ internalIPv6s)}
+          '') (with config.networking.nat; internalIPs ++ internalIPv6s ++ this.ipv4 ++ this.ipv6)}
         }
       '';
 
       virtualHosts = {
         ${my.domain} = {
           root = inputs.www;
+          locations."= /favicon.png".return = "301 ${my.gravatar}?s=64";
+          locations."= /favicon.ico".return = "301 ${my.gravatar}?s=64";
           locations."= /glam.pdf".alias = "${glamRoot}/report/report.pdf";
           locations."= /glam-slides.pdf".alias = "${glamRoot}/report/slides.pdf";
         };
@@ -61,7 +63,7 @@ in {
               if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Content-Type: text/plain');
                 if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-                  $url = exec('. /etc/set-environment; upload -r '.escapeshellarg($_FILES['file']['tmp_name']).' '.escapeshellarg(basename($_FILES['file']['name'])))."\n";
+                  $url = exec('. /etc/set-environment; upload -r '.escapeshellarg($_FILES['file']['tmp_name']).(isset($_POST['keepname']) ? ' '.escapeshellarg(basename($_FILES['file']['name'])) : ""))."\n";
                   if (isset($_POST['browser']))
                     header("Location: $url");
                   else
@@ -72,14 +74,17 @@ in {
               <meta name=viewport content="width=device-width, initial-scale=1">
               <title>Upload</title>
               <form method=post enctype=multipart/form-data>
-                <input type=file name=file onchange="form.submit()">
+                <input type=file name=file onchange="form.submit()"><br>
+                <input type=checkbox id=keepname name=keepname>
+                <label for=keepname>Keep name?</label>
                 <input type=hidden name=browser value=1>
               </form>
               <?php }
             '';
           };
           locations."/".tryFiles = "$uri $uri/ /local$uri /local$uri/ =404";
-          locations."= /favicon.ico".root = inputs.www;
+          locations."= /favicon.png".return = "301 ${my.gravatar}?s=64";
+          locations."= /favicon.ico".return = "301 ${my.gravatar}?s=64";
           locations."/.st".extraConfig = "internal;";
           extraConfig = ''
             default_type text/plain;

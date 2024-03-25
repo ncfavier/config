@@ -160,6 +160,8 @@ in {
         realName = "bothendieck";
         channels = [ "##nf" "#tendra" ];
         commandPrefix = ".";
+        pasteUrl = "https://f.${my.domain}";
+        pasteField = "file";
         urlAlternativeHosts = {
           "twitter.com" = "https://nitter.d420.de";
           "m.twitter.com" = "https://nitter.d420.de";
@@ -174,8 +176,8 @@ in {
     #     src = pkgs.fetchFromGitHub {
     #       owner = "zedeus";
     #       repo = "nitter";
-    #       rev = "d7ca353a55ea3440a2ec1f09155951210a374cc7";
-    #       hash = "sha256-nlpUzbMkDzDk1n4X+9Wk7+qQk+KOfs5ID6euIfHBoa8=";
+    #       rev = "b62d73dbd373f08af07c7a79efcd790d3bc1a49c";
+    #       hash = "sha256-yCD7FbqWZMY0fyFf9Q3Ka06nw5Ha7jYLpmPONAhEVIM=";
     #     };
     #   });
     #   openFirewall = false;

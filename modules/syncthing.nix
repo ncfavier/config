@@ -73,6 +73,7 @@
         };
         irc-logs = {
           path = "${config.my.home}/sync/irc-logs";
+          type = if this.isServer then "sendonly" else "receiveonly";
           devices = allDevicesExceptPhone;
           fsWatcherEnabled = false;
           versioning = trashcan;
@@ -91,6 +92,7 @@
           path = if config.mailserver.enable or false
             then config.mailserver.mailDirectory
             else "${config.my.home}/sync/mail";
+          type = if config.mailserver.enable or false then "sendonly" else "receiveonly";
           devices = allDevicesExceptPhone;
           versioning = simple;
         };

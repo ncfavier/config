@@ -1,7 +1,9 @@
-{ lib, config, ... }: with lib; let
+{ inputs, lib, config, ... }: with lib; let
   signature = "nix.monade.li:2Zgy59ai/edDBizXByHMqiGgaHlE04G6Nzuhx1RPFgo=";
 in {
   secrets.nix-binary-cache = {};
+
+  imports = [ inputs.nix-serve-ng.nixosModules.default ];
 
   services.nix-serve = {
     enable = true;

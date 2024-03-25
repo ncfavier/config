@@ -47,8 +47,13 @@
     '';
 
     locals."groups.conf".text = ''
-      symbols "FORGED_RECIPIENTS" {
-        weight = 10;
+      symbols {
+        "FORGED_RECIPIENTS" {
+          weight = 10;
+        }
+        "FORGED_RECIPIENTS_2" {
+          weight = 10;
+        }
       }
     '';
 

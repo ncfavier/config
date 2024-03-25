@@ -28,7 +28,6 @@
     };
     bothendieck = {
       url = "github:ncfavier/bothendieck";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.qeval.follows = "qeval";
     };
     nixpkgs-qeval.url = "nixpkgs/nixos-unstable";
@@ -37,6 +36,7 @@
       inputs.nixpkgs.follows = "nixpkgs-qeval";
       inputs.nur.follows = "nur";
     };
+    nix-serve-ng.url = "github:aristanetworks/nix-serve-ng";
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: let
