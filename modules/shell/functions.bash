@@ -439,14 +439,14 @@ pr() {
     local origin
     origin=$(git remote get-url origin) || return
     if [[ $origin == *'github.com'* ]]; then
-        if (( $1 > 0 )); then
+        if (( ${1:-0} > 0 )); then
             gh pr checkout "$@"
         else
             NO_ALARM=1
             gh pr create --web "$@"
         fi
     elif [[ $origin == *'gitlab'* ]]; then
-        if (( $1 > 0 )); then
+        if (( ${1:-0} > 0 )); then
             glab mr checkout "$@"
         else
             NO_ALARM=1

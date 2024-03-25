@@ -102,6 +102,8 @@
         backend = mkDefault "glx";
         vSync = true; # the only reason i need picom...
 
+        settings.unredir-if-possible = true; # reduces lag in fullscreen games
+
         # workaround for https://github.com/yshui/picom/issues/16#issuecomment-792739119
         fade = true;
         fadeSteps = [ 1 1 ];

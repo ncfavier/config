@@ -52,7 +52,6 @@
 
   hm.services.picom = {
     backend = "xrender";
-    settings.unredir-if-possible = true;
   };
 
   my.hashedPassword = "$y$j9T$4ixQiecsV/ucuBhr6jEte1$4mQUZgQsZXNlA2rY5RfntCTPEZ7ZuZc64L1k9VO5tQ8";
