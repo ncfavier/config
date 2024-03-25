@@ -18,30 +18,30 @@
     initrd.kernelModules = [ "nouveau" ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
 
+    initrd.luks.devices.nixos = {
+      device = "/dev/disk/by-partlabel/nixos";
+      allowDiscards = true;
+      bypassWorkqueues = true;
+    };
+
     swraid.enable = false;
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-partlabel/nixos";
+      device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
     "/boot" = {
-      device = "/dev/disk/by-partlabel/boot";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
-    };
-
-    "/home" = {
-      device = "/dev/disk/by-partlabel/home";
-      fsType = "ext4";
-      neededForBoot = true;
     };
   };
 
   swapDevices = [ {
     device = "/swap";
-    size = 4096;
+    size = 8 * 1024;
   } ];
 
   networking.wireless.interfaces = [ "wlp3s0" ];
