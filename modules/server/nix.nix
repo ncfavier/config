@@ -10,6 +10,7 @@ in {
     bindAddress = "127.0.0.1";
     openFirewall = false;
     secretKeyFile = config.secrets.nix-binary-cache.path;
+    extraParams = "--priority 41";
   };
 
   services.nginx.virtualHosts."nix.${my.domain}" = {

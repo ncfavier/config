@@ -10,7 +10,7 @@
     modules/shell
     modules/gpg.nix
     modules/git.nix
-    modules/cachix.nix
+    modules/nix.nix
   ];
 
   options = {
@@ -21,12 +21,10 @@
   };
 
   config = {
-    nix.settings = {
-      experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
-      warn-dirty = false;
-    };
-
     services.getty.autologinUser = mkForce my.username;
+
+    # start wpa-supplicant on boot
+    systemd.services.wpa_supplicant.wantedBy = mkForce [ "multi-user.target" ];
 
     # reduce size by removing unneeded firmware
     nixpkgs.overlays = [ (pkgs: prev: {
