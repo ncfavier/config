@@ -81,7 +81,11 @@
     nixosConfigurations = mapAttrs (hostname: localConfig:
       mkSystem my.machines.${hostname} (attrValues (modulesIn ./modules) ++ [ localConfig ])
     ) (modulesIn ./machines) // {
-      iso = mkSystem { isISO = true; } [ ./iso.nix ];
+      iso = mkSystem {
+        # TODO do this properly
+        isISO = true;
+        isServer = false;
+      } [ ./iso.nix ];
     };
 
     packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel)
