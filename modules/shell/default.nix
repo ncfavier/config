@@ -31,7 +31,7 @@
       free = "free -h";
       ip = "ip --color=auto";
       ls = "ls -h --color=auto --group-directories-first";
-      lsblk = "lsblk -o NAME,TYPE,FSTYPE,LABEL,UUID,SIZE,MOUNTPOINT";
+      lsblk = "lsblk -o NAME,TYPE,UUID,PARTLABEL,FSTYPE,LABEL,SIZE,MOUNTPOINT";
       mv = "mv -i";
       nix = "nix -vL";
 

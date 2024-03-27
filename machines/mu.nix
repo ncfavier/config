@@ -34,13 +34,14 @@ in {
 
   fileSystems = {
     "/" = {
-      device = "LABEL=nixos";
+      device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
     "/boot" = {
-      device = "LABEL=boot";
+      device = "/dev/disk/by-label/boot";
       fsType = "ext4";
+      options = [ "umask=0077" ];
     };
   };
 
