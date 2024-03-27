@@ -24,10 +24,8 @@
     kernelModules = [ "kvm-intel" ];
     initrd.availableKernelModules = [ "ehci_pci" "ahci" "firewire_ohci" "sdhci_pci" ];
 
-    initrd.luks.devices.nixos = {
-      device = "/dev/disk/by-partlabel/nixos";
-      allowDiscards = true;
-      bypassWorkqueues = true;
+    initrd.luks.devices.home = {
+      device = "/dev/disk/by-partlabel/home";
     };
 
     swraid.enable = false;
@@ -43,11 +41,17 @@
       device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
+
+    "/home" = {
+      device = "/dev/disk/by-label/home";
+      fsType = "ext4";
+      neededForBoot = true;
+    };
   };
 
   swapDevices = [ {
     device = "/swap";
-    size = 4096;
+    size = 4 * 1024;
   } ];
 
   networking.wireless.interfaces = [ "wlp3s0" ];
