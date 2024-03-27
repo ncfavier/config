@@ -85,6 +85,7 @@
         # TODO do this properly
         isISO = true;
         isServer = false;
+        isStation = false;
       } [ ./iso.nix ];
     };
 

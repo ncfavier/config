@@ -74,7 +74,7 @@
       };
     }
 
-    (mkIf (this.isStation or false) {
+    (mkIf this.isStation {
       networking.wireless = {
         enable = true;
         userControlled.enable = true;
@@ -82,6 +82,7 @@
         environmentFile = config.secrets.wireless.path;
         networks = {
           tsu.psk = "@TSU_PSK@";
+          "@HOME_SSID@".psk = "@HOME_PSK@";
         };
         fallbackToWPA2 = false;
       };
