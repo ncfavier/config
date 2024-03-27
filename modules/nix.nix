@@ -32,7 +32,7 @@
       lib.meta = {
         configPath = "${config.my.home}/git/config";
         mkMutableSymlink = path: config.hm.lib.file.mkOutOfStoreSymlink
-          (config.lib.meta.configPath + removePrefix (toString inputs.self) (toString path));
+          (config.lib.meta.configPath + removePrefix (toString ./..) (toString path));
       };
 
       secrets.nix-access-tokens = {
