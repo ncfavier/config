@@ -11,9 +11,9 @@ prompt_nix_shell() {
     fi
 }
 
-declare -A katakana=([wo]=ヲ [mu]=ム [mo]=モ [no]=ノ [fu]=フ [tsu]=ツ)
-if [[ $TERM != *linux* && -v 'katakana[$HOSTNAME]' ]]; then
-    hostname_pretty=${katakana[$HOSTNAME]}
+declare -A kana=([wo]=を [mu]=む [mo]=も [no]=の [fu]=ふ [tsu]=つ)
+if [[ $TERM != *linux* && -v 'kana[$HOSTNAME]' ]]; then
+    hostname_pretty=${kana[$HOSTNAME]}
 else
     hostname_pretty=$HOSTNAME
 fi
