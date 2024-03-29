@@ -22,11 +22,18 @@
       unordered-containers
       vector
     ]))
-    cabal-install
     cabal2nix
     stack
     haskell-language-server
   ];
+
+  hm.programs.haskell.cabal = {
+    enable = true;
+    config = ''
+      username: ncfavier
+      password-command: pass hackage
+    '';
+  };
 
   hm.home.file = {
     ".ghc/ghci.conf".text = ''

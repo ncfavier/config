@@ -354,7 +354,8 @@
         "qeval": "qeval",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
-        "www": "www"
+        "www": "www",
+        "xhmm": "xhmm"
       }
     },
     "simple-nixos-mailserver": {
@@ -510,6 +511,22 @@
       "original": {
         "owner": "ncfavier",
         "repo": "monade.li",
+        "type": "github"
+      }
+    },
+    "xhmm": {
+      "locked": {
+        "lastModified": 1711720699,
+        "narHash": "sha256-kf9Pp/194bx4Ah76araetj6qnoHjAzbWiTtWpmSj0kc=",
+        "owner": "ncfavier",
+        "repo": "xhmm",
+        "rev": "80cc1a458b429c4d29a63a5245e722e80805e656",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "cabal-xdg",
+        "repo": "xhmm",
         "type": "github"
       }
     }

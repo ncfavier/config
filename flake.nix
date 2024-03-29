@@ -13,6 +13,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    xhmm.url = "github:ncfavier/xhmm/cabal-xdg";
     nur.url = "nur";
     dns = {
       url = "github:kirelagin/dns.nix";

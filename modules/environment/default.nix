@@ -52,6 +52,7 @@ index b799b70..da17f82 100644
     ncdu
     lsof
     lm_sensors
+    hwinfo
     dosfstools
     mtools
     gptfdisk

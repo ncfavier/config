@@ -14,6 +14,10 @@
   };
 
   hm = {
+    imports = [
+      inputs.xhmm.homeManagerModules.languages.haskell
+    ];
+
     home.stateVersion = config.system.stateVersion;
     home.enableNixpkgsReleaseCheck = false;
 
