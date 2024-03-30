@@ -516,16 +516,15 @@
     },
     "xhmm": {
       "locked": {
-        "lastModified": 1711720699,
+        "lastModified": 1711752190,
         "narHash": "sha256-kf9Pp/194bx4Ah76araetj6qnoHjAzbWiTtWpmSj0kc=",
-        "owner": "ncfavier",
+        "owner": "schuelermine",
         "repo": "xhmm",
-        "rev": "80cc1a458b429c4d29a63a5245e722e80805e656",
+        "rev": "467f2e77db241ed5a2ca1223ff7486ea255bf9f5",
         "type": "github"
       },
       "original": {
-        "owner": "ncfavier",
-        "ref": "cabal-xdg",
+        "owner": "schuelermine",
         "repo": "xhmm",
         "type": "github"
       }

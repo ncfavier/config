@@ -101,7 +101,7 @@ in {
         local-data = concatLists (mapAttrsToList (n: m: [
           ''"${n}.${config.networking.wireguard.interface}. A ${m.wireguard.ipv4}"''
           ''"${n}.${config.networking.wireguard.interface}. AAAA ${m.wireguard.ipv6}"''
-        ]) my.machines) ++ [
+        ]) (my.machinesWith "wireguard")) ++ [
           ''"fu.home. A 192.168.1.2"''
           ''"mo.home. A 192.168.1.3"''
           ''"tsu.home. A 192.168.1.4"''
@@ -111,7 +111,7 @@ in {
         local-data-ptr = concatLists (mapAttrsToList (n: m: [
           ''"${m.wireguard.ipv4} ${n}.${config.networking.wireguard.interface}."''
           ''"${m.wireguard.ipv6} ${n}.${config.networking.wireguard.interface}."''
-        ]) my.machines);
+        ]) (my.machinesWith "wireguard"));
       };
       forward-zone = [ {
         name = ".";

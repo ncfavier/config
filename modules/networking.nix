@@ -5,7 +5,7 @@
         useNetworkd = true;
         tempAddresses = "disabled";
 
-        hostName = mkIf (this ? hostname) this.hostname;
+        hostName = mkIf (this ? hostname && this.hostname != null) this.hostname;
         hosts = { # remove default hostname mappings
           "127.0.0.2" = mkForce [];
           "::1" = mkForce [];

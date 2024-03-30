@@ -1,4 +1,6 @@
-{ lib, this, config, ... }: with lib; {
+{ lib, this, config, ... }: with lib; let
+  devices = my.machinesWith "syncthing";
+in {
   imports = [
     (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "settings" "folders" ])
   ];
@@ -28,7 +30,7 @@
       devices = mapAttrs (_: m: {
         inherit (m.syncthing) id;
         introducer = m.isServer;
-      }) my.machines;
+      }) devices;
 
       folders = let
         trashcan = {
@@ -42,8 +44,8 @@
             cleanoutDays = "0";
           };
         };
-        allDevices = attrNames my.machines;
-        allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) my.machines);
+        allDevices = attrNames devices;
+        allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) devices);
       in {
         my = {
           path = "${config.my.home}/sync/my";

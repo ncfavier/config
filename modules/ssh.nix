@@ -50,7 +50,7 @@
             RequestTTY = "yes";
           };
         };
-      }) my.machines ++ [ {
+      }) (my.machinesWith "hostname") ++ [ {
         "ens sas sas.eleves.ens.fr" = {
           hostname = "sas.eleves.ens.fr";
           user = "nfavier";

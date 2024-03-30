@@ -13,7 +13,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    xhmm.url = "github:ncfavier/xhmm/cabal-xdg";
+    xhmm.url = "github:schuelermine/xhmm";
     nur.url = "nur";
     dns = {
       url = "github:kirelagin/dns.nix";
@@ -41,57 +41,32 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: let
-    lib = (nixpkgs.lib.extend (_: _: home-manager.lib)).extend (import ./lib);
+    lib = (nixpkgs.lib.extend (_: _: home-manager.lib)).extend (import ./lib machines);
+    machines = lib.exprsIn ./machines;
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    mkSystem = this: modules: lib.nixosSystem {
-      inherit lib system;
-      modules = modules ++ [ ({ config, ... }: {
-        nixpkgs.overlays = let
-          importNixpkgs = nixpkgs: import nixpkgs {
-            inherit (config.nixpkgs) localSystem crossSystem config;
-          };
-        in [
-          (pkgs: prev: {
-            stable = importNixpkgs inputs.nixpkgs-stable;
-            rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
-              owner = "NixOS";
-              repo = "nixpkgs";
-              inherit rev sha256;
-            });
-            pr = n: pkgs.rev "refs/pull/${toString n}/head";
-            mine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
-              owner = lib.my.githubUsername;
-              repo = "nixpkgs";
-              inherit rev sha256;
-            });
-            local = importNixpkgs "${config.my.home}/git/nixpkgs";
-          })
-        ];
-        system.configurationRevision = self.rev or "dirty";
-      }) ];
-      specialArgs = {
-        inherit inputs this;
-        hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
-        pkgsBase = pkgs; # for use in imports without infinite recursion
-      };
-    };
   in with lib; {
     inherit lib;
 
-    nixosConfigurations = mapAttrs (hostname: localConfig:
-      mkSystem my.machines.${hostname} (attrValues (modulesIn ./modules) ++ [ localConfig ])
-    ) (modulesIn ./machines) // {
-      iso = mkSystem {
-        # TODO do this properly
-        isISO = true;
-        isServer = false;
-        isStation = false;
-      } [ ./iso.nix ];
-    };
+    nixosConfigurations = mapAttrs (k: nixos: let
+      this = my.machines.${k};
+    in
+      lib.nixosSystem {
+        inherit lib system;
+        modules = optionals (! this.isISO) (attrValues (modulesIn ./modules)) ++ [
+          { system.configurationRevision = self.rev or "dirty"; }
+          nixos
+        ];
+        specialArgs = {
+          inherit inputs this;
+          myModulesPath = toString ./modules;
+          hardware = nixpkgs.nixosModules // inputs.nixos-hardware.nixosModules;
+          pkgsBase = pkgs; # for use in imports without infinite recursion
+        };
+      }
+    ) (catAttrs' "nixos" machines);
 
-    packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel)
-      (builtins.removeAttrs self.nixosConfigurations [ "iso" ]) // {
+    packages.${system} = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
       iso = let
         inherit (self.nixosConfigurations.iso) config;
 

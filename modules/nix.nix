@@ -1,6 +1,28 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; {
   config = mkMerge [
     {
+      nixpkgs.overlays = let
+        importNixpkgs = nixpkgs: import nixpkgs {
+          inherit (config.nixpkgs) localSystem crossSystem config;
+        };
+      in [
+        (pkgs: prev: {
+          stable = importNixpkgs inputs.nixpkgs-stable;
+          rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+            owner = "NixOS";
+            repo = "nixpkgs";
+            inherit rev sha256;
+          });
+          pr = n: pkgs.rev "refs/pull/${toString n}/head";
+          mine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+            owner = lib.my.githubUsername;
+            repo = "nixpkgs";
+            inherit rev sha256;
+          });
+          local = importNixpkgs "${config.my.home}/git/nixpkgs";
+        })
+      ];
+
       nix.settings = mkMerge [
         {
           experimental-features = [ "nix-command" "flakes" "ca-derivations" ];

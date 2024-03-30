@@ -1,4 +1,4 @@
-lib: prev: with lib; {
+machines: lib: prev: with lib; {
   # Collects the top-level modules in a directory into an attribute set of paths.
   # A module `foo` can be either a file (`foo.nix`) or a directory (`foo/default.nix`).
   modulesIn = dir: pipe dir [
@@ -14,6 +14,18 @@ lib: prev: with lib; {
     concatLists
     listToAttrs
   ];
+
+  # Like modulesIn, but imports the files.
+  exprsIn = dir: mapAttrs (_: f: import f) (modulesIn dir);
+
+  # Like catAttrs, but operates on an attribute set of attribute sets
+  # instead of a list of attribute sets.
+  catAttrs' = key: set:
+    listToAttrs (concatMap (name:
+      let v = set.${name}; in
+      if v ? ${key} then [(nameValuePair name v.${key})] else []
+    ) (attrNames set));
+
 
   # Collects the inputs of a flake recursively (with possible duplicates).
   collectFlakeInputs = input:
@@ -31,5 +43,5 @@ lib: prev: with lib; {
     imports = [ ({ config, ... }: { config = mkIf (getAttrFromPath name config).enable cfg; }) ];
   };
 
-  my = import ./my.nix lib;
+  my = import ./my.nix lib machines;
 }
