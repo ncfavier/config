@@ -9,7 +9,7 @@
     syncthing.id = "VVLGMST-LA633IY-KWESSFD-7FFF7LE-PNJAEML-ZXZSBLL-ATLQHPT-MUHEDAR";
   };
 
-  nixos = { hardware, pkgs, ... }: {
+  nixos = { hardware, config, pkgs, ... }: {
     imports = with hardware; [
       notDetected
       common-cpu-intel-cpu-only
@@ -26,7 +26,7 @@
       };
 
       kernelModules = [ "kvm-intel" ];
-      initrd.kernelModules = [ "nouveau" ];
+      # initrd.kernelModules = [ "nouveau" ];
       initrd.availableKernelModules = [ "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
 
       initrd.luks.devices.nixos = {
@@ -36,6 +36,14 @@
       };
 
       swraid.enable = false;
+    };
+
+    services.xserver.videoDrivers = [ "nvidia" ];
+    nixpkgs.config.nvidia.acceptLicense = true;
+
+    hardware.nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+      nvidiaSettings = true;
     };
 
     fileSystems = {
@@ -61,10 +69,6 @@
     environment.systemPackages = with pkgs; [
       efibootmgr
     ];
-
-    hm.services.picom = {
-      backend = "xrender";
-    };
 
     my.hashedPassword = "$y$j9T$4ixQiecsV/ucuBhr6jEte1$4mQUZgQsZXNlA2rY5RfntCTPEZ7ZuZc64L1k9VO5tQ8";
 
