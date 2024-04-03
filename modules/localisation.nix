@@ -1,24 +1,38 @@
-{ lib, ... }: with lib; {
-  i18n.defaultLocale = "en_GB.UTF-8";
+{ lib, config, ... }: with lib; {
+  options.keys = {
+    composeKey = mkOption {
+      type = types.enum [ "ralt" "lwin" "lwin-altgr" "rwin" "rwin-altgr" "menu" "menu-altgr" "lctrl" "lctrl-altg" "rctrl" "rctrl-altg" "caps" "caps-altgr" "102" "102-altgr" "paus" "prsc" "sclk" ];
+      default = "menu";
+    };
 
-  services.xserver = {
-    layout = "fr-my,us,ru,gr";
-    xkbVariant = ",,phonetic_azerty,";
-    xkbOptions = "grp:shifts_toggle";
-
-    extraLayouts.fr-my = {
-      languages = [ "fra" ];
-      description = "Modified French layout";
-      symbolsFile = builtins.toFile "fr-my" ''
-        xkb_symbols "fr-my" {
-          include "fr(oss)"
-          key <TLDE> { [ grave, twosuperior ] };
-          key <BKSL> { [ asterisk, dead_greek, dead_grave, dead_macron ] };
-          key <AB08> { [ semicolon, period, multiply, U00B7 ] };
-        };
-      '';
+    printScreenKey = mkOption {
+      type = types.str;
+      default = "Print";
     };
   };
 
-  time.timeZone = "Europe/Paris";
+  config = {
+    i18n.defaultLocale = "en_GB.UTF-8";
+
+    services.xserver.xkb = {
+      layout = "fr-my,us,ru,gr";
+      variant = ",,phonetic_azerty,";
+      options = "grp:shifts_toggle,compose:${config.keys.composeKey},caps:escape_shifted_capslock";
+
+      extraLayouts.fr-my = {
+        languages = [ "fra" ];
+        description = "Modified French layout";
+        symbolsFile = builtins.toFile "fr-my" ''
+          xkb_symbols "fr-my" {
+            include "fr(oss)"
+            key <TLDE> { [ grave, twosuperior ] };
+            key <BKSL> { [ asterisk, dead_greek, dead_grave, dead_macron ] };
+            key <AB08> { [ semicolon, period, multiply, U00B7 ] };
+          };
+        '';
+      };
+    };
+
+    time.timeZone = "Europe/Paris";
+  };
 }

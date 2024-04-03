@@ -130,7 +130,7 @@
         nix-tree
         nixpkgs-fmt
         nixpkgs-review
-        nixfmt
+        nixfmt-rfc-style
         nil
       ];
 

@@ -336,6 +336,13 @@ nix-shell() {
     history -n
 }
 
+nixpkgs-allow() {
+    export NIXPKGS_ALLOW_BROKEN=1
+    export NIXPKGS_ALLOW_INSECURE=1
+    export NIXPKGS_ALLOW_UNFREE=1
+    export NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1
+}
+
 ghcWithPackages() {
     nix-shell -p "ghc.withPackages (ps: with ps; [$*])"
 }

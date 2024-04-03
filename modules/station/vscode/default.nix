@@ -110,7 +110,7 @@ in {
           in
           map (e: e // { inherit (new.''${e.name}) version sha256; }) old
         ''} |
-        ${pkgs.nixfmt}/bin/nixfmt
+        ${pkgs.nixfmt-rfc-style}/bin/nixfmt
       '')
     ];
   };
