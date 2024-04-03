@@ -21,12 +21,11 @@
 
     options = {
       secrets = mkSinkUndeclaredOptions {};
-      boot.supportedFilesystems = mkOption {
-        apply = subtractLists [ "reiserfs" "xfs" "cifs" "f2fs" ];
-      };
     };
 
     config = {
+      boot.supportedFilesystems = genAttrs [ "reiserfs" "xfs" "cifs" "f2fs" ] (_: mkForce false);
+
       services.getty.autologinUser = mkForce my.username;
 
       # start wpa-supplicant on boot
