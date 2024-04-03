@@ -27,6 +27,7 @@
       aliases = [ "@${my.domain}" ];
     };
     lmtpSaveToDetailMailbox = "no";
+    messageSizeLimit = 25 * 1024 * 1024;
   };
 
   my.extraGroups = [ config.mailserver.vmailGroupName ];
