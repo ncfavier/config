@@ -62,7 +62,7 @@
 
     swapDevices = [ {
       device = "/swap";
-      size = 8192;
+      size = 8 * 1024;
     } ];
 
     networking.wireless.interfaces = [ "wlp3s0" ];

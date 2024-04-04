@@ -6,6 +6,10 @@ in mkEnableModule [ "services" "my-lambdabot" ] {
     group = config.users.users.lambdabot.group;
   };
 
+  nixpkgs.overlays = [ (self: super: {
+    mueval = (pkgs.pr 301484 "sha256-uBDM6hO8TDxoWE3KTkNdKYHjvcRKkdGzjUpw0B0jsps=").mueval; # TODO
+  }) ];
+
   services.lambdabot = {
     enable = true;
     package = let

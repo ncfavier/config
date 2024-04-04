@@ -3,8 +3,6 @@
 in {
   secrets.nix-binary-cache = {};
 
-  imports = [ inputs.nix-serve-ng.nixosModules.default ];
-
   services.nix-serve = {
     enable = true;
     bindAddress = "127.0.0.1";

@@ -20,17 +20,19 @@
     ];
 
     boot = {
-      loader.grub = {
-        enable = true;
-        device = "/dev/sda";
-        configurationLimit = 3;
+      loader = {
+        efi.canTouchEfiVariables = true;
+        systemd-boot = {
+          enable = true;
+          configurationLimit = 3;
+        };
       };
 
       kernelPackages = pkgs.linuxPackages_latest;
       initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
 
       initrd.luks.devices.nixos = {
-        device = "/dev/sda2";
+        device = "/dev/disk/by-partlabel/nixos";
         allowDiscards = true;
         bypassWorkqueues = true;
       };
@@ -54,10 +56,19 @@
 
       "/boot" = {
         device = "/dev/disk/by-label/boot";
-        fsType = "ext4";
+        fsType = "vfat";
         options = [ "umask=0077" ];
       };
     };
+
+    swapDevices = [ {
+      device = "/swap";
+      size = 8 * 1024;
+    } ];
+
+    environment.systemPackages = with pkgs; [
+      efibootmgr
+    ];
 
     networking.interfaces.${interface} = {
       useDHCP = true;
@@ -92,10 +103,5 @@
 
     services.bothendieck.enable = true;
     services.my-lambdabot.enable = true;
-
-    swapDevices = [ {
-      device = "/swap";
-      size = 8 * 1024;
-    } ];
   };
 }
