@@ -30,6 +30,7 @@
           trusted-users = [ "root" "@wheel" ];
           max-jobs = "auto";
           log-lines = 30;
+          connect-timeout = 5;
           substituters = [
             "https://${my.githubUsername}.cachix.org"
             "https://nix-community.cachix.org"
@@ -67,7 +68,6 @@
           experimental-features = [ "auto-allocate-uids" ];
           keep-derivations = true;
           auto-allocate-uids = true;
-          connect-timeout = 5;
         };
 
         extraOptions = ''
@@ -100,6 +100,11 @@
           options = "--delete-older-than 30d";
         };
         optimise.automatic = true;
+      };
+
+      nixpkgs.flake = {
+        setFlakeRegistry = false;
+        setNixPath = false;
       };
 
       systemd.user.services.nix-index = {
