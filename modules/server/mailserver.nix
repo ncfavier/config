@@ -28,6 +28,7 @@
     };
     lmtpSaveToDetailMailbox = "no";
     messageSizeLimit = 25 * 1024 * 1024;
+    rejectRecipients = map (x: "${x}@${my.domain}") [ "naim" "znc" ];
   };
 
   my.extraGroups = [ config.mailserver.vmailGroupName ];
@@ -52,21 +53,6 @@
         "FORGED_RECIPIENTS" {
           weight = 10;
         }
-        "FORGED_RECIPIENTS_2" {
-          weight = 10;
-        }
-      }
-    '';
-
-    locals."settings.conf".text = ''
-      forged_rcpt {
-        rcpt = "znc";
-        apply {
-          FORCED_RECIPIENTS_2 = 100.0;
-        }
-        symbols [
-          "FORGED_RECIPIENT_2"
-        ]
       }
     '';
   };

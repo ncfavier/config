@@ -1,4 +1,27 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
+  nixpkgs.overlays = [ (self: super: {
+    tmux = super.tmux.overrideAttrs (old: {
+      patches = old.patches or [] ++ [
+        # https://github.com/tmux/tmux/issues/3923
+        (builtins.toFile "tmux.patch" ''
+diff --git a/screen-write.c b/screen-write.c
+index 6892d041..1174cb15 100644
+--- a/screen-write.c
++++ b/screen-write.c
+@@ -2088,7 +2088,7 @@ screen_write_combine(struct screen_write_ctx *ctx, const struct grid_cell *gc)
+ 	if (utf8_is_zwj(ud))
+ 		zero_width = 1;
+ 	else if (utf8_is_vs(ud))
+-		zero_width = force_wide = 1;
++		zero_width = 1;
+ 	else if (ud->width == 0)
+ 		zero_width = 1;
+
+        '')
+      ];
+    });
+  }) ];
+
   hm.programs.tmux = {
     enable = true;
 
