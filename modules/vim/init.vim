@@ -49,8 +49,8 @@ let g:agdavim_includeutf8_mappings = 0 " barely works, messes with /
 
 au FileType diff,gitcommit,gitsendemail let b:EditorConfig_disable = 1
 
-colors noirbuddy
-lua require("noirbuddy").setup { colors = { primary = "#FF00FF", background = "#000000", } }
+" colors noirbuddy
+" lua require("noirbuddy").setup { colors = { primary = "#d903ff", background = "#000000", } }
 
 set breakindent
 set clipboard+=unnamedplus

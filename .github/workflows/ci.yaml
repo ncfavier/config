@@ -27,11 +27,11 @@ jobs:
           name: ${{ github.actor }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           extraPullNames: nix-community, mic92
-          pathsToPush: nixos.iso
+          pathsToPush: iso
       # - name: Check flake
       #   run: nix flake check
       - name: Build ISO
-        run: nix -L build .#iso -o nixos.iso
+        run: nix -L build .#iso -o iso
       - name: Create release
         id: release
         uses: ncfavier/action-gh-release@delete-existing
@@ -40,5 +40,5 @@ jobs:
           target_commitish: ${{ github.ref }}
           name: ISO image
           delete_on_existing: true
-          files: nixos.iso
+          files: iso/iso/nixos*.iso
           fail_on_unmatched_files: true
