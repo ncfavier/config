@@ -100,6 +100,7 @@ in {
     };
 
     home.packages = [
+      pkgs.coqPackages.vscoq-language-server
       (pkgs.writeShellScriptBin "update-vscode-extensions" ''
         ${pkgs.path}/pkgs/applications/editors/vscode/extensions/update_installed_exts.sh |
         nix eval -f - --apply ${escapeShellArg ''

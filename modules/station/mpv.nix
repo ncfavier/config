@@ -22,6 +22,10 @@
         pulse-latency-hacks = mkIf (config.sound.backend == "pulseaudio") true;
       };
 
+      scriptOpts.autoload = {
+        directory_mode = "ignore";
+      };
+
       profiles = {
         "loop" = {
           loop-file = "inf";

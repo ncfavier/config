@@ -30,6 +30,9 @@
   hm.programs.haskell.cabal = {
     enable = true;
     config = ''
+      repository hackage.haskell.org
+        url: http://hackage.haskell.org/
+
       username: ncfavier
       password-command: pass hackage
     '';

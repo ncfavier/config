@@ -35,6 +35,7 @@
         dnsutils
         ldns
         whois
+        inetutils
         nethogs
         socat
         rsync

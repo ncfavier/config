@@ -71,6 +71,7 @@
         inherit (self.nixosConfigurations.iso) config;
 
         # horrible hack, see https://github.com/NixOS/nix/issues/5633
+        # TODO use unsafeDiscardReferences
         involution = name: file: pkgs.runCommand name {} ''
           tr a-z0-9 n-za-m5-90-4 < ${escapeShellArg file} > "$out"
         '';

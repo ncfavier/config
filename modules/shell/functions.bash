@@ -1,3 +1,17 @@
+# Helpers
+
+count() {
+    echo "$#"
+}
+
+args() {
+    echo "$# arguments"
+    if (( $# )); then
+        printf '<%s> ' "$@"
+        echo
+    fi
+}
+
 ask() {
     local prompt=$1 default=${2:-y}
     read -rp "$prompt " answer
@@ -34,6 +48,65 @@ complete_alias() { # completion function for aliases
     complete -F "$function_name" "$alias_name"
 }
 
+# copy a command and its output to the clipboard
+alias clipcmd='clipcmd_helper # '
+clipcmd_helper() {
+    local cmd
+    local -a lines
+    read -r _ _ cmd < <(history 1)
+    readarray lines < <(LC_ALL=en_US.UTF-8 eval "$cmd" 2>&1)
+    printf %s "${lines[@]}"
+    {
+        printf '$ %s\n' "$cmd"
+        printf %s "${lines[@]}"
+    } | clip
+}
+
+command_not_found_handle() {
+    local IFS=$' \t\n'
+    if [[ $1 == *@* ]]; then # [user]@host as a shorthand for ssh user@host
+        local host=${1#@}
+        shift
+        if (( $# )); then
+            sshesc -qt "$host" -- bash -ilc "${*@Q}"
+        else
+            ssh -qt "$host" -- tmux new-session -A
+        fi
+    else # look for a package providing the command in nixpkgs
+        local pkgs=() i n action
+        printf '%s\n' "$1: command not found" >&2
+        if [[ -t 1 ]] && command -v nix-locate > /dev/null && {
+            readarray -t pkgs < <(nix-locate-program "$1")
+            (( n = ${#pkgs[@]} ))
+        }; then
+            echo "It is provided by the following packages:"
+            for (( i = 0; i < n; i++ )); do
+                pkgs[i]=${pkgs[i]%.out}
+                printf '%*d %s\n' "${#n}" "$((i+1))" "${pkgs[i]}"
+            done
+            if read -p "? " action && [[ $action =~ ^([0-9]*)([rsi]?)$ ]]; then
+                i=${BASH_REMATCH[1]:-1}
+                action=${BASH_REMATCH[2]:-s}
+                if (( 1 <= i && i <= n )); then
+                    case $action in
+                    r)
+                        nix-shell -p "${pkgs[i-1]}" --command "$*";;
+                    s)
+                        history -a
+                        nix-shell -p "${pkgs[i-1]}";;
+                    i)
+                        nix-env -iA "pkgs.${pkgs[i-1]}";;
+                    esac
+                    return
+                fi
+            fi
+        fi
+        return 127
+    fi
+}
+
+# Files, streams and navigation
+
 diff-json() {
     local old new
     old=$(mktemp --suffix .old)
@@ -43,14 +116,6 @@ diff-json() {
     shift 2
     diff "$@" "$old" "$new"
     rm -f "$old" "$new"
-}
-
-cat() { # cat directories to list them
-    if (( $# == 1 )) && [[ -d $1 ]]; then
-        ll "$1"
-    else
-        command cat "$@"
-    fi
 }
 
 cd() { # ls after cd
@@ -112,6 +177,15 @@ flast() { # find the most recently modified files in a tree
     done
 }
 
+set-mtime() {
+    local dst=$1 mtime f
+    mtime=$(stat -c %Y "$dst")
+    shift
+    for f do
+        touch -d "@$mtime" -- "$f"
+    done
+}
+
 writeiso() { # write an ISO file to a block device
     local file=$1 device=$2
     sudo dd if="$file" of="$device" bs=1M oflag=sync status=progress
@@ -160,18 +234,17 @@ unansi() {
     sed 's/\x1b\[[0-9;]*m//g' "$@"
 }
 
-# copy a command and its output to the clipboard
-alias clipcmd='clipcmd_helper # '
-clipcmd_helper() {
-    local cmd
-    local -a lines
-    read -r _ _ cmd < <(history 1)
-    readarray lines < <(LC_ALL=en_US.UTF-8 eval "$cmd" 2>&1)
-    printf %s "${lines[@]}"
-    {
-        printf '$ %s\n' "$cmd"
-        printf %s "${lines[@]}"
-    } | clip
+# Network
+
+myip() { # print my public IP addresses
+    myipv4
+    myipv6
+}
+myipv4() {
+    dig -4 +short @resolver1.opendns.com myip.opendns.com A
+}
+myipv6() {
+    dig -6 +short @resolver1.opendns.com myip.opendns.com AAAA
 }
 
 ix() { # upload to ix.io
@@ -209,31 +282,6 @@ weechat_fifo() {
     ssh "$server_hostname" '. config env; cat > "$weechat_fifo"'
 }
 
-todo() {
-    local f=$1 fs
-    . config env
-    if [[ ! $f ]]; then
-        if remote=$(git config --get remote.origin.url); then
-            f=$(basename -s .git "$remote")
-        else
-            f=main
-        fi
-    fi
-    shopt -s nullglob
-    fs=("${synced[my]}/todo/$f"* "${synced[my]}/todo/$f")
-    ${EDITOR:-vim} "${fs[0]}"
-    if [[ -e "${fs[0]}" && ! -s "${fs[0]}" ]]; then
-        rm -- "${fs[0]}"
-    fi
-}
-_todo() {
-    . config env
-    compreply -f -- "${synced[my]}/todo/$2"
-    COMPREPLY=("${COMPREPLY[@]#"${synced[my]}/todo/"}")
-    COMPREPLY=("${COMPREPLY[@]%.md}")
-}
-complete -F _todo todo
-
 irg() ( # search IRC logs
     shopt -s extglob
     . config env
@@ -264,16 +312,43 @@ _irg() {
 }
 complete -F _irg irg
 
-myip() { # print my public IPs
-    myipv4
-    myipv6
+# Tasks
+
+todo() {
+    local f=$1 fs
+    . config env
+    if [[ ! $f ]]; then
+        if remote=$(git config --get remote.origin.url); then
+            f=$(basename -s .git "$remote")
+        else
+            f=main
+        fi
+    fi
+    shopt -s nullglob
+    fs=("${synced[my]}/todo/$f"* "${synced[my]}/todo/$f")
+    ${EDITOR:-vim} "${fs[0]}"
+    if [[ -e "${fs[0]}" && ! -s "${fs[0]}" ]]; then
+        rm -- "${fs[0]}"
+    fi
 }
-myipv4() {
-    dig -4 +short @resolver1.opendns.com myip.opendns.com A
+_todo() {
+    . config env
+    compreply -f -- "${synced[my]}/todo/$2"
+    COMPREPLY=("${COMPREPLY[@]#"${synced[my]}/todo/"}")
+    COMPREPLY=("${COMPREPLY[@]%.md}")
 }
-myipv6() {
-    dig -6 +short @resolver1.opendns.com myip.opendns.com AAAA
+complete -F _todo todo
+
+remindme() {
+    local delay=$1
+    shift
+    {
+        sleep "$delay"
+        exec dunstify -i dialog-information -t 10000 "$*"
+    } &> /dev/null & disown
 }
+
+# Development
 
 man() { # man foo -bar
     if [[ $1 != -* && $2 == -* ]]; then
@@ -290,31 +365,6 @@ rfc() {
     curl -fsSL https://www.ietf.org/rfc/rfc"$n".txt | sponge | less
 }
 complete -W "${!rfc_numbers[*]}" rfc
-
-xcompose() { # print the path to the system-wide XCompose file
-    echo "$(pkgs xorg.libX11)/share/X11/locale/en_US.UTF-8/Compose"
-}
-
-args() {
-    echo "$# arguments"
-    if (( $# )); then
-        printf '<%s> ' "$@"
-        echo
-    fi
-}
-
-count() {
-    echo "$#"
-}
-
-remindme() {
-    local delay=$1
-    shift
-    {
-        sleep "$delay"
-        exec dunstify -i dialog-information -t 10000 "$*"
-    } &> /dev/null & disown
-}
 
 mk() ( # runs make using the closest makefile in the hierarchy
     local dir=$PWD
@@ -429,6 +479,10 @@ fdnp() {
     fd -L "$@" $NIX_PROFILES
 }
 
+xcompose() { # print the path to the system-wide XCompose file
+    echo "$(pkgs xorg.libX11)/share/X11/locale/en_US.UTF-8/Compose"
+}
+
 hm() {
     if (( ! $# )); then
         set -- status
@@ -465,45 +519,18 @@ pr() {
     fi
 }
 
-command_not_found_handle() {
-    local IFS=$' \t\n'
-    if [[ $1 == *@* ]]; then # [user]@host as a shorthand for ssh user@host
-        local host=${1#@}
-        shift
-        if (( $# )); then
-            sshesc -qt "$host" -- bash -ilc "${*@Q}"
+# Audio/video
+
+ffmpeg-concat() { # ffmpeg-concat a b c -- out
+    local files=()
+    while (( $# )); do
+        if [[ $1 == -* ]]; then
+            [[ $1 == -- ]] && shift
+            break
         else
-            ssh -qt "$host" -- tmux new-session -A
+            files+=("$(realpath "$1")")
         fi
-    else # look for a package providing the command in nixpkgs
-        local pkgs=() i n action
-        printf '%s\n' "$1: command not found" >&2
-        if [[ -t 1 ]] && command -v nix-locate > /dev/null && {
-            readarray -t pkgs < <(nix-locate-program "$1")
-            (( n = ${#pkgs[@]} ))
-        }; then
-            echo "It is provided by the following packages:"
-            for (( i = 0; i < n; i++ )); do
-                pkgs[i]=${pkgs[i]%.out}
-                printf '%*d %s\n' "${#n}" "$((i+1))" "${pkgs[i]}"
-            done
-            if read -p "? " action && [[ $action =~ ^([0-9]*)([rsi]?)$ ]]; then
-                i=${BASH_REMATCH[1]:-1}
-                action=${BASH_REMATCH[2]:-s}
-                if (( 1 <= i && i <= n )); then
-                    case $action in
-                    r)
-                        nix-shell -p "${pkgs[i-1]}" --command "$*";;
-                    s)
-                        history -a
-                        nix-shell -p "${pkgs[i-1]}";;
-                    i)
-                        nix-env -iA "pkgs.${pkgs[i-1]}";;
-                    esac
-                    return
-                fi
-            fi
-        fi
-        return 127
-    fi
+        shift
+    done
+    ffmpeg -f concat -safe 0 -i <(printf 'file %q\n' "${files[@]}") "$@"
 }

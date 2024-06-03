@@ -316,4 +316,5 @@
   ],
   "workbench.editor.empty.hint": "hidden",
   "workbench.colorTheme": "Lilac",
+  "rust-analyzer.cargo.features": "all",
 }

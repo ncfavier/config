@@ -281,13 +281,6 @@ in {
             }
           }
 
-          @-moz-document domain(github.com) {
-            .blob-num, .blob-code-inner, .highlight pre, .react-code-text {
-              font-family: monospace !important;
-              font-size: 13px !important;
-            }
-          }
-
           @-moz-document domain(adventofcode.com) {
             body {
               font-size: 12pt !important;
