@@ -33,12 +33,7 @@ jobs:
       - name: Build ISO
         run: nix -L build .#iso -o iso
       - name: Create release
-        id: release
-        uses: ncfavier/action-gh-release@delete-existing
-        with:
-          tag_name: iso
-          target_commitish: ${{ github.ref }}
-          name: ISO image
-          delete_on_existing: true
-          files: iso/iso/nixos*.iso
-          fail_on_unmatched_files: true
+        run: |
+          gh release upload iso iso/iso/nixos*.iso --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
