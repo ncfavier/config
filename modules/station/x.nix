@@ -4,15 +4,16 @@
     displayManager.startx.enable = true;
     tty = 1;
     autoRepeatDelay = 250;
-    libinput = {
-      enable = true;
-      mouse.accelSpeed = "0.5";
-      touchpad = {
-        accelSpeed = "0.5";
-        tapping = false;
-      };
-    };
     dpi = mkDefault 96;
+  };
+
+  services.libinput = {
+    enable = true;
+    mouse.accelSpeed = "0.5";
+    touchpad = {
+      accelSpeed = "0.5";
+      tapping = false;
+    };
   };
 
   lib.shellEnv = {
