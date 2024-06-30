@@ -79,6 +79,12 @@
                   <family>sans-serif</family>
                 </prefer>
               </alias>
+              <alias binding="same">
+                <family>Liberation Mono</family>
+                <prefer>
+                  <family>monospace</family>
+                </prefer>
+              </alias>
               <match target="scan"> <!-- TODO module -->
                 <test name="family"><string>tewi</string></test>
                 <edit name="charset" mode="assign">

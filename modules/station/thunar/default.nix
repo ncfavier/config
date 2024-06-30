@@ -42,8 +42,10 @@
         MimeType=${concatStringsSep ";" config.lib.mimeTypes.media}
         Exec=${thumbnailerScript "ffmpeg" ''${ffmpegthumbnailer}/bin/ffmpegthumbnailer -i "$i" -o "$o" -s "$s" -t 30 -m''}
       '')
-      (pythonScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
-        with ps; [ dbus-python pygobject3 pyxdg ]))
+      ((pythonScriptWithDeps "dbus-gen-thumbnails" ./dbus-gen-thumbnails.py (ps:
+        with ps; [ dbus-python pygobject3 pyxdg ])).overrideAttrs {
+          nativeBuildInputs = [ wrapGAppsNoGuiHook gobject-introspection ];
+      })
     ];
 
     xdg.configFile = {

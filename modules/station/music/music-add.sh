@@ -13,6 +13,10 @@ ask() { # TODO get this from functions.bash
     [[ $answer == y ]]
 }
 
+yt-dlp() {
+    command yt-dlp --ignore-config --cookies-from firefox "$@"
+}
+
 destdir=$(xdg-user-dir MUSIC)
 cover_maxsize=800
 
@@ -42,7 +46,7 @@ for src in "${srcs[@]}"; do
 
     if [[ $src =~ ^[[:alpha:]]+:// ]]; then
         echo "Downloading audio files from $src..."
-        yt-dlp --ignore-config -x --audio-format mp3 -o "$srcdir/%(playlist_index)s - %(title)s.%(ext)s" --cookies-from firefox "$src" || die "Failed to download audio files."
+        yt-dlp -x --audio-format mp3 -o "$srcdir/%(playlist_index)s - %(title)s.%(ext)s" "$src" || die "Failed to download audio files."
         printf '\a'
     elif [[ -r $src ]]; then
         if [[ ${src%/*} -ef $destdir ]]; then cmd=mv; else cmd=cp; fi
@@ -60,6 +64,7 @@ for src in "${srcs[@]}"; do
             editdir=$(mktemp --tmpdir="$tmpdir" -d "${basename%.*}-XXX")
             echo "Please save resulting file(s) under $editdir"
             echo "Starting Audacity..."
+            awk -i inplace -v p="$editdir" '/^\[/{ok=0}/^\[ExportAudioDialog\]/{ok=1;print;print "Format=MP3";print "DefaultPath=" p;next}!(ok && /^DefaultPath|Format/){print}' "$XDG_CONFIG_HOME/audacity/audacity.cfg"
             audacity "$srcfile" &> /dev/null
             editedfiles=("$editdir"/*.mp3)
 

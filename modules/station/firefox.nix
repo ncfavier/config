@@ -156,6 +156,7 @@ in {
             #nav-bar {
               color: var(--fg) !important;
               box-shadow: none !important;
+              border: none !important;
             }
 
             #back-button {
