@@ -234,6 +234,21 @@ unansi() {
     sed 's/\x1b\[[0-9;]*m//g' "$@"
 }
 
+traverse() {
+    local line
+    while IFS= read -r line; do
+        "$@" "$line"
+    done
+}
+
+xtraverse() {
+    xargs -d'\n' "$@"
+}
+
+cxan() {
+    clip | traverse "$@"
+}
+
 # Network
 
 myip() { # print my public IP addresses

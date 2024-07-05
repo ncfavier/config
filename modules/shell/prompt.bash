@@ -5,9 +5,14 @@ prompt_git() {
     fi
 }
 
-prompt_nix_shell() {
-    if [[ -v IN_NIX_SHELL ]]; then
-        printf +
+prompt_symbol() {
+    for (( i = 2; i < SHLVL; i++ )) do
+        printf '+'
+    done
+    if [[ -v DIRENV_FILE ]]; then
+        printf '\1\e[34m\2$\1\e[0m\2'
+    else
+        printf '$'
     fi
 }
 
@@ -18,7 +23,7 @@ else
     hostname_pretty=$HOSTNAME
 fi
 
-PS1='\['$(tput sgr0)'\]'${SSH_CONNECTION+$hostname_pretty }'\['$(tput bold)'\]\w\['$(tput sgr0)'\]$(prompt_git) $(prompt_nix_shell)\$ '
+PS1='\['$(tput sgr0)'\]'${SSH_CONNECTION+$hostname_pretty }'\['$(tput bold)'\]\w\['$(tput sgr0)'\]$(prompt_git) $(prompt_symbol) '
 PS2='\['$(tput sgr0)'\]> '
 
 pwd_prompt_string='\W'

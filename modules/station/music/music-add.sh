@@ -96,6 +96,8 @@ reuse_cover=
 if [[ $cover_src == @ ]]; then
     reuse_cover=1
     cover_src=
+else
+    cover_src=${cover_src/#'~'/"$HOME"}
 fi
 
 cover=
