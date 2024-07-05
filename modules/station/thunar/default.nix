@@ -27,7 +27,7 @@
       })
       xfce.xfconf
       glib.bin
-      gnome.zenity
+      zenity
       webp-pixbuf-loader
       libavif
       (writeShellScriptBin "closest-dir" ''

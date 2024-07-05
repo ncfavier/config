@@ -103,8 +103,8 @@
 
     tmsu = prev.tmsu.overrideAttrs (o: {
       patches = o.patches or [] ++ [ (builtins.toFile "tmsu-patch" ''
-        --- a/src/github.com/oniony/TMSU/common/path/path.go
-        +++ b/src/github.com/oniony/TMSU/common/path/path.go
+        --- a/common/path/path.go
+        +++ b/common/path/path.go
         @@ -92,14 +92 @@ func Dereference(path string) (string, error) {
         -	stat, err := os.Lstat(path)
         -	if err != nil {

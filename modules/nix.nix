@@ -130,7 +130,6 @@
         nix-bash-completions
         nix-index-unwrapped # use the system-wide nix
         nix-diff
-        nix-top
         nix-output-monitor
         nix-tree
         nixpkgs-fmt

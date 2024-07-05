@@ -26,8 +26,8 @@
 
     environment.systemPackages = with pkgs; [
       gparted
-      gnome.gnome-system-monitor
-      gnome.gnome-disk-utility
+      gnome-system-monitor
+      gnome-disk-utility
     ];
 
     hm.home.packages = with pkgs; [
@@ -48,7 +48,7 @@
       gimp
       inkscape
       poppler_utils
-      transmission-gtk
+      transmission_4-gtk
       qemu
       (writeShellScriptBin "power" ''
         actions=(shutdown reboot suspend "lock and suspend" logout)
