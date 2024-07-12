@@ -162,10 +162,18 @@ in {
         commandPrefix = ".";
         pasteUrl = "https://f.${my.domain}";
         pasteField = "file";
-        urlAlternativeHosts = {
-          "twitter.com" = "https://nitter.d420.de";
-          "m.twitter.com" = "https://nitter.d420.de";
-        };
+        urlAlternativeHosts = fix (self: {
+          "youtube.com" = "https://yewtu.be";
+          "www.youtube.com" = self."youtube.com";
+          "youtu.be" = self."youtube.com" + "/watch";
+          "x.com" = "https://nitter.privacydev.net";
+          "xcancel.com" = self."x.com";
+          "twitter.com" = self."x.com";
+          "m.twitter.com" = self."x.com";
+          "reddit.com" = "https://libreddit.nl";
+          "www.reddit.com" = self."reddit.com";
+          "old.reddit.com" = self."reddit.com";
+        });
       };
       secretsFile = config.secrets.bothendieck.path;
     };
