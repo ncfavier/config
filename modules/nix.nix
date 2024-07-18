@@ -1,4 +1,6 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; {
+  imports = [ inputs.lix.nixosModules.default ];
+
   config = mkMerge [
     {
       nixpkgs.overlays = let
