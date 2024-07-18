@@ -33,7 +33,7 @@ in {
           "browser.newtabpage.enhanced" = false;
           "browser.onboarding.enabled" = false;
           "browser.sessionstore.restore_on_demand" = false;
-          "browser.sessionstore.restore_tabs_lazily" = false;
+          "browser.sessionstore.restore_tabs_lazily" = true;
           "browser.startup.homepage" = "about:home";
           "browser.tabs.firefox-view" = false;
           "browser.tabs.firefox-view-next" = false;

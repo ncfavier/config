@@ -121,7 +121,7 @@ if [[ $cover_src ]]; then
 
     if (( resize )); then
         echo "Resizing album cover..."
-        convert "$cover" -resize "${cover_maxsize}x${cover_maxsize}>" "$cover"
+        magick "$cover" -resize "${cover_maxsize}x${cover_maxsize}>" "$cover"
     fi
 fi
 

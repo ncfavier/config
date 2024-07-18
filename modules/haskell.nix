@@ -23,7 +23,6 @@
       vector
     ]))
     cabal2nix
-    stack
     haskell-language-server
   ];
 
@@ -36,6 +35,16 @@
       username: ncfavier
       password-command: pass hackage
     '';
+  };
+
+  hm.programs.haskell.stack = {
+    enable = true;
+    settings = {
+      nix = {
+        enable = true;
+        packages = [ "zlib" ];
+      };
+    };
   };
 
   hm.home.file = {

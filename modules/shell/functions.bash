@@ -246,7 +246,11 @@ xtraverse() {
 }
 
 cxan() {
-    clip | traverse "$@"
+    local arg args
+    readarray -t args < <(clip)
+    for arg in ${args[@]}; do
+        "$@" "$arg"
+    done
 }
 
 # Network

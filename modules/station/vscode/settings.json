@@ -317,4 +317,5 @@
   "rust-analyzer.cargo.features": "all",
   "haskell.plugin.importLens.codeActionsOn": false,
   "workbench.colorTheme": "Lilac",
+  "git.openRepositoryInParentFolders": "always",
 }

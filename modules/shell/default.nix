@@ -19,6 +19,11 @@
 
   programs.bash = {
     promptInit = readFile ./prompt.bash;
+    interactiveShellInit = ''
+      if [[ ! -v SHLVL_BASE ]]; then
+        export SHLVL_BASE=$SHLVL
+      fi
+    '';
     shellAliases = {
       # Default flags
       comm = "comm --output-delimiter=$'\\t\\t'";

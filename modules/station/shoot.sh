@@ -94,7 +94,7 @@ else
     import -silent -window root ${geometry:+-crop "$geometry"} "$target"
 
     # Thumbnail
-    convert "$target" -resize "${thumbnail_size}x${thumbnail_size}>" "$thumbnail"
+    magick "$target" -resize "${thumbnail_size}x${thumbnail_size}>" "$thumbnail"
 fi
 
 # Notify

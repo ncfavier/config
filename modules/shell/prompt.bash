@@ -6,10 +6,10 @@ prompt_git() {
 }
 
 prompt_symbol() {
-    for (( i = 2; i < SHLVL; i++ )) do
+    for (( i = SHLVL_BASE; i < SHLVL; i++ )) do
         printf '+'
     done
-    if [[ -v DIRENV_FILE ]]; then
+    if [[ -v DIRENV_FILE && -v IN_NIX_SHELL ]]; then
         printf '\1\e[34m\2$\1\e[0m\2'
     else
         printf '$'
