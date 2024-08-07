@@ -31,7 +31,7 @@
     openssl
     bc
     fortune
-    imagemagick
+    imagemagickBig
     ffmpeg-full
     (yt-dlp.override { withAlias = true; })
     jq

@@ -38,6 +38,7 @@
     programs.bash.profileExtra = ''
       if [[ ! $DISPLAY && $XDG_VTNR == ${toString config.services.xserver.tty} ]]; then
           export XDG_SESSION_TYPE=x11
+          unset SHLVL_BASE
           exec systemd-cat -t xsession startx
       fi
     '';

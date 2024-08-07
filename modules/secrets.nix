@@ -39,7 +39,11 @@
   };
 
   hm = {
-    programs.password-store.enable = true;
+    programs.password-store = {
+      enable = true;
+      package = pkgs.pass.withExtensions (e: [ e.pass-otp ]);
+    };
+
     xdg.dataFile.password-store.source =
       config.hm.lib.file.mkOutOfStoreSymlink config.synced.password-store.path;
   };

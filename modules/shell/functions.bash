@@ -248,7 +248,7 @@ xtraverse() {
 cxan() {
     local arg args
     readarray -t args < <(clip)
-    for arg in ${args[@]}; do
+    for arg in "${args[@]}"; do
         "$@" "$arg"
     done
 }
@@ -295,6 +295,11 @@ sshesc() { # ssh opts -- argv...
     ssh "${args[@]}" -- "${*@Q}"
 }
 complete_alias sshesc ssh
+
+ssh-rspamd() {
+    ssh -L 3333:/run/rspamd/worker-controller.sock "$@"
+}
+complete_alias ssh-rspamd ssh
 
 weechat_fifo() {
     . config env

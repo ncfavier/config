@@ -79,7 +79,10 @@
         format.signOff = true;
         init.defaultBranch = "main";
         pull.rebase = true;
-        push.autoSetupRemote = true;
+        push = {
+          default = "upstream";
+          autoSetupRemote = true;
+        };
         rebase = {
           autoStash = true;
           autoSquash = true;

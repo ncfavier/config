@@ -10,6 +10,7 @@ in {
           tree-style-tab
           ublock-origin
           i-dont-care-about-cookies
+          cookies-txt
           darkreader
           refined-github
           redirector # ^https:\/\/(.*?)\.m\.wikipedia\.org\/(.*) → https://$1.wikipedia.org/$2
