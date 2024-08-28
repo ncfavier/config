@@ -173,7 +173,7 @@ in {
         "super + p" =
           "xsel -bo | upload -";
         "super + {_,shift,ctrl} + space" =
-          "rofi -sidebar-mode -show-icons -modes drun,run,window -show {drun,run,window}";
+          "rofi -sidebar-mode -show-icons -modes drun,run,window -show {drun,drun,window}";
         "super + asterisk" =
           "rofi -show calc";
         "super + o" =

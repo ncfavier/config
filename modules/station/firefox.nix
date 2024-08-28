@@ -9,14 +9,12 @@ in {
           french-dictionary
           tree-style-tab
           ublock-origin
-          i-dont-care-about-cookies
           cookies-txt
           darkreader
           refined-github
           redirector # ^https:\/\/(.*?)\.m\.wikipedia\.org\/(.*) → https://$1.wikipedia.org/$2
                      # ^https:\/\/(.*?)\.m\.wiktionary\.org\/(.*) → https://$1.wiktionary.org/$2
                      # ^https:\/\/mobile\.twitter\.com\/(.*) → https://twitter.com/$1
-          youtube-shorts-block
         ];
         settings = {
           "accessibility.typeaheadfind.autostart" = false;

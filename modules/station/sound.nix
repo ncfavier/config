@@ -34,10 +34,8 @@
         pavucontrol
         (writeShellScriptBin "volume" ''
           if (( ! $# )); then
-            data=$(LC_ALL=C pactl list sinks)
-            volume=$(grep -i volume <<< "$data" | grep -oP '\d+(?=%)' | head -n 1)
-            mute=$(grep -i mute <<< "$data" | grep -oE 'no|yes' | head -n 1)
-            printf '%s:%s\n' "$volume" "$mute"
+            pactl --format=json list sinks |
+              jq -r --arg def "$(pactl get-default-sink)" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%")):\(.mute)"'
           else case $1 in
             mute) pactl set-sink-mute @DEFAULT_SINK@ 1;;
             unmute) pactl set-sink-mute @DEFAULT_SINK@ 0;;

@@ -9,7 +9,7 @@ mpc() {
 mpc_load() {
     mpc clear
     if [[ $1 == random ]]; then
-        find -L "$music_dir" -maxdepth 1 -type f -mtime -500 -printf '%f\n' | mpc add
+        find -L "$music_dir" -maxdepth 1 -type f -mtime -730 -printf '%f\n' | mpc add
     elif [[ $artist || $album ]]; then
         mpc findadd ${artist:+artist "$artist"} ${album:+album "$album"}
     else

@@ -223,7 +223,7 @@ cleanup_on_exit
     fi
 
     # sound
-    stdbuf -oL alsactl monitor |
+    pactl subscribe | grep --line-buffered "^Event 'change'" |
     while
         printf 'S%s\n' "$(volume)"
         read -r
@@ -435,7 +435,7 @@ while read -rn 1 event; do
             ;;
         S) # sound
             IFS=: read -r percentage mute
-            if [[ $mute == yes ]]; then
+            if [[ $mute == true ]]; then
                 sound=
             else
                 icon=$(icon_ramp "$percentage"  10  50 )
