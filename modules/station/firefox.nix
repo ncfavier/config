@@ -7,6 +7,7 @@ in {
       profiles.${profile} = with config.theme; {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
+          to-google-translate
           tree-style-tab
           ublock-origin
           cookies-txt
@@ -15,6 +16,7 @@ in {
           redirector # ^https:\/\/(.*?)\.m\.wikipedia\.org\/(.*) → https://$1.wikipedia.org/$2
                      # ^https:\/\/(.*?)\.m\.wiktionary\.org\/(.*) → https://$1.wiktionary.org/$2
                      # ^https:\/\/mobile\.twitter\.com\/(.*) → https://twitter.com/$1
+          video-resumer
         ];
         settings = {
           "accessibility.typeaheadfind.autostart" = false;

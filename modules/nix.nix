@@ -3,6 +3,8 @@
 
   config = mkMerge [
     {
+      system.extraDependencies = collectFlakeInputs inputs.lix;
+
       nixpkgs.overlays = let
         importNixpkgs = nixpkgs: import nixpkgs {
           inherit (config.nixpkgs) localSystem crossSystem config;
@@ -183,14 +185,7 @@
                 ')
                 ;;
               update)
-                if (( $# )); then
-                  args=()
-                  for input do args+=(--update-input "$input"); done
-                  exec nix flake lock --refresh "''${args[@]}" "$configPath"
-                else
-                  # https://github.com/NixOS/nix/issues/6095 prevents using config-git here
-                  exec nix flake update -v --refresh "$configPath"
-                fi
+                exec nix flake update -v --refresh --flake "$configPath" "$@"
                 ;;
               rev)
                 if (( $# )); then
@@ -264,7 +259,7 @@
                     flakeArgs+=(--override-flake config "$configPath")
                   done
                   ;;&
-                compare|update|rev) _complete_nix_cmd $cword nix flake lock "$configPath" --update-input;;
+                compare|update|rev) _complete_nix_cmd $cword nix flake update --flake "$configPath";;
                 repl)               _complete_nix_cmd $args_offset nix repl "''${flakeArgs[@]}" ~/.nix-defexpr;;
                 eval)               _complete_nix_cmd $args_offset nix eval "''${flakeArgs[@]}" -f ~/.nix-defexpr;;
                 bld)                _complete_nix_cmd $args_offset nix build "''${flakeArgs[@]}" -f ~/.nix-defexpr;;

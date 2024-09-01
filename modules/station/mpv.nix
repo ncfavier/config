@@ -20,6 +20,8 @@
         hwdec = "auto-safe";
 
         pulse-latency-hacks = mkIf (config.sound.backend == "pulseaudio") true;
+
+        ytdl-raw-options = "cookies-from-browser=firefox";
       };
 
       scriptOpts.autoload = {

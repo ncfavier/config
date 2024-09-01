@@ -4,7 +4,7 @@
     (mkAliasOptionModule [ "hm" ] [ "home-manager" "users" my.username ])
   ];
 
-  system.extraDependencies = collectFlakeInputs inputs.home-manager;
+  system.extraDependencies = collectFlakeInputs inputs.home-manager ++ collectFlakeInputs inputs.xhmm;
 
   home-manager = {
     useGlobalPkgs = true;
