@@ -76,25 +76,26 @@
     }
 
     (mkIf this.isStation {
-      networking.wireless = {
+      networking.networkmanager = {
         enable = true;
-        userControlled.enable = true;
-        allowAuxiliaryImperativeNetworks = true;
-        environmentFile = config.secrets.wireless.path;
-        networks = {
-          tsu.psk = "@TSU_PSK@";
-          "@HOME_SSID@".psk = "@HOME_PSK@";
+
+        ensureProfiles = {
+          environmentFiles = [ config.secrets.wireless.path ];
+          profiles = {
+            tsu = {
+              connection.id = "tsu";
+              connection.type = "wifi";
+              wifi.ssid = "tsu";
+              wifi-security.key-mgmt = "wpa-psk";
+              wifi-security.psk = "$TSU_PSK";
+            };
+          };
         };
-        fallbackToWPA2 = false;
       };
 
-      environment.systemPackages = with pkgs; [ wpa_supplicant_gui ];
+      my.extraGroups = [ "networkmanager" ];
 
-      systemd.network.networks."30-sncf" = {
-        matchConfig.SSID = "_SNCF_WIFI_INOUI";
-        DHCP = "yes";
-        domains = [ "~sncf" ];
-      };
+      hm.services.network-manager-applet.enable = true;
 
       systemd.network.wait-online.anyInterface = true;
     })

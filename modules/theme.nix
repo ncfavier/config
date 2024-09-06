@@ -31,6 +31,7 @@
       font = "bitmap";
       fontSize = 8;
       pangoFont = "${font} ${toString fontSize}";
+      trayWidth = 3 * barHeight;
     };
 
     lib.shellEnv.theme = config.theme;

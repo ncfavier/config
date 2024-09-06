@@ -3,6 +3,7 @@ shopt -s nullglob lastpipe
 pidfile=$XDG_RUNTIME_DIR/bar.pid
 [[ -e $pidfile ]] && kill "$(< "$pidfile")" 2> /dev/null
 pkill -x lemonbar
+pkill -x trayer
 echo "$$" > "$pidfile"
 
 . config env
@@ -113,6 +114,8 @@ cleanup_on_exit() {
 battery=(/sys/class/power_supply/BAT*)
 read -r default_layout < <(xkb-switch -l)
 bold=3
+
+IFS=, read screenWidth _ < /sys/class/graphics/fb0/virtual_size
 
 # ℕ
 xft_fonts=("siji:pixelsize=10" "${theme[font]}:size=${theme[fontSize]}" "${theme[font]}:bold:size=${theme[fontSize]}" "tewi:size=${theme[fontSize]}" "Biwidth:size=9")
@@ -515,7 +518,7 @@ done |
 # Bar
 #
 
-lemonbar -g x"${theme[barHeight]}" \
+lemonbar -g "$((screenWidth - ${theme[trayWidth]}))x${theme[barHeight]}" \
          -a 255 \
          -B "${theme[background]}" \
          -F "${theme[foreground]}" \
@@ -532,5 +535,7 @@ done &
 # Set lemonbar to be just above the root window to prevent displaying over other windows
 sleep 0.1s
 xdo above -t "$(xdo id -n root)" -m -n lemonbar 2> /dev/null &
+
+trayer -l --edge top --align right --height "${theme[barHeight]}" --widthtype pixel --width "${theme[trayWidth]}" &
 
 wait
