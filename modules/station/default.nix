@@ -37,6 +37,7 @@
       tdesktop
       signal-desktop
       libreoffice-fresh
+      xournalpp
       pandoc
       coq
       (agda.withPackages (p: with p; [

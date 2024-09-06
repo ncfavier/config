@@ -1,10 +1,8 @@
-{ lib, config, pkgs, ... }: with lib; let
-  profile = "default";
-in {
+{ lib, config, pkgs, ... }: with lib; {
   hm = {
     programs.firefox = {
       enable = true;
-      profiles.${profile} = with config.theme; {
+      profiles.default = with config.theme; {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
           to-google-translate
@@ -312,14 +310,22 @@ in {
           }
         '';
       };
+      profiles.work = {
+        id = 1;
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          french-dictionary
+          to-google-translate
+          ublock-origin
+        ];
+      };
     };
 
     home.sessionVariables.MOZ_USE_XINPUT2 = "1";
 
     # https://firefox-source-docs.mozilla.org/devtools/backend/protocol.html
     # https://searchfox.org/mozilla-central/source/devtools/server/actors/style-sheets.js
-    home.file.".mozilla/firefox/${profile}/chrome/userChrome.css".onChange = ''
-      if cd ~/.mozilla/firefox/${profile} && pgrep firefox > /dev/null; then (
+    home.file.".mozilla/firefox/default/chrome/userChrome.css".onChange = ''
+      if cd ~/.mozilla/firefox/default && pgrep firefox > /dev/null; then (
         port=6001
         firefox --start-debugger-server "$port" || exit 0
         exec {ff}<>/dev/tcp/localhost/"$port"

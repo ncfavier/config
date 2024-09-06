@@ -188,6 +188,8 @@ in {
           "wm go {_,-n} {web,mail,chat,files,editor,video,music}";
         "super + ctrl + w" =
           "wm go wifi";
+        "super + alt + w" =
+          "firefox -P work";
       };
     };
 

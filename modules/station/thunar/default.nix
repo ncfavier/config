@@ -26,7 +26,8 @@
         ];
       })
       xfce.xfconf
-      glib.bin
+      xfce.exo
+      glib
       zenity
       webp-pixbuf-loader
       libavif
