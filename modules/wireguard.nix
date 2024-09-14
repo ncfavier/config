@@ -113,6 +113,11 @@ in {
         '';
       };
 
+      systemd.services."wg-quick-${interface}" = {
+        requires = [ "nss-lookup.target" ];
+        after = [ "nss-lookup.target" ];
+      };
+
       environment.systemPackages = [ wg-toggle wg-exempt ];
     }))
   ];

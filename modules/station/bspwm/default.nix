@@ -172,6 +172,8 @@ in {
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + p" =
           "xsel -bo | upload -";
+        "super + shift + p" =
+          "rofi-pass";
         "super + {_,shift,ctrl} + space" =
           "rofi -sidebar-mode -show-icons -modes drun,run,window -show {drun,drun,window}";
         "super + asterisk" =

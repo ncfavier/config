@@ -93,11 +93,16 @@
         };
       };
 
+      # TODO https://github.com/NixOS/nixpkgs/pull/340325
+      environment.etc."ipsec.secrets".text = ''
+        include ipsec.d/ipsec.nm-l2tp.secrets
+      '';
+
       my.extraGroups = [ "networkmanager" ];
 
       hm.services.network-manager-applet.enable = true;
 
-      systemd.network.wait-online.anyInterface = true;
+      systemd.network.wait-online.enable = false;
     })
   ];
 }

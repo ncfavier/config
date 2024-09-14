@@ -188,6 +188,7 @@ set-mtime() {
 
 writeiso() { # write an ISO file to a block device
     local file=$1 device=$2
+    ask "write to $device?" n || return 1
     sudo dd if="$file" of="$device" bs=1M oflag=sync status=progress
 }
 

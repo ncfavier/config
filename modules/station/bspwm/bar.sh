@@ -252,12 +252,12 @@ cleanup_on_exit
                 parts+=("D$has_route$interface");;
             wlan)
                 ssid=
-                iw dev "$interface" info | while read -r field value; do
-                    if [[ $field == ssid ]]; then
-                        printf -v ssid '%b' "$value"
-                        break
-                    fi
-                done
+                # iw dev "$interface" info | while read -r field value; do
+                #     if [[ $field == ssid ]]; then
+                #         printf -v ssid '%b' "$value"
+                #         break
+                #     fi
+                # done
                 parts+=("L$has_route$interface,$ssid");;
             wireguard)
                 parts+=("G$has_route$interface");;
@@ -378,8 +378,8 @@ while read -rn 1 event; do
                         ;;
                     L)
                         IFS=, read -d : interface ssid
-                        trunc ssid 15
-                        escape ssid
+                        # trunc ssid 15
+                        # escape ssid
                         wireless+="%{A:wm go wifi:}%{A}"
                         dim_if_not "$has_route" wireless
                         ;;

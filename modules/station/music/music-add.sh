@@ -13,10 +13,6 @@ ask() { # TODO get this from functions.bash
     [[ $answer == y ]]
 }
 
-yt-dlp() {
-    command yt-dlp --ignore-config --cookies-from firefox "$@"
-}
-
 destdir=$(xdg-user-dir MUSIC)
 cover_maxsize=800
 

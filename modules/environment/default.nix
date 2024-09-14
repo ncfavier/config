@@ -33,7 +33,6 @@
     fortune
     imagemagickBig
     ffmpeg-full
-    (yt-dlp.override { withAlias = true; })
     jq
     htmlq
     python3
@@ -69,6 +68,14 @@
   };
 
   hm.xdg.configFile."htop/htoprc".force = true;
+
+  hm.programs.yt-dlp = {
+    enable = true;
+    package = pkgs.yt-dlp.override { withAlias = true; };
+    settings = {
+      cookies-from-browser = "firefox";
+    };
+  };
 
   nixpkgs.overlays = [ (pkgs: prev: {
     shellScriptWith = name: src: { deps ? [], vars ? {} }:

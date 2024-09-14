@@ -316,6 +316,7 @@
           french-dictionary
           to-google-translate
           ublock-origin
+          refined-github
         ];
       };
     };

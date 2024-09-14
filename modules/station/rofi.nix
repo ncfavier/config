@@ -53,6 +53,14 @@
       cycle = true;
       terminal = "alacritty";
 
+      pass = {
+        enable = true;
+        extraConfig = ''
+          default_do=copyPass
+          clip=clipboard
+        '';
+      };
+
       extraConfig = {
         dpi = 0; # auto-detect using X screen size
         drun-display-format = "{name}";
