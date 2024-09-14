@@ -3,6 +3,6 @@
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [
       obs-vkcapture
-    ] ++ optional (config.sound.backend == "pipewire") obs-pipewire-audio-capture;
+    ] ++ optional (config.sound-backend == "pipewire") obs-pipewire-audio-capture;
   };
 }

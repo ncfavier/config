@@ -1,18 +1,18 @@
 { lib, config, pkgs, ... }: with lib; {
-  options.sound.backend = mkOption {
+  options.sound-backend = mkOption {
     type = types.enum [ "pulseaudio" "pipewire" ];
     default = "pipewire";
   };
 
   config = mkMerge [
-    (mkIf (config.sound.backend == "pulseaudio") {
+    (mkIf (config.sound-backend == "pulseaudio") {
       hardware.pulseaudio = {
         enable = true;
         support32Bit = true;
       };
     })
 
-    (mkIf (config.sound.backend == "pipewire") {
+    (mkIf (config.sound-backend == "pipewire") {
       services.pipewire = {
         enable = true;
         alsa.enable = true;

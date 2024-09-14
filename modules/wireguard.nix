@@ -77,8 +77,8 @@ in {
             elif [[ $arg == *:*:* && $arg == +([[:xdigit:]:]) ]]; then
                 v6+=("$arg")
             else
-                v4+=($(dig +short "$arg" A))
-                v6+=($(dig +short "$arg" AAAA))
+                v4+=($(dig +short "$arg" A | grep -v '^;'))
+                v6+=($(dig +short "$arg" AAAA | grep -v '^;'))
             fi
         done
         for ip in "''${v4[@]}"; do
@@ -109,7 +109,7 @@ in {
           ${getExe wg-exempt} ${escapeShellArgs exceptions}
         '';
         preDown = ''
-          ${getExe wg-exempt} -d ${escapeShellArgs exceptions}
+          ${getExe wg-exempt} -d ${escapeShellArgs exceptions} || true
         '';
       };
 

@@ -6,7 +6,7 @@
       extraConfig = ''
         auto_update "yes"
 
-        ${if config.sound.backend == "pulseaudio" then ''
+        ${if config.sound-backend == "pulseaudio" then ''
         audio_output {
           type "pulse"
           name "PulseAudio"
