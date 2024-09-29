@@ -45,6 +45,7 @@
         cubical
         agda-categories
       ]))
+      ocamlPackages.cooltt
       audacity
       gimp
       inkscape

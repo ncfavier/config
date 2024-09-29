@@ -5,7 +5,6 @@
       profiles.default = with config.theme; {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
-          to-google-translate
           tree-style-tab
           ublock-origin
           cookies-txt
@@ -15,6 +14,7 @@
                      # ^https:\/\/(.*?)\.m\.wiktionary\.org\/(.*) → https://$1.wiktionary.org/$2
                      # ^https:\/\/mobile\.twitter\.com\/(.*) → https://twitter.com/$1
           video-resumer
+          uppity
         ];
         settings = {
           "accessibility.typeaheadfind.autostart" = false;
@@ -314,7 +314,6 @@
         id = 1;
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
-          to-google-translate
           ublock-origin
           refined-github
         ];

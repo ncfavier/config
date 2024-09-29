@@ -72,9 +72,9 @@ in {
         for arg do
             if [[ $arg == -d ]]; then
                 action=del
-            elif [[ $arg == +([0-9]).+([0-9]).+([0-9]).+([0-9]) ]]; then
+            elif [[ $arg == +([0-9]).+([0-9]).+([0-9]).+([0-9])?(/*) ]]; then
                 v4+=("$arg")
-            elif [[ $arg == *:*:* && $arg == +([[:xdigit:]:]) ]]; then
+            elif [[ $arg == *:*:* && $arg == +([[:xdigit:]:])?(/*) ]]; then
                 v6+=("$arg")
             else
                 v4+=($(dig +short "$arg" A | grep -v '^;'))
@@ -90,7 +90,10 @@ in {
             sudo ip -6 rule "$action" to "$ip" lookup main
         done
       '') { deps = with pkgs; [ dnsutils iproute2 ]; };
-      exceptions = [ "wikipedia.org" ];
+      exceptions = [
+        "wikipedia.org"
+        "129.16.0.0/16" # Chalmers
+      ];
     in {
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;
@@ -100,7 +103,7 @@ in {
           interface # search domain
         ];
         peers = [ {
-          endpoint = "${my.domain}:${toString port}";
+          endpoint = "${head my.server.ipv4}:${toString port}";
           inherit (my.server.wireguard) publicKey;
           allowedIPs = [ "0.0.0.0/0" "::/0" ];
           persistentKeepalive = 21;

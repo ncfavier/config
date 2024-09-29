@@ -1,4 +1,4 @@
-{ lib, ... }: with lib; {
+{ lib, pkgs, ... }: with lib; {
   hm = {
     programs.gpg = {
       enable = true;
@@ -49,6 +49,7 @@
 
     services.gpg-agent = {
       enable = true;
+      pinentryPackage = pkgs.pinentry-gtk2;
       enableSshSupport = true;
       sshKeys = [
         "2EBD4F5F9AAAE5BCC8FB0A3CC9BE73CAACA66D33"
