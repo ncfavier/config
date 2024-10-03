@@ -29,6 +29,7 @@
     lmtpSaveToDetailMailbox = "no";
     messageSizeLimit = 25 * 1024 * 1024;
     rejectRecipients = map (x: "${x}@${my.domain}") [ "naim" "znc" ];
+    rejectSender = [ "sales@headquarters-biz.cloud" ];
   };
 
   my.extraGroups = [ config.mailserver.vmailGroupName ];
