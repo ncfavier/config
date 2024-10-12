@@ -120,6 +120,7 @@
                 autoconnect = "false";
               };
               ipv4 = {
+                method = "auto";
                 never-default = "true";
                 route1 = "129.16.0.0/16"; # Chalmers
                 route2 = "130.241.0.0/16"; # GU
