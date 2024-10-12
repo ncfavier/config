@@ -317,6 +317,10 @@
           ublock-origin
           refined-github
         ];
+        settings = {
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        };
+        inherit (config.hm.programs.firefox.profiles.default) userContent;
       };
     };
 

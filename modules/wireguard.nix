@@ -90,9 +90,11 @@ in {
             sudo ip -6 rule "$action" to "$ip" lookup main
         done
       '') { deps = with pkgs; [ dnsutils iproute2 ]; };
-      exceptions = [
+      exemptions = [
         "wikipedia.org"
-        "129.16.0.0/16" # Chalmers
+        "129.16.0.0/16" "2001:6b0::/32" # Chalmers
+        "130.241.0.0/16" # GU
+        "40.126.0.0/18" "2603:1000::/25" # Microsoft
       ];
     in {
       networking.wg-quick.interfaces.${interface} = {
@@ -109,10 +111,10 @@ in {
           persistentKeepalive = 21;
         } ];
         postUp = ''
-          ${getExe wg-exempt} ${escapeShellArgs exceptions}
+          ${getExe wg-exempt} ${escapeShellArgs exemptions}
         '';
         preDown = ''
-          ${getExe wg-exempt} -d ${escapeShellArgs exceptions} || true
+          ${getExe wg-exempt} -d ${escapeShellArgs exemptions} || true
         '';
       };
 

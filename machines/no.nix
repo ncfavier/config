@@ -20,8 +20,8 @@
 
     services.tlp.settings = {
       RUNTIME_PM_DENYLIST = "02:00.0"; # otherwise the Ethernet adapter doesn't work on battery mode
-      START_CHARGE_THRESH_BAT0 = 75;
-      STOP_CHARGE_THRESH_BAT0 = 81;
+      START_CHARGE_THRESH_BAT0 = 85;
+      STOP_CHARGE_THRESH_BAT0 = 91;
       RESTORE_THRESHOLDS_ON_BAT = 1;
     };
 
@@ -68,7 +68,7 @@
     networking.wireless.interfaces = [ "wlp3s0" ];
 
     networking.sharing = {
-      enable = true;
+      enable = false;
       internalInterface = "enp2s0f0";
       externalInterface = "wlp3s0";
     };

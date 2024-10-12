@@ -80,7 +80,7 @@
         enable = true;
 
         ensureProfiles = {
-          environmentFiles = [ config.secrets.wireless.path ];
+          environmentFiles = [ config.secrets.networkmanager.path ];
           profiles = {
             tsu = {
               connection.id = "tsu";
@@ -89,9 +89,67 @@
               wifi-security.key-mgmt = "wpa-psk";
               wifi-security.psk = "$TSU_PSK";
             };
+
+            eduroam = {
+              connection = {
+                id = "eduroam";
+                type = "wifi";
+              };
+              wifi.ssid = "eduroam";
+              wifi-security.key-mgmt = "wpa-eap";
+              "802-1x" = {
+                eap = "peap;";
+                identity = "${my.chalmersId}@chalmers.se";
+                password = "$CHALMERS_PASSWORD";
+                phase2-auth = "mschapv2";
+              };
+            };
+
+            nomad = {
+              connection = {
+                id = "NOMAD";
+                type = "wifi";
+              };
+              wifi.ssid = "NOMAD";
+            };
+
+            chalmers = {
+              connection = {
+                type = "vpn";
+                id = "Chalmers";
+                autoconnect = "false";
+              };
+              ipv4 = {
+                never-default = "true";
+                route1 = "129.16.0.0/16"; # Chalmers
+                route2 = "130.241.0.0/16"; # GU
+                route3 = "40.126.0.0/10"; # Microsoft
+              };
+              ipv6 = {
+                method = "disabled";
+              };
+              vpn = {
+                gateway = "vpn-gw.chalmers.se";
+                ipsec-enabled = "yes";
+                refuse-chap = "yes";
+                refuse-eap = "yes";
+                refuse-mschap = "yes";
+                refuse-pap = "yes";
+                service-type = "org.freedesktop.NetworkManager.l2tp";
+                user = my.chalmersId;
+                user-auth-type = "password";
+              };
+              vpn-secrets = {
+                ipsec-psk = "$CHALMERS_PSK";
+                password = "$CHALMERS_PASSWORD";
+              };
+            };
           };
         };
       };
+
+      # "info" spams CTRL-EVENT-SIGNAL-CHANGE messages in the log
+      systemd.services.wpa_supplicant.serviceConfig.LogLevelMax = "notice";
 
       # TODO https://github.com/NixOS/nixpkgs/pull/340325
       environment.etc."ipsec.secrets".text = ''

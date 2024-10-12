@@ -138,6 +138,7 @@
       <dead_circumflex> <n> : "ⁿ"
       <dead_circumflex> <r> : "ʳ"
       <dead_circumflex> <s> : "ˢ"
+      <Multi_key> <asciicircum> <u> : "ᵘ"
       <dead_circumflex> <v> : "ᵛ"
       <dead_circumflex> <V> : "ⱽ"
       <Multi_key> <asciicircum> <w> : "ʷ"

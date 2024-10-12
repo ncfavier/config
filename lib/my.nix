@@ -13,6 +13,7 @@ lib: machines: with lib; let
       config = {
         username = "n";
         githubUsername = "ncfavier";
+        chalmersId = "naimf";
         realName = "Naïm Favier";
         domain = "monade.li";
         email = "${my.username}@${my.domain}";
