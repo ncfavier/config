@@ -16,7 +16,7 @@ in {
     overrideFolders = true;
 
     guiAddress = "${this.wireguard.ipv4}:8384";
-    openDefaultPorts = false;
+    openDefaultPorts = true;
 
     key = mkIf (this ? syncthing) config.secrets.syncthing.path;
 

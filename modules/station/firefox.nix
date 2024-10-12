@@ -20,6 +20,7 @@
           "accessibility.typeaheadfind.autostart" = false;
           "accessibility.typeaheadfind.manual" = false;
           "apz.gtk.touchpad_pinch.enabled" = false;
+          "browser.aboutConfig.showWarning" = false;
           "browser.download.alwaysOpenPanel" = false;
           "browser.download.always_ask_before_handling_new_types" = true;
           "browser.fixup.alternate.enabled" = false;
@@ -52,7 +53,6 @@
           "extensions.pocket.enabled" = false;
           "full-screen-api.warning.timeout" = "0";
           "general.autoScroll" = true;
-          "general.warnOnAboutConfig" = false;
           "gfx.color_management.mode" = "0";
           "layers.acceleration.force-enabled" = true;
           "media.ffmpeg.vaapi.enabled" = true;
