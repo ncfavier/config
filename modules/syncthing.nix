@@ -18,7 +18,7 @@ in {
     guiAddress = "${this.wireguard.ipv4}:8384";
     openDefaultPorts = false;
 
-    key = config.secrets.syncthing.path;
+    key = mkIf (this ? syncthing) config.secrets.syncthing.path;
 
     settings = {
       gui = {
