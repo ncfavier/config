@@ -26,6 +26,8 @@
     config = {
       boot.supportedFilesystems = genAttrs [ "reiserfs" "xfs" "cifs" "f2fs" ] (_: mkForce false);
 
+      console.font = "Lat2-Terminus16";
+
       services.getty.autologinUser = mkForce my.username;
 
       # start wpa-supplicant on boot
