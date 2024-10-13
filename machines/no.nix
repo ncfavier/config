@@ -13,6 +13,7 @@
     imports = with hardware; [
       notDetected
       lenovo-thinkpad-t14s-amd-gen1
+      common-pc-ssd
     ];
 
     services.fwupd.enable = true;

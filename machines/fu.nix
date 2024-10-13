@@ -13,6 +13,7 @@
     imports = with hardware; [
       notDetected
       common-cpu-intel-cpu-only
+      common-pc-ssd
     ];
 
     boot = {

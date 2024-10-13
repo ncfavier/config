@@ -15,6 +15,7 @@
       common-cpu-amd
       common-cpu-amd-pstate
       common-gpu-amd
+      common-pc-ssd
     ];
 
     boot = {

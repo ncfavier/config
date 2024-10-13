@@ -66,6 +66,8 @@
       size = 8 * 1024;
     } ];
 
+    services.fstrim.enable = true;
+
     environment.systemPackages = with pkgs; [
       efibootmgr
     ];

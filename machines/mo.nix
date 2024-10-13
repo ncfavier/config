@@ -13,6 +13,7 @@
     imports = with hardware; [
       notDetected
       lenovo-thinkpad-t420
+      common-pc-ssd
     ];
 
     services.tlp.settings = {
