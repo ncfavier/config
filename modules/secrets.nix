@@ -14,9 +14,9 @@
     age.sshKeyPaths = [];
 
     # GPG running as root can't find my socket dir (https://github.com/NixOS/nixpkgs/issues/57779)
-    environment.SOPS_GPG_EXEC = pkgs.writeShellScript "gpg-${my.username}" ''
-      exec ${pkgs.util-linux}/bin/runuser -u ${my.username} -- ${pkgs.gnupg}/bin/gpg "$@"
-    '';
+    # environment.SOPS_GPG_EXEC = pkgs.writeShellScript "gpg-${my.username}" ''
+    #   exec ${pkgs.util-linux}/bin/runuser -u ${my.username} -- ${pkgs.gnupg}/bin/gpg "$@"
+    # '';
 
     secrets = let
       secretsDir = "${inputs.self}/secrets";

@@ -62,9 +62,17 @@
     services.blueman.enable = true;
     hm.services.blueman-applet.enable = true;
 
+    services.hardware.openrgb.enable = true;
+    nixpkgs.overlays = [ (self: super: {
+      openrgb = (pkgs.mine "openrgb-unstable" "sha256-5BGfqBwhx3cj2ST9qjzgaAmaDvjUwrzqZdBowA9VSHU=").openrgb;
+    }) ];
+
     keys.composeKey = "rwin";
+    keys.printScreenKey = "Insert";
 
     broadcasting.enable = true;
+
+    services.xserver.videoDrivers = [ "amdgpu" ];
 
     my.hashedPassword = "$y$j9T$HVlzhk1CJa7IPyHjmHTFN.$c1go/wt0izX52Ej/EWtykusUCmqJLCXtvgXGvjcrHu8";
 
