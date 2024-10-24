@@ -9,6 +9,3 @@ a package manager and build system with a declarative approach based on a
 [functional programming](https://en.wikipedia.org/wiki/Functional_programming)
 language. (See [GNU Guix](https://guix.gnu.org/)
 for an alternative with a stronger focus on software freedoms.)
-
-This repository is not meant to be used as-is by anyone else, but feel free to take
-inspiration (see the [license](https://github.com/ncfavier/config/blob/main/LICENSE)).

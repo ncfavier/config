@@ -105,14 +105,6 @@
               };
             };
 
-            nomad = {
-              connection = {
-                id = "NOMAD";
-                type = "wifi";
-              };
-              wifi.ssid = "NOMAD";
-            };
-
             chalmers = {
               connection = {
                 type = "vpn";

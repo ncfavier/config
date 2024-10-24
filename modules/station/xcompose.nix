@@ -124,6 +124,7 @@
       <Multi_key> <underscore> <s> : "ₛ"
       <Multi_key> <underscore> <t> : "ₜ"
       <Multi_key> <underscore> <u> : "ᵤ"
+      <Multi_key> <underscore> <v> : "ᵥ"
       <Multi_key> <underscore> <x> : "ₓ"
       <dead_circumflex> <b> : "ᵇ"
       <dead_circumflex> <c> : "ᶜ"

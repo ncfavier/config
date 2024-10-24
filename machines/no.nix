@@ -84,6 +84,7 @@
     services.blueman.enable = true;
     hm.services.blueman-applet.enable = true;
 
+    services.xserver.videoDrivers = [ "amdgpu" ];
     services.xserver.dpi = 120;
 
     keys.composeKey = "prsc";

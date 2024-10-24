@@ -42,6 +42,12 @@
           '';
         });
       }) ];
+
+      environment.systemPackages = [
+        sops
+      ];
+
+      environment.variables.EDITOR = "vim";
     };
   };
 }

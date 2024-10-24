@@ -5,6 +5,7 @@
     tty = 1;
     autoRepeatDelay = 250;
     dpi = mkDefault 96;
+    enableTearFree = true;
   };
 
   services.libinput = {
@@ -87,7 +88,7 @@
     services.picom = {
       enable = mkDefault true;
       backend = mkDefault "glx";
-      vSync = true; # the only reason i need picom...
+      vSync = ! config.services.xserver.enableTearFree;
 
       settings.unredir-if-possible = true; # reduces lag in fullscreen games
 
