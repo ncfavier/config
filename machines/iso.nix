@@ -4,7 +4,7 @@
     hostname = null;
   };
 
-  nixos = { lib, modulesPath, myModulesPath, ... }: with lib; {
+  nixos = { lib, modulesPath, myModulesPath, pkgs, ... }: with lib; {
     imports = [
       "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
       "${myModulesPath}/theme.nix"
@@ -43,7 +43,7 @@
         });
       }) ];
 
-      environment.systemPackages = [
+      environment.systemPackages = with pkgs; [
         sops
       ];
 
