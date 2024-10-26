@@ -177,12 +177,22 @@ flast() { # find the most recently modified files in a tree
     done
 }
 
-set-mtime() {
+copymtime() {
     local dst=$1 mtime f
     mtime=$(stat -c %Y "$dst")
     shift
     for f do
         touch -d "@$mtime" -- "$f"
+    done
+}
+
+filename2mtime() {
+    local f name
+    for f do
+        name=${f##*/}
+        if [[ $name =~ ([0-9]{8})_([0-9]{6}) ]]; then
+            touch -t "${BASH_REMATCH[1]}${BASH_REMATCH[2]::4}.${BASH_REMATCH[2]:4}" "$f"
+        fi
     done
 }
 
