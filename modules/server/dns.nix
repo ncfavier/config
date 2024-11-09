@@ -93,10 +93,10 @@ in {
         ];
         access-control = [
           "127.0.0.0/8 allow" "::1/128 allow"
-          "10.42.0.0/16 allow" "fd42::/16 allow"
+          "${config.networking.wireguard.subnetv4} allow" "${config.networking.wireguard.subnetv6} allow"
         ];
-        private-address = [
-          "fd42::/16" "10.42.0.0/16"
+        private-address = with config.networking.wireguard; [
+          subnetv4 subnetv6
         ];
         local-data = concatLists (mapAttrsToList (n: m: [
           ''"${n}.${config.networking.wireguard.interface}. A ${m.wireguard.ipv4}"''
