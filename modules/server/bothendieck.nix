@@ -163,7 +163,7 @@ in {
         pasteUrl = "https://f.${my.domain}";
         pasteField = "file";
         urlAlternativeHosts = fix (self: {
-          "youtube.com" = "https://yewtu.be";
+          "youtube.com" = "https://inv.nadeko.net";
           "www.youtube.com" = self."youtube.com";
           "youtu.be" = self."youtube.com" + "/watch";
           "x.com" = "https://nitter.privacydev.net";
@@ -195,6 +195,17 @@ in {
     #   # server.httpMaxConnections = 2;
     #   # config.tokenCount = 1;
     #   # cache.redisConnections = 1;
+    # };
+
+    # services.invidious = {
+    #   enable = true;
+    #   address = "10.42.0.1";
+    #   settings = {
+    #     db.user = "invidious";
+    #     visitor_data = "CgtybDlZTEQ2SGpwWSimhvy3BjIKCgJERRIEEgAgWg==";
+    #     po_token = "MnhO4DLuWhFOyE7cO2QCllOtrVffXV1Zhe_YtxhlTNAQyP0kZ7AI_83lhWLCj6C7tw8VOxekehfF2T9kRpDzE0kLVcFPOcx4JP6q2jeGSgt2XGcHc5pKA1zkjRCSFqKXJvwnp6B4_dgyME-2mHS32iX4sVu02Ot2FhU=";
+    #   };
+    #   sig-helper.enable = true;
     # };
   };
 }

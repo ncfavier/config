@@ -10,32 +10,32 @@ in {
     ratelimit.enable = true;
 
     zones = with dns.combinators; let
-      here = {
+      soa = {
+        SOA = {
+          nameServer = "@";
+          adminEmail = "dns@${my.domain}";
+          serial = 0;
+        };
+        NS = [ "@" ];
+      };
+      aaaaa = {
         A = map a this.ipv4;
         AAAA = map aaaa this.ipv6;
       };
     in {
-      "yoneda.ninja".data = dns.toString "yoneda.ninja" (here // {
+      "yoneda.ninja".data = dns.toString "yoneda.ninja" (soa // aaaaa // {
         TTL = 60;
-        SOA = {
-          nameServer = "@";
-          adminEmail = "dns@${my.domain}";
-          serial = 0;
-        };
-        NS = [ "@" ];
         CAA = letsEncrypt "dns+caa@${my.domain}";
-        subdomains."*" = here;
+        subdomains."*" = aaaaa;
       });
 
-      ${my.domain}.data = dns.toString my.domain (here // {
-        TTL = 60 * 60;
+      "grove.monade.li".data = dns.toString "grove.monade.li" (soa // aaaaa // {
+        TTL = 60;
+        TXT = [ "across old bark" "in the ancient glade" "it's always dark" "the quiet shade" ];
+      });
 
-        SOA = {
-          nameServer = "@";
-          adminEmail = "dns@${my.domain}";
-          serial = 0;
-        };
-        NS = [ "@" ];
+      ${my.domain}.data = dns.toString my.domain (soa // aaaaa // {
+        TTL = 60 * 60;
 
         MX = [ (mx.mx 10 "@") ];
         DKIM = [ {
@@ -71,7 +71,7 @@ in {
         ];
 
         subdomains = rec {
-          "*" = here;
+          "*" = aaaaa;
 
           github.CNAME = [ "${my.githubUsername}.github.io." ];
           glam = github;

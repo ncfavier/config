@@ -48,6 +48,23 @@ in {
 
         "www.${my.domain}".globalRedirect = my.domain;
 
+        "grove.${my.domain}" = {
+          locations."/" = {
+            extraConfig = ''
+              fastcgi_pass unix:${config.services.phpfpm.pools.upload.socket};
+            '';
+            fastcgiParams.SCRIPT_FILENAME = pkgs.writeText "grove.php" ''
+              <?php
+              header("Content-Type: text/plain");
+              $poem = array("across old bark", "in the ancient glade", "it's always dark", "the quiet shade");
+              shuffle($poem);
+              foreach ($poem as $line) {
+                echo "$line\n";
+              }
+            '';
+          };
+        };
+
         "f.${my.domain}" = {
           root = uploadsRoot;
           locations."= /" = {
