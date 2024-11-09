@@ -2,10 +2,6 @@
   description = "ncfavier's configurations";
 
   inputs = {
-    lix = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-22.11";
     nixos-hardware.url = "nixos-hardware";

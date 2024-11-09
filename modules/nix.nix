@@ -1,10 +1,6 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; {
-  imports = [ inputs.lix.nixosModules.default ];
-
   config = mkMerge [
     {
-      system.extraDependencies = collectFlakeInputs inputs.lix;
-
       nixpkgs.overlays = let
         importNixpkgs = nixpkgs: import nixpkgs {
           inherit (config.nixpkgs) localSystem crossSystem config;
@@ -26,6 +22,8 @@
           local = importNixpkgs "${config.my.home}/git/nixpkgs";
         })
       ];
+
+      nix.package = pkgs.lix;
 
       nix.settings = mkMerge [
         {
