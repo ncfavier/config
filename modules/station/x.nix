@@ -1,8 +1,6 @@
 { lib, config, pkgs, ... }: with lib; {
   services.xserver = {
     enable = true;
-    displayManager.startx.enable = true;
-    tty = 1;
     autoRepeatDelay = 250;
     dpi = mkDefault 96;
     enableTearFree = true;
@@ -23,27 +21,9 @@
 
   services.autorandr.enable = true;
 
+  bspwm.enable = mkDefault true;
+
   hm = {
-    xsession = {
-      enable = true;
-      scriptPath = ".xinitrc";
-
-      importedVariables = [ "PATH" ];
-      numlock.enable = true;
-      initExtra = ''
-        [[ -f ~/.fehbg ]] && ~/.fehbg &
-        ${pkgs.xorg.xset}/bin/xset -b
-      '';
-    };
-
-    programs.bash.profileExtra = ''
-      if [[ ! $DISPLAY && $XDG_VTNR == ${toString config.services.xserver.tty} ]]; then
-          export XDG_SESSION_TYPE=x11
-          unset SHLVL_BASE
-          exec systemd-cat -t xsession startx
-      fi
-    '';
-
     home.keyboard = with config.services.xserver.xkb; {
       inherit layout variant;
       options = splitString "," options;
@@ -59,7 +39,6 @@
     home.packages = with pkgs; [
       xorg.xev
       arandr
-      hsetroot
       xdotool
     ];
 

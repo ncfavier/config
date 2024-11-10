@@ -63,6 +63,9 @@
     hm.services.blueman-applet.enable = true;
 
     services.hardware.openrgb.enable = true;
+    systemd.services.openrgb.postStart = ''
+      ${getExe config.services.hardware.openrgb.package} --config ${config.hm.xdg.configHome}/OpenRGB -p default || true
+    '';
     nixpkgs.overlays = [ (self: super: {
       openrgb = (pkgs.mine "openrgb-unstable" "sha256-5BGfqBwhx3cj2ST9qjzgaAmaDvjUwrzqZdBowA9VSHU=").openrgb;
     }) ];

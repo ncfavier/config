@@ -4,7 +4,12 @@
       config-cli lemonbar-xft xtitle xkb-switch trayer
     ];
   };
-in {
+in mkEnableModule [ "bspwm" ] {
+  services.xserver = {
+    displayManager.startx.enable = true;
+    tty = 1;
+  };
+
   hm = {
     xsession.windowManager.bspwm = {
       enable = true;
@@ -71,6 +76,26 @@ in {
     xdg.configFile."bspwm/bspwmrc".onChange = ''
       if [[ -v DISPLAY ]] && pgrep bspwm > /dev/null; then
         "$XDG_CONFIG_HOME"/bspwm/bspwmrc
+      fi
+    '';
+
+    xsession = {
+      enable = true;
+      scriptPath = ".xinitrc";
+
+      importedVariables = [ "PATH" ];
+      numlock.enable = true;
+      initExtra = ''
+        [[ -f ~/.fehbg ]] && ~/.fehbg &
+        ${pkgs.xorg.xset}/bin/xset -b
+      '';
+    };
+
+    programs.bash.profileExtra = ''
+      if [[ ! $DISPLAY && $XDG_VTNR == ${toString config.services.xserver.tty} ]]; then
+          export XDG_SESSION_TYPE=x11
+          unset SHLVL_BASE
+          exec systemd-cat -t xsession startx
       fi
     '';
 
