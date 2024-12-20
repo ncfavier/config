@@ -15,7 +15,6 @@
         firewall = {
           enable = true;
           logRefusedConnections = false;
-          logReversePathDrops = true;
           rejectPackets = true;
           allowedUDPPorts = [ 5355 ]; # LLMNR
         };
@@ -35,6 +34,7 @@
         dnsutils
         ldns
         whois
+        ethtool
         inetutils
         nethogs
         socat

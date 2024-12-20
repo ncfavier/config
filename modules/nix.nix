@@ -147,7 +147,7 @@
       };
 
       nixpkgs.overlays = [
-        inputs.nur.overlay
+        inputs.nur.overlays.default
         (pkgs: prev: {
           config-cli = hiPrio (pkgs.writeShellScriptBin "config" ''
             configPath=${escapeShellArg config.lib.meta.configPath}

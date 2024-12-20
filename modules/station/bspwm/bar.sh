@@ -228,7 +228,7 @@ cleanup_on_exit
     # sound
     pactl subscribe | grep --line-buffered "^Event 'change'" |
     while
-        printf 'S%s\n' "$(volume)"
+        printf 'S%s:%s\n' "$(volume)" "$(volume mic)"
         read -r
     do :; done &
 
@@ -437,13 +437,16 @@ while read -rn 1 event; do
             fi
             ;;
         S) # sound
-            IFS=: read -r percentage mute
+            IFS=: read -r vol mute vol_mic mute_mic
             if [[ $mute == true ]]; then
                 sound=
             else
-                icon=$(icon_ramp "$percentage"  10  50 )
-                left_pad 2 percentage # prevent the scrolling area from shrinking as you scroll under 10%
-                sound="$icon $percentage%%"
+                icon=$(icon_ramp "$vol"  10  50 )
+                left_pad 2 vol # prevent the scrolling area from shrinking as you scroll under 10%
+                sound="$icon $vol%%"
+            fi
+            if [[ $mute_mic != true ]]; then
+                sound+=" "
             fi
             pad_right sound
             sound="%{A:wm go volume:}%{A3:volume toggle:}%{A4:volume +2:}%{A5:volume -2:}$sound%{A}%{A}%{A}%{A}"

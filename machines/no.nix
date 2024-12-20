@@ -9,7 +9,7 @@
     syncthing.id = "MN3PICD-LGLVMZ2-SSNK5CG-LXNWL5R-U2QMWNM-AIA4UAG-NQ5WT5Y-B3TKXQV";
   };
 
-  nixos = { hardware, lib, pkgs, ... }: with lib; {
+  nixos = { hardware, lib, config, pkgs, ... }: with lib; {
     imports = with hardware; [
       notDetected
       lenovo-thinkpad-t14s-amd-gen1
@@ -35,7 +35,7 @@
         };
       };
 
-      kernelPackages = mkForce pkgs.linuxPackages_latest;
+      # kernelPackages = mkForce pkgs.linuxPackages_latest;
       kernelModules = [ "kvm-amd" ];
       initrd.availableKernelModules = [ "nvme" "ehci_pci" "xhci_pci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
 
@@ -93,6 +93,8 @@
     # services.fprintd.enable = true;
 
     broadcasting.enable = true;
+
+    jellyfin.enable = true;
 
     my.hashedPassword = "$y$j9T$Z68zdBJVmsTe5BneXrjFH1$jGJpIx5jFgUo8FSjrAqh.O4daLKNsybkUPoWJawPcX.";
 

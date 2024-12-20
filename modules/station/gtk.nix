@@ -20,6 +20,7 @@
           gtk-menu-images = true;
           gtk-xft-antialias = 1;
           gtk-xft-hinting = 1;
+          gtk-recent-files-enabled = false;
         };
       };
       font = {

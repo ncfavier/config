@@ -48,7 +48,7 @@
     };
 
     services.gpg-agent = {
-      enable = true;
+      enable = false;
       pinentryPackage = pkgs.pinentry-gtk2;
       enableSshSupport = true;
       sshKeys = [

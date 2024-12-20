@@ -140,7 +140,6 @@
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "vim.useSystemClipboard": true,
   "editor.semanticHighlighting.enabled": true,
-  "editor.fontSize": 13,
   "editor.bracketPairColorization.enabled": false,
   "editor.guides.bracketPairs": "active",
   "extensions.autoCheckUpdates": false,
@@ -318,4 +317,5 @@
   "haskell.plugin.importLens.codeActionsOn": false,
   "workbench.colorTheme": "1984 - Light",
   "git.openRepositoryInParentFolders": "always",
+  "editor.fontSize": 13,
 }

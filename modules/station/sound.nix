@@ -52,6 +52,10 @@
             pactl --format=json list sinks |
               jq -r --arg def "$(pactl get-default-sink)" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%")):\(.mute)"'
           else case $1 in
+            mic)
+              pactl --format=json list sources |
+                jq -r --arg def "$(pactl get-default-source)" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%")):\(.mute)"'
+              ;;
             mute) pactl set-sink-mute @DEFAULT_SINK@ 1;;
             unmute) pactl set-sink-mute @DEFAULT_SINK@ 0;;
             toggle) pactl set-sink-mute @DEFAULT_SINK@ toggle;;
