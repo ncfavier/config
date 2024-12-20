@@ -90,4 +90,15 @@
 	<patterns>*</patterns>
 	<image-files/>
 </action>
+<action>
+	<icon>wallpaper</icon>
+	<name>Set as wallpaper (center)</name>
+	<submenu></submenu>
+	<unique-id>1731433819648815-1</unique-id>
+	<command>feh --bg-center --image-bg &apos;#ffffff&apos; %F</command>
+	<description></description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
 </actions>
