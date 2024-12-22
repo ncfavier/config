@@ -15,6 +15,7 @@ ask() { # TODO get this from functions.bash
 
 destdir=$(xdg-user-dir MUSIC)
 cover_maxsize=800
+preserve_mtime=0
 
 if [[ $1 == -n ]]; then
     # Normalise
@@ -25,6 +26,9 @@ if [[ $1 == -n ]]; then
         [[ $f != "$n" ]] && mv -i "$f" "$n"
     done
     exit
+elif [[ $1 == -k ]]; then
+    preserve_mtime=1
+    shift
 fi
 
 [[ -t 0 ]] || die "Not a terminal."
@@ -45,8 +49,8 @@ for src in "${srcs[@]}"; do
         yt-dlp -x --audio-format mp3 -o "$srcdir/%(playlist_index)s - %(title)s.%(ext)s" "$src" || die "Failed to download audio files."
         printf '\a'
     elif [[ -r $src ]]; then
-        if [[ ${src%/*} -ef $destdir ]]; then cmd=mv; else cmd=cp; fi
-        "$cmd" -t "$srcdir" -- "$src"
+        if [[ ${src%/*} -ef $destdir ]]; then cmd=(mv); else cmd=(cp --preserve=timestamps); fi
+        "${cmd[@]}" -t "$srcdir" -- "$src"
     else
         die "File not found or not readable: $src"
     fi
@@ -151,6 +155,7 @@ for file in "${files[@]}"; do
     basename=${basename//[\"\\\/:*?<>|]/_}
 
     echo "Adding file to music directory..."
+    destfile=$destdir/$basename.mp3
     ffmpeg -nostdin -loglevel error \
         -i "$file" \
         ${cover:+-i "$cover"} \
@@ -162,7 +167,11 @@ for file in "${files[@]}"; do
         -metadata title="$title" \
         ${track:+-metadata track="$track"} \
         -metadata:s:v:0 comment='Cover (front)' \
-        "$destdir/$basename.mp3"
+        "$destfile"
+    if (( preserve_mtime )); then
+        mtime=$(stat -c %Y "$file")
+        touch -d "@$mtime" -- "$destfile"
+    fi
 done
 
 mpc -q update
