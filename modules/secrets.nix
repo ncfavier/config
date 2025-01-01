@@ -30,6 +30,11 @@
   };
 
   hm = {
+    home.activation.generateAgeKeyfile = ''
+      mkdir -p "$XDG_CONFIG_HOME/sops/age"
+      ${getExe pkgs.ssh-to-age} -private-key -i ${head config.sops.age.sshKeyPaths} > "$XDG_CONFIG_HOME/sops/age/keys.txt" || true
+    '';
+
     programs.password-store = {
       enable = true;
       package = pkgs.pass.withExtensions (e: [ e.pass-otp ]);
