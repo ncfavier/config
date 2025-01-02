@@ -9,8 +9,8 @@
     {
       name = "agda-mode";
       publisher = "banacorn";
-      sha256 = "0kb35hs2830nihxwk91kq9fhibmr2gl6mihv0ll7lgx5bsgvgml0";
-      version = "0.4.7";
+      sha256 = "02r28a8y6pdjhad76z193xrlc4yk4fsynn064w7cff56gdc31bd5";
+      version = "0.5.1";
     }
     {
       name = "codercoder-dark-theme";
@@ -31,7 +31,7 @@
       version = "0.1.13";
     }
     {
-      name = "Theme-Lavender";
+      name = "theme-lavender";
       publisher = "gerane";
       sha256 = "0zaqm8x3pgjhsjlppi7ln5l66j150cr7m9m23xgmsix1xaqms0fd";
       version = "0.0.5";
@@ -57,8 +57,8 @@
     {
       name = "vscoq";
       publisher = "maximedenes";
-      sha256 = "1ji8pcf5fwvr2vx29112ahbgclx0my6kyg09k12j2nrkxf291335";
-      version = "2.0.3";
+      sha256 = "04m1dby6zfzg5nahnricjax28g47mgnja7d9cbll270i7ahnyncm";
+      version = "2.2.1";
     }
     {
       name = "vscode-duotone-dark";

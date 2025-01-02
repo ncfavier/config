@@ -315,7 +315,7 @@
   "workbench.editor.empty.hint": "hidden",
   "rust-analyzer.cargo.features": "all",
   "haskell.plugin.importLens.codeActionsOn": false,
-  "workbench.colorTheme": "1984 - Light",
   "git.openRepositoryInParentFolders": "always",
   "editor.fontSize": 13,
+  "workbench.colorTheme": "1984 - Light",
 }
