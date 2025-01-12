@@ -139,6 +139,7 @@
       <dead_circumflex> <l> : "ˡ"
       <dead_circumflex> <m> : "ᵐ"
       <dead_circumflex> <n> : "ⁿ"
+      <dead_circumflex> <p> : "ᵖ"
       <dead_circumflex> <P> : "ᴾ"
       <dead_circumflex> <r> : "ʳ"
       <dead_circumflex> <s> : "ˢ"

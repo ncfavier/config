@@ -317,5 +317,4 @@
   "haskell.plugin.importLens.codeActionsOn": false,
   "git.openRepositoryInParentFolders": "always",
   "editor.fontSize": 13,
-  "workbench.colorTheme": "1984 - Light",
 }

@@ -26,15 +26,6 @@
         kotlin-vim
         # TODO https://github.com/mcchrish/vim-no-color-collections
         colorbuddy-nvim
-        (pkgs.vimUtils.buildVimPlugin {
-          name = "nvim-noirbuddy";
-          src = pkgs.fetchFromGitHub {
-            owner = "jesseleite";
-            repo = "nvim-noirbuddy";
-            rev = "7d92fc64ae4c23213fd06f0464a72de45887b0ba";
-            hash = "sha256-r+HO4lTXYotbC7rsD/3RpbjDofHAIrUrikAhyFnimuM=";
-          };
-        })
       ];
     };
 
