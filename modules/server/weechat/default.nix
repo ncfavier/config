@@ -22,7 +22,7 @@
       ''}";
     };
   };
-in {
+in mkEnableModule [ "my-services" "weechat" ] {
   secrets.weechat = {
     owner = my.username;
     inherit (config.my) group;
@@ -53,4 +53,6 @@ in {
   environment.systemPackages = with pkgs; [ lolcat ];
 
   lib.shellEnv.weechat_fifo = "${config.hm.xdg.cacheHome}/weechat/weechat_fifo";
+
+  my-services.ulmaoc-topic.enable = true;
 }

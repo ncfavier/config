@@ -38,10 +38,10 @@ in {
         TTL = 60 * 60;
 
         MX = [ (mx.mx 10 "@") ];
-        DKIM = [ {
+        DKIM = optional (config.lib ? dkim) {
           selector = "mail";
           p = config.lib.dkim.pk;
-        } ];
+        };
         DMARC = [ {
           p = "quarantine";
           sp = "quarantine";
@@ -81,7 +81,7 @@ in {
     };
   };
 
-  services.unbound = {
+  services.unbound = mkIf (this ? wireguard) {
     enable = true;
     localControlSocketPath = "/run/unbound/unbound.ctl";
     settings = {

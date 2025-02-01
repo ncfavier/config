@@ -3,16 +3,20 @@
   glamRoot = "/run/nginx/glam";
   maxUploadSize = "256M";
 in {
-  options.services.nginx.virtualHosts = mkOption {
-    type = types.attrsOf (types.submodule ({ name, ... }: {
-      config = mkIf (name != "default") {
-        forceSSL = mkDefault true;
-        enableACME = mkDefault true;
-      };
-    }));
+  options = {
+    my-services.nginx.enable = mkEnableOption "nginx";
+
+    services.nginx.virtualHosts = mkOption {
+      type = types.attrsOf (types.submodule ({ name, ... }: {
+        config = mkIf (name != "default") {
+          forceSSL = mkDefault true;
+          enableACME = mkDefault true;
+        };
+      }));
+    };
   };
 
-  config = {
+  config = mkIf config.my-services.nginx.enable {
     system.extraDependencies = collectFlakeInputs inputs.www;
 
     services.nginx = {

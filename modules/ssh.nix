@@ -27,6 +27,7 @@
             "${m.hostname}.home"
             "${m.hostname}.local"
             "${m.hostname}.${config.networking.wireguard.interface}"
+          ] ++ optionals (m ? wireguard) [
             m.wireguard.ipv4 m.wireguard.ipv6
           ] ++ optionals m.isServer [
             my.domain "*.${my.domain}"

@@ -29,20 +29,26 @@
     systemPackages = [ pkgs.sops pkgs.age ];
   };
 
-  hm = {
-    home.activation.generateAgeKeyfile = ''
-      mkdir -p "$XDG_CONFIG_HOME/sops/age"
-      ${getExe pkgs.ssh-to-age} -private-key -i ${head config.sops.age.sshKeyPaths} > "$XDG_CONFIG_HOME/sops/age/keys.txt" || true
-    '';
+  hm = mkMerge [
+    {
+      # TODO iso
+      # TODO why isn't XDG_CONFIG_HOME set?
+      home.activation.generateAgeKeyfile = ''
+        mkdir -p "''${XDG_CONFIG_HOME:-$HOME/.config}/sops/age"
+        ${getExe pkgs.ssh-to-age} -private-key -i ${head config.sops.age.sshKeyPaths} > "''${XDG_CONFIG_HOME:-$HOME/.config}/sops/age/keys.txt" || true
+      '';
+    }
 
-    programs.password-store = {
-      enable = true;
-      package = pkgs.pass.withExtensions (e: [ e.pass-otp ]);
-    };
+    (mkIf config.services.syncthing.enable {
+      programs.password-store = {
+        enable = true;
+        package = pkgs.pass.withExtensions (e: [ e.pass-otp ]);
+      };
 
-    xdg.dataFile.password-store.source =
-      config.hm.lib.file.mkOutOfStoreSymlink config.synced.password-store.path;
-  };
+      xdg.dataFile.password-store.source =
+        config.hm.lib.file.mkOutOfStoreSymlink config.synced.password-store.path;
+    })
+  ];
 
   nix.settings = {
     substituters = [ "https://mic92.cachix.org" ];

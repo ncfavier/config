@@ -1,6 +1,7 @@
 { lib, this, config, pkgs, ... }: with lib; let
   interface = config.networking.wireguard.interface;
   port = 500;
+  enable = this ? wireguard;
 in {
   options.networking.wireguard = {
     interface = mkOption {
@@ -30,7 +31,7 @@ in {
   };
 
   config = mkMerge [
-    (mkIf (this.isServer || this.isStation) {
+    (mkIf (enable && (this.isServer || this.isStation)) {
       networking.firewall.trustedInterfaces = [ interface ];
       systemd.network.wait-online.ignoredInterfaces = [ interface ];
 
@@ -58,7 +59,7 @@ in {
       ];
     })
 
-    (mkIf this.isServer {
+    (mkIf (enable && this.isServer) {
       networking = {
         wireguard = {
           enable = true;
@@ -98,7 +99,7 @@ in {
       services.resolved.domains = [ interface ];
     })
 
-    (mkIf this.isStation (let
+    (mkIf (enable && this.isStation) (let
       wg-toggle = pkgs.shellScriptWith "wg-toggle" (builtins.toFile "wg-toggle" ''
         PATH=/run/wrappers/bin:$PATH
         ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }

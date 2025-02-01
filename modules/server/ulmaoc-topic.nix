@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; mkEnableModule [ "my-services" "ulmaoc-topic" ] {
   secrets.ulmaoc-topic = {
     owner = my.username;
     inherit (config.my) group;

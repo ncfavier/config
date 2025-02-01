@@ -1,4 +1,4 @@
-{ inputs, lib, config, ... }: with lib; {
+{ inputs, lib, config, ... }: with lib; mkEnableModule [ "my-services" "mailserver" ] {
   imports = [ inputs.simple-nixos-mailserver.nixosModules.default ];
 
   system.extraDependencies = collectFlakeInputs inputs.simple-nixos-mailserver;

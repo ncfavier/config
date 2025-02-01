@@ -45,6 +45,8 @@
 
       environment.systemPackages = with pkgs; [
         sops
+        age
+        ssh-to-age
       ];
 
       environment.variables.EDITOR = "vim";

@@ -1,5 +1,6 @@
 { lib, this, config, ... }: with lib; let
   devices = my.machinesWith "syncthing";
+  enable = this ? wireguard && this ? syncthing;
 in {
   imports = [
     (mkAliasOptionModule [ "synced" ] [ "services" "syncthing" "settings" "folders" ])
@@ -8,7 +9,7 @@ in {
   lib.shellEnv.synced = mapAttrs (_: v: v.path) config.synced;
 
   services.syncthing = {
-    enable = true;
+    inherit enable;
     user = my.username;
     inherit (config.my) group;
     dataDir = config.my.home;

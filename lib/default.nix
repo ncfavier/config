@@ -40,7 +40,9 @@ machines: lib: prev: with lib; {
   # Creates a simple module with an `enable` option.
   mkEnableModule = name: cfg: {
     options = setAttrByPath name { enable = mkEnableOption (last name); };
-    imports = [ ({ config, ... }: { config = mkIf (getAttrFromPath name config).enable cfg; }) ];
+    imports = cfg.imports or [] ++ [
+      ({ config, ... }: { config = mkIf (getAttrFromPath name config).enable (removeAttrs cfg [ "imports" ]); })
+    ];
   };
 
   my = import ./my.nix lib machines;
