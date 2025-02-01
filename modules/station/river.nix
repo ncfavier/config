@@ -12,7 +12,7 @@
 
       settings = {
         map.normal = {
-          "Super Return" = "spawn alacritty";
+          "Super Return" = "spawn ghostty";
           "Super Q" = "close";
           "Super+Shift E" = "exit";
         };

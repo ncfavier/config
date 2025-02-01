@@ -1,6 +1,8 @@
 { lib, pkgs, ... }: with lib; {
   environment.systemPackages = with pkgs; [
+    (writeShellScriptBin "functions" (readFile ./functions.bash)) # meant to be sourced
     alacritty.terminfo
+    ghostty.terminfo
   ];
 
   environment.sessionVariables = rec {
@@ -81,7 +83,7 @@
 
             complete -F _command C cxa cxan
             complete -v dp
-            complete_alias diff git diff
+            complete -f diff
             complete_alias drv nix derivation show
             complete_alias nwd nix why-depends
             complete_alias s systemctl

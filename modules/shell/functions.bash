@@ -1,3 +1,5 @@
+shopt -s extglob
+
 # Helpers
 
 count() {
@@ -146,7 +148,7 @@ unbck() { # restore
 }
 
 rm() ( # rm, but more resilient to completion failures
-    shopt -s nullglob extglob
+    shopt -s nullglob
     for arg do
         if [[ $arg != -* && $arg != */ && ! -L $arg && -d $arg ]] && matches=("$arg"!()) && (( ${#matches[@]} )); then
             ask "do you really want to remove '$arg'? (add a / to dismiss)" n || return 1

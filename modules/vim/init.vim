@@ -51,6 +51,7 @@ au FileType diff,gitcommit,gitsendemail let b:EditorConfig_disable = 1
 
 " colors noirbuddy
 " lua require("noirbuddy").setup { colors = { primary = "#d903ff", background = "#000000", } }
+set notermguicolors
 
 set breakindent
 set clipboard+=unnamedplus

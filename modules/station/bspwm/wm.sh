@@ -35,7 +35,7 @@ focus-window() {
 }
 
 get-workspaces() {
-    readarray -t workspaces < <(bspc query --desktops --names "$@")
+    readarray -t workspaces < <(bspc query --desktops --monitor primary --names "$@")
     n=0
     for w in "${workspaces[@]}"; do
         (( w > n )) && (( n = w ))
@@ -52,20 +52,21 @@ renumber-workspaces() {
             new_workspaces+=("$w")
         fi
     done
-    bspc monitor -d "${new_workspaces[@]}"
+    bspc monitor primary -d "${new_workspaces[@]}"
 }
 
 terminal() {
-    if [[ $class || $focus_title ]]; then
-        class="$class" title="$focus_title" focus-window && return
+    if [[ $class || $instance || $focus_title ]]; then
+        class="$class" instance="$instance" title="$focus_title" focus-window && return
     fi
     . /etc/set-environment # reset PATH
-    exec alacritty \
-        ${class:+--class "$class"} \
-        ${title:+--title "$title"} \
-        ${columns:+-o window.dimensions.columns="$columns"} \
-        ${lines:+-o window.dimensions.lines="$lines"} \
-        ${hold:+--hold} \
+    exec ghostty \
+        ${class:+--class="$class"} \
+        ${instance:+--x11-instance-name="$instance"} \
+        ${title:+--title="$title"} \
+        ${columns:+--window-width="$columns"} \
+        ${lines:+--window-height="$lines"} \
+        ${hold:+--wait-after-command} \
         "$@"
 }
 
@@ -82,9 +83,10 @@ go() {
         term|terminal)
             terminal ${*:+-e "$@"} &;;
         chat|irc)
-            class=irc lines=100 columns=140 terminal \
-                -o bell.command='{program = "notify-send", args = ["-i", "0", "-r", "0x1F4AC", "💬"]}' \
+            instance=irc lines=100 columns=140 terminal \
+                --confirm-close-surface=false \
                 -e mosh -- "$server_hostname" tmux -L weechat attach ${not_new:+-d} &;;
+                # -o bell.command='{program = "notify-send", args = ["-i", "0", "-r", "0x1F4AC", "💬"]}' \
         editor)
             focus_title='- N?VIM$' terminal -e vim &;;
         web|browser)
@@ -100,7 +102,7 @@ go() {
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)
-            class=calendar title=calendar columns=64 lines=9 hold=1 terminal -e cal -3 &;;
+            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal -e cal -3 &;;
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
         emoji)
@@ -130,7 +132,7 @@ case $cmd in
         fi;;
     add-workspace)
         get-workspaces
-        bspc monitor -a "$((n + 1))"
+        bspc monitor primary -a "$((n + 1))"
         bspc desktop -f "$((n + 1))";;
     lock)
         i3lock -c 000000;;

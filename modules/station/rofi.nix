@@ -36,7 +36,7 @@
       };
 
       cycle = true;
-      terminal = "alacritty";
+      terminal = "ghostty";
 
       pass = {
         enable = true;

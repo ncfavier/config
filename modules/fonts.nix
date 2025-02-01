@@ -85,28 +85,6 @@
                   <family>monospace</family>
                 </prefer>
               </alias>
-              <match target="scan"> <!-- TODO module -->
-                <test name="family"><string>tewi</string></test>
-                <edit name="charset" mode="assign">
-                  <minus>
-                    <name>charset</name>
-                    <charset>
-                      <int>0x2B1B</int> <!-- ⬛ -->
-                    </charset>
-                  </minus>
-                </edit>
-              </match>
-              <match target="font">
-                <test name="family"><string>tewi</string></test>
-                <edit name="charset" mode="assign">
-                  <minus>
-                    <name>charset</name>
-                    <charset>
-                      <int>0x2B1B</int> <!-- ⬛ -->
-                    </charset>
-                  </minus>
-                </edit>
-              </match>
               <selectfont>
                 <rejectfont>
                   <pattern>

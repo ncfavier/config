@@ -24,8 +24,8 @@
         agda-vim
         coq-vim
         kotlin-vim
-        # TODO https://github.com/mcchrish/vim-no-color-collections
         colorbuddy-nvim
+        # more minimalist themes: https://github.com/mcchrish/vim-no-color-collections
       ];
     };
 

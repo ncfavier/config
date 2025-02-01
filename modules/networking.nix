@@ -144,11 +144,6 @@
       # "info" spams CTRL-EVENT-SIGNAL-CHANGE messages in the log
       systemd.services.wpa_supplicant.serviceConfig.LogLevelMax = "notice";
 
-      # TODO https://github.com/NixOS/nixpkgs/pull/340325
-      environment.etc."ipsec.secrets".text = ''
-        include ipsec.d/ipsec.nm-l2tp.secrets
-      '';
-
       my.extraGroups = [ "networkmanager" ];
 
       hm.services.network-manager-applet.enable = true;

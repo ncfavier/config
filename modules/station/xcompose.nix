@@ -306,6 +306,8 @@
       <Multi_key> <d> <e> <e> : "∂"
       <Multi_key> <n> <a> <b> : "∇"
       <Multi_key> <y> <o> : "よ"
+      <Multi_key> <quotedbl> <o> : "ő"
+      <Multi_key> <quotedbl> <O> : "Ő"
       <Multi_key> <space> <space> : "␣"
       <Multi_key> <BackSpace> : "⌫"
       <Multi_key> <Up> : "↑"

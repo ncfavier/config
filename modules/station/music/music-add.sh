@@ -1,16 +1,10 @@
 shopt -s nullglob lastpipe
 
+. functions || exit
+
 die() {
     (( $# )) && printf '%s\n' "$1" >&2
     exit 1
-}
-
-ask() { # TODO get this from functions.bash
-    local prompt=$1 default=${2:-y}
-    read -rp "$prompt " answer
-    if [[ $answer ]]; then echo; else answer=$default; fi
-    answer=${answer,,}
-    [[ $answer == y ]]
 }
 
 destdir=$(xdg-user-dir MUSIC)

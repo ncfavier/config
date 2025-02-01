@@ -225,6 +225,7 @@
           "video/msvideo"
           "video/ogg"
           "video/quicktime"
+          "video/vnd.avi"
           "video/vnd.divx"
           "video/vnd.mpegurl"
           "video/vnd.rn-realvideo"

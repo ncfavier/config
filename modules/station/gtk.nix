@@ -46,8 +46,8 @@
     services.xsettingsd = {
       enable = true;
       settings = {
-        "Net/ThemeName" = config.hm.gtk.theme.name;
-        "Net/IconThemeName" = config.hm.gtk.iconTheme.name;
+        "Net/ThemeName" = mkIf (config.hm.gtk.theme != null) config.hm.gtk.theme.name;
+        "Net/IconThemeName" = mkIf (config.hm.gtk.iconTheme != null) config.hm.gtk.iconTheme.name;
       };
     };
   };

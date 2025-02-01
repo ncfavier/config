@@ -20,6 +20,10 @@
   };
 
   services.autorandr.enable = true;
+  hm.xdg.configFile."autorandr/settings.ini".text = ''
+    [config]
+    skip-options=gamma
+  '';
 
   bspwm.enable = mkDefault true;
 

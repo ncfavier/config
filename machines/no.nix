@@ -87,6 +87,41 @@
     services.xserver.videoDrivers = [ "amdgpu" ];
     services.xserver.dpi = 120;
 
+    services.autorandr = let
+      eDP = "*";
+      HDMI-A-0 = "*";
+    in {
+      profiles = {
+        default = {
+          fingerprint = { inherit eDP; };
+          config = {
+            eDP = {
+              enable = true;
+              mode = "1920x1080";
+            };
+          };
+          hooks.postswitch.bspwm = ''
+            bspc monitor HDMI-A-0 -r
+          '';
+        };
+        hdmi = {
+          fingerprint = { inherit eDP HDMI-A-0; };
+          config = {
+            eDP = {
+              enable = true;
+              primary = true;
+              mode = "1920x1080";
+            };
+            HDMI-A-0 = {
+              enable = true;
+              mode = "1920x1080";
+              position = "0x0";
+            };
+          };
+        };
+      };
+    };
+
     keys.composeKey = "prsc";
     keys.printScreenKey = "XF86Favorites";
 
