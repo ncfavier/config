@@ -35,7 +35,7 @@ focus-window() {
 }
 
 get-workspaces() {
-    readarray -t workspaces < <(bspc query --desktops --monitor primary --names "$@")
+    readarray -t workspaces < <(bspc query --desktops --monitor focused --names "$@")
     n=0
     for w in "${workspaces[@]}"; do
         (( w > n )) && (( n = w ))
@@ -52,7 +52,7 @@ renumber-workspaces() {
             new_workspaces+=("$w")
         fi
     done
-    bspc monitor primary -d "${new_workspaces[@]}"
+    bspc monitor focused -d "${new_workspaces[@]}"
 }
 
 terminal() {
@@ -102,7 +102,7 @@ go() {
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)
-            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal -e cal -3 &;;
+            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal --confirm-close-surface=false -e cal -3 &;;
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
         emoji)
@@ -132,7 +132,7 @@ case $cmd in
         fi;;
     add-workspace)
         get-workspaces
-        bspc monitor primary -a "$((n + 1))"
+        bspc monitor focused -a "$((n + 1))"
         bspc desktop -f "$((n + 1))";;
     lock)
         i3lock -c 000000;;

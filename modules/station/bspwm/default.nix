@@ -13,7 +13,7 @@ in mkEnableModule [ "bspwm" ] {
   hm = {
     xsession.windowManager.bspwm = {
       enable = true;
-      monitors.primary = [ "web" "mail" "chat" "files" "1" ];
+      monitors.focused = [ "web" "mail" "chat" "files" "1" ];
       alwaysResetDesktops = false;
       settings = with config.theme; {
         focused_border_color = foreground;
