@@ -23,11 +23,11 @@ in {
         AAAA = map aaaa this.ipv6;
       };
     in {
-      "yoneda.ninja".data = dns.toString "yoneda.ninja" (soa // aaaaa // {
-        TTL = 60;
-        CAA = letsEncrypt "dns+caa@${my.domain}";
-        subdomains."*" = aaaaa;
-      });
+      # "yoneda.ninja".data = dns.toString "yoneda.ninja" (soa // aaaaa // {
+      #   TTL = 60;
+      #   CAA = letsEncrypt "dns+caa@${my.domain}";
+      #   subdomains."*" = aaaaa;
+      # });
 
       "grove.monade.li".data = dns.toString "grove.monade.li" (soa // aaaaa // {
         TTL = 60;

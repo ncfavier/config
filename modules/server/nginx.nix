@@ -113,7 +113,7 @@ in {
 
         "git.${my.domain}".globalRedirect = "github.com/${my.githubUsername}";
 
-        "yoneda.ninja".locations."/".return = "301 https://arxiv.org/pdf/1501.02503.pdf";
+        # "yoneda.ninja".locations."/".return = "301 https://arxiv.org/pdf/1501.02503.pdf";
 
         default = {
           default = true;
