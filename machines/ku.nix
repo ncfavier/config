@@ -72,6 +72,10 @@
       efibootmgr
     ];
 
+    networking.defaultGateway6 = {
+      inherit interface;
+      address = "fe80::1";
+    };
     networking.interfaces.${interface} = {
       useDHCP = true;
       ipv6.addresses = map (address: {
