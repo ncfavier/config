@@ -1,6 +1,8 @@
 lib: machines: with lib; let
+  mainServer = "mu";
+
   modules = [
-    (mkAliasOptionModule [ "server" ] [ "machines" "mu" ])
+    (mkAliasOptionModule [ "server" ] [ "machines" mainServer ])
     ({ config, ... }: {
       freeformType = types.attrs;
 
@@ -27,6 +29,8 @@ lib: machines: with lib; let
 
         machines = catAttrs' "identity" machines;
         machinesWith = key: filterAttrs (_: v: v ? ${key} && v.${key} != null) config.machines;
+        machinesThat = pred: filterAttrs (_: pred) config.machines;
+        inherit mainServer;
       };
     })
   ];

@@ -70,6 +70,7 @@ in {
             allowedIPsAsRoutes = false;
             peers = mapAttrsToList (_: m: {
               inherit (m.wireguard) publicKey;
+              endpoint = mkIf (m.ipv4 != []) "${head m.ipv4}:${toString port}";
               allowedIPs = [ "${m.wireguard.ipv4}/32" "${m.wireguard.ipv6}/128" ];
             }) (my.machinesWith "wireguard");
           };
@@ -144,12 +145,14 @@ in {
           my.server.wireguard.ipv4 my.server.wireguard.ipv6
           interface # search domain
         ];
-        peers = [ {
-          endpoint = "${head my.server.ipv4}:${toString port}";
-          inherit (my.server.wireguard) publicKey;
-          allowedIPs = [ "0.0.0.0/0" "::/0" ];
+        peers = mapAttrsToList (_: m: {
+          endpoint = "${head m.ipv4}:${toString port}";
+          inherit (m.wireguard) publicKey;
+          allowedIPs = if m.hostname == my.mainServer
+            then [ "0.0.0.0/0" "::/0" ]
+            else [ "${m.wireguard.ipv4}/32" "${m.wireguard.ipv6}/128" ];
           persistentKeepalive = 21;
-        } ];
+        }) (my.machinesThat (m: m.isServer && m ? wireguard));
         postUp = ''
           ${getExe wg-exempt} ${escapeShellArgs config.networking.wireguard.exemptions}
         '';
