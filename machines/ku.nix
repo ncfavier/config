@@ -86,6 +86,12 @@
 
     networking.nat.externalInterface = interface;
 
+    my-services.nginx.enable = true;
+    my-services.mailserver.enable = true;
+    my-services.weechat.enable = true;
+    my-services.bothendieck.enable = true;
+    my-services.lambdabot.enable = true;
+
     my.hashedPassword = "$y$j9T$gdhcWVYa8vkGfJpYE7XbQ.$QN9N0v0BZpFbAfMkqDoYN0O8KiTwXTN193kRowdrG0B";
 
     services.syncthing.cert = builtins.toFile "syncthing-cert" ''
@@ -106,11 +112,5 @@
     '';
 
     system.stateVersion = "22.05";
-
-    # my-services.nginx.enable = true;
-    # my-services.mailserver.enable = true;
-    # my-services.weechat.enable = true;
-    # my-services.bothendieck.enable = true;
-    # my-services.lambdabot.enable = true;
   };
 }

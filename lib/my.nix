@@ -1,6 +1,6 @@
 lib: machines: with lib; let
   modules = [
-    (mkAliasOptionModule [ "server" ] [ "machines" "mu" ])
+    (mkAliasOptionModule [ "server" ] [ "machines" "ku" ])
     ({ config, ... }: {
       freeformType = types.attrs;
 

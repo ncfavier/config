@@ -92,7 +92,7 @@ in {
           versioning = simple;
         };
         mail = {
-          path = if config.mailserver.enable or false
+          path = if this.isServer
             then config.mailserver.mailDirectory
             else "${config.my.home}/sync/mail";
           type = if config.mailserver.enable or false then "sendonly" else "receiveonly";
