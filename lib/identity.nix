@@ -12,6 +12,11 @@
       type = nullOr str;
       default = name;
     };
+    system = mkOption {
+      description = "The machine's platform";
+      type = str;
+      default = "x86_64-linux";
+    };
     isServer  = mkMachineTypeOption "server";
     isStation = mkMachineTypeOption "station";
     isPhone   = mkMachineTypeOption "phone";
