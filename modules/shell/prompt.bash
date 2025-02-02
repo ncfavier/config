@@ -16,7 +16,7 @@ prompt_symbol() {
     fi
 }
 
-declare -A kana=([wo]=を [mu]=む [mo]=も [no]=の [fu]=ふ [ki]=き [tsu]=つ)
+declare -A kana=([wo]=を [mu]=む [mo]=も [no]=の [fu]=ふ [ki]=き [ku]=く [tsu]=つ)
 if [[ $TERM != *linux* && -v 'kana[$HOSTNAME]' ]]; then
     hostname_pretty=${kana[$HOSTNAME]}
 else

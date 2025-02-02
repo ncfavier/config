@@ -30,7 +30,7 @@ in {
 
       devices = mapAttrs (_: m: {
         inherit (m.syncthing) id;
-        introducer = m.isServer;
+        introducer = m.hostname == my.mainServer;
       }) devices;
 
       folders = let
@@ -76,7 +76,7 @@ in {
         };
         irc-logs = {
           path = "${config.my.home}/sync/irc-logs";
-          type = if this.isServer then "sendonly" else "receiveonly";
+          type = if config.my-services.weechat.enable then "sendonly" else "receiveonly";
           devices = allDevicesExceptPhone;
           fsWatcherEnabled = false;
           versioning = trashcan;
