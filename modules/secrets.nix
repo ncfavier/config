@@ -31,8 +31,6 @@
 
   hm = mkMerge [
     {
-      # TODO iso
-      # TODO why isn't XDG_CONFIG_HOME set?
       home.activation.generateAgeKeyfile = ''
         mkdir -p "''${XDG_CONFIG_HOME:-$HOME/.config}/sops/age"
         ${getExe pkgs.ssh-to-age} -private-key -i ${head config.sops.age.sshKeyPaths} > "''${XDG_CONFIG_HOME:-$HOME/.config}/sops/age/keys.txt" || true
