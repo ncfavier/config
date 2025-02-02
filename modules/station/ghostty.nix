@@ -49,6 +49,12 @@
         "14=${cold}"
         "15=${foreground}"
       ];
+
+      gtk-custom-css = "${pkgs.writeText "ghostty.css" ''
+        window {
+          border-radius: 0 0;
+        }
+      ''}";
     };
   };
 }

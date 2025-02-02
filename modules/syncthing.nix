@@ -76,7 +76,7 @@ in {
         };
         irc-logs = {
           path = "${config.my.home}/sync/irc-logs";
-          type = if config.my-services.weechat.enable then "sendonly" else "receiveonly";
+          type = if config.my-services.weechat.enable or false then "sendonly" else "receiveonly";
           devices = allDevicesExceptPhone;
           fsWatcherEnabled = false;
           versioning = trashcan;
