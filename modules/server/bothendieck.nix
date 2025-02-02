@@ -1,5 +1,5 @@
 { inputs, this, lib, config, pkgs, ... }: with lib; let
-  cfg = config.services.bothendieck;
+  cfg = config.my-services.bothendieck;
 
   settingsFormat = pkgs.formats.toml {};
   configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;
@@ -151,7 +151,7 @@ in {
       };
     };
 
-    services.bothendieck = {
+    my-services.bothendieck = {
       settings = {
         server = "irc.eu.libera.chat";
         tls = true;
