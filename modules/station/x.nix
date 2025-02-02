@@ -25,7 +25,7 @@
     skip-options=gamma
   '';
 
-  bspwm.enable = mkDefault true;
+  my-programs.bspwm.enable = mkDefault true;
 
   hm = {
     home.keyboard = with config.services.xserver.xkb; {

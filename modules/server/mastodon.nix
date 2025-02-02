@@ -1,7 +1,7 @@
 { lib, config, ... }: with lib; let
   cfg = config.services.mastodon;
   webDomain = "fedi.${my.domain}";
-in mkEnableModule [ "mastodon" ] {
+in mkEnableModule [ "my-services" "mastodon" ] {
   services.mastodon = {
     enable = true;
     localDomain = my.domain;

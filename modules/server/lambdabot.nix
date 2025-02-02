@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }: with lib; let
   tunnelPort = 6642;
-in mkEnableModule [ "services" "my-lambdabot" ] {
+in mkEnableModule [ "my-services" "lambdabot" ] {
   secrets.lambdabot-ulminfo = {
     owner = config.users.users.lambdabot.name;
     group = config.users.users.lambdabot.group;

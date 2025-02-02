@@ -28,11 +28,13 @@
         size = 10;
       };
       theme = {
-        package = pkgs.flat-remix-gtk;
+        package = pkgs.orchis-theme.override {
+          tweaks = [ "black" "primary" ];
+        };
         name = gtkTheme;
       };
       iconTheme = {
-        package = pkgs.flat-remix-icon-theme;
+        package = pkgs.tela-icon-theme;
         name = iconTheme;
       };
     };

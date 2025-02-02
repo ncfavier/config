@@ -73,7 +73,7 @@
     bind -n C-q detach
   '';
   dfDir = "/run/df/state";
-in mkEnableModule [ "services" "dwarf-fortress" ] {
+in mkEnableModule [ "my-services" "dwarf-fortress" ] {
   nixpkgs.config.allowUnfree = true;
 
   systemd.services.dwarf-fortress = {

@@ -148,7 +148,7 @@ in {
         peers = mapAttrsToList (_: m: {
           endpoint = "${head m.ipv4}:${toString port}";
           inherit (m.wireguard) publicKey;
-          allowedIPs = if m.hostname == my.mainServer
+          allowedIPs = if m.hostname == my.server.hostname
             then [ "0.0.0.0/0" "::/0" ]
             else [ "${m.wireguard.ipv4}/32" "${m.wireguard.ipv6}/128" ];
           persistentKeepalive = 21;

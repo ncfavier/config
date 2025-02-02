@@ -118,7 +118,7 @@ bold=3
 IFS=, read screenWidth _ < /sys/class/graphics/fb0/virtual_size
 
 # ℕ
-xft_fonts=("siji:pixelsize=10" "${theme[font]}:size=${theme[fontSize]}" "${theme[font]}:bold:size=${theme[fontSize]}" "tewi:size=${theme[fontSize]}" "Biwidth:size=9")
+xft_fonts=("siji:pixelsize=10" "bitmap:size=8" "bitmap:bold:size=8" "tewi:size=8" "Biwidth:size=9")
 font_args=()
 for f in "${xft_fonts[@]}"; do
     case $f in

@@ -4,7 +4,7 @@
       config-cli lemonbar-xft xtitle xkb-switch trayer
     ];
   };
-in mkEnableModule [ "bspwm" ] {
+in mkEnableModule [ "my-programs" "bspwm" ] {
   services.xserver = {
     displayManager.startx.enable = true;
     tty = 1;
@@ -208,9 +208,9 @@ in mkEnableModule [ "bspwm" ] {
         "super + ctrl + Return" =
           "rofi -show ssh";
         "super + {_,shift} + Return" =
-          "{_,BASH_STARTUP=@${my.server.hostname}} wm go terminal";
+          "{_,BASH_STARTUP=@${my.server.hostname} new_instance=1} wm go terminal";
         "super + {_,shift} + KP_Enter" =
-          "{_,BASH_STARTUP=@${my.server.hostname}} wm go terminal";
+          "{_,BASH_STARTUP=@${my.server.hostname} new_instance=1} wm go terminal";
         "super + {_,shift} + {w,x,c,f,e,v,m}" =
           "wm go {_,-n} {web,mail,chat,files,editor,video,music}";
         "super + ctrl + w" =

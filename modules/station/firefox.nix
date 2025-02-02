@@ -113,8 +113,8 @@
 
             .tabbrowser-tab {
               color: var(--fg-alt) !important;
-              font-family: var(--font) !important;
-              font-size: var(--font-size) !important;
+              /* font-family: var(--font) !important; */
+              /* font-size: var(--font-size) !important; */
             }
 
             .tabbrowser-tab[fadein]:not([pinned="true"]) {

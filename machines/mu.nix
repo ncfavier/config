@@ -106,7 +106,7 @@
     my-services.nginx.enable = true;
     my-services.mailserver.enable = true;
     my-services.weechat.enable = true;
-    services.bothendieck.enable = true;
-    services.my-lambdabot.enable = true;
+    my-services.bothendieck.enable = true;
+    my-services.lambdabot.enable = true;
   };
 }

@@ -1,4 +1,4 @@
-{ lib, config, ... }: with lib; mkEnableModule [ "river" ] {
+{ lib, config, ... }: with lib; mkEnableModule [ "my-programs" "river" ] {
   programs.river = {
     enable = true;
     extraPackages = [];

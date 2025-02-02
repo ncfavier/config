@@ -1,4 +1,4 @@
-{ lib, config, ... }: with lib; mkEnableModule [ "jellyfin" ] {
+{ lib, config, ... }: with lib; mkEnableModule [ "my-services" "jellyfin" ] {
   services.jellyfin = {
     enable = true;
     openFirewall = true;

@@ -88,7 +88,7 @@
     });
   });
 in {
-  options.services.bothendieck = {
+  options.my-services.bothendieck = {
     enable = mkEnableOption "bothendieck";
     settings = mkOption {
       type = types.submodule {

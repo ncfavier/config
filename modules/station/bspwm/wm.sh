@@ -63,6 +63,7 @@ terminal() {
     exec ghostty \
         ${class:+--class="$class"} \
         ${instance:+--x11-instance-name="$instance"} \
+        ${new_instance:+--gtk-single-instance=false} \
         ${title:+--title="$title"} \
         ${columns:+--window-width="$columns"} \
         ${lines:+--window-height="$lines"} \
@@ -90,10 +91,16 @@ go() {
         editor)
             focus_title='- N?VIM$' terminal -e vim &;;
         web|browser)
+            if (( new )); then
+                bspc rule -a firefox -o desktop=focused
+            fi
             class='firefox|chromium-browser' focus-window || exec firefox &;;
         mail)
             class=thunderbird focus-window || exec thunderbird &;;
         files)
+            if (( new )); then
+                bspc rule -a Thunar -o desktop=focused
+            fi
             class='thunar|dolphin' focus-window || exec thunar &;;
         music)
             exec rofi -kb-custom-1 'Control+r' -show music;;

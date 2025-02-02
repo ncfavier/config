@@ -129,7 +129,7 @@
 
     broadcasting.enable = true;
 
-    jellyfin.enable = true;
+    my-services.jellyfin.enable = true;
 
     my.hashedPassword = "$y$j9T$Z68zdBJVmsTe5BneXrjFH1$jGJpIx5jFgUo8FSjrAqh.O4daLKNsybkUPoWJawPcX.";
 

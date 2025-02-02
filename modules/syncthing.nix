@@ -30,7 +30,7 @@ in {
 
       devices = mapAttrs (_: m: {
         inherit (m.syncthing) id;
-        introducer = m.hostname == my.mainServer;
+        introducer = m.hostname == my.server.hostname;
       }) devices;
 
       folders = let
