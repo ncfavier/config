@@ -66,8 +66,10 @@ clipcmd_helper() {
 
 command_not_found_handle() {
     local IFS=$' \t\n'
-    if [[ $1 == *@* ]]; then # [user]@host as a shorthand for ssh user@host
+    if [[ $1 == *@* ]]; then # [user]@[host] as a shorthand for ssh user@host (host defaults to main server)
+        . config env
         local host=${1#@}
+        host=${host:-$server_hostname}
         shift
         if (( $# )); then
             sshesc -qt "$host" -- bash -ilc "${*@Q}"

@@ -49,11 +49,26 @@
       })
     ];
 
+    xfconf.settings.thunar = {
+      last-icon-view-zoom-level = "THUNAR_ZOOM_LEVEL_400_PERCENT";
+      last-menubar-visible = false;
+      misc-change-window-icon = true;
+      misc-date-style = "THUNAR_DATE_STYLE_LONG";
+      misc-exec-shell-scripts-by-default = true;
+      misc-file-size-binary = true;
+      misc-full-path-in-tab-title = true;
+      misc-middle-click-in-tab = true;
+      misc-show-delete-action = true;
+      misc-single-click = false;
+      misc-text-beside-icons = false;
+      misc-thumbnail-draw-frames = false;
+      misc-thumbnail-mode = "THUNAR_THUMBNAIL_MODE_ALWAYS";
+      shortcuts-icon-emblems = false;
+      shortcuts-icon-size = "THUNAR_ICON_SIZE_48";
+      tree-icon-size = "THUNAR_ICON_SIZE_32";
+    };
+
     xdg.configFile = {
-      "xfce4/xfconf/xfce-perchannel-xml/thunar.xml" = {
-        source = ./thunar.xml;
-        force = true;
-      };
       "Thunar/uca.xml".source = config.lib.meta.mkMutableSymlink ./uca.xml;
       "Thunar/accels.scm".source = config.lib.meta.mkMutableSymlink ./accels.scm;
       "tumbler/tumbler.rc" = {

@@ -377,7 +377,7 @@
       <Multi_key> <y> <y> : "☯"
       <Multi_key> <O> <O> : "👀"
       <Multi_key> <greater> <less> : "👉👈"
-      <Multi_key> <l> <e> <m> : "https://cdn.discordapp.com/emojis/1007757147116941423.webp"
+      <Multi_key> <l> <e> <m> : "https://f.monade.li/lemon.webp"
       <Multi_key> <backslash> <slash> : "¯\\_(ツ)_/¯"
       <Multi_key> <s> <2> <h> : "┐('~'; )┌"
       <Multi_key> <l> <e> <n> : "( ͡° ͜ʖ ͡°)"
