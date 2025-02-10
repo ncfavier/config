@@ -39,12 +39,13 @@
       libreoffice-fresh
       xournalpp
       pandoc
-      coq
       (agda.withPackages (p: with p; [
         standard-library
         cubical
         agda-categories
       ]))
+      coq
+      elan
       ocamlPackages.cooltt
       audacity
       gimp

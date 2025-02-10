@@ -50,6 +50,7 @@
     ];
 
     xfconf.settings.thunar = {
+      hidden-bookmarks = [ "recent:///" ];
       last-icon-view-zoom-level = "THUNAR_ZOOM_LEVEL_400_PERCENT";
       last-menubar-visible = false;
       misc-change-window-icon = true;

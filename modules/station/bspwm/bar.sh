@@ -345,7 +345,7 @@ while read -rn 1 event; do
             read -r paused
             dunst=
             if (( paused )); then
-                dunst="%{F${theme[hot]}}%{F-}"
+                dunst=""
             fi
             ;;
         K) # keyboard

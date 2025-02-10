@@ -386,6 +386,8 @@
       <Multi_key> <q> <t> : "(◕‿◕)"
       <Multi_key> <s> <a> <d> : "(｡•́︿•̀｡)"
       <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
+
+      ${builtins.readFile ./agda.xcompose}
     '';
 
     onChange = ''

@@ -2,6 +2,7 @@
   interface = config.networking.wireguard.interface;
   port = 500;
   enable = this ? wireguard;
+  allExemptions = config.networking.wireguard.exemptions ++ config.networking.wireguard.extraExemptions;
 in {
   options.networking.wireguard = {
     interface = mkOption {
@@ -26,6 +27,15 @@ in {
         "129.16.0.0/16" "2001:6b0::/32" # Chalmers
         "130.241.0.0/16" # Gothenburg University
         "40.126.0.0/18" "2603:1000::/25" # Microsoft
+      ];
+    };
+
+    # The AllowedIPs field has a length limit on WireGuard for Android, so having too many exemptions makes it go over the limit.
+    # These exemptions are ignored by the script below.
+    extraExemptions = mkOption {
+      type = with types; listOf str;
+      default = [
+        "cache.nixos.org"
       ];
     };
   };
@@ -154,10 +164,10 @@ in {
           persistentKeepalive = 21;
         }) (my.machinesThat (m: m.isServer && m ? wireguard));
         postUp = ''
-          ${getExe wg-exempt} ${escapeShellArgs config.networking.wireguard.exemptions}
+          ${getExe wg-exempt} ${escapeShellArgs allExemptions}
         '';
         preDown = ''
-          ${getExe wg-exempt} -d ${escapeShellArgs config.networking.wireguard.exemptions} || true
+          ${getExe wg-exempt} -d ${escapeShellArgs allExemptions} || true
         '';
       };
 
