@@ -48,6 +48,12 @@
           fi
         '')
       ];
+
+      programs.bash.shellAliases = {
+        cxa = "xargs -a <(clip)";
+        cxan = "xargs -a <(clip) -d'\\n'";
+        cxan1 = "xargs -a <(clip) -d'\\n' -n 1";
+      };
     }
 
     (mkIf this.isStation {

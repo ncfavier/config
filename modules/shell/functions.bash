@@ -249,25 +249,6 @@ unansi() {
     sed 's/\x1b\[[0-9;]*m//g' "$@"
 }
 
-traverse() {
-    local line
-    while IFS= read -r line; do
-        "$@" "$line"
-    done
-}
-
-xtraverse() {
-    xargs -d'\n' "$@"
-}
-
-cxan() {
-    local arg args
-    readarray -t args < <(clip)
-    for arg in "${args[@]}"; do
-        "$@" "$arg"
-    done
-}
-
 # Network
 
 myip() { # print my public IP addresses
