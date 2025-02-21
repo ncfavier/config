@@ -6,12 +6,12 @@
       sha256 = "1zybp2px5pqd0hkigvdxf9a8yb2j1fmw20sgi7h7pmsxdxpz7yzl";
       version = "1.3.6";
     }
-    {
-      name = "agda-mode";
-      publisher = "banacorn";
-      sha256 = "02r28a8y6pdjhad76z193xrlc4yk4fsynn064w7cff56gdc31bd5";
-      version = "0.5.1";
-    }
+    # {
+    #   name = "agda-mode";
+    #   publisher = "banacorn";
+    #   sha256 = "02r28a8y6pdjhad76z193xrlc4yk4fsynn064w7cff56gdc31bd5";
+    #   version = "0.5.1";
+    # }
     {
       name = "codercoder-dark-theme";
       publisher = "CoderCoder";
@@ -91,6 +91,28 @@ in {
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
         bungcip.better-toml
+        (pkgs.vscode-utils.buildVscodeExtension {
+          pname = "agda-mode-vscode";
+          version = "0.5.1-unstable";
+          vscodeExtPublisher = "banacorn";
+          vscodeExtName = "agda-mode";
+          vscodeExtUniqueId = "banacorn.agda-mode";
+          src = pkgs.buildNpmPackage {
+            name = "agda-mode-vscode.zip";
+            src = pkgs.fetchFromGitHub {
+              owner = my.githubUsername;
+              repo = "agda-mode-vscode";
+              rev = "3b25c9def0d145b0f7aa918bd7f9837d256c2486";
+              hash = "sha256-1cHYjWzvnebKnL6zy0gZqcD6q8dLtyYlU1XqVNy8Eiw=";
+            };
+            npmDepsHash = "sha256-q+d4Rof49Xi4PdYaPYUgzSox1M88ReEt6cvCr93KaA4=";
+            makeCacheWritable = true;
+            nativeBuildInputs = [ pkgs.vsce ];
+            installPhase = ''
+              vsce package -o "$out"
+            '';
+          };
+        })
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace exts;
     };
 

@@ -10,6 +10,7 @@
     rlwrap
     bat
     xxd
+    dos2unix
     ripgrep
     file
     fd
