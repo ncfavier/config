@@ -91,6 +91,7 @@ in {
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
         bungcip.better-toml
+        tekumara.typos-vscode
         (pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
           version = "0.5.1-unstable";

@@ -47,7 +47,7 @@
       diff = "git diff --no-index --no-prefix";
       dp = "declare -p";
       fc-grep = "fc-list | rg -i";
-      serve = "python -m http.server --directory";
+      serve = "http-server";
       l = "ls -l";
       ll = "ls -la";
       nwd = "nix why-depends";

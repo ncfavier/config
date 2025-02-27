@@ -39,6 +39,7 @@
       libreoffice-fresh
       xournalpp
       pandoc
+      typos
       (agda.withPackages (p: with p; [
         standard-library
         cubical
@@ -49,6 +50,7 @@
       ocamlPackages.cooltt
       audacity
       gimp
+      evince
       inkscape
       poppler_utils
       transmission_4-gtk

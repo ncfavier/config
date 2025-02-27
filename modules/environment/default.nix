@@ -29,6 +29,7 @@
     binutils
     gcc
     gnumake
+    http-server
     openssl
     bc
     fortune

@@ -79,6 +79,9 @@ if [[ ${srcs[0]} == http?(s)://@(?(*.)bandcamp.com|soundcloud.com|music.youtube.
     info_json=$(yt-dlp -J "${srcs[0]}")
     jq -r '.entries[0]//. | .artist//.uploader, .album//.title, first(.thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))//.thumbnail' <<< "$info_json" |
     { read -r artist; read -r album; read -r cover_src; }
+    if [[ ${srcs[0]} == *soundcloud.com* ]]; then
+        cover_src=${cover_src/-large/-t1080x1080}
+    fi
 fi
 
 read -ep "Artist? " ${artist:+-i "$artist"} artist

@@ -454,6 +454,10 @@ nix-closure-size() {
     nix path-info -rsSh "$@"
 }
 
+nix-build-closure() {
+    nix-store -qR --include-outputs "$(nix-store -qd "$@")"
+}
+
 nix-clear-cache() {
     rm ~/.cache/nix/binary-cache-v*.sqlite*
     sudo sh -c 'rm ~/.cache/nix/binary-cache-v*.sqlite*'
