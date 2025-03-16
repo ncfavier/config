@@ -61,6 +61,7 @@
       misc-middle-click-in-tab = true;
       misc-show-delete-action = true;
       misc-single-click = false;
+      misc-symbolic-icons-in-toolbar = false;
       misc-text-beside-icons = false;
       misc-thumbnail-draw-frames = false;
       misc-thumbnail-mode = "THUNAR_THUMBNAIL_MODE_ALWAYS";
