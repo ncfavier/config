@@ -20,7 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      url = "gitlab:yu-re-ka/nixos-mailserver/dovecot2-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     www = {

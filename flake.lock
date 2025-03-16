@@ -303,11 +303,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1720637234,
-        "narHash": "sha256-YDZEjSPBnjs5tBK4039n1ebbxfRD08zJIN5A9kFAMlc=",
+        "lastModified": 1742147065,
+        "narHash": "sha256-zu51tKCM3LewvQu80m66aFx+iicY5iG2WGKeEjchnSM=",
         "owner": "ncfavier",
         "repo": "qeval",
-        "rev": "088ade4589363a682199e16d8bf4e897b18ffe0b",
+        "rev": "72ba2e9c55eaf5e25d13a5b348601afeac1bf969",
         "type": "github"
       },
       "original": {
@@ -343,15 +343,16 @@
         "nixpkgs-24_11": "nixpkgs-24_11"
       },
       "locked": {
-        "lastModified": 1741986986,
-        "narHash": "sha256-V/OjvrJHCuTcPsT/JA/GGhDSrdOdUQp2HS4kk/7t1hQ=",
-        "owner": "simple-nixos-mailserver",
+        "lastModified": 1741983839,
+        "narHash": "sha256-75+RWpJ2OAvWJ+TBLJcR/2k4WhIAVHxGnqiNSxjF7nA=",
+        "owner": "yu-re-ka",
         "repo": "nixos-mailserver",
-        "rev": "90539a1a993a7ec16563139e82fa66f1c439ba0f",
+        "rev": "a45385de413941dc6aab2fd7c7a34b96b2bc4fc8",
         "type": "gitlab"
       },
       "original": {
-        "owner": "simple-nixos-mailserver",
+        "owner": "yu-re-ka",
+        "ref": "dovecot2-modules",
         "repo": "nixos-mailserver",
         "type": "gitlab"
       }
