@@ -2,7 +2,6 @@
   relayPort = 6642;
   scripts = [
     "autosort.py"
-    "buffer_autoset.py"
     "color_popup.pl"
     "colorize_nicks.py"
     "go.py"
