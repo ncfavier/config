@@ -3,7 +3,7 @@
     programs.firefox = {
       enable = true;
       profiles.default = with config.theme; {
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
           tree-style-tab
           ublock-origin
@@ -312,7 +312,7 @@
       };
       profiles.work = {
         id = 1;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
           ublock-origin
           refined-github

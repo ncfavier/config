@@ -167,7 +167,7 @@ in {
           ${getExe wg-exempt} ${escapeShellArgs allExemptions}
         '';
         preDown = ''
-          ${getExe wg-exempt} -d ${escapeShellArgs allExemptions} || true
+          timeout 3s ${getExe wg-exempt} -d ${escapeShellArgs allExemptions} || true
         '';
       };
 

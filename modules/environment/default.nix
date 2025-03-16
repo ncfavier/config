@@ -69,7 +69,7 @@
     };
   };
 
-  hm.xdg.configFile."htop/htoprc".force = true;
+  hm.xdg.configFile."htop".force = true;
 
   hm.programs.yt-dlp = {
     enable = true;
