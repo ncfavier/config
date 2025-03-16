@@ -157,7 +157,6 @@
       "icon": "terminal-bash"
     },
   },
-  "window.menuBarVisibility": "toggle",
   "nix.serverPath": "nil",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
@@ -319,4 +318,7 @@
   "lean4.alwaysShowTitleBarMenu": false,
   "lean4.automaticallyBuildDependencies": true,
   "files.trimTrailingWhitespace": true,
+  "chat.commandCenter.enabled": false,
+  "window.menuBarVisibility": "toggle",
+  "window.customTitleBarVisibility": "never",
 }
