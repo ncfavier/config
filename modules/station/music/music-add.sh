@@ -33,7 +33,9 @@ trap 'echo; echo "Files kept in $tmpdir"' exit
 srcs=("$@")
 (( ${#srcs[@]} > 0 )) || read -ep "Source URLs/paths? " -a srcs
 
+artist= album= cover_src=
 files=()
+i=0
 
 for src in "${srcs[@]}"; do
     srcdir=$(mktemp --tmpdir="$tmpdir" -d src-XXX)
@@ -41,7 +43,18 @@ for src in "${srcs[@]}"; do
     if [[ $src =~ ^[[:alpha:]]+:// ]]; then
         echo "Downloading audio files from $src..."
         yt-dlp -x --audio-format mp3 -o "$srcdir/%(playlist_index)s - %(title)s.%(ext)s" "$src" || die "Failed to download audio files."
-        printf '\a'
+
+        if (( i == 0 )) && [[ $src == http?(s)://@(?(*.)bandcamp.com|soundcloud.com|music.youtube.com)/* ]]; then
+            echo "Fetching album information for $src..."
+            info_json=$(yt-dlp -J "$src")
+            jq -r '.entries[0]//. | .artist//.uploader, .album//.title, first(.thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))//.thumbnail' <<< "$info_json" |
+            { read -r artist; read -r album; read -r cover_src; }
+            if [[ $src == *soundcloud.com* ]]; then
+                cover_src=${cover_src/-large/-t1080x1080}
+            fi
+        fi
+
+        printf '\a' # Downloading might take a while; notify the user when done
     elif [[ -r $src ]]; then
         if [[ ${src%/*} -ef $destdir ]]; then cmd=(mv); else cmd=(cp --preserve=timestamps); fi
         "${cmd[@]}" -t "$srcdir" -- "$src"
@@ -53,7 +66,7 @@ for src in "${srcs[@]}"; do
         basename=${srcfile##*/}
 
         if ask "Include '$basename' (or edit with Audacity)? [Y/e/n]"; then
-            files+=("$srcfile")
+            files[i++]=$srcfile
         elif [[ $answer == e ]]; then
             editdir=$(mktemp --tmpdir="$tmpdir" -d "${basename%.*}-XXX")
             echo "Please save resulting file(s) under $editdir"
@@ -64,24 +77,21 @@ for src in "${srcs[@]}"; do
 
             if (( ${#editedfiles[@]} > 0 )); then
                 files+=("${editedfiles[@]}")
+                (( i += ${#editedfiles[@]} ))
             else
-                files+=("$srcfile")
+                files[i++]=$srcfile
             fi
+        else
+            (( i++ ))
         fi
     done
 done
 
 (( ${#files[@]} > 0 )) || die "No files given."
 
-artist= album= cover_src=
-if [[ ${srcs[0]} == http?(s)://@(?(*.)bandcamp.com|soundcloud.com|music.youtube.com)/* ]]; then
-    echo "Fetching album information..."
-    info_json=$(yt-dlp -J "${srcs[0]}")
-    jq -r '.entries[0]//. | .artist//.uploader, .album//.title, first(.thumbnails[].url | select(contains("googleusercontent")) | gsub("=w\\d+-h\\d+"; "=w800-h800"))//.thumbnail' <<< "$info_json" |
-    { read -r artist; read -r album; read -r cover_src; }
-    if [[ ${srcs[0]} == *soundcloud.com* ]]; then
-        cover_src=${cover_src/-large/-t1080x1080}
-    fi
+use_tracks=
+if (( i > 1 )); then
+    use_tracks=1
 fi
 
 read -ep "Artist? " ${artist:+-i "$artist"} artist
@@ -122,24 +132,27 @@ if [[ $cover_src ]]; then
     fi
 fi
 
-use_tracks=
-ask "Use track numbers? [Y/n]" && use_tracks=true
+if [[ $use_tracks ]]; then
+    ask "Use track numbers? [Y/n]" || use_tracks=
+else
+    ask "Use track numbers? [y/N]" n && use_tracks=1
+fi
 
-i=0
-for file in "${files[@]}"; do
+for i in "${!files[@]}"; do
+    file=${files[i]}
     basename=${file##*/}
     basename=${basename%.*}
     title=
     track=
-    echo "File: $basename ($(( ++i ))/${#files[@]})"
+    echo "File: $basename ($(( i + 1 ))/${#files[@]})"
     if [[ $info_json ]]; then
-        jq -r --argjson i "$i" '(if has("entries") then .entries[] | select(.playlist_index == $i) else . end) | .track//.title' <<< "$info_json" |
+        jq -r --argjson i "$(( i + 1 ))" '(if has("entries") then .entries[] | select(.playlist_index == $i) else . end) | .track//.title' <<< "$info_json" |
         read -r title
     else
         title=${basename#*' - '}
     fi
     read -ep "Title? " -i "$title" title
-    [[ $use_tracks ]] && read -ep "Track number? " -i "$i" track
+    [[ $use_tracks ]] && read -ep "Track number? " -i "$(( i + 1 ))" track
 
     ffprobe -loglevel error -show_entries format_tags -print_format json "$file" |
     jq -r '.format.tags | [(.artist, .album, .title, .track) + "\u0000"] | add' |

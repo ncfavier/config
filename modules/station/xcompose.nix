@@ -375,6 +375,7 @@
       <Multi_key> <e> <t> : "ꝫ"
       <Multi_key> <E> <T> : "Ꝫ"
       <Multi_key> <s> <h> : "ʃ"
+      <Multi_key> <c> <u> <b> <e> : "🧊"
       <Multi_key> <y> <y> : "☯"
       <Multi_key> <O> <O> : "👀"
       <Multi_key> <greater> <less> : "👉👈"

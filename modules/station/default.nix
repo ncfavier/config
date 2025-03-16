@@ -80,6 +80,7 @@
           collection-latexextra
           collection-fontsextra
           collection-bibtexextra
+          collection-langcjk
           ;
       };
     };

@@ -161,7 +161,6 @@
   "nix.serverPath": "nil",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
-  "files.trimTrailingWhitespace": true,
   "editor.occurrencesHighlight": "off",
   "vim.handleKeys": {
     "<C-b>": false,
@@ -317,4 +316,7 @@
   "git.openRepositoryInParentFolders": "always",
   "editor.fontSize": 13,
   "workbench.colorTheme": "Night Owl Light Bold",
+  "lean4.alwaysShowTitleBarMenu": false,
+  "lean4.automaticallyBuildDependencies": true,
+  "files.trimTrailingWhitespace": true,
 }
