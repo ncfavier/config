@@ -137,6 +137,7 @@
       <dead_circumflex> <h> : "ʰ"
       <Multi_key> <asciicircum> <i> : "ⁱ"
       <Multi_key> <asciicircum> <j> : "ʲ"
+      <dead_circumflex> <k> : "ᵏ"
       <dead_circumflex> <l> : "ˡ"
       <dead_circumflex> <m> : "ᵐ"
       <dead_circumflex> <n> : "ⁿ"

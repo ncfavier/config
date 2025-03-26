@@ -321,4 +321,5 @@
   "chat.commandCenter.enabled": false,
   "window.menuBarVisibility": "toggle",
   "window.customTitleBarVisibility": "never",
+  "diffEditor.ignoreTrimWhitespace": false,
 }

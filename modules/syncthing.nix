@@ -91,12 +91,19 @@ in {
           devices = allDevices;
           versioning = simple;
         };
+        firefox = {
+          path = "${config.my.home}/${config.hm.programs.firefox.configPath}/${config.hm.programs.firefox.profiles.default.path}";
+          type = if this.isServer then "receiveonly" else "sendonly";
+          devices = allDevicesExceptPhone;
+          versioning = simple;
+        };
         mail = {
           path = if this.isServer
             then config.mailserver.mailDirectory
             else "${config.my.home}/sync/mail";
           type = if config.mailserver.enable or false then "sendonly" else "receiveonly";
           devices = allDevicesExceptPhone;
+          fsWatcherEnabled = false;
           versioning = simple;
         };
       };
@@ -121,6 +128,9 @@ in {
     '';
     "${config.synced.uploads.path}/.stignore".text = ''
       /local
+    '';
+    "${config.synced.firefox.path}/.stignore".text = ''
+      storage
     '';
   };
 }
