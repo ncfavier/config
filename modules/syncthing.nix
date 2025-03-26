@@ -92,9 +92,10 @@ in {
           versioning = simple;
         };
         firefox = {
-          path = "${config.my.home}/${config.hm.programs.firefox.configPath}/${config.hm.programs.firefox.profiles.default.path}";
-          type = if this.isServer then "receiveonly" else "sendonly";
+          path = "${config.my.home}/${config.hm.programs.firefox.configPath}/default";
+          type = if config.hm.programs.firefox.enable then "sendonly" else "receiveonly";
           devices = allDevicesExceptPhone;
+          fsWatcherEnabled = false;
           versioning = simple;
         };
         mail = {

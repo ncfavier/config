@@ -3,8 +3,16 @@
 
   settingsFormat = pkgs.formats.toml {};
   configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;
+  firefoxDir = "/run/bothendieck/firefox";
 
   bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieckWithEvaluators.override (old: {
+    yt-dlp = pkgs.runCommand "yt-dlp-wrapper" {
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+    } ''
+      mkdir -p "$out/bin"
+      makeWrapper ${getExe pkgs.yt-dlp} "$out/bin/yt-dlp" \
+        --add-flags --cookies-from=firefox:${firefoxDir}
+    '';
     qeval = old.qeval.override ({ pkgs, ... }: {
       baseKernelPackages = pkgs.linuxPackages_latest;
       enableKVM = this.hasKVM;
@@ -144,6 +152,8 @@ in {
 
         Restart = "on-failure";
         RestartSec = "10s";
+
+        BindReadOnlyPaths = [ "${config.synced.firefox.path}:${firefoxDir}" ];
       };
       unitConfig = {
         StartLimitIntervalSec = "1min";
@@ -158,14 +168,14 @@ in {
         port = 6697;
         nick = "|||";
         realName = "bothendieck";
-        channels = [ "##nf" "#tendra" ];
+        channels = [ "##nf" "#tendra" "#bothendieck" ];
         commandPrefix = ".";
         pasteUrl = "https://f.${my.domain}";
         pasteField = "file";
         urlAlternativeHosts = fix (self: {
-          "youtube.com" = "https://inv.nadeko.net";
-          "www.youtube.com" = self."youtube.com";
-          "youtu.be" = self."youtube.com" + "/watch";
+          # "youtube.com" = "https://inv.nadeko.net";
+          # "www.youtube.com" = self."youtube.com";
+          # "youtu.be" = self."youtube.com" + "/watch";
           "x.com" = "https://nitter.privacydev.net";
           "xcancel.com" = self."x.com";
           "twitter.com" = self."x.com";
@@ -177,35 +187,5 @@ in {
       };
       secretsFile = config.secrets.bothendieck.path;
     };
-
-    # services.nitter = {
-    #   enable = true;
-    #   package = pkgs.nitter.overrideAttrs (o: {
-    #     src = pkgs.fetchFromGitHub {
-    #       owner = "zedeus";
-    #       repo = "nitter";
-    #       rev = "b62d73dbd373f08af07c7a79efcd790d3bc1a49c";
-    #       hash = "sha256-yCD7FbqWZMY0fyFf9Q3Ka06nw5Ha7jYLpmPONAhEVIM=";
-    #     };
-    #   });
-    #   openFirewall = false;
-    #   server.hostname = my.domain;
-    #   server.address = head this.ipv4; # can't use a local address because bothendieck blocks those
-    #   server.port = 8099;
-    #   # server.httpMaxConnections = 2;
-    #   # config.tokenCount = 1;
-    #   # cache.redisConnections = 1;
-    # };
-
-    # services.invidious = {
-    #   enable = true;
-    #   address = "10.42.0.1";
-    #   settings = {
-    #     db.user = "invidious";
-    #     visitor_data = "CgtybDlZTEQ2SGpwWSimhvy3BjIKCgJERRIEEgAgWg==";
-    #     po_token = "MnhO4DLuWhFOyE7cO2QCllOtrVffXV1Zhe_YtxhlTNAQyP0kZ7AI_83lhWLCj6C7tw8VOxekehfF2T9kRpDzE0kLVcFPOcx4JP6q2jeGSgt2XGcHc5pKA1zkjRCSFqKXJvwnp6B4_dgyME-2mHS32iX4sVu02Ot2FhU=";
-    #   };
-    #   sig-helper.enable = true;
-    # };
   };
 }
