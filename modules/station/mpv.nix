@@ -17,6 +17,7 @@
         sub-auto = "fuzzy";
         sub-border-size = 1;
 
+        ao = "pulse";
         hwdec = "auto-safe";
 
         pulse-latency-hacks = mkIf (config.sound-backend == "pulseaudio") true;
