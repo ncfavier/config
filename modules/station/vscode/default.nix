@@ -6,12 +6,12 @@
       sha256 = "1zybp2px5pqd0hkigvdxf9a8yb2j1fmw20sgi7h7pmsxdxpz7yzl";
       version = "1.3.6";
     }
-    # {
-    #   name = "agda-mode";
-    #   publisher = "banacorn";
-    #   sha256 = "02r28a8y6pdjhad76z193xrlc4yk4fsynn064w7cff56gdc31bd5";
-    #   version = "0.5.1";
-    # }
+    {
+      name = "agda-mode";
+      publisher = "banacorn";
+      sha256 = "sha256-xz+KO743jGziLzO7pINTcOX9JV68MJ0juDl+rpr9hk8=";
+      version = "0.5.5";
+    }
     {
       name = "codercoder-dark-theme";
       publisher = "CoderCoder";
@@ -92,7 +92,7 @@ in {
         james-yu.latex-workshop
         bungcip.better-toml
         tekumara.typos-vscode
-        (pkgs.vscode-utils.buildVscodeExtension {
+        /*(pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
           version = "0.5.1-unstable";
           vscodeExtPublisher = "banacorn";
@@ -113,7 +113,7 @@ in {
               vsce package -o "$out"
             '';
           };
-        })
+        })*/
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace exts;
     };
 
