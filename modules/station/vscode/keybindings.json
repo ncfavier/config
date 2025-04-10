@@ -142,5 +142,15 @@
         "key": "ctrl+shift+-",
         "command": "-workbench.action.navigateForward",
         "when": "canNavigateForward"
+    },
+    {
+        "key": "ctrl+8",
+        "command": "agda-mode.input-symbol[Activate]",
+        "when": "editorTextFocus && editorLangId == 'agda' || editorTextFocus && editorLangId == 'lagda-forester' || editorTextFocus && editorLangId == 'lagda-md' || editorTextFocus && editorLangId == 'lagda-org' || editorTextFocus && editorLangId == 'lagda-rst' || editorTextFocus && editorLangId == 'lagda-tex' || editorTextFocus && editorLangId == 'lagda-typ'"
+    },
+    {
+        "key": "\\",
+        "command": "-agda-mode.input-symbol[Activate]",
+        "when": "editorTextFocus && editorLangId == 'agda' || editorTextFocus && editorLangId == 'lagda-forester' || editorTextFocus && editorLangId == 'lagda-md' || editorTextFocus && editorLangId == 'lagda-org' || editorTextFocus && editorLangId == 'lagda-rst' || editorTextFocus && editorLangId == 'lagda-tex' || editorTextFocus && editorLangId == 'lagda-typ'"
     }
 ]

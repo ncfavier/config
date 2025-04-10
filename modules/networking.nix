@@ -141,6 +141,9 @@
         };
       };
 
+      # https://github.com/NixOS/nixpkgs/issues/375352
+      environment.etc."strongswan.conf".text = "";
+
       # "info" spams CTRL-EVENT-SIGNAL-CHANGE messages in the log
       systemd.services.wpa_supplicant.serviceConfig.LogLevelMax = "notice";
 

@@ -314,7 +314,6 @@
   "haskell.plugin.importLens.codeActionsOn": false,
   "git.openRepositoryInParentFolders": "always",
   "editor.fontSize": 13,
-  "workbench.colorTheme": "Night Owl Light Bold",
   "lean4.alwaysShowTitleBarMenu": false,
   "lean4.automaticallyBuildDependencies": true,
   "files.trimTrailingWhitespace": true,
@@ -322,4 +321,8 @@
   "window.menuBarVisibility": "toggle",
   "window.customTitleBarVisibility": "never",
   "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.colorTheme": "Mr Pink",
+  "agdaMode.connection.paths": [
+    "/etc/profiles/per-user/n/bin/agda"
+  ],
 }
