@@ -325,4 +325,7 @@
   "agdaMode.connection.paths": [
     "/etc/profiles/per-user/n/bin/agda"
   ],
+  "git.autoStash": true,
+  "git.fetchOnPull": true,
+  "diffEditor.renderSideBySide": false,
 }
