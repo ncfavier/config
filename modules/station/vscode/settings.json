@@ -322,10 +322,10 @@
   "window.customTitleBarVisibility": "never",
   "diffEditor.ignoreTrimWhitespace": false,
   "workbench.colorTheme": "Mr Pink",
-  "agdaMode.connection.paths": [
-    "/etc/profiles/per-user/n/bin/agda"
-  ],
   "git.autoStash": true,
   "git.fetchOnPull": true,
   "diffEditor.renderSideBySide": false,
+  "agdaMode.connection.paths": [
+    "agda"
+  ],
 }

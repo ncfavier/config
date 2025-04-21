@@ -47,7 +47,9 @@ in {
         };
         allDevices = attrNames devices;
         allDevicesExceptPhone = attrNames (filterAttrs (_: m: !m.isPhone) devices);
-      in {
+      in mapAttrs (_: f: {
+        enable = builtins.elem this.hostname f.devices;
+      } // f) {
         my = {
           path = "${config.my.home}/sync/my";
           devices = allDevices;
@@ -94,7 +96,7 @@ in {
         firefox = {
           path = "${config.my.home}/${config.hm.programs.firefox.configPath}/default";
           type = if config.hm.programs.firefox.enable then "sendonly" else "receiveonly";
-          devices = allDevicesExceptPhone;
+          devices = [ my.server.hostname "no" ];
           fsWatcherEnabled = false;
           versioning = simple;
         };

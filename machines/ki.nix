@@ -62,10 +62,7 @@
     services.blueman.enable = true;
     hm.services.blueman-applet.enable = true;
 
-    services.hardware.openrgb.enable = true;
-    systemd.services.openrgb.postStart = ''
-      ${getExe config.services.hardware.openrgb.package} --config ${config.hm.xdg.configHome}/OpenRGB -p default || true
-    '';
+    my-services.openrgb.enable = true;
 
     keys.composeKey = "rwin";
     keys.printScreenKey = "Insert";
