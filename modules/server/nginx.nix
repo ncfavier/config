@@ -44,8 +44,8 @@ in {
       virtualHosts = {
         ${my.domain} = {
           root = inputs.www;
-          locations."= /favicon.png".return = "301 ${my.gravatar}?s=64";
-          locations."= /favicon.ico".return = "301 ${my.gravatar}?s=64";
+          locations."= /face.jpg".return = "301 https://f.${my.domain}/face.jpg";
+          locations."= /favicon.ico".tryFiles = "/favicon.png =404";
           locations."= /glam.pdf".alias = "${glamRoot}/report/report.pdf";
           locations."= /glam-slides.pdf".alias = "${glamRoot}/report/slides.pdf";
         };
@@ -104,8 +104,8 @@ in {
             '';
           };
           locations."/".tryFiles = "$uri $uri/ /local$uri /local$uri/ =404";
-          locations."= /favicon.png".return = "301 ${my.gravatar}?s=64";
-          locations."= /favicon.ico".return = "301 ${my.gravatar}?s=64";
+          locations."= /favicon.png".return = "301 https://${my.domain}/favicon.png";
+          locations."= /favicon.ico".return = "301 https://${my.domain}/favicon.ico";
           locations."/.st".extraConfig = "internal;";
           extraConfig = ''
             default_type text/plain;

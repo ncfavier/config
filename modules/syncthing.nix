@@ -99,6 +99,7 @@ in {
           devices = [ my.server.hostname "no" ];
           fsWatcherEnabled = false;
           versioning = simple;
+          maxConflicts = 0;
         };
         mail = {
           path = if this.isServer
