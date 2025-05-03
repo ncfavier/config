@@ -36,6 +36,7 @@
           "browser.startup.homepage" = "about:home";
           "browser.tabs.firefox-view" = false;
           "browser.tabs.firefox-view-next" = false;
+          "browser.tabs.hoverPreview.enabled" = false;
           "browser.tabs.tabmanager.enabled" = false;
           "browser.tabs.warnOnClose" = false;
           "browser.toolbars.bookmarks.visibility" = "never";

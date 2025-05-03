@@ -39,6 +39,7 @@
       libreoffice-fresh
       xournalpp
       pandoc
+      inlyne
       typos
       ((pkgs.mine "agda-bump" "sha256-o7ROtc5q4ISWsF+nuENjeITzaZsaXO7OiNOLg9+h88k=").agda.withPackages (p: with p; [
         standard-library
@@ -87,7 +88,6 @@
     hm.xdg.configFile."agda/defaults".text = ''
       standard-library
       cubical
-      agda-categories
     '';
 
     cachix.derivationsToPush = [ pkgs.tmsu ];

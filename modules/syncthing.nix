@@ -97,7 +97,6 @@ in {
           path = "${config.my.home}/${config.hm.programs.firefox.configPath}/default";
           type = if config.hm.programs.firefox.enable then "sendonly" else "receiveonly";
           devices = [ my.server.hostname "no" ];
-          fsWatcherEnabled = false;
           versioning = simple;
           maxConflicts = 0;
         };

@@ -8,6 +8,7 @@
       in [
         (pkgs: prev: {
           stable = importNixpkgs inputs.nixpkgs-stable;
+          unstable = importNixpkgs inputs.nixpkgs-unstable;
           rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
             owner = "NixOS";
             repo = "nixpkgs";
@@ -51,7 +52,7 @@
 
     (mkIf (! this.isISO) {
       system.extraDependencies = concatMap collectFlakeInputs (with inputs; [
-        nixpkgs nixpkgs-stable nixos-hardware nur
+        nixpkgs nixpkgs-stable nixpkgs-unstable nixos-hardware nur
       ]);
 
       lib.meta = {
