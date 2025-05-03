@@ -65,6 +65,7 @@ set path=**
 set scrolloff=5
 set shiftround
 set shiftwidth=0
+set shortmess+=I
 set smartindent
 set softtabstop=4
 set splitbelow
