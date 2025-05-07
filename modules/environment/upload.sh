@@ -27,8 +27,8 @@ hash_length=6
 
 # Parse command line arguments
 
-keep_name=0 remove=0 force=0 interactive=0
-while getopts :l:krf o; do case $o in
+keep_name=0 random_name=0 remove=0 force=0 interactive=0
+while getopts :l:kurf o; do case $o in
     :) OPTARG=1 ;&
     l)
         n=$OPTARG
@@ -40,6 +40,7 @@ while getopts :l:krf o; do case $o in
         exit
         ;;
     k) keep_name=1;;
+    u) random_name=1;;
     r) remove=1;;
     f) force=1;;
 esac done
@@ -48,7 +49,7 @@ shift "$(( OPTIND - 1 ))"
 source=$1
 if [[ $2 ]]; then
     basename=$2
-    keep_name=1
+    keep_name=$(( ! random_name ))
 else
     basename=$source
 fi
