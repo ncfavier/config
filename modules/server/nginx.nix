@@ -30,6 +30,7 @@ in {
       serverNamesHashBucketSize = 128;
       commonHttpConfig = ''
         charset utf-8;
+        charset_types text/css;
         types {
           text/plain sh csh tex latex rs tcl pl markdown md;
         }
@@ -44,7 +45,6 @@ in {
       virtualHosts = {
         ${my.domain} = {
           root = inputs.www;
-          locations."= /face.jpg".return = "301 https://f.${my.domain}/face.jpg";
           locations."= /favicon.ico".tryFiles = "/favicon.png =404";
           locations."= /glam.pdf".alias = "${glamRoot}/report/report.pdf";
           locations."= /glam-slides.pdf".alias = "${glamRoot}/report/slides.pdf";
@@ -74,7 +74,7 @@ in {
           locations."= /" = {
             extraConfig = ''
               if ($internal != 1) {
-                return 403 "Nothing to see here, move along.\n";
+                return 301 $scheme://${my.domain};
               }
               fastcgi_pass unix:${config.services.phpfpm.pools.upload.socket};
               client_max_body_size ${maxUploadSize};
@@ -84,7 +84,7 @@ in {
               if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Content-Type: text/plain');
                 if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-                  $url = exec('. /etc/set-environment; upload -r '.escapeshellarg($_FILES['file']['tmp_name']).(isset($_POST['keepname']) ? ' '.escapeshellarg(basename($_FILES['file']['name'])) : ""))."\n";
+                  $url = exec('. /etc/set-environment; upload -r '.(isset($_POST['keepname']) ? "" : '-u ').escapeshellarg($_FILES['file']['tmp_name']).' '.escapeshellarg(basename($_FILES['file']['name'])))."\n";
                   if (isset($_POST['browser']))
                     header("Location: $url");
                   else

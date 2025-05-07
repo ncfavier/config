@@ -27,6 +27,9 @@ hash_length=6
 
 # Parse command line arguments
 
+# If $2 is set, it is used as the destination name unless -u is used.
+# If $2 is unset, a random name is used unless -k is used (in which case the source filename is used).
+
 keep_name=0 random_name=0 remove=0 force=0 interactive=0
 while getopts :l:kurf o; do case $o in
     :) OPTARG=1 ;&

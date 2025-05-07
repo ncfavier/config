@@ -446,11 +446,11 @@
     "www": {
       "flake": false,
       "locked": {
-        "lastModified": 1745789738,
-        "narHash": "sha256-3VtkbVFeXoHdLOktlBhslI1NWjGYeBFRLmsd+cqLD3Y=",
+        "lastModified": 1746052846,
+        "narHash": "sha256-DIsScWd6mZwwJSAkdRBEYftudriLTRafGVM3MYs6H8U=",
         "owner": "ncfavier",
         "repo": "monade.li",
-        "rev": "6700e1201962b53cd0f969b1688478f5d85398a2",
+        "rev": "419d0b37c44ef07b47b5f88829ba61060506870b",
         "type": "github"
       },
       "original": {

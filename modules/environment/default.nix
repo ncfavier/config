@@ -73,13 +73,14 @@
 
   hm.programs.yt-dlp = {
     enable = true;
-    package = pkgs.unstable.yt-dlp.override { withAlias = true; };
+    package = pkgs.yt-dlp.override { withAlias = true; };
     settings = {
       cookies-from-browser = "firefox";
     };
   };
 
   nixpkgs.overlays = [ (pkgs: prev: {
+    inherit (pkgs.unstable) yt-dlp;
     shellScriptWith = name: src: { deps ? [], vars ? {} }:
       # can't use `writeScriptBin` because no check phase,
       # can't use `writeShellScriptBin` because no interactive shell
