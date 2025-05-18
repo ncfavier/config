@@ -383,6 +383,7 @@
       <Multi_key> <O> <O> : "👀"
       <Multi_key> <greater> <less> : "👉👈"
       <Multi_key> <l> <e> <m> : "https://f.monade.li/lemon.webp"
+      <Multi_key> <s> <u> <s> : "ඞ"
       <Multi_key> <backslash> <slash> : "¯\\_(ツ)_/¯"
       <Multi_key> <s> <2> <h> : "┐('~'; )┌"
       <Multi_key> <l> <e> <n> : "( ͡° ͜ʖ ͡°)"
