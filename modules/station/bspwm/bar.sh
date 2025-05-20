@@ -456,7 +456,13 @@ while read -rn 1 event; do
             trunc title 80
             escape title
             if [[ $title ]]; then
-                title=" $title"
+                layer=$(bspc query -T -n focused | jq -r '.client.layer')
+                case $layer in
+                    above) layer='↑ ';;
+                    below) layer='↓ ';;
+                    *) layer=;;
+                esac
+                title=" $layer$title"
                 pad title
                 title="%{A:bspc node -t ~floating:}%{A2:bspc node -c:}%{A3:bspc desktop -l next:}$title%{A}%{A}%{A}"
             fi

@@ -51,6 +51,8 @@ index 6892d041..1174cb15 100644
       set -g window-status-format "#W"
       set -g window-status-separator "  "
 
+      set-hook -g client-active attach
+
       bind r source $XDG_DATA_HOME/tmux/tmux.conf
       bind -n C-q detach
       bind -n C-Left previous-window
