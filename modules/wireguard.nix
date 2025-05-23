@@ -27,6 +27,7 @@ in {
         "129.16.0.0/16" "2001:6b0::/32" # Chalmers
         "130.241.0.0/16" # Gothenburg University
         "40.126.0.0/18" "2603:1000::/25" # Microsoft
+        "104.16.0.0/13" "172.64.0.0/13" # Stack Exchange (Cloudflare)
       ];
     };
 

@@ -58,11 +58,6 @@
         "command": "-workbench.action.closeWindow"
     },
     {
-        "key": "\\",
-        "command": "-agda-mode.input-symbol[Activate]",
-        "when": "editorLangId == 'agda'"
-    },
-    {
         "key": "ctrl+tab",
         "command": "workbench.action.nextEditorInGroup"
     },
@@ -89,16 +84,6 @@
         "when": "true"
     },
     {
-        "key": "ctrl+8",
-        "command": "agda-mode.input-symbol[Activate]",
-        "when": "editorLangId == 'agda' || editorLangId == 'lagda-md' || editorLangId == 'lagda-rst' || editorLangId == 'lagda-tex'"
-    },
-    {
-        "key": "\\",
-        "command": "-agda-mode.input-symbol[Activate]",
-        "when": "editorLangId == 'agda' || editorLangId == 'lagda-md' || editorLangId == 'lagda-rst' || editorLangId == 'lagda-tex'"
-    },
-    {
         "key": "ctrl+6",
         "command": "workbench.action.zoomOut"
     },
@@ -117,11 +102,6 @@
     {
         "key": "ctrl+=",
         "command": "-workbench.action.zoomIn"
-    },
-    {
-        "key": "\\",
-        "command": "-agda-mode.input-symbol[Activate]",
-        "when": "editorTextFocus && editorLangId == 'agda' || editorTextFocus && editorLangId == 'lagda-md' || editorTextFocus && editorLangId == 'lagda-rst' || editorTextFocus && editorLangId == 'lagda-tex'"
     },
     {
         "key": "alt+left",
@@ -146,11 +126,21 @@
     {
         "key": "ctrl+8",
         "command": "agda-mode.input-symbol[Activate]",
-        "when": "editorTextFocus && editorLangId == 'agda' || editorTextFocus && editorLangId == 'lagda-forester' || editorTextFocus && editorLangId == 'lagda-md' || editorTextFocus && editorLangId == 'lagda-org' || editorTextFocus && editorLangId == 'lagda-rst' || editorTextFocus && editorLangId == 'lagda-tex' || editorTextFocus && editorLangId == 'lagda-typ'"
+        "when": "config.agdaMode.inputMethod.enabled && editorTextFocus && variableLanguage && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"
     },
     {
         "key": "\\",
         "command": "-agda-mode.input-symbol[Activate]",
-        "when": "editorTextFocus && editorLangId == 'agda' || editorTextFocus && editorLangId == 'lagda-forester' || editorTextFocus && editorLangId == 'lagda-md' || editorTextFocus && editorLangId == 'lagda-org' || editorTextFocus && editorLangId == 'lagda-rst' || editorTextFocus && editorLangId == 'lagda-tex' || editorTextFocus && editorLangId == 'lagda-typ'"
+        "when": "config.agdaMode.inputMethod.enabled && editorTextFocus && variableLanguage && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"
+    },
+    {
+        "key": "ctrl+8",
+        "command": "agda-mode.input-symbol[Activate]",
+        "when": "config.agdaMode.inputMethod.enabled && editorTextFocus && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"
+    },
+    {
+        "key": "\\",
+        "command": "-agda-mode.input-symbol[Activate]",
+        "when": "config.agdaMode.inputMethod.enabled && editorTextFocus && !agdaModeTyping && editorLangId =~ /.*(l?agda(-(markdown|typst|latex|tex|rst|org|forester))?).*/"
     }
 ]

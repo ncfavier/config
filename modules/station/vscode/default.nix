@@ -9,8 +9,8 @@
     {
       name = "agda-mode";
       publisher = "banacorn";
-      sha256 = "sha256-xz+KO743jGziLzO7pINTcOX9JV68MJ0juDl+rpr9hk8=";
-      version = "0.5.5";
+      sha256 = "sha256-Lif7fvR2fozQDko0G74/+UhTnlbFjGAQj5eb2IIH61I=";
+      version = "0.5.7";
     }
     {
       name = "codercoder-dark-theme";
