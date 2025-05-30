@@ -39,6 +39,9 @@
       inputs.nixpkgs.follows = "nixpkgs-qeval";
       inputs.nur.follows = "nur";
     };
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: let

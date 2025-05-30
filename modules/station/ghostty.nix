@@ -1,7 +1,7 @@
-{ lib, config, pkgs, ...}: with lib; {
+{ inputs, lib, config, pkgs, ...}: with lib; {
   hm.programs.ghostty = {
     enable = true;
-    package = (pkgs.rev "181677c8fabc3b8463d882c6e3d13db5248b7ee1" "sha256-abRT+KXeTt3pkwxVeBwF8xlPlYoBm8qXVrUkw7NjfC0=").ghostty; # TODO
+    package = inputs.ghostty.packages.x86_64-linux.default;
     installVimSyntax = true;
 
     settings = with config.theme; {

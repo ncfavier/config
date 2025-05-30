@@ -17,7 +17,7 @@
     services.xserver.xkb = {
       layout = "fr-my,us,ru,gr";
       variant = ",,phonetic_azerty,";
-      options = "grp:shifts_toggle,compose:${config.keys.composeKey},caps:escape_shifted_capslock";
+      options = "grp:shifts_toggle,compose:${config.keys.composeKey},caps:escape";
 
       extraLayouts.fr-my = {
         languages = [ "fra" ];

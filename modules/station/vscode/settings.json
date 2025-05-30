@@ -321,11 +321,11 @@
   "window.menuBarVisibility": "toggle",
   "window.customTitleBarVisibility": "never",
   "diffEditor.ignoreTrimWhitespace": false,
-  "workbench.colorTheme": "Mr Pink",
   "git.autoStash": true,
   "git.fetchOnPull": true,
   "diffEditor.renderSideBySide": false,
   "agdaMode.connection.paths": [
     "agda"
   ],
+  "workbench.colorTheme": "Mr Pink",
 }
