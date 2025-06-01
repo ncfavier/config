@@ -81,6 +81,7 @@
           collection-fontsextra
           collection-bibtexextra
           collection-langcjk
+          collection-publishers
           ;
       };
     };
