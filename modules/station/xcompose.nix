@@ -128,6 +128,7 @@
       <Multi_key> <underscore> <u> : "ᵤ"
       <Multi_key> <underscore> <v> : "ᵥ"
       <Multi_key> <underscore> <x> : "ₓ"
+      <Multi_key> <asciicircum> <a> : "ᵃ"
       <dead_circumflex> <b> : "ᵇ"
       <dead_circumflex> <c> : "ᶜ"
       <dead_circumflex> <d> : "ᵈ"

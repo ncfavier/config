@@ -2,9 +2,11 @@
   hm = {
     programs.firefox = {
       enable = true;
+      languagePacks = [ "en-GB" ];
       profiles.default = with config.theme; {
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
+          british-english-dictionary-2
           tree-style-tab
           ublock-origin
           cookies-txt
