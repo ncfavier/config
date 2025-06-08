@@ -49,7 +49,7 @@
 
     services.gpg-agent = {
       enable = false;
-      pinentryPackage = pkgs.pinentry-gtk2;
+      pinentry.package = pkgs.pinentry-gtk2;
       enableSshSupport = true;
       sshKeys = [
         "2EBD4F5F9AAAE5BCC8FB0A3CC9BE73CAACA66D33"

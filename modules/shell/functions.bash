@@ -459,8 +459,8 @@ nix-build-closure() {
 }
 
 nix-clear-cache() {
-    rm ~/.cache/nix/binary-cache-v*.sqlite*
-    sudo sh -c 'rm ~/.cache/nix/binary-cache-v*.sqlite*'
+    rm -f ~/.cache/nix/binary-cache-v*.sqlite*
+    sudo sh -c 'rm -f ~/.cache/nix/binary-cache-v*.sqlite*'
 }
 
 nix-mv() {

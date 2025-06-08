@@ -90,7 +90,7 @@ in {
         rust-lang.rust-analyzer
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
-        bungcip.better-toml
+        tamasfe.even-better-toml
         /*(pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
           version = "0.5.1-unstable";

@@ -6,7 +6,6 @@
       mozc
       hangul
       typing-booster
-      table table-others
     ];
   };
 
@@ -30,7 +29,7 @@
     dconf.settings = {
       "desktop/ibus/general" = {
         use-system-keyboard-layout = true;
-        preload-engines = [ "xkb:fr:oss:fra" "mozc-jp" "hangul" "typing-booster" "table:latex" ];
+        preload-engines = [ "xkb:fr:oss:fra" "mozc-jp" "hangul" "typing-booster" ];
       };
       "desktop/ibus/general/hotkey".triggers = [ "<Super>i" ];
       "desktop/ibus/panel" = {

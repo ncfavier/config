@@ -24,6 +24,7 @@
       cursor-color = "white";
       shell-integration-features = "no-cursor";
       mouse-hide-while-typing = true;
+      mouse-scroll-multiplier = 2;
       copy-on-select = "clipboard";
       app-notifications = [ "no-clipboard-copy" ];
       keybind = [
