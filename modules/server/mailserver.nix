@@ -5,14 +5,15 @@
 
   secrets.dkim = {
     path = "/etc/dkim/${my.domain}.${config.mailserver.dkimSelector}.key";
-    owner = config.services.opendkim.user;
-    group = config.services.opendkim.group;
+    owner = config.services.rspamd.user;
+    group = config.services.rspamd.group;
   };
 
   lib.dkim.pk = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/MUKMp4lOoDhaeyIh5hzVNkr5eJ7GMekGRCvVMpSx2DWgUPg8UR68VT1ObmEAQZVDd696XdRNFgFJZuaGSTqcjPfGVq7e+DFVZcRZbISat8mlvOyuDe7J2EwZQxn3gup9hwbesfFPCY6V+ZMwLylT0j974xqJPxEvkebZ+DylUwIDAQAB";
 
   mailserver = {
     enable = true;
+    stateVersion = 1;
     enableImap = false;
     enableSubmission = true;
     enableImapSsl = true;

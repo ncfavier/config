@@ -30,13 +30,10 @@
     };
     bothendieck = {
       url = "github:ncfavier/bothendieck";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.qeval.follows = "qeval";
     };
-    nixpkgs-qeval.url = "nixpkgs/nixos-unstable";
     qeval = {
       url = "github:ncfavier/qeval";
-      inputs.nixpkgs.follows = "nixpkgs-qeval";
       inputs.nur.follows = "nur";
     };
     ghostty = {

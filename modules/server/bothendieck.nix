@@ -14,14 +14,13 @@
         --add-flags --cookies-from=firefox:${firefoxDir}
     '';
     qeval = old.qeval.override ({ pkgs, ... }: {
-      baseKernelPackages = pkgs.linuxPackages_latest;
+      # baseKernelPackages = pkgs.linuxPackages_latest;
       enableKVM = this.hasKVM;
       qemu = pkgs.qemu_kvm; # don't rebuild QEMU
       suspensionUseCompression = false; # favour speed
       suspensionTimeout = 300;
       editEvaluators = evs: builtins.removeAttrs evs [
         "java" "kotlin" # too slow
-        "python2" # EOL, don't feel like compiling it
       ] // {
         rust = lib.recursiveUpdate evs.rust {
           storeDrives.rust = with pkgs; [ rustc gcc ]; # don't use the nightly channel
