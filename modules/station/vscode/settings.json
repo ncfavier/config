@@ -1,7 +1,7 @@
 {
   "editor.fontFamily": "monospace",
   "keyboard.dispatch": "keyCode",
-  "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
+  "latex-workshop.latex.recipe.default": "lastUsed",
   "latex-workshop.view.pdf.viewer": "browser",
   "update.mode": "none",
   "workbench.colorCustomizations": {
@@ -157,7 +157,6 @@
       "icon": "terminal-bash"
     },
   },
-  "nix.serverPath": "nil",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   "editor.occurrencesHighlight": "off",
@@ -327,5 +326,5 @@
   "agdaMode.connection.paths": [
     "agda"
   ],
-  "workbench.colorTheme": "Lilac",
+  "workbench.colorTheme": "Mr Pink",
 }

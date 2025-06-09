@@ -101,7 +101,6 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
     home.packages = with pkgs; [
       xdo
-      i3lock
       bar
       (shellScriptWith "wm" ./wm.sh { deps = [ xtitle ]; })
     ];
@@ -225,6 +224,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
     '';
   };
 
+  programs.i3lock.enable = true;
   security.pam.services.i3lock.fprintAuth = false;
 
   nixpkgs.overlays = [

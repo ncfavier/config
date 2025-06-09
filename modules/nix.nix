@@ -138,7 +138,6 @@
         nixpkgs-fmt
         nixpkgs-review
         nixfmt-rfc-style
-        nil
       ];
 
       lib.shellEnv = {

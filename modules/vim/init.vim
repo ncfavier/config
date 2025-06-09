@@ -1,8 +1,6 @@
 lua << EOF
 require('nvim-lastplace').setup{}
 
-require('lspconfig').nil_ls.setup{}
-
 require('lspconfig').hls.setup {
   filetypes = { 'haskell', 'lhaskell', 'cabal' },
   settings = {

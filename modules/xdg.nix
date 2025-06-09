@@ -5,6 +5,9 @@
     }
 
     (mkIf this.isStation {
+      # https://github.com/NixOS/nixpkgs/issues/380166
+      environment.extraSetup = "rm -r $out/etc/xdg/autostart";
+
       hm = {
         home.packages = with pkgs; [
           xdg-user-dirs
