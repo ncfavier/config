@@ -73,7 +73,7 @@
 
   hm.programs.yt-dlp = {
     enable = true;
-    package = pkgs.yt-dlp.override { withAlias = true; };
+    package = pkgs.unstable.yt-dlp.override { withAlias = true; };
     settings = {
       cookies-from-browser = "firefox";
     };
