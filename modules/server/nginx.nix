@@ -1,6 +1,6 @@
 { inputs, lib, this, config, pkgs, ... }: with lib; let
   uploadsRoot = "/run/nginx/uploads";
-  glamRoot = "/run/nginx/glam";
+  workRoot = "/run/nginx/work";
   maxUploadSize = "256M";
 in {
   options = {
@@ -46,8 +46,10 @@ in {
         ${my.domain} = {
           root = inputs.www;
           locations."= /favicon.ico".tryFiles = "/favicon.png =404";
-          locations."= /glam.pdf".alias = "${glamRoot}/report/report.pdf";
-          locations."= /glam-slides.pdf".alias = "${glamRoot}/report/slides.pdf";
+          locations."= /glam.pdf".alias = "${workRoot}/l3-ens/internship-glam/report/report.pdf";
+          locations."= /glam-slides.pdf".alias = "${workRoot}/l3-ens/internship-glam/report/slides.pdf";
+          locations."= /focusing.pdf".alias = "${workRoot}/m1-ens/internship-linearlogic/report.pdf";
+          locations."= /focusing-slides.pdf".alias = "${workRoot}/m1-ens/internship-linearlogic/slides.pdf";
         };
 
         "www.${my.domain}".globalRedirect = my.domain;
@@ -128,7 +130,7 @@ in {
     };
 
     systemd.services.nginx.serviceConfig.BindReadOnlyPaths = [
-      "${config.synced.my.path}/work/internship-glam:${glamRoot}"
+      "${config.synced.my.path}/work:${workRoot}"
       "${config.synced.uploads.path}:${uploadsRoot}"
     ];
 
