@@ -14,7 +14,7 @@ lib: machines: with lib; let
         username = "n";
         githubUsername = "ncfavier";
         chalmersId = "naimf";
-        realName = "Naïm Favier";
+        realName = "Naïm Camille Favier";
         domain = "monade.li";
         email = "${my.username}@${my.domain}";
         pgpFingerprint = "F3EB4BBB4E7199BC299CD4E995AFCE8211908325";

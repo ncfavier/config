@@ -28,6 +28,7 @@ in {
         "130.241.0.0/16" # Gothenburg University
         "40.126.0.0/18" "2603:1000::/25" # Microsoft
         "104.16.0.0/13" "172.64.0.0/13" # Stack Exchange (Cloudflare)
+        "89.187.169.0/24" "138.199.36.0/23" # Bluesky CDN
       ];
     };
 
