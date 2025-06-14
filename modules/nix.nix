@@ -154,6 +154,19 @@
             defexpr=${escapeShellArg "${config.hm.home.homeDirectory}/.nix-defexpr"}
             cmd=$1
             shift
+            process_nix_args() {
+              nix_args=()
+              while (( $# )); do
+                case $1 in
+                  --substitute-from)
+                    shift
+                    nix_args+=(--option extra-substituters "ssh-ng://$1?trusted=1");;
+                  *)
+                    nix_args+=("$1");;
+                esac
+                shift
+              done
+            }
             case $cmd in
               repl|eval|bld|run|rev)
                 args=() flakeArgs=()
@@ -215,13 +228,16 @@
               home)
                 attr=nixosConfigurations.${escapeShellArg this.hostname}.config.hm.home.activationPackage
                 export VERBOSE=1
-                exec nix shell -v "$configPath#$attr" "$@" -c home-manager-generation;;
+                process_nix_args "$@"
+                exec nix shell -v "$configPath#$attr" "''${nix_args[@]}" -c home-manager-generation;;
               @*)
                 host=''${cmd#@}
                 hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
-                exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "$@";;
+                process_nix_args "$@"
+                exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "''${nix_args[@]}";;
               *)
-                exec nixos-rebuild -v --fast --flake "$configPath" --use-remote-sudo "$cmd" "$@";;
+                process_nix_args "$@"
+                exec nixos-rebuild -v --fast --flake "$configPath" --use-remote-sudo "$cmd" "''${nix_args[@]}";;
             esac
           '');
         })
@@ -263,7 +279,9 @@
                 bld)                _complete_nix_cmd $args_offset nix build "''${flakeArgs[@]}" -f ~/.nix-defexpr;;
                 run)                _complete_nix_cmd $args_offset nix run "''${flakeArgs[@]}" -f ~/.nix-defexpr;;
                 home)               _complete_nix_cmd $args_offset nix shell "$configPath";;
-                build|switch)       _complete_nix_cmd $args_offset nix build "$configPath";;
+                build|switch)
+                  _complete_nix_cmd $args_offset nix build "$configPath"
+                  compreply -W '--substitute-from';;
               esac
             fi
           }
