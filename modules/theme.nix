@@ -30,7 +30,8 @@
       gtkFont = "sans-serif";
       font = "bitmap";
       fontSize = 8;
-      pangoFont = "${font} ${toString fontSize}";
+      # pangoFont = "${font} ${toString fontSize}";
+      pangoFont = "sans-serif 12";
       trayWidth = 3 * barHeight;
     };
 

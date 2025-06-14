@@ -76,7 +76,7 @@
       "tumbler/tumbler.rc" = {
         source = ./tumbler.rc;
         onChange = ''
-          pkill ''${VERBOSE+-e} -f ${pkgs.xfce.tumbler} || true
+          ${getBin pkgs.procps}/bin/pkill ''${VERBOSE+-e} -f ${pkgs.xfce.tumbler} || true
         '';
       };
     };

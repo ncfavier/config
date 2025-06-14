@@ -70,10 +70,15 @@
         deps = [ slop imagemagick ffmpeg-full ffmpegthumbnailer ];
       })
       tmsu
+      gucharmap
+      (shellScriptWith "unicode-analyse" ./unicode-analyse.sh {
+        deps = [ zenity gucharmap ];
+      })
     ];
 
     hm.programs.texlive = {
       enable = true;
+      packageSet = (pkgs.pr 413558 "sha256-aDCoPtyLPjxDyiZF5kfkaEkhH/xP4P/uTQ+tX9lX/2s=").texlive; # TODO
       extraPackages = tpkgs: {
         inherit (tpkgs)
           scheme-medium

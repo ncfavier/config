@@ -3,9 +3,9 @@
     enable = true;
     type = "ibus";
     ibus.engines = with pkgs.ibus-engines; [
-      mozc
+      pinyin
+      anthy
       hangul
-      typing-booster
     ];
   };
 
@@ -14,22 +14,22 @@
       "ibus restart || ibus-daemon --daemonize --replace --xim"
     ];
 
-    xdg.configFile."mozc/ibus_config.textproto".text = ''
-      engines {
-        name: "mozc-jp"
-        longname: "Mozc"
-        layout: "default"
-        layout_variant: ""
-        layout_option: ""
-        rank: 80
-      }
-      active_on_launch: True
-    '';
+    # xdg.configFile."mozc/ibus_config.textproto".text = ''
+    #   engines {
+    #     name: "mozc-jp"
+    #     longname: "Mozc"
+    #     layout: "default"
+    #     layout_variant: ""
+    #     layout_option: ""
+    #     rank: 80
+    #   }
+    #   active_on_launch: True
+    # '';
 
     dconf.settings = {
       "desktop/ibus/general" = {
         use-system-keyboard-layout = true;
-        preload-engines = [ "xkb:fr:oss:fra" "mozc-jp" "hangul" "typing-booster" ];
+        preload-engines = [ "xkb:fr:oss:fra" "anthy" "pinyin" "hangul" ];
       };
       "desktop/ibus/general/hotkey".triggers = [ "<Super>i" ];
       "desktop/ibus/panel" = {

@@ -104,7 +104,6 @@
       };
 
       environment.systemPackages = with pkgs; [
-        gucharmap
         (writeShellScriptBin "show-siji" ''
           exec ${xorg.xfd}/bin/xfd -rows 23 -columns 28 -fn '-*-siji-*-10-*'
         '')

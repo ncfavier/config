@@ -74,7 +74,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
     };
 
     xdg.configFile."bspwm/bspwmrc".onChange = ''
-      if [[ -v DISPLAY ]] && pgrep bspwm > /dev/null; then
+      if [[ -v DISPLAY ]] && ${getBin pkgs.procps}/bin/pgrep bspwm > /dev/null; then
         "$XDG_CONFIG_HOME"/bspwm/bspwmrc
       fi
     '';
@@ -194,6 +194,8 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           "backlight {-,+}";
         "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + ${config.keys.printScreenKey}" =
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
+        "super + u" =
+          "unicode-analyse";
         "super + p" =
           "xsel -bo | upload -";
         "super + shift + p" =
@@ -220,7 +222,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
     };
 
     xdg.configFile."sxhkd/sxhkdrc".onChange = ''
-      pkill ''${VERBOSE+-e} -USR1 -x sxhkd || true
+      ${getBin pkgs.procps}/bin/pkill ''${VERBOSE+-e} -USR1 -x sxhkd || true
     '';
   };
 

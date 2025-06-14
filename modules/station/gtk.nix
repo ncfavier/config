@@ -1,6 +1,9 @@
 { lib, config, pkgs, ... }: with lib; {
   hm = {
-    home.packages = [ pkgs.lxappearance ];
+    home.packages = [
+      pkgs.lxappearance
+      pkgs.gtk3.dev # gtk3-icon-browser
+    ];
 
     gtk = with config.theme; {
       enable = true;
