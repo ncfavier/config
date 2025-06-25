@@ -38,6 +38,7 @@
       signal-desktop
       libreoffice-fresh
       xournalpp
+      zotero
       pandoc
       inlyne
       typos

@@ -78,7 +78,6 @@
   "haskell.plugin.ghcide-type-lenses.globalOn": false,
   "haskell.plugin.hlint.globalOn": false,
   "editor.tabSize": 2,
-  "nix.enableLanguageServer": true,
   "search.exclude": {
     "**/_build": true,
     "**/.direnv": true,
