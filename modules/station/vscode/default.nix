@@ -1,75 +1,75 @@
 { lib, config, pkgs, ... }: with lib; let
   exts = [
     {
+      hash = "sha256-9Pvzb29d13vgiU8DwasLUiyPVHK97RcnBA3f0q+4y/8=";
       name = "white";
       publisher = "arthurwhite";
-      sha256 = "1zybp2px5pqd0hkigvdxf9a8yb2j1fmw20sgi7h7pmsxdxpz7yzl";
       version = "1.3.6";
     }
     {
+      hash = "sha256-C55ogw05iFmodYox/igaCu0MkEbvqpTPX1MSlcz8G50=";
       name = "agda-mode";
       publisher = "banacorn";
-      sha256 = "sha256-Lif7fvR2fozQDko0G74/+UhTnlbFjGAQj5eb2IIH61I=";
-      version = "0.5.7";
+      version = "0.6.0";
     }
     {
+      hash = "sha256-jPLwWZogHmUsjRbBO6fWODuRH+l93QJHT88dOM1TT4U=";
       name = "codercoder-dark-theme";
-      publisher = "CoderCoder";
-      sha256 = "11agag6kh7fg9x3h5pbxx4gr2frqsskkph8niln6a7i0k9cz1wlc";
+      publisher = "codercoder";
       version = "1.2.6";
     }
     {
+      hash = "sha256-ydCrAyxg1XSoa4l9cDA3J3eh1Px9FQZaBvtfCe5c2ac=";
       name = "night-owl-light-bold";
       publisher = "feego";
-      sha256 = "19yrbkp0jpzv0rd0c5bxzkaa2xr76wq70zc9dfl79mb05h1spl69";
       version = "0.0.11";
     }
     {
+      hash = "sha256-PxjuztS/h16vUJYBeV/WUSq2rNqy6MIQTgoqmPMLNwk=";
       name = "synthax";
       publisher = "foxhoundn";
-      sha256 = "029p1grrhaha9q8c5s5jvanbcajisrgpj0cna2pmx1xzsk7fw61z";
       version = "0.1.13";
     }
     {
+      hash = "sha256-zQFdseqhR11fH6KmejIDJUhjaLH0xHup1FC+OzqqWH0=";
       name = "theme-lavender";
       publisher = "gerane";
-      sha256 = "0zaqm8x3pgjhsjlppi7ln5l66j150cr7m9m23xgmsix1xaqms0fd";
       version = "0.0.5";
     }
     {
+      hash = "sha256-+IYYyhlgL6ITvh08jgQVrPmGAe0zf0Y7oaM8fLBYGjw=";
       name = "white-winter";
       publisher = "jker";
-      sha256 = "0g0sb2q7qg53l4xlczrkxl0qdydc2l28wg0xpq9s4bv03751i1pq";
       version = "1.0.1";
     }
     {
+      hash = "sha256-RZ6SMs5thosLw6XvJwesHxdlcyvWnqCPV7VJc1mBYWM=";
       name = "vscode-theme-1984";
       publisher = "juanmnl";
-      sha256 = "0qv1h5cp6jdmay7s17nn5drna5qzmh3jgvx5qc5qp1kdrqr957j5";
       version = "0.3.4";
     }
     {
+      hash = "sha256-e7NQuSxEc2S7uIvZM2hR2EKaFQl+OU5FhvosaD+AvMQ=";
       name = "vscode-theme-mr-pink";
       publisher = "juanmnl";
-      sha256 = "1i5wh0znhb7shr2lwfby14arlhnqa5l37ncbp2xn8ws45jwm1cvv";
       version = "1.0.1";
     }
     {
+      hash = "sha256-QBUTOFhdksHGkpYqgQIF2u+WodYH5PmMMvGFHwEEEIk=";
       name = "vscoq";
       publisher = "maximedenes";
-      sha256 = "04m1dby6zfzg5nahnricjax28g47mgnja7d9cbll270i7ahnyncm";
-      version = "2.2.1";
+      version = "2.2.6";
     }
     {
+      hash = "sha256-OPOgjjkooaDQzYoPOmly6WenvAILWhxBKuqRKmQi+rQ=";
       name = "vscode-duotone-dark";
       publisher = "sallar";
-      sha256 = "1d7s49j2m4ga590iqnhb0ayafrz9f9lkl3warp8a1898767a1wrq";
       version = "0.3.3";
     }
     {
+      hash = "sha256-sPw7wRfaGP9SvNEu3ogMJ3iIXYpOsRMgbXlMU+uGnC8=";
       name = "lilac";
       publisher = "shubham-saudolla";
-      sha256 = "0bwwhvmm6k3rdlh17cafi9fqhy171j4dwbnipi9gy66s2z0kpz5h";
       version = "1.3.0";
     }
   ];
@@ -131,7 +131,7 @@ in {
             old = builtins.fromJSON (builtins.readFile ${builtins.toFile "exts.json" (builtins.toJSON exts)});
             new = builtins.listToAttrs (map (e: { inherit (e) name; value = e; }) extensions);
           in
-          map (e: e // { inherit (new.''${e.name}) version sha256; }) old
+          map (e: e // new.''${e.name}) old
         ''} |
         ${pkgs.nixfmt-rfc-style}/bin/nixfmt
       '')

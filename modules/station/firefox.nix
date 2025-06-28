@@ -7,7 +7,6 @@
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           french-dictionary
           british-english-dictionary-2
-          tree-style-tab
           ublock-origin
           cookies-txt
           darkreader
@@ -16,6 +15,7 @@
                      # ^https:\/\/(.*?)\.m\.wiktionary\.org\/(.*) → https://$1.wiktionary.org/$2
           video-resumer
           uppity
+          zotero-connector
         ];
         settings = {
           "accessibility.typeaheadfind.autostart" = false;
