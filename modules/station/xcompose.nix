@@ -134,6 +134,7 @@
       <dead_circumflex> <d> : "ᵈ"
       <Multi_key> <asciicircum> <e> : "ᵉ"
       <dead_circumflex> <f> : "ᶠ"
+      <Multi_key> <asciicircum> <g> : "ᵍ"
       <Multi_key> <asciicircum> <G> : "ᴳ"
       <dead_circumflex> <h> : "ʰ"
       <Multi_key> <asciicircum> <i> : "ⁱ"

@@ -32,7 +32,6 @@
 
     hm.home.packages = with pkgs; [
       chromium
-      thunderbird
       discord
       tdesktop
       signal-desktop
