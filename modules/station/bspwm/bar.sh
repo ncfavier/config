@@ -405,23 +405,40 @@ while read -rn 1 event; do
                 power=
             else
                 (( percentage = $(< "$battery"/capacity) ))
-                (( percentage > 100 )) && (( percentage = 100 ))
+                if (( percentage > 100 )); then (( percentage = 100 )); fi
                 icon=$(icon_ramp "$percentage" -u          )
                 [[ $status == Charging ]] && icon+=
                 power="$icon $percentage%%"
                 if (( long_battery )); then
                     power+=" $status"
-                    (( voltage = $(< "$battery"/voltage_now) / 1000 ))
-                    if (( present_rate = $(< "$battery"/power_now) / voltage )); then
-                        (( remaining_capacity = $(< "$battery"/energy_now) / voltage ))
-                        if [[ $status == Charging ]]; then
-                            (( full_capacity = $(< "$battery"/energy_full) / voltage))
-                            (( seconds_left = 3600 * (full_capacity - remaining_capacity) / present_rate ))
-                        elif [[ $status == Discharging ]]; then
-                            (( seconds_left = 3600 * remaining_capacity / present_rate ))
-                        fi
+                    # The kernel reports values in µV, µA, µAh and µWh (https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/include/linux/power_supply.h?h=v6.0.11#n22).
+                    # Some firmware reports energy instead of charge, so we convert that to charge using voltage.
+                    # Since bash doesn't have floating-point arithmetic, we work with milli- to minimise error.
+                    (( voltage_now = $(< "$battery"/voltage_now) / 1000 )) # mV
+                    if [[ -e $battery/current_now ]]; then
+                        (( current_now = $(< "$battery"/current_now) / 1000 )) # mA
+                    else
+                        (( current_now = $(< "$battery"/power_now) / voltage_now )) # mA
                     fi
-                    (( seconds_left )) && power+=" $(print_time "$seconds_left")"
+                    if [[ -e $battery/charge_now ]]; then
+                        (( charge_now = $(< "$battery"/charge_now) / 1000 )) # mAh
+                    else
+                        (( charge_now = $(< "$battery"/energy_now) / voltage_now )) # mAh
+                    fi
+                    if [[ -e $battery/charge_full ]]; then
+                        (( charge_full = $(< "$battery"/charge_full) / 1000 )) # mAh
+                    else
+                        (( charge_full = $(< "$battery"/energy_full) / voltage_now )) # mAh
+                    fi
+                    if (( current_now )); then
+                        if [[ $status == Charging ]]; then
+                            (( remaining_charge = charge_full - charge_now )) # mAh
+                        elif [[ $status == Discharging ]]; then
+                            (( remaining_charge = charge_now )) # mAh
+                        fi
+                        (( remaining_time = 3600 * remaining_charge / current_now )) # s
+                    fi
+                    (( remaining_time )) && power+=" $(print_time "$remaining_time")"
                 fi
                 (( percentage <= 10 )) && [[ $status != Charging ]] && power="%{F${theme[hot]}}$power%{F-}"
             fi
