@@ -8,10 +8,10 @@
     environment.etc."systemd/system-sleep/batenergy".source = pkgs.writeShellScript "batenergy" ''
       PATH=${makeBinPath [ pkgs.coreutils pkgs.bc ]}
       source ${pkgs.fetchFromGitHub {
-        owner = "equaeghe";
+        owner = my.githubUsername;
         repo = "batenergy";
-        rev = "13c381f68f198af361c5bd682b32577131fbb60f";
-        hash = "sha256-4JQrSD8HuBDPbBGy2b/uzDvrBUZ8+L9lAnK95rLqASk=";
+        rev = "6109882f05c0762d82fa013dd76d8425aacd58fb";
+        hash = "sha256-JS/NAO8NhAy+3XmI+rNYRN/H0q50Zv+AETmfvmK03eE=";
       }}/batenergy.sh "$@"
     '';
 
@@ -41,7 +41,7 @@
       pandoc
       inlyne
       typos
-      ((pkgs.mine "agda-bump" "sha256-o7ROtc5q4ISWsF+nuENjeITzaZsaXO7OiNOLg9+h88k=").agda.withPackages (p: with p; [
+      (agda.withPackages (p: with p; [
         standard-library
         cubical
       ]))
