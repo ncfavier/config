@@ -208,7 +208,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           "unicode-analyse";
         "super + p" =
           "xsel -bo | upload -";
-        "super + space" =
+        "super + {_,shift} + space" =
           "wm launch";
         "super + shift + p" =
           "rofi-pass";
