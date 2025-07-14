@@ -1,4 +1,4 @@
-{ lib, this, pkgs, ... }: with lib; optionalAttrs this.isStation {
+{ lib, this, config, pkgs, ... }: with lib; optionalAttrs this.isStation {
   imports = attrValues (modulesIn ./.);
 
   config = {
@@ -31,12 +31,8 @@
     ];
 
     hm.home.packages = with pkgs; [
-      (chromium.override {
-        commandLineArgs = "--force-device-scale-factor=2";
-      })
-      (signal-desktop.override {
-        commandLineArgs = "--force-device-scale-factor=2";
-      })
+      (config.lib.x.scaleElectronApp chromium)
+      (config.lib.x.scaleElectronApp signal-desktop)
       libreoffice-fresh
       xournalpp
       zotero

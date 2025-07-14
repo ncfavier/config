@@ -26,6 +26,12 @@ in {
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
     };
 
+    lib.x.scaleElectronApp = drv:
+      if (config.services.xserver.dpiScaleFactor == 1) then drv
+      else drv.override {
+        commandLineArgs = "--force-device-scale-factor=${toString config.services.xserver.dpiScale}";
+      };
+
     services.libinput = {
       enable = true;
       mouse.accelSpeed = mkDefault "0.5";

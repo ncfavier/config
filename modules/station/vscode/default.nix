@@ -77,9 +77,7 @@ in {
   hm = {
     programs.vscode = {
       enable = true;
-      package = pkgs.vscodium.override {
-        commandLineArgs = "--force-device-scale-factor=2";
-      };
+      package = config.lib.x.scaleElectronApp pkgs.vscodium;
       profiles.default.extensions = with pkgs.vscode-extensions; [
         vscodevim.vim
         xadillax.viml
