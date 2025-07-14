@@ -28,18 +28,18 @@
         };
       };
       font = {
-        name = gtkFont;
-        size = 10;
+        name = font;
+        size = fontSize;
       };
       theme = {
         package = pkgs.orchis-theme.override {
           tweaks = [ "black" "primary" ];
         };
-        name = gtkTheme;
+        name = "Orchis-Purple" + (if dark then "-Dark" else "");
       };
       iconTheme = {
         package = pkgs.tela-icon-theme;
-        name = iconTheme;
+        name = "Tela-dracula" + (if dark then "-dark" else "");
       };
     };
 

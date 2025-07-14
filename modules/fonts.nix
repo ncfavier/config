@@ -8,7 +8,10 @@
       nixpkgs.config.allowUnfree = true;
 
       console.packages = [ pkgs.terminus_font ];
-      console.font = if config.theme.dpiScale < 1.5 then "ter-16n" else "ter-128b";
+      console.font =
+        if config.services.xserver.dpiScaleFactor < 1.5
+        then "ter-16n"
+        else "ter-128b";
 
       fonts = {
         packages = with pkgs; [

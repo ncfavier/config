@@ -7,12 +7,9 @@
           columns = 80;
           lines = 25;
         };
-        padding = let
-          inherit (config.services.xserver) dpi;
-          padding' = if dpi != null then padding * 96 / dpi else padding; # undo DPI scaling
-        in {
-          x = padding';
-          y = padding';
+        padding = {
+          x = padding;
+          y = padding;
         };
         decorations = "none";
       };

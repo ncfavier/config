@@ -24,11 +24,11 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
       monitors.focused = [ "web" "mail" "chat" "files" "1" ];
       alwaysResetDesktops = false;
       settings = with config.theme; {
-        focused_border_color = foreground;
-        normal_border_color = foregroundAlt;
-        presel_feedback_color = hot;
+        focused_border_color = borderColor;
+        normal_border_color = borderColorAlt;
         border_width = borderWidth;
-        window_gap = builtins.floor (padding * dpiScale);
+        presel_feedback_color = foreground;
+        window_gap = config.lib.x.dpiScale padding;
         borderless_monocle = true;
         gapless_monocle = true;
         initial_polarity = "second_child";
@@ -83,7 +83,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
     xdg.configFile."bspwm/bspwmrc".onChange = ''
       if [[ -v DISPLAY ]] && ${getBin pkgs.procps}/bin/pgrep bspwm > /dev/null; then
-        "$XDG_CONFIG_HOME"/bspwm/bspwmrc
+        ${pkgs.bspwm}/bin/bspc wm -r
       fi
     '';
 

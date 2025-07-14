@@ -23,8 +23,8 @@
           border-color = mkLiteral borderColor;
         };
         window = {
-          padding = builtins.floor (padding * dpiScale);
-          border = borderWidth;
+          padding = config.lib.x.dpiScale padding;
+          border = 1;
         };
         message.border = 0;
         listview.border = 0;
@@ -47,7 +47,7 @@
       };
 
       extraConfig = {
-        dpi = 0; # auto-detect using X screen size
+        dpi = config.services.xserver.dpi;
         drun-display-format = "{name}";
         sort = true;
         normalize-match = true;

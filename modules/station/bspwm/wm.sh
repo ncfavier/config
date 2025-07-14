@@ -116,7 +116,7 @@ launch() {
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
         emoji)
-            rofi_args=(-theme-str 'configuration { font: "sans 14"; }')
+            rofi_args=(-theme-str "configuration { font: \"${theme[font]} 14\"; }")
             exec rofimoji --selector-args "${rofi_args[*]@Q}";;
         *)
             die "unknown application $app";;

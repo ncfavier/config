@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }: with lib; let
-  fonts = [
-    "sans-serif:size=10;4"
-    "sans-serif:weight=bold:size=10;4"
+  fonts = with config.theme; [
+    "${font}:size=${toString fontSize};4"
+    "${font}:size=${toString fontSize}:weight=bold;4"
     "emoji:scale=6;4"
     "Material Design Icons;6"
   ];
@@ -63,14 +63,17 @@ in {
 
         settings = with config.theme; {
           "bar/main" = {
-            inherit dpi background foreground;
+            inherit background foreground;
+            inherit (config.services.xserver) dpi;
             width = "100%";
-            height = "22pt";
+            height = "${toString (config.lib.x.dpiScale barHeight)}px";
+            border-bottom-size = borderWidth;
+            border-color = borderColor;
             line-size = "2pt";
             radius = 0;
             modules.left = "wm title";
             modules.right = "memory keyboard systemd dunst music vpn sound light battery date tray";
-            module.margin = 2;
+            module.margin = "5pt";
             font = fonts;
             enable-ipc = true;
             enable-struts = true;
@@ -80,7 +83,7 @@ in {
           "module/wm" = let
             default = {
               text = icon "%icon%";
-              padding = 2;
+              padding = "7pt";
             };
           in {
             type = "internal/bspwm";
@@ -214,6 +217,8 @@ in {
         # Polybar needs to start after bspwm, see https://github.com/nix-community/home-manager/issues/213
         Install.WantedBy = mkForce [ "graphical-session-bspwm.target" ];
         Unit.After = [ "graphical-session-bspwm.target" ];
+
+        Service.ExecStopPost = "${pkgs.bspwm}/bin/bspc config top_padding 0";
       };
 
       home.packages = attrValues pkgs.myPolybarScripts;
