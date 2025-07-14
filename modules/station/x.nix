@@ -29,7 +29,7 @@ in {
     lib.x.scaleElectronApp = drv:
       if (config.services.xserver.dpiScaleFactor == 1) then drv
       else drv.override {
-        commandLineArgs = "--force-device-scale-factor=${toString config.services.xserver.dpiScale}";
+        commandLineArgs = "--force-device-scale-factor=${toString config.services.xserver.dpiScaleFactor}";
       };
 
     services.libinput = {
