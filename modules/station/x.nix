@@ -3,15 +3,15 @@
     enable = true;
     autoRepeatDelay = 250;
     dpi = mkDefault 96;
-    enableTearFree = true;
+    enableTearFree = mkDefault (builtins.head config.services.xserver.videoDrivers != "modesetting");
   };
 
   services.libinput = {
     enable = true;
-    mouse.accelSpeed = "0.5";
+    mouse.accelSpeed = mkDefault "0.5";
     touchpad = {
-      accelSpeed = "0.5";
-      tapping = false;
+      accelSpeed = mkDefault "0.5";
+      tapping = mkDefault false;
     };
   };
 
@@ -36,8 +36,14 @@
     home.pointerCursor = {
       package = pkgs.adwaita-icon-theme;
       name = "Adwaita";
-      size = 16;
+      size = builtins.floor (24 * config.theme.dpiScale);
       x11.enable = true;
+      gtk.enable = true;
+    };
+    gtk.gtk4.cursorTheme = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 24;
     };
 
     home.packages = with pkgs; [

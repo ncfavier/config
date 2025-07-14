@@ -23,7 +23,7 @@
           border-color = mkLiteral borderColor;
         };
         window = {
-          inherit padding;
+          padding = builtins.floor (padding * dpiScale);
           border = borderWidth;
         };
         message.border = 0;

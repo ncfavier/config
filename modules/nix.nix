@@ -51,9 +51,8 @@
     }
 
     (mkIf (! this.isISO) {
-      system.extraDependencies = concatMap collectFlakeInputs (with inputs; [
-        nixpkgs nixpkgs-stable nixpkgs-unstable nixos-hardware nur
-      ]);
+      # https://github.com/NixOS/nix/issues/3995
+      system.extraDependencies = concatMap collectFlakeInputs (builtins.attrValues inputs);
 
       lib.meta = {
         configPath = "${config.my.home}/git/config";
@@ -234,10 +233,10 @@
                 host=''${cmd#@}
                 hostname=$(ssh -q "$host" 'echo "$HOSTNAME"')
                 process_nix_args "$@"
-                exec nixos-rebuild -v --flake "$configPath#$hostname" --target-host "$host" --use-remote-sudo "''${nix_args[@]}";;
+                exec nixos-rebuild --flake "$configPath#$hostname" --target-host "$host" --sudo "''${nix_args[@]}";;
               *)
                 process_nix_args "$@"
-                exec nixos-rebuild -v --fast --flake "$configPath" --use-remote-sudo "$cmd" "''${nix_args[@]}";;
+                exec nixos-rebuild --no-reexec --flake "$configPath" --sudo "$cmd" "''${nix_args[@]}";;
             esac
           '');
         })

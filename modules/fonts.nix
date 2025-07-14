@@ -7,15 +7,8 @@
     (mkIf this.isStation {
       nixpkgs.config.allowUnfree = true;
 
-      console.font = pkgs.runCommandLocal "dina.psf" {} ''
-        cd ${pkgs.bdf2psf}/share/bdf2psf
-        ${if config.services.xserver.dpi != null && config.services.xserver.dpi >= 100 then
-          "sed 's/POINT_SIZE 100/AVERAGE_WIDTH 80/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-10.bdf"
-        else
-          "sed 's/POINT_SIZE 80/AVERAGE_WIDTH 70/' ${pkgs.dina-font.bdf}/share/fonts/misc/Dina_r400-8.bdf"
-        } |
-        ${pkgs.bdf2psf}/bin/bdf2psf --fb - standard.equivalents ascii.set+useful.set+linux.set 256 "$out"
-      '';
+      console.packages = [ pkgs.terminus_font ];
+      console.font = if config.theme.dpiScale < 1.5 then "ter-16n" else "ter-128b";
 
       fonts = {
         packages = with pkgs; [

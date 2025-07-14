@@ -55,7 +55,7 @@
 
     environment.systemPackages = with pkgs; [
       efibootmgr
-      radeontop
+      amdgpu_top
     ];
 
     hardware.bluetooth.enable = true;
@@ -63,6 +63,8 @@
     hm.services.blueman-applet.enable = true;
 
     my-services.openrgb.enable = true;
+    # TODO: 1.0rc1 supports my motherboard
+    services.hardware.openrgb.package = (pkgs.mine "openrgb" "sha256-aw1L5q1Ac7KlbwVvHMjH+WBrYsMzOvwjftuGGSglLgU=").openrgb;
 
     keys.composeKey = "rwin";
     keys.printScreenKey = "Insert";

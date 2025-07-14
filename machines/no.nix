@@ -76,7 +76,7 @@
 
     environment.systemPackages = with pkgs; [
       efibootmgr
-      radeontop
+      amdgpu_top
       v4l-utils
     ];
 
@@ -125,7 +125,7 @@
     keys.composeKey = "prsc";
     keys.printScreenKey = "XF86Favorites";
 
-    # services.fprintd.enable = true;
+    services.fprintd.enable = false;
 
     broadcasting.enable = true;
 

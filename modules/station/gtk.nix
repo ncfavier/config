@@ -3,6 +3,7 @@
     home.packages = [
       pkgs.lxappearance
       pkgs.gtk3.dev # gtk3-icon-browser
+      pkgs.gnome-themes-extra # https://github.com/NixOS/nixpkgs/issues/60918
     ];
 
     gtk = with config.theme; {
@@ -44,8 +45,6 @@
 
     xdg.configFile."gtk-3.0/settings.ini".force = true;
     xdg.configFile."gtk-3.0/bookmarks".force = true;
-
-    home.pointerCursor.gtk.enable = true;
 
     # live reloading
     services.xsettingsd = {

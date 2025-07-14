@@ -4,8 +4,6 @@
     (mkAliasOptionModule [ "secrets" ] [ "sops" "secrets" ])
   ];
 
-  system.extraDependencies = collectFlakeInputs inputs.sops-nix;
-
   sops = {
     gnupg.sshKeyPaths = [];
     age.sshKeyPaths = [ "${config.my.home}/.ssh/id_ed25519" ];

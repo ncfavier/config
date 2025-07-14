@@ -9,7 +9,7 @@
         enable_recursive_icon_lookup = true;
         width = "(0, 1200)";
         height = 9999;
-        offset = "${toString (padding * 2)}x${toString (barHeight + padding * 2)}";
+        offset = "${toString (padding * 2)}x${toString (baseBarHeight + padding * 2)}";
         notification_limit = 6;
         shrink = true;
         inherit padding;
@@ -42,6 +42,20 @@
         background = hot;
         inherit foreground;
         timeout = 0;
+      };
+
+      # Allow certain notifications in pause mode
+      dunstify = {
+        appname = "dunstify";
+        override_pause_level = 100;
+      };
+      wifi = {
+        appname = "NetworkManager Applet";
+        override_pause_level = 100;
+      };
+      bluetooth = {
+        appname = "blueman";
+        override_pause_level = 100;
       };
     };
   };

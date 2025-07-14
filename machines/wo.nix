@@ -10,6 +10,140 @@
   };
 
   nixos = { hardware, lib, config, pkgs, ... }: with lib; {
+    imports = with hardware; [
+      notDetected
+      framework-amd-ai-300-series
+    ];
+
+    services.fwupd.enable = true;
+
+    boot = {
+      loader = {
+        efi.canTouchEfiVariables = true;
+        systemd-boot = {
+          enable = true;
+          configurationLimit = 25;
+          editor = false;
+          consoleMode = "auto";
+        };
+      };
+
+      kernelPackages = pkgs.linuxPackages_latest;
+      kernelModules = [ "kvm-amd" ];
+      initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
+
+      initrd.luks.devices.nixos = {
+        device = "/dev/disk/by-partlabel/nixos";
+        allowDiscards = true;
+        bypassWorkqueues = true;
+      };
+
+      swraid.enable = false;
+    };
+
+    fileSystems = {
+      "/" = {
+        device = "/dev/disk/by-label/nixos";
+        fsType = "ext4";
+      };
+
+      "/boot" = {
+        device = "/dev/disk/by-label/boot";
+        fsType = "vfat";
+        options = [ "umask=0077" ];
+      };
+    };
+
+    swapDevices = [ {
+      device = "/swap";
+      size = 16 * 1024;
+    } ];
+
+    networking.wireless.interfaces = [ "wlp192s0" ];
+
+    networking.sharing = {
+      enable = false;
+      internalInterface = "enp195s0f0u2";
+      externalInterface = "wlp192s0";
+    };
+
+    environment.systemPackages = with pkgs; [
+      efibootmgr
+      amdgpu_top
+      v4l-utils
+    ];
+
+    hardware.bluetooth.enable = true;
+    services.blueman.enable = true;
+    hm.services.blueman-applet.enable = true;
+
+    services.xserver.videoDrivers = [ "amdgpu" ];
+    services.xserver.dpi = 192;
+    services.xserver.upscaleDefaultCursor = true;
+    fonts.fontconfig = {
+      hinting.enable = false;
+      subpixel.lcdfilter = "none";
+    };
+
+    services.autorandr = let
+      eDP = "*";
+      DisplayPort-1 = "*";
+    in {
+      profiles = {
+        default = {
+          fingerprint = { inherit eDP; };
+          config = {
+            eDP = {
+              enable = true;
+              mode = "2880x1920";
+            };
+          };
+          hooks.postswitch.bspwm = ''
+            bspc monitor DisplayPort-1 -r
+          '';
+        };
+        hdmi = {
+          fingerprint = { inherit eDP DisplayPort-1; };
+          config = {
+            eDP = {
+              enable = true;
+              primary = true;
+              mode = "2880x1920";
+            };
+            DisplayPort-1 = {
+              enable = true;
+              mode = "1920x1080";
+              position = "0x0";
+            };
+          };
+        };
+      };
+    };
+
+    services.libinput.touchpad.accelSpeed = "0.8";
+
+    environment.variables = {
+      GDK_SCALE = "2";
+      GDK_DPI_SCALE = "0.5";
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+    };
+    services.xserver.displayManager.importedVariables = [
+      "GDK_SCALE"
+      "GDK_DPI_SCALE"
+      "QT_AUTO_SCREEN_SCALE_FACTOR"
+    ];
+
+    keys.composeKey = "rctrl";
+
+    battery.battery = "BAT1";
+    battery.adapter = "ACAD";
+    battery.fullAt = 99;
+
+    services.fprintd.enable = true;
+
+    broadcasting.enable = true;
+
     my.hashedPassword = "$y$j9T$iAwsXl5QOM5ku7mZGODkq.$CnAcwjvPNqPgUL7oyQ.luxOqq517KcrGkomfk.LH6H.";
 
     services.syncthing.cert = builtins.toFile "syncthing-cert" ''
@@ -28,5 +162,7 @@
       afIOg50rofZ8FxLzgCyG8Tk7
       -----END CERTIFICATE-----
     '';
+
+    system.stateVersion = "25.11";
   };
 }

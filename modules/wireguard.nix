@@ -168,7 +168,7 @@ in {
         postUp = ''
           ${getExe wg-exempt} ${escapeShellArgs allExemptions}
         '';
-        preDown = ''
+        postDown = ''
           timeout 3s ${getExe wg-exempt} -d ${escapeShellArgs allExemptions} || true
         '';
       };

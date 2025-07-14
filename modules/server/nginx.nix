@@ -17,8 +17,6 @@ in {
   };
 
   config = mkIf config.my-services.nginx.enable {
-    system.extraDependencies = collectFlakeInputs inputs.www;
-
     services.nginx = {
       enable = true;
       package = pkgs.nginxMainline;

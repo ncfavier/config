@@ -61,6 +61,7 @@ terminal() {
     fi
     . /etc/set-environment # reset PATH
     exec ghostty \
+        --launched-from=desktop \
         ${class:+--class="$class"} \
         ${instance:+--x11-instance-name="$instance"} \
         ${new_instance:+--gtk-single-instance=false} \
@@ -71,7 +72,7 @@ terminal() {
         "$@"
 }
 
-go() {
+launch() {
     new= not_new=1
     if [[ $1 == -n ]]; then
         shift
@@ -81,6 +82,8 @@ go() {
     app=$1
     shift
     case $app in
+        '')
+            rofi -sidebar-mode -show-icons -modes drun,run,window -show drun &;;
         term|terminal)
             terminal ${*:+-e "$@"} &;;
         chat|irc)
@@ -109,7 +112,7 @@ go() {
         volume)
             class=pavucontrol focus-window || exec pavucontrol &;;
         cal|calendar)
-            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal --confirm-close-surface=false -e cal -3 &;;
+            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal --confirm-close-surface=false -e sh -c 'sleep 0.1 &&cal -3' &;;
         wifi)
             class=wpa_gui focus-window || exec wpa_gui &;;
         emoji)
@@ -123,8 +126,8 @@ go() {
 cmd=$1
 shift
 case $cmd in
-    go)
-        go "$@";;
+    launch)
+        launch "$@";;
     focus-window)
         focus-window "$@";;
     focus-workspace)

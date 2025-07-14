@@ -17,6 +17,7 @@
     tree
     ncdu
     lsof
+    inotify-tools
     lm_sensors
     hwinfo
     dosfstools

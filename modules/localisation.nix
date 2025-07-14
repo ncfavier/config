@@ -1,7 +1,7 @@
 { lib, config, ... }: with lib; {
   options.keys = {
     composeKey = mkOption {
-      type = types.enum [ "ralt" "lwin" "lwin-altgr" "rwin" "rwin-altgr" "menu" "menu-altgr" "lctrl" "lctrl-altg" "rctrl" "rctrl-altg" "caps" "caps-altgr" "102" "102-altgr" "paus" "prsc" "sclk" ];
+      type = types.enum [ "ralt" "lwin" "lwin-altgr" "rwin" "rwin-altgr" "menu" "menu-altgr" "lctrl" "lctrl-altgr" "rctrl" "rctrl-altgr" "caps" "caps-altgr" "102" "102-altgr" "paus" "prsc" "sclk" ];
       default = "menu";
     };
 

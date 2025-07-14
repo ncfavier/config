@@ -78,6 +78,9 @@
     (mkIf this.isStation {
       networking.networkmanager = {
         enable = true;
+        plugins = with pkgs; [
+          networkmanager-l2tp
+        ];
 
         ensureProfiles = {
           environmentFiles = [ config.secrets.networkmanager.path ];

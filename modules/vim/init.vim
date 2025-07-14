@@ -56,6 +56,8 @@ set clipboard+=unnamedplus
 set expandtab
 set ignorecase
 set laststatus=1
+set list
+set listchars=nbsp:␣
 set modeline
 set mouse=a
 set nonumber
@@ -113,6 +115,7 @@ nnoremap <silent> <Return>         :noh<Bar>redraw!<Bar>echo<Return>
 imap              <Home>           <C-o><Home>
 inoremap <expr>   <Tab>            (col('.') == 1 \|\| getline('.')[:col('.')-2] =~ '^\s*$') ? "\<Tab>" : "\<C-n>"
 inoremap          <C-f>            <C-x><C-f>
+noremap           <C-ç>            <C-^> " https://github.com/ghostty-org/ghostty/issues/4965 https://github.com/neovim/neovim/issues/31045
 vmap              <Tab>            >
 vmap              <S-Tab>          <
 vnoremap          >                >gv

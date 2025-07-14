@@ -5,9 +5,6 @@
 in mkEnableModule [ "my-services" "openrgb" ] {
   services.hardware.openrgb = {
     enable = true;
-
-    # 1.0rc1 supports my motherboard
-    package = (pkgs.mine "openrgb" "sha256-aw1L5q1Ac7KlbwVvHMjH+WBrYsMzOvwjftuGGSglLgU=").openrgb;
   };
 
   # load the default profile on start and after suspend

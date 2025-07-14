@@ -31,10 +31,12 @@
     ];
 
     hm.home.packages = with pkgs; [
-      chromium
-      discord
-      tdesktop
-      signal-desktop
+      (chromium.override {
+        commandLineArgs = "--force-device-scale-factor=2";
+      })
+      (signal-desktop.override {
+        commandLineArgs = "--force-device-scale-factor=2";
+      })
       libreoffice-fresh
       xournalpp
       zotero
@@ -49,7 +51,7 @@
       elan
       ocamlPackages.cooltt
       audacity
-      gimp
+      gimp3
       evince
       inkscape
       poppler_utils
@@ -58,7 +60,7 @@
       (writeShellScriptBin "power" ''
         actions=(shutdown reboot suspend "lock and suspend" logout)
         printf '%s\n' "''${actions[@]}" |
-        case $(rofi -dmenu -p action -no-fixed-num-lines -theme-str 'window{width:200;}') in
+        case $(rofi -dmenu -p action -no-fixed-num-lines -theme-str 'window{width:20 em;}') in
             shutdown) sudo poweroff;;
             reboot) sudo reboot;;
             suspend) sudo systemctl suspend;;
@@ -78,7 +80,6 @@
 
     hm.programs.texlive = {
       enable = true;
-      packageSet = (pkgs.pr 413558 "sha256-aDCoPtyLPjxDyiZF5kfkaEkhH/xP4P/uTQ+tX9lX/2s=").texlive; # TODO
       extraPackages = tpkgs: {
         inherit (tpkgs)
           scheme-medium

@@ -41,6 +41,8 @@
       lsblk = "lsblk -o NAME,TYPE,UUID,PARTLABEL,FSTYPE,LABEL,SIZE,MOUNTPOINT";
       mv = "mv -i";
       nix = "nix -vL";
+      pgrep = "pgrep -a";
+      pkill = "pkill -e";
 
       # Shorthands
       C = "LC_ALL=C ";
@@ -57,6 +59,7 @@
       s = "sudo systemctl";
       u = "systemctl --user";
       j = "journalctl";
+      ju = "journalctl --user";
       top = "htop";
       vim-patch = "vim -c 'au! mangle' --cmd 'let b:EditorConfig_disable = 1'";
 

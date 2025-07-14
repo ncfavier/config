@@ -1,8 +1,6 @@
 { inputs, lib, config, ... }: with lib; mkEnableModule [ "my-services" "mailserver" ] {
   imports = [ inputs.simple-nixos-mailserver.nixosModules.default ];
 
-  system.extraDependencies = collectFlakeInputs inputs.simple-nixos-mailserver;
-
   secrets.dkim = {
     path = "/etc/dkim/${my.domain}.${config.mailserver.dkimSelector}.key";
     owner = config.services.rspamd.user;

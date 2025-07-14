@@ -11,6 +11,14 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
   };
 
   hm = {
+    systemd.user.targets.graphical-session-bspwm = {
+      Unit = {
+        Description = "bspwm session";
+        BindsTo = [ "graphical-session.target" ];
+        Requisite = [ "graphical-session.target" ];
+      };
+    };
+
     xsession.windowManager.bspwm = {
       enable = true;
       monitors.focused = [ "web" "mail" "chat" "files" "1" ];
@@ -20,7 +28,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         normal_border_color = foregroundAlt;
         presel_feedback_color = hot;
         border_width = borderWidth;
-        window_gap = padding;
+        window_gap = builtins.floor (padding * dpiScale);
         borderless_monocle = true;
         gapless_monocle = true;
         initial_polarity = "second_child";
@@ -68,8 +76,8 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         bspc desktop mail -l monocle
       '';
       startupPrograms = [
-        "${bar}/bin/bar" # ensure bspwmrc changes if bar.sh changes
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+        "${config.systemd.package}/bin/systemctl --user start graphical-session-bspwm.target"
       ];
     };
 
@@ -110,8 +118,8 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         local cur prev words cword
         _init_completion
         if (( cword == 1 )); then
-          compreply -W 'go focus-window focus-workspace move-window-to-workspace remove-workspace add-workspace lock quit'
-        elif [[ ''${words[1]} == go ]]; then
+          compreply -W 'launch focus-window focus-workspace move-window-to-workspace remove-workspace add-workspace lock quit'
+        elif [[ ''${words[1]} == launch ]]; then
           compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi emoji'
         fi
       }
@@ -188,6 +196,8 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           "{_,mpc} volume {-,+}2";
         "XF86AudioMute" =
           "volume toggle";
+        "shift + XF86AudioMute" =
+          "volume toggle-mic";
         "XF86AudioMicMute" =
           "volume toggle-mic";
         "XF86MonBrightness{Down,Up}" =
@@ -198,24 +208,24 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           "unicode-analyse";
         "super + p" =
           "xsel -bo | upload -";
+        "super + space" =
+          "wm launch";
         "super + shift + p" =
           "rofi-pass";
-        "super + {_,shift,ctrl} + space" =
-          "rofi -sidebar-mode -show-icons -modes drun,run,window -show {drun,drun,window}";
         "super + asterisk" =
           "rofi -show calc";
         "super + o" =
-          "wm go emoji";
+          "wm launch emoji";
         "super + ctrl + Return" =
           "rofi -show ssh";
         "super + {_,shift} + Return" =
-          "{_,BASH_STARTUP=@${my.server.hostname} new_instance=1} wm go terminal";
+          "{_,BASH_STARTUP=@${my.server.hostname} new_instance=1} wm launch terminal";
         "super + {_,shift} + KP_Enter" =
-          "{_,BASH_STARTUP=@${my.server.hostname} new_instance=1} wm go terminal";
+          "{_,BASH_STARTUP=@${my.server.hostname} new_instance=1} wm launch terminal";
         "super + {_,shift} + {w,x,c,f,e,v,m}" =
-          "wm go {_,-n} {web,mail,chat,files,editor,video,music}";
+          "wm launch {_,-n} {web,mail,chat,files,editor,video,music}";
         "super + ctrl + w" =
-          "wm go wifi";
+          "wm launch wifi";
         "super + alt + w" =
           "firefox -P work";
       };
@@ -227,7 +237,6 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
   };
 
   programs.i3lock.enable = true;
-  security.pam.services.i3lock.fprintAuth = false;
 
   nixpkgs.overlays = [
     (pkgs: prev: {

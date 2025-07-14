@@ -17,7 +17,7 @@
         decorations = "none";
       };
       font = {
-        normal.family = font;
+        normal.family = "monospace";
         size = fontSize;
       };
       colors = {

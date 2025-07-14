@@ -7,10 +7,10 @@
       version = "1.3.6";
     }
     {
-      hash = "sha256-C55ogw05iFmodYox/igaCu0MkEbvqpTPX1MSlcz8G50=";
+      hash = "sha256-Lif7fvR2fozQDko0G74/+UhTnlbFjGAQj5eb2IIH61I=";
       name = "agda-mode";
       publisher = "banacorn";
-      version = "0.6.0";
+      version = "0.5.7"; # 0.6.0 and 0.7.0 are broken
     }
     {
       hash = "sha256-jPLwWZogHmUsjRbBO6fWODuRH+l93QJHT88dOM1TT4U=";
@@ -77,7 +77,9 @@ in {
   hm = {
     programs.vscode = {
       enable = true;
-      package = pkgs.vscodium;
+      package = pkgs.vscodium.override {
+        commandLineArgs = "--force-device-scale-factor=2";
+      };
       profiles.default.extensions = with pkgs.vscode-extensions; [
         vscodevim.vim
         xadillax.viml

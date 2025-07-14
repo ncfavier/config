@@ -14,11 +14,12 @@
     settings = with config.theme; {
       gtk-single-instance = true;
       window-decoration = false;
+      font-size = 10;
       font-family = [ "monospace" "emoji" ];
       font-codepoint-map = "U+2600-U+27BF,U+2B00-U+2BFF,U+1F300-U+1F5FF=emoji";
       window-title-font-family = "monospace";
-      window-padding-x = 16;
-      window-padding-y = 16;
+      window-padding-x = padding;
+      window-padding-y = padding;
       theme = "Aura";
       cursor-style = "block";
       cursor-color = "white";

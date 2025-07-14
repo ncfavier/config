@@ -1,4 +1,4 @@
-{
+{ lib, pkgs, ... }: with lib; {
   hm.home.file.".XCompose" = {
     text = ''
       include "%L"
@@ -400,7 +400,7 @@
     '';
 
     onChange = ''
-      ibus restart || true
+      ${getBin pkgs.ibus}/bin/ibus restart || true
     '';
   };
 }

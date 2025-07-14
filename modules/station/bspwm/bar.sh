@@ -17,7 +17,7 @@ desktop_label() {
         mail) var='';;
         chat) var='';;
         files) var='';;
-        *) var='⬤';;
+        *) var='';;
     esac
 }
 
@@ -118,12 +118,12 @@ bold=3
 IFS=, read screenWidth _ < /sys/class/graphics/fb0/virtual_size
 
 # ℕ
-xft_fonts=("siji:pixelsize=10" "bitmap:size=8" "bitmap:bold:size=8" "tewi:size=8" "Biwidth:size=9")
+xft_fonts=("siji:pixelsize=10" "sans-serif:size=9" "sans-serif:bold:size=9" "tewi:size=8" "Biwidth:size=9")
 font_args=()
 for f in "${xft_fonts[@]}"; do
     case $f in
-        *siji*) if (( dpi > 100 )); then offset=-2; else offset=-1; fi;;
-        *Biwidth*) offset=-1;;
+        *siji*) if (( dpi > 100 )); then offset=-8; else offset=-1; fi;;
+        *Biwidth*) if (( dpi > 100 )); then offset=-5; else offset=-1; fi;;
         *) offset=0;;
     esac
     font_args+=(-o "$offset" -f "$f")
@@ -339,7 +339,7 @@ while read -rn 1 event; do
             fi
             printf -v clock " %($date_format %%{T$bold}$time_format%%{T-})T" -1
             pad_right clock
-            clock="%{A:pkill -USR1 -P $$ -f $0 -o:}%{A3:wm go calendar:}$clock%{A}%{A}"
+            clock="%{A:pkill -USR1 -P $$ -f $0 -o:}%{A3:wm launch calendar:}$clock%{A}%{A}"
             ;;
         D) # dunst
             read -r paused
@@ -363,7 +363,7 @@ while read -rn 1 event; do
             read -r song
             if [[ $song ]]; then
                 pad_right song
-                song="%{A2:mpc -q stop:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm go music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
+                song="%{A2:mpc -q stop:}%{A3:mpc -q toggle:}%{A4:mpc -q volume +2:}%{A5:mpc -q volume -2:}%{A:wm launch music:} %{A}%{A:music-notify:}$song%{A}%{A}%{A}%{A}%{A}"
             fi
             ;;
         N) # network
@@ -380,7 +380,7 @@ while read -rn 1 event; do
                         IFS=, read -d : interface ssid
                         # trunc ssid 15
                         # escape ssid
-                        wireless+="%{A:wm go wifi:}%{A}"
+                        wireless+="%{A:wm launch wifi:}%{A}"
                         dim_if_not "$has_route" wireless
                         ;;
                     G)
@@ -416,12 +416,14 @@ while read -rn 1 event; do
                     # Since bash doesn't have floating-point arithmetic, we work with milli- to minimise error.
                     (( voltage_now = $(< "$battery"/voltage_now) / 1000 )) # mV
                     if [[ -e $battery/current_now ]]; then
-                        (( current_now = $(< "$battery"/current_now) / 1000 )) # mA
+                        current_now=$(< "$battery"/current_now)
+                        (( current_now = ${current_now#-} / 1000 )) # mA
                     else
-                        (( current_now = $(< "$battery"/power_now) / voltage_now )) # mA
+                        power_now=$(< "$battery"/power_now)
+                        (( current_now = ${power_now#-} / voltage_now )) # mA
                     fi
                     if [[ -e $battery/charge_now ]]; then
-                        (( charge_now = $(< "$battery"/charge_now) / 1000 )) # mAh
+                        (( charge_now = $(< "$battery"/charge_now) / 1000 )) # mAh
                     else
                         (( charge_now = $(< "$battery"/energy_now) / voltage_now )) # mAh
                     fi
@@ -436,7 +438,7 @@ while read -rn 1 event; do
                         elif [[ $status == Discharging ]]; then
                             (( remaining_charge = charge_now )) # mAh
                         fi
-                        (( remaining_time = 3600 * remaining_charge / current_now )) # s
+                        (( remaining_time = 3600 * remaining_charge / current_now )) # s
                     fi
                     (( remaining_time )) && power+=" $(print_time "$remaining_time")"
                 fi
@@ -462,11 +464,14 @@ while read -rn 1 event; do
                 left_pad 2 vol # prevent the scrolling area from shrinking as you scroll under 10%
                 sound="$icon $vol%%"
             fi
+            if [[ $(pactl get-default-sink) == bluez* ]]; then
+                sound+=" "
+            fi
             if [[ $mute_mic != true ]]; then
                 sound+=" "
             fi
             pad_right sound
-            sound="%{A:wm go volume:}%{A3:volume toggle:}%{A4:volume +2:}%{A5:volume -2:}$sound%{A}%{A}%{A}%{A}"
+            sound="%{A:wm launch volume:}%{A3:volume toggle:}%{A4:volume +2:}%{A5:volume -2:}$sound%{A}%{A}%{A}%{A}"
             ;;
         T) # title
             read -r title
@@ -496,9 +501,9 @@ while read -rn 1 event; do
                     pad item
                     item="%{A:wm focus-workspace $desktop:}%{A2:wm move-window-to-workspace $desktop:}$item%{A}%{A}"
                     if [[ $desktop =~ ^[[:alpha:]]+$ ]]; then
-                        item="%{A3:wm go $desktop:}$item%{A}"
+                        item="%{A3:wm launch $desktop:}$item%{A}"
                     else
-                        item="%{A3:wm focus-workspace $desktop;wm go terminal:}$item%{A}"
+                        item="%{A3:wm focus-workspace $desktop;wm launch terminal:}$item%{A}"
                     fi
                     case $type in
                         f|F) f=${theme[foregroundAlt]};;&

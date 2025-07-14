@@ -12,7 +12,7 @@
         home.packages = with pkgs; [
           xdg-user-dirs
           (writeShellScriptBin "xdg-terminal-exec" ''
-            wm go terminal "$@"
+            wm launch terminal "$@"
           '')
         ];
 
