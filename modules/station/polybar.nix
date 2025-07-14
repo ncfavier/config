@@ -44,6 +44,8 @@ in {
   };
 
   config = {
+    cachix.derivationsToPush = [ config.hm.services.polybar.package ];
+
     hm = {
       services.polybar = {
         enable = true;
@@ -90,7 +92,7 @@ in {
             ws-icon.text = [ "web;󰇧" "mail;󰇮" "chat;󰭹" "files;󰉋" ];
             ws-icon.default = "󰋘";
             pin-workspaces = false;
-            format.text = "%{A3:wm launch launcher:}<label-state>%{A}";
+            format.text = "%{A3:wm launch:}<label-state>%{A}";
             label.occupied = default;
             label.empty = default // {
               foreground = foregroundAlt;

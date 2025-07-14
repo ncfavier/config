@@ -1,8 +1,33 @@
-{ lib, config, pkgs, ... }: with lib; {
+{ lib, config, pkgs, ... }: with lib; let
+  pkgs425075 = pkgs.pr 425075 "sha256-YNnwQAAkbd5lAL7KnRGXIF9yhpecBOmn7D9PIY6iWMs=";
+  thunarWithPkgs = pkgs425075.xfce.thunar.override { # TODO
+    thunarPlugins = with pkgs.xfce; [
+      thunar-volman
+      thunar-archive-plugin
+      thunar-media-tags-plugin
+    ];
+    thunar-unwrapped = pkgs425075.xfce.thunar-unwrapped.overrideAttrs (old: {
+      patches = old.patches or [] ++ [
+        # https://gitlab.xfce.org/xfce/thunar/-/merge_requests/671
+        (builtins.toFile "thunar-compact-patch" ''
+diff --git a/thunar/thunar-icon-view.c b/thunar/thunar-icon-view.c
+index 218601800..b03ef6ed9 100644
+--- a/thunar/thunar-icon-view.c
++++ b/thunar/thunar-icon-view.c
+@@ -212 +212 @@ thunar_icon_view_set_consistent_horizontal_spacing (ThunarIconView *icon_view)
+-  if (exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
++  if (TRUE || exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
+        '')
+      ];
+    });
+  };
+in {
   services.gvfs.enable = true;
   services.tumbler.enable = true;
   programs.dconf.enable = true;
   programs.file-roller.enable = true;
+
+  cachix.derivationsToPush = [ thunarWithPkgs ];
 
   hm = {
     home.packages = with pkgs; let
@@ -17,29 +42,8 @@
         fi
         ${script}
       ''} %o %s %i %u";
-      pkgs425075 = pkgs.pr 425075 "sha256-YNnwQAAkbd5lAL7KnRGXIF9yhpecBOmn7D9PIY6iWMs=";
     in [
-      (pkgs425075.xfce.thunar.override { # TODO
-        thunarPlugins = with xfce; [
-          thunar-volman
-          thunar-archive-plugin
-          thunar-media-tags-plugin
-        ];
-        thunar-unwrapped = pkgs425075.xfce.thunar-unwrapped.overrideAttrs (old: {
-          patches = old.patches or [] ++ [
-            # https://gitlab.xfce.org/xfce/thunar/-/merge_requests/671
-            (builtins.toFile "thunar-compact-patch" ''
-  diff --git a/thunar/thunar-icon-view.c b/thunar/thunar-icon-view.c
-  index 218601800..b03ef6ed9 100644
-  --- a/thunar/thunar-icon-view.c
-  +++ b/thunar/thunar-icon-view.c
-  @@ -212 +212 @@ thunar_icon_view_set_consistent_horizontal_spacing (ThunarIconView *icon_view)
-  -  if (exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
-  +  if (TRUE || exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
-            '')
-          ];
-        });
-      })
+      thunarWithPkgs
       xfce.xfconf
       xfce.exo
       glib

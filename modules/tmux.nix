@@ -21,6 +21,7 @@ index 6892d041..1174cb15 100644
       ];
     });
   }) ];
+  cachix.derivationsToPush = [ pkgs.tmux ];
 
   hm.programs.tmux = {
     enable = true;

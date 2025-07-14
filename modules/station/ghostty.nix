@@ -1,4 +1,6 @@
 { inputs, lib, config, pkgs, ...}: with lib; {
+  cachix.derivationsToPush = [ config.hm.programs.ghostty.package ];
+
   hm.programs.ghostty = {
     enable = true;
     package = inputs.ghostty.packages.x86_64-linux.default.overrideAttrs (old: {
