@@ -28,7 +28,7 @@ in {
       serverNamesHashBucketSize = 128;
       commonHttpConfig = ''
         charset utf-8;
-        charset_types text/css;
+        charset_types *;
         types {
           text/plain sh csh tex latex rs tcl pl markdown md;
         }
