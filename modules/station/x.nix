@@ -19,7 +19,7 @@ in {
       enableTearFree = mkDefault (builtins.head config.services.xserver.videoDrivers != "modesetting");
     };
 
-    environment.variables = mkIf (config.services.xserver.dpiScaleFactor > 1) {
+    environment.variables = mkIf (config.services.xserver.dpiScaleFactor >= 2) {
       GDK_SCALE = toString config.services.xserver.dpiScaleFactor;
       GDK_DPI_SCALE = toString (1 / config.services.xserver.dpiScaleFactor);
       _JAVA_OPTIONS = "-Dsun.java2d.uiScale=${toString config.services.xserver.dpiScaleFactor}";

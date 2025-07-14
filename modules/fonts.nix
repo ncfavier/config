@@ -9,7 +9,7 @@
 
       console.packages = [ pkgs.terminus_font ];
       console.font =
-        if config.services.xserver.dpiScaleFactor < 1.5
+        if config.services.xserver.dpiScaleFactor < 2
         then "ter-116n"
         else "ter-128b";
 
