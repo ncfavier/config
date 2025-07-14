@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }: with lib; let
   fonts = with config.theme; [
-    "${font}:size=${toString fontSize};4"
-    "${font}:size=${toString fontSize}:weight=bold;4"
-    "emoji:scale=6;4"
-    "Material Design Icons;6"
+    "${font}:size=${toString fontSize};${toString (config.lib.x.dpiScale 2)}"
+    "${font}:size=${toString fontSize}:weight=bold;${toString (config.lib.x.dpiScale 2)}"
+    "emoji:scale=6;${toString (config.lib.x.dpiScale 2)}"
+    "Material Design Icons;${toString (config.lib.x.dpiScale 3)}"
   ];
   boldFont = 2;
   iconFont = length fonts;
@@ -74,7 +74,7 @@ in {
             line-size = "2pt";
             radius = 0;
             modules.left = "wm title";
-            modules.right = "memory keyboard systemd dunst music vpn sound light battery date tray";
+            modules.right = "memory keyboard systemd dunst music sound light battery date vpn tray";
             module.margin = "5pt";
             font = fonts;
             enable-ipc = true;
