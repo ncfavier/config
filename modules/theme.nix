@@ -6,6 +6,9 @@
         type = bool;
         default = true;
       };
+      options.fontSize = mkOption {
+        type = int;
+      };
     };
   };
 

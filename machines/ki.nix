@@ -66,6 +66,8 @@
     # TODO: 1.0rc1 supports my motherboard
     services.hardware.openrgb.package = (pkgs.mine "openrgb" "sha256-aw1L5q1Ac7KlbwVvHMjH+WBrYsMzOvwjftuGGSglLgU=").openrgb;
 
+    theme.fontSize = mkForce 12;
+
     keys.composeKey = "rwin";
     keys.printScreenKey = "Insert";
 
