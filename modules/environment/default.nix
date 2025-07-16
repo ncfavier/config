@@ -18,6 +18,7 @@
     ncdu
     lsof
     inotify-tools
+    config.boot.kernelPackages.cpupower
     lm_sensors
     hwinfo
     dosfstools

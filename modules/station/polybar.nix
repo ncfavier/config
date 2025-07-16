@@ -90,7 +90,7 @@ in {
           in {
             type = "internal/bspwm";
             ws-icon.text = [ "web;󰇧" "mail;󰇮" "chat;󰭹" "files;󰉋" ];
-            ws-icon.default = "󰋘";
+            ws-icon.default = "󰋙";
             pin-workspaces = false;
             format.text = "%{A3:wm launch:}<label-state>%{A}";
             label.occupied = default;

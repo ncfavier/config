@@ -92,6 +92,7 @@
             complete_alias s systemctl
             complete_alias u systemctl --user
             complete_alias j journalctl
+            complete_alias ju journalctl --user
           ''
           (mkAfter ''
             if [[ $BASH_STARTUP ]]; then eval "$BASH_STARTUP"; fi

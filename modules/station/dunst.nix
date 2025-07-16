@@ -8,8 +8,8 @@
       global = {
         enable_recursive_icon_lookup = true;
         width = "(0, 1200)";
-        height = 9999;
-        offset = "${toString (padding * 2)}x${toString (barHeight + padding * 2)}";
+        height = "(0, 9999)";
+        offset = "(${toString (padding * 2)}, ${toString (barHeight + padding * 2)})";
         notification_limit = 6;
         shrink = true;
         inherit padding;

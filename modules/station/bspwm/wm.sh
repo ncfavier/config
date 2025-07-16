@@ -60,8 +60,7 @@ terminal() {
         class="$class" instance="$instance" title="$focus_title" focus-window && return
     fi
     . /etc/set-environment # reset PATH
-    exec ghostty \
-        --launched-from=desktop \
+    exec ghostty --launched-from=cli \
         ${class:+--class="$class"} \
         ${instance:+--x11-instance-name="$instance"} \
         ${new_instance:+--gtk-single-instance=false} \
@@ -85,7 +84,7 @@ launch() {
         '')
             rofi -sidebar-mode -show-icons -modes drun,run,window -show drun &;;
         term|terminal)
-            terminal ${*:+-e "$@"} &;;
+            terminal +new-window ${*:+-e "$@"} &;;
         chat|irc)
             instance=irc lines=100 columns=140 terminal \
                 --confirm-close-surface=false \

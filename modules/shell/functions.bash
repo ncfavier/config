@@ -455,7 +455,7 @@ nix-closure-size() {
 }
 
 nix-build-closure() {
-    nix-store -qR --include-outputs "$(nix-store -qd "$@")"
+    nix-store -qR --include-outputs "$(nix derivation show "$@" | jq -r 'keys[0]')"
 }
 
 nix-clear-cache() {

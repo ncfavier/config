@@ -25,6 +25,7 @@
       theme = "Aura";
       cursor-style = "block";
       cursor-color = "white";
+      scrollback-limit = 50000000;
       shell-integration-features = "no-cursor";
       mouse-hide-while-typing = true;
       mouse-scroll-multiplier = 2;

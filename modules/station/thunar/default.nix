@@ -1,5 +1,5 @@
 { lib, config, pkgs, ... }: with lib; let
-  pkgs425075 = pkgs.pr 425075 "sha256-YNnwQAAkbd5lAL7KnRGXIF9yhpecBOmn7D9PIY6iWMs=";
+  pkgs425075 = pkgs.pr 425075 "sha256-ZB06Snn0AE8VqZqSZ2VvpCiJkLB1+WTgM/wnMD/rtOU=";
   thunarWithPkgs = pkgs425075.xfce.thunar.override { # TODO
     thunarPlugins = with pkgs.xfce; [
       thunar-volman
