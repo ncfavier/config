@@ -1,9 +1,5 @@
 { lib, config, pkgs, ... }: with lib; let
-  bar = with pkgs; shellScriptWith "bar" ./bar.sh {
-    deps = [
-      config-cli lemonbar-xft xtitle xkb-switch trayer
-    ];
-  };
+  bspwm = config.hm.xsession.windowManager.bspwm.package;
 in mkEnableModule [ "my-programs" "bspwm" ] {
   services.xserver = {
     displayManager.startx.enable = true;
@@ -83,7 +79,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
     xdg.configFile."bspwm/bspwmrc".onChange = ''
       if [[ -v DISPLAY ]] && ${getBin pkgs.procps}/bin/pgrep bspwm > /dev/null; then
-        ${pkgs.bspwm}/bin/bspc wm -r
+        ${bspwm}/bin/bspc wm -r
       fi
     '';
 
@@ -109,8 +105,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
     home.packages = with pkgs; [
       xdo
-      bar
-      (shellScriptWith "wm" ./wm.sh { deps = [ xtitle ]; })
+      (shellScriptWith "wm" ./wm.sh { deps = [ xtitle ]; }) # not all dependencies listed
     ];
 
     programs.bash.initExtra = ''
@@ -253,34 +248,6 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
             url = "https://github.com/ncfavier/bspwm/commit/9e84eaa6eebe7faff7c7d0d2a911ed6a0d0b0296.patch";
             hash = "sha256-2SDGO3Q+/VXtagoqipBjaP0F4pQQl3qam/uKDchZO3I=";
           });
-      });
-
-      lemonbar-xft = prev.lemonbar-xft.overrideAttrs (o: {
-        src = pkgs.fetchFromGitLab {
-          owner = "protesilaos";
-          repo = "lemonbar-xft";
-          rev = "0042efd2ec1477ab96eb044ebba72a10aefff21f";
-          sha256 = "sha256-SDQTvpqv4E5fbAbYDGfylk2w9bfXNSdNBdgKwXcfxFA=";
-        };
-        patches = o.patches or [] ++ [
-          (builtins.toFile "lemonbar-xft-patch" ''
-            Read whole lines of input.
-            --- a/lemonbar.c
-            +++ b/lemonbar.c
-            @@ -1456 +1456,2 @@ main (int argc, char **argv)
-            -    char input[4096] = {0, };
-            +    char *input = NULL;
-            +    size_t input_size = 0;
-            @@ -1546,2 +1546,0 @@ main (int argc, char **argv)
-            -    // Prevent fgets to block
-            -    fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
-            @@ -1562,3 +1561 @@ main (int argc, char **argv)
-            -                input[0] = '\0';
-            -                while (fgets(input, sizeof(input), stdin) != NULL)
-            -                    ; // Drain the buffer, the last line is actually used
-            +                getline(&input, &input_size, stdin);
-          '')
-        ];
       });
     })
   ];

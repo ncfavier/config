@@ -1,12 +1,11 @@
 { lib, config, pkgs, ... }: with lib; let
-  pkgs425075 = pkgs.pr 425075 "sha256-ZB06Snn0AE8VqZqSZ2VvpCiJkLB1+WTgM/wnMD/rtOU=";
-  thunarWithPkgs = pkgs425075.xfce.thunar.override { # TODO
+  thunarWithPkgs = pkgs.thunar-unwrapped.xfce.thunar.override {
     thunarPlugins = with pkgs.xfce; [
       thunar-volman
       thunar-archive-plugin
       thunar-media-tags-plugin
     ];
-    thunar-unwrapped = pkgs425075.xfce.thunar-unwrapped.overrideAttrs (old: {
+    thunar-unwrapped = pkgs.thunar-unwrapped.xfce.thunar-unwrapped.overrideAttrs (old: {
       patches = old.patches or [] ++ [
         # https://gitlab.xfce.org/xfce/thunar/-/merge_requests/671
         (builtins.toFile "thunar-compact-patch" ''

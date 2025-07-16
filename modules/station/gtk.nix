@@ -38,7 +38,7 @@
         name = "Orchis-Purple" + (if dark then "-Dark" else "");
       };
       iconTheme = {
-        package = (pkgs.mine "tela-breeze" "sha256-6se/3s0BC6zFeiC7dUx+XOg02ntXGyIL3CRzri4M7M0=").tela-icon-theme; # TODO
+        package = pkgs.tela-breeze.tela-icon-theme;
         name = "Tela-dracula" + (if dark then "-dark" else "");
       };
     };

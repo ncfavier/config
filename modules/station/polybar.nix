@@ -83,16 +83,17 @@ in {
           };
 
           "module/wm" = let
+            padding = "7pt";
             default = {
-              text = icon "%icon%";
-              padding = "7pt";
+              text = "%{A2:wm move-window-to-workspace %name% :}%{A3:wm launch %name% :}%{O${padding}}${icon "%icon%"}%{O${padding}}%{A}%{A}";
+              padding = 0;
             };
           in {
             type = "internal/bspwm";
             ws-icon.text = [ "web;󰇧" "mail;󰇮" "chat;󰭹" "files;󰉋" ];
             ws-icon.default = "󰋙";
             pin-workspaces = false;
-            format.text = "%{A3:wm launch:}<label-state>%{A}";
+            format.text = "<label-state>";
             label.occupied = default;
             label.empty = default // {
               foreground = foregroundAlt;
@@ -220,7 +221,7 @@ in {
         Install.WantedBy = mkForce [ "graphical-session-bspwm.target" ];
         Unit.After = [ "graphical-session-bspwm.target" ];
 
-        Service.ExecStopPost = "${pkgs.bspwm}/bin/bspc config top_padding 0";
+        Service.ExecStopPost = "${config.hm.xsession.windowManager.bspwm.package}/bin/bspc config top_padding 0";
       };
 
       home.packages = attrValues pkgs.myPolybarScripts;

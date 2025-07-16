@@ -314,6 +314,38 @@
         "type": "github"
       }
     },
+    "nixpkgs-agda-bump": {
+      "locked": {
+        "lastModified": 1752661299,
+        "narHash": "sha256-V6gZSevVYp5m+rSAwwtsOaMHg7hYpI6LXXxJwFdZN0s=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "1288f57e557951419770b5691fc613f8e3266c73",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "agda-bump",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-discord-cli-args": {
+      "locked": {
+        "lastModified": 1752003465,
+        "narHash": "sha256-TCVRpIXM8N7t4vybjBQ2CyAWnsL8Z1tpcEUmKGLtsl4=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "0025e0ec6e81ca9920f09df37d8f15dcd86619f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "discord-cli-args",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-mozilla": {
       "locked": {
         "lastModified": 1744624473,
@@ -326,6 +358,22 @@
       "original": {
         "owner": "mozilla",
         "repo": "nixpkgs-mozilla",
+        "type": "github"
+      }
+    },
+    "nixpkgs-openrgb-bump": {
+      "locked": {
+        "lastModified": 1745062660,
+        "narHash": "sha256-aw1L5q1Ac7KlbwVvHMjH+WBrYsMzOvwjftuGGSglLgU=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "c145f188fca277af0ebcf15f58953ff3022773ad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "openrgb",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -342,6 +390,38 @@
         "id": "nixpkgs",
         "ref": "nixos-22.11",
         "type": "indirect"
+      }
+    },
+    "nixpkgs-tela-breeze": {
+      "locked": {
+        "lastModified": 1752616776,
+        "narHash": "sha256-6se/3s0BC6zFeiC7dUx+XOg02ntXGyIL3CRzri4M7M0=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "9fab7d37f52565f327c995d155edee16a80c5110",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "tela-breeze",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-thunar-unwrapped": {
+      "locked": {
+        "lastModified": 1752592617,
+        "narHash": "sha256-ZB06Snn0AE8VqZqSZ2VvpCiJkLB1+WTgM/wnMD/rtOU=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "025e4689208688088209828f3bfc4ff2bcf7c321",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "thunar-unwrapped",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-unstable": {
@@ -467,7 +547,12 @@
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-agda-bump": "nixpkgs-agda-bump",
+        "nixpkgs-discord-cli-args": "nixpkgs-discord-cli-args",
+        "nixpkgs-openrgb-bump": "nixpkgs-openrgb-bump",
         "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs-tela-breeze": "nixpkgs-tela-breeze",
+        "nixpkgs-thunar-unwrapped": "nixpkgs-thunar-unwrapped",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "qeval": "qeval",

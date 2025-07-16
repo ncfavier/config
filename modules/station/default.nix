@@ -39,7 +39,7 @@
       pandoc
       inlyne
       typos
-      (agda.withPackages (p: with p; [
+      (pkgs.agda-bump.agda.withPackages (p: with p; [
         standard-library
         cubical
       ]))

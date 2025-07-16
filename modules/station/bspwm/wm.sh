@@ -1,4 +1,4 @@
-shopt -s lastpipe
+shopt -s lastpipe extglob
 
 . config env
 
@@ -83,8 +83,8 @@ launch() {
     case $app in
         '')
             rofi -sidebar-mode -show-icons -modes drun,run,window -show drun &;;
-        term|terminal)
-            terminal +new-window ${*:+-e "$@"} &;;
+        term|terminal|+([[:digit:]]))
+            terminal ${*:+-e "$@"} &;;
         chat|irc)
             instance=irc lines=100 columns=140 terminal \
                 --confirm-close-surface=false \

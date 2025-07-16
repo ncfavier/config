@@ -6,22 +6,29 @@
           inherit (config.nixpkgs) localSystem crossSystem config;
         };
       in [
-        (pkgs: prev: {
-          stable = importNixpkgs inputs.nixpkgs-stable;
-          unstable = importNixpkgs inputs.nixpkgs-unstable;
-          rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
-            owner = "NixOS";
-            repo = "nixpkgs";
-            inherit rev sha256;
-          });
-          pr = n: pkgs.rev "refs/pull/${toString n}/head";
-          mine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
-            owner = lib.my.githubUsername;
-            repo = "nixpkgs";
-            inherit rev sha256;
-          });
-          local = importNixpkgs "${config.my.home}/git/nixpkgs";
-        })
+        (pkgs: prev:
+          # Turn inputs.nixpkgs-foo into pkgs.foo.
+          lib.genAttrs
+            (map (lib.removePrefix "nixpkgs-") (lib.filter (lib.hasPrefix "nixpkgs-")
+              (builtins.attrNames inputs)))
+            (name: importNixpkgs inputs."nixpkgs-${name}")
+          // {
+            # Don't use these: flake inputs are more robust and do not
+            # get garbage collected (see extraDependencies below).
+            rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+              owner = "NixOS";
+              repo = "nixpkgs";
+              inherit rev sha256;
+            });
+            pr = n: pkgs.rev "refs/pull/${toString n}/head";
+            mine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+              owner = lib.my.githubUsername;
+              repo = "nixpkgs";
+              inherit rev sha256;
+            });
+            local = importNixpkgs "${config.my.home}/git/nixpkgs";
+          }
+        )
       ];
 
       nix.package = pkgs.lix;
