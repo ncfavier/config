@@ -326,4 +326,5 @@
     "agda"
   ],
   "workbench.colorTheme": "Mr Pink",
+  "editor.experimentalEditContextEnabled": false,
 }

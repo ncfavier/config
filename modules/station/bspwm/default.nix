@@ -153,7 +153,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         "super + h" =
           "bspc node -g hidden";
         "super + shift + h" =
-          "bspc node any.hidden -g hidden=off";
+          "bspc node any.hidden -g hidden=off; bspc node any.below -l normal";
         "super + less" =
           ''bspc node -l "$(bspc query -T -n | jq -r 'if .client.layer == "above" then "normal" else "below" end')"'';
         "super + greater" =

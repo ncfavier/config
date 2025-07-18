@@ -4,10 +4,10 @@
   "IS_MINIMIZED": false,
   "SKIP_HOST_UPDATE": true,
   "WINDOW_BOUNDS": {
-    "x": 728,
-    "y": 502,
-    "width": 696,
-    "height": 442
+    "x": 16,
+    "y": 44,
+    "width": 1408,
+    "height": 900
   },
   "BACKGROUND_COLOR": "#000000",
   "chromiumSwitches": {}

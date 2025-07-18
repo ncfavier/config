@@ -57,7 +57,7 @@ set expandtab
 set ignorecase
 set laststatus=1
 set list
-set listchars=nbsp:␣
+set listchars=tab:\ \ ,nbsp:␣
 set modeline
 set mouse=a
 set nonumber

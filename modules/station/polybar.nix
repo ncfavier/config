@@ -93,6 +93,7 @@ in {
             ws-icon.text = [ "web;󰇧" "mail;󰇮" "chat;󰭹" "files;󰉋" ];
             ws-icon.default = "󰋙";
             pin-workspaces = false;
+            enable-scroll = false;
             format.text = "<label-state>";
             label.occupied = default;
             label.empty = default // {

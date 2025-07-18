@@ -64,6 +64,12 @@ clipcmd_helper() {
     } | clip
 }
 
+unlock() {
+    . config env
+    local host=${1:-$server_hostname}
+    ssh "unlock.$host"
+}
+
 command_not_found_handle() {
     local IFS=$' \t\n'
     if [[ $1 == *@* ]]; then # [user]@[host] as a shorthand for ssh user@host (host defaults to main server)

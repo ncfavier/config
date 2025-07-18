@@ -1,4 +1,9 @@
-{ lib, this, config, pkgs, ... }: with lib; optionalAttrs this.isStation {
+{ lib, this, config, pkgs, ... }: with lib; let
+  agda = pkgs.agda-bump.agda.withPackages (p: with p; [
+    standard-library
+    cubical
+  ]);
+in optionalAttrs this.isStation {
   imports = attrValues (modulesIn ./.);
 
   config = {
@@ -39,10 +44,7 @@
       pandoc
       inlyne
       typos
-      (pkgs.agda-bump.agda.withPackages (p: with p; [
-        standard-library
-        cubical
-      ]))
+      agda
       coq
       elan
       ocamlPackages.cooltt
@@ -93,6 +95,6 @@
       cubical
     '';
 
-    cachix.derivationsToPush = [ pkgs.tmsu ];
+    cachix.derivationsToPush = [ pkgs.tmsu agda ];
   };
 }

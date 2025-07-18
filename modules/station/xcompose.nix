@@ -3,6 +3,7 @@
     text = ''
       include "%L"
 
+      <Multi_key> <e> <n> : "–"
       <Multi_key> <less> <bar> <s> : "◂"
       <Multi_key> <bar> <greater> <s> : "▸"
       <Multi_key> <bar> <greater> <w> : "▹"

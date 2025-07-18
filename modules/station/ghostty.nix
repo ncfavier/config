@@ -29,6 +29,8 @@
       shell-integration-features = "no-cursor";
       mouse-hide-while-typing = true;
       mouse-scroll-multiplier = 2;
+      clipboard-read = "ask";
+      clipboard-write = "allow";
       copy-on-select = "clipboard";
       app-notifications = [ "no-clipboard-copy" ];
       keybind = [
