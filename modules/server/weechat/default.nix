@@ -21,6 +21,7 @@
       ''}";
     };
   };
+  tmux = config.hm.programs.tmux.package;
 in mkEnableModule [ "my-services" "weechat" ] {
   secrets.weechat = {
     owner = my.username;
@@ -36,8 +37,8 @@ in mkEnableModule [ "my-services" "weechat" ] {
     serviceConfig = {
       User = my.username;
       Type = "forking";
-      ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
-      ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
+      ExecStart     = "${tmux}/bin/tmux -L weechat new-session -s weechat -d ${config.my.shellPath} -lc 'exec ${weechat}/bin/weechat'";
+      ExecStartPost = "${tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
     };
     restartIfChanged = false;
   };

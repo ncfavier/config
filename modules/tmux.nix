@@ -21,7 +21,7 @@ index 6892d041..1174cb15 100644
       ];
     });
   }) ];
-  cachix.derivationsToPush = [ pkgs.tmux ];
+  cachix.derivationsToPush = [ config.hm.programs.tmux.package ];
 
   hm.programs.tmux = {
     enable = true;
@@ -46,11 +46,13 @@ index 6892d041..1174cb15 100644
       set -g status-left ""
       set -g status-right "#S"
       set -g status-style ""
-      set -ga terminal-overrides ",xterm-256color:Ms=\\E]52;c;%p2%s\\7" # get mosh to behave https://gist.github.com/yudai/95b20e3da66df1b066531997f982b57b
       set -g window-status-current-format "#W"
       set -g window-status-current-style "bold fg=terminal"
       set -g window-status-format "#W"
       set -g window-status-separator "  "
+
+      # Work around OSC52 issues in Mosh: https://github.com/tmux/tmux/issues/4081#issuecomment-2307713596
+      set -ga terminal-overrides ",xterm-256color:Ms=\\E]52;c%p1%.0s;%p2%s\\7"
 
       set-hook -g client-active attach
 
