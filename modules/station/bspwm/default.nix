@@ -54,6 +54,10 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           desktop = "files";
           follow = true;
         };
+        "org.gnome.FileRoller:org.gnome.FileRoller:Extract" = {
+          state = "floating";
+          rectangle = "${toString (config.lib.x.dpiScale 1200)}x${toString (config.lib.x.dpiScale 800)}+${toString (config.lib.x.dpiScale 300)}+${toString (config.lib.x.dpiScale 100)}";
+        };
       } // genAttrs [
         "feh"
         "imv"

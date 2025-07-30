@@ -147,7 +147,7 @@
       ];
 
       lib.shellEnv = {
-        inherit (my) domain;
+        inherit (my) domain githubUsername;
         server_hostname = my.server.hostname;
         inherit (this) isServer;
       };

@@ -14,6 +14,7 @@
       <Multi_key> <q> <e> <d> : "∎"
       <Multi_key> <o> <o> : "∘"
       <Multi_key> <asterisk> <asterisk> : "⋆"
+      <Multi_key> <a> <s> <t> : "∗"
       <Multi_key> <asterisk> <period> : "∙"
       <Multi_key> <asterisk> <comma> : "·"
       <Multi_key> <asterisk> <o> : "∘"

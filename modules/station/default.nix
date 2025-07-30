@@ -55,6 +55,7 @@ in optionalAttrs this.isStation {
       poppler_utils
       transmission_4-gtk
       qemu
+      rustdesk-flutter
       (writeShellScriptBin "power" ''
         actions=(shutdown reboot suspend "lock and suspend" logout)
         printf '%s\n' "''${actions[@]}" |

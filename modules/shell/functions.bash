@@ -463,6 +463,13 @@ nix-closure-size() {
 nix-build-closure() {
     nix-store -qR --include-outputs "$(nix derivation show "$@" | jq -r 'keys[0]')"
 }
+complete_alias nix-build-closure nix derivation show
+
+cachix-push-closure() {
+    . config env
+    nix-build-closure "$@" | grep -v '\.drv$' | cachix push "$githubUsername"
+}
+complete_alias cachix-push-closure nix derivation show
 
 nix-clear-cache() {
     rm -f ~/.cache/nix/binary-cache-v*.sqlite*

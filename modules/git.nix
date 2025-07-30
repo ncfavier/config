@@ -16,6 +16,8 @@
       };
 
       aliases = {
+        old = "bisect old";
+        new = "bisect new";
         good = "bisect good";
         bad = "bisect bad";
         i = "init";
