@@ -67,14 +67,14 @@ in optionalAttrs this.isStation {
             logout) wm quit;;
         esac
       '')
-      (shellScriptWith "shoot" ./shoot.sh {
+      (shellScriptWith "shoot" {
         deps = [ slop imagemagick ffmpeg-full ffmpegthumbnailer ];
-      })
+      } (readFile ./shoot.sh))
       tmsu
       gucharmap
-      (shellScriptWith "unicode-analyse" ./unicode-analyse.sh {
+      (shellScriptWith "unicode-analyse" {
         deps = [ zenity gucharmap ];
-      })
+      } (readFile ./unicode-analyse.sh))
     ];
 
     hm.programs.texlive = {

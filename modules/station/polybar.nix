@@ -168,9 +168,10 @@ in {
           "module/sound" = {
             type = "internal/pulseaudio";
             interval = 2;
-            label.volume.text = "%{A3:wm launch volume:}${icon "󰕾"} %percentage%%%{A}";
-            label.muted.text = "%{A3:wm launch volume:}${icon "󰝟"}%{A}";
+            label.volume.text = "${icon "󰕾"} %percentage%%";
+            label.muted.text = icon "󰝟";
             label.muted.foreground = foregroundAlt;
+            click.right = "wm launch volume";
           };
 
           "module/light" = {

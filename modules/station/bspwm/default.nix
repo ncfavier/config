@@ -109,21 +109,22 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
     home.packages = with pkgs; [
       xdo
-      (shellScriptWith "wm" ./wm.sh { deps = [ xtitle ]; }) # not all dependencies listed
+      (shellScriptWith "wm" {
+        deps = [ xtitle ]; # not all dependencies listed
+        completion = ''
+          _wm() {
+            local cur prev words cword
+            _init_completion
+            if (( cword == 1 )); then
+              compreply -W 'launch focus-window focus-workspace move-window-to-workspace remove-workspace add-workspace lock quit'
+            elif [[ ''${words[1]} == launch ]]; then
+              compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi emoji'
+            fi
+          }
+          complete -F _wm wm
+        '';
+      } (readFile ./wm.sh))
     ];
-
-    programs.bash.initExtra = ''
-      _wm() {
-        local cur prev words cword
-        _init_completion
-        if (( cword == 1 )); then
-          compreply -W 'launch focus-window focus-workspace move-window-to-workspace remove-workspace add-workspace lock quit'
-        elif [[ ''${words[1]} == launch ]]; then
-          compreply -W '-n terminal chat irc editor web browser mail files music video volume calendar wifi emoji'
-        fi
-      }
-      complete -F _wm wm
-    '';
 
     services.sxhkd = {
       enable = true;
@@ -194,11 +195,11 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         "{_,super + alt} + XF86Audio{Lower,Raise}Volume" =
           "{_,mpc} volume {-,+}2";
         "XF86AudioMute" =
-          "volume toggle";
-        "shift + XF86AudioMute" =
-          "volume toggle-mic";
+          "volume toggle-deaf";
+        "alt + XF86AudioMute" =
+          "volume toggle-mute";
         "XF86AudioMicMute" =
-          "volume toggle-mic";
+          "volume toggle-mute";
         "XF86MonBrightness{Down,Up}" =
           "backlight {-,+}";
         "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + ${config.keys.printScreenKey}" =

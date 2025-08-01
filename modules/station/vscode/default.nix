@@ -6,12 +6,12 @@
       publisher = "arthurwhite";
       version = "1.3.6";
     }
-    # {
-    #   hash = "sha256-Lif7fvR2fozQDko0G74/+UhTnlbFjGAQj5eb2IIH61I=";
-    #   name = "agda-mode";
-    #   publisher = "banacorn";
-    #   version = "0.5.7"; # 0.6.0 and 0.7.0 are broken
-    # }
+    {
+      hash = "sha256-ZyFY3pzNUUpdAB3lqys/z0NOUrQA/qmPquRPNFw/JAI=";
+      name = "agda-mode";
+      publisher = "banacorn";
+      version = "0.6.3";
+    }
     {
       hash = "sha256-jPLwWZogHmUsjRbBO6fWODuRH+l93QJHT88dOM1TT4U=";
       name = "codercoder-dark-theme";
@@ -91,29 +91,37 @@ in {
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
         tamasfe.even-better-toml
-        (pkgs.vscode-utils.buildVscodeExtension {
-          pname = "agda-mode-vscode";
-          version = "0.5.7-unstable";
-          vscodeExtPublisher = "banacorn";
-          vscodeExtName = "agda-mode";
-          vscodeExtUniqueId = "banacorn.agda-mode";
-          src = pkgs.buildNpmPackage {
-            name = "agda-mode-vscode.zip";
-            src = pkgs.fetchFromGitHub {
-              owner = my.githubUsername;
-              repo = "agda-mode-vscode";
-              rev = "live";
-              hash = "sha256-wCGTLf5h7VSRSFF6JCpdZ3dUf+cy+I6gPH1NuWUzL+o=";
-            };
-            npmDepsHash = "sha256-kYo6XsxiHp1tQ4JiPZ0PoXXla5WW2n1MFpCEQMqIjyc=";
-            makeCacheWritable = true;
-            nativeBuildInputs = [ pkgs.vsce ];
-            forceGitDeps = true;
-            installPhase = ''
-              vsce package -o "$out"
-            '';
-          };
-        })
+        # (pkgs.vscode-utils.buildVscodeExtension {
+        #   pname = "agda-mode-vscode";
+        #   version = "0.6.2-unstable";
+        #   vscodeExtPublisher = "banacorn";
+        #   vscodeExtName = "agda-mode";
+        #   vscodeExtUniqueId = "banacorn.agda-mode";
+        #   src = pkgs.buildNpmPackage {
+        #     name = "agda-mode-vscode.zip";
+        #     # src = pkgs.fetchFromGitHub {
+        #     #   owner = my.githubUsername;
+        #     #   repo = "agda-mode-vscode";
+        #     #   rev = "live";
+        #     #   hash = "sha256-wCGTLf5h7VSRSFF6JCpdZ3dUf+cy+I6gPH1NuWUzL+o=";
+        #     # };
+        #     # npmDepsHash = "sha256-kYo6XsxiHp1tQ4JiPZ0PoXXla5WW2n1MFpCEQMqIjyc=";
+        #     src = pkgs.fetchFromGitHub {
+        #       owner = "banacorn";
+        #       repo = "agda-mode-vscode";
+        #       rev = "3fcded146d0fefe3e1e20e0b620191c6f8eca77d";
+        #       hash = "sha256-z68hpIUe5VGSUoA4Tcc/ydd4vZz32Rb96buA25e/ZlA=";
+        #     };
+        #     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = 1;
+        #     npmDepsHash = "sha256-6DHXs/EKRbLf8liqr+gtWOMwCT7RTwCYD9et9sgseRo=";
+        #     makeCacheWritable = true;
+        #     nativeBuildInputs = [ pkgs.vsce ];
+        #     forceGitDeps = true;
+        #     installPhase = ''
+        #       vsce package -o "$out"
+        #     '';
+        #   };
+        # })
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace exts;
     };
 

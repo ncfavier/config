@@ -50,8 +50,8 @@
       fi
       chmod -R u+w -- "$f"
     '')
-    (shellScriptWith "upload" ./upload.sh {})
-    (shellScriptWith "order" ./order.sh {})
+    (shellScriptWith "upload" {} (readFile ./upload.sh))
+    (shellScriptWith "order" {} (readFile ./order.sh))
   ];
 
   programs.bcc.enable = true; # for execsnoop
@@ -82,7 +82,7 @@
   };
 
   nixpkgs.overlays = [ (pkgs: prev: {
-    shellScriptWith = name: src: { deps ? [], vars ? {} }:
+    shellScriptWith = name: { deps ? [], vars ? {}, completion ? null }: src:
       # can't use `writeScriptBin` because no check phase,
       # can't use `writeShellScriptBin` because no interactive shell
       pkgs.writeTextFile {
@@ -95,11 +95,16 @@
           PATH=${makeBinPath deps}''${PATH+:$PATH}
           ''}
           ${toShellVars vars}
-          ${readFile src}
+          ${src}
         '';
         checkPhase = ''
           ${pkgs.stdenv.shellDryRun} "$target"
+        '' + optionalString (completion != null) ''
+          installShellCompletion --bash --cmd "$name" ${builtins.toFile "completions.bash" completion}
         '';
+        derivationArgs = optionalAttrs (completion != null) {
+          nativeBuildInputs = [ pkgs.installShellFiles ];
+        };
       };
 
     pythonScriptWithDeps = name: src: deps:

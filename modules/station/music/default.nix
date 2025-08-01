@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ lib, config, pkgs, ... }: with lib; {
   hm = {
     services.mpd = {
       enable = true;
@@ -29,21 +29,21 @@
     };
 
     programs.rofi.extraConfig.modes = [ "music:${
-      pkgs.shellScriptWith "music-rofi" ./music-rofi.sh {}
+      pkgs.shellScriptWith "music-rofi" {} (readFile ./music-rofi.sh)
     }/bin/music-rofi" ];
 
     home.packages = with pkgs; [
       playerctl
       mpc_cli
-      (shellScriptWith "music-play" ./music-play.sh {
+      (shellScriptWith "music-play" {
         deps = [ mpc_cli ];
-      })
-      (shellScriptWith "music-notify" ./music-notify.sh {
+      } (readFile ./music-play.sh))
+      (shellScriptWith "music-notify" {
         deps = [ mpc_cli playerctl dunst ];
-      })
-      (shellScriptWith "music-add" ./music-add.sh {
+      } (readFile ./music-notify.sh))
+      (shellScriptWith "music-add" {
         deps = [ imagemagick ffmpeg-full audacity mpc_cli ];
-      })
+      } (readFile ./music-add.sh))
       songrec
     ];
   };

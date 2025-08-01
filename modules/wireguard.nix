@@ -113,7 +113,9 @@ in {
     })
 
     (mkIf (enable && this.isStation) (let
-      wg-toggle = pkgs.shellScriptWith "wg-toggle" (builtins.toFile "wg-toggle" ''
+      wg-toggle = pkgs.shellScriptWith "wg-toggle" {
+        deps = with pkgs; [ iproute2 jq systemd ];
+      } ''
         PATH=/run/wrappers/bin:$PATH
         ip46() { sudo ip -4 "$@"; sudo ip -6 "$@"; }
         fwmark=$(sudo wg show ${interface} fwmark) || exit
@@ -124,8 +126,10 @@ in {
             ip46 route add default dev ${interface} table "$fwmark"
             resolvectl domain ${interface} ${interface} '~.' # ~. means "use this interface exclusively"
         fi
-      '') { deps = with pkgs; [ iproute2 jq systemd ]; };
-      wg-exempt = pkgs.shellScriptWith "wg-exempt" (builtins.toFile "wg-exempt" ''
+      '';
+      wg-exempt = pkgs.shellScriptWith "wg-exempt" {
+        deps = with pkgs; [ dnsutils iproute2 ];
+      } ''
         PATH=/run/wrappers/bin:$PATH
         v4=() v6=() action=add
         for arg do
@@ -148,7 +152,7 @@ in {
             sudo ip -6 rule "$action" from "$ip" lookup main
             sudo ip -6 rule "$action" to "$ip" lookup main
         done
-      '') { deps = with pkgs; [ dnsutils iproute2 ]; };
+      '';
     in {
       networking.wg-quick.interfaces.${interface} = {
         privateKeyFile = config.secrets.wireguard.path;

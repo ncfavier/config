@@ -47,19 +47,26 @@
         alsa-utils
         pulseaudio
         pavucontrol
-        (writeShellScriptBin "volume" ''
+        (shellScriptWith "volume" {
+          completion = ''
+            complete -W 'mic deafen undeafen toggle-deaf mute unmute toggle-mute' volume
+          '';
+        } ''
+          print-volume() {
+            jq -r --arg def "$1" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%"))" + if .mute then " (muted)" else "" end'
+          }
           if (( ! $# )); then
-            pactl --format=json list sinks |
-              jq -r --arg def "$(pactl get-default-sink)" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%")):\(.mute)"'
+            pactl --format=json list sinks | print-volume "$(pactl get-default-sink)"
           else case $1 in
             mic)
-              pactl --format=json list sources |
-                jq -r --arg def "$(pactl get-default-source)" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%")):\(.mute)"'
+              pactl --format=json list sources | print-volume "$(pactl get-default-source)"
               ;;
-            mute) pactl set-sink-mute @DEFAULT_SINK@ 1;;
-            unmute) pactl set-sink-mute @DEFAULT_SINK@ 0;;
-            toggle) pactl set-sink-mute @DEFAULT_SINK@ toggle;;
-            toggle-mic) pactl set-source-mute @DEFAULT_SOURCE@ toggle;;
+            deafen) pactl set-sink-mute @DEFAULT_SINK@ 1;;
+            undeafen) pactl set-sink-mute @DEFAULT_SINK@ 0;;
+            toggle-deaf) pactl set-sink-mute @DEFAULT_SINK@ toggle;;
+            mute) pactl set-source-mute @DEFAULT_SOURCE@ 1;;
+            unmute) pactl set-source-mute @DEFAULT_SOURCE@ 0;;
+            toggle-mute) pactl set-source-mute @DEFAULT_SOURCE@ toggle;;
             *) pactl set-sink-volume @DEFAULT_SINK@ "$1%";;
           esac fi
         '')
