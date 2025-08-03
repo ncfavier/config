@@ -64,7 +64,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         "mpv"
         "File-roller"
         "Lxappearance"
-        "Pavucontrol"
+        "pavucontrol"
         "*:calendar"
         "Qemu-system-x86_64"
         "Gucharmap"
@@ -196,10 +196,12 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           "{_,mpc} volume {-,+}2";
         "XF86AudioMute" =
           "volume toggle-deaf";
+        "alt + XF86Audio{Lower,Raise}Volume" =
+          "volume mic {-,+}2 && mic-notify";
         "alt + XF86AudioMute" =
-          "volume toggle-mute";
+          "volume toggle-mute && mic-notify";
         "XF86AudioMicMute" =
-          "volume toggle-mute";
+          "volume toggle-mute && mic-notify";
         "XF86MonBrightness{Down,Up}" =
           "backlight {-,+}";
         "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + ${config.keys.printScreenKey}" =

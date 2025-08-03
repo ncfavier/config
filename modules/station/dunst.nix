@@ -23,7 +23,6 @@
         word_wrap = true;
         icon_theme = config.hm.gtk.iconTheme.name;
         icon_position = "right";
-        min_icon_size = 64;
         max_icon_size = 500;
         dmenu = "rofi -dmenu -p dunst -no-fixed-num-lines";
         browser = "xdg-open";

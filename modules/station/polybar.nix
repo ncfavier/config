@@ -184,7 +184,9 @@ in {
             ramp.font = iconFont;
           };
 
-          "module/battery" = {
+          "module/battery" = let
+            actions = t: "%{A:battery-notify:}${t}%{A}";
+          in {
             type = "internal/battery";
             inherit (config.battery) battery adapter;
             full-at = config.battery.fullAt;
@@ -194,10 +196,10 @@ in {
             ramp.capacity.font = iconFont;
             ramp.charging.text = [ "󰢟" "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
             ramp.charging.font = iconFont;
-            format.full.text = "${icon "󱈑"} <label-full>";
-            format.charging.text = "<ramp-charging> <label-charging>";
-            format.discharging.text = "<ramp-capacity> <label-discharging>";
-            format.low.text = "${icon "󱃍"} <label-low>";
+            format.full.text = actions "${icon "󱈑"} <label-full>";
+            format.charging.text = actions "<ramp-charging> <label-charging>";
+            format.discharging.text = actions "<ramp-capacity> <label-discharging>";
+            format.low.text = actions "${icon "󱃍"} <label-low>";
             format.low.foreground = hot;
           };
 
@@ -226,7 +228,14 @@ in {
         Service.ExecStopPost = "${config.hm.xsession.windowManager.bspwm.package}/bin/bspc config top_padding 0";
       };
 
-      home.packages = attrValues pkgs.myPolybarScripts;
+      home.packages = attrValues pkgs.myPolybarScripts ++ [
+        (pkgs.shellScriptWith "battery-notify" {
+          deps = with pkgs; [ dunst ];
+          vars = {
+            inherit (config.battery) fullAt;
+          };
+        } (readFile ./battery-notify.sh))
+      ];
     };
 
     fonts.packages = with pkgs; [ material-design-icons ];

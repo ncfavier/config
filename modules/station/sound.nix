@@ -47,19 +47,38 @@
         alsa-utils
         pulseaudio
         pavucontrol
+        (shellScriptWith "mic-notify" {
+          deps = [ jq pulseaudio ];
+        } ''
+          def=$(pactl get-default-source)
+          IFS=: read -r volume mute < <(pactl --format=json list sources | jq -r --arg def "$def" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%")):\(.mute)"')
+          if [[ $mute == true ]]; then
+            icon=microphone-disabled-symbolic
+          else
+            icon=audio-input-microphone-symbolic
+          fi
+          id=0x1F399 # 🎙️
+          dunstify -i "$icon" -r "$id" "Microphone: $volume%"
+        '')
         (shellScriptWith "volume" {
+          deps = [ jq pulseaudio ];
           completion = ''
             complete -W 'mic deafen undeafen toggle-deaf mute unmute toggle-mute' volume
           '';
         } ''
           print-volume() {
-            jq -r --arg def "$1" '.[] | select(.name == $def) | "\(first(.volume[]) | .value_percent | rtrimstr("%"))" + if .mute then " (muted)" else "" end'
+            jq -r --arg def "$1" '.[] | select(.name == $def) | (first(.volume[]) | .value_percent | rtrimstr("%")) + if .mute then " (muted)" else "" end'
           }
           if (( ! $# )); then
             pactl --format=json list sinks | print-volume "$(pactl get-default-sink)"
           else case $1 in
             mic)
-              pactl --format=json list sources | print-volume "$(pactl get-default-source)"
+              shift
+              if (( ! $# )); then
+                pactl --format=json list sources | print-volume "$(pactl get-default-source)"
+              else
+                pactl set-source-volume @DEFAULT_SOURCE@ "$1%"
+              fi
               ;;
             deafen) pactl set-sink-mute @DEFAULT_SINK@ 1;;
             undeafen) pactl set-sink-mute @DEFAULT_SINK@ 0;;

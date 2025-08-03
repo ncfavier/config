@@ -88,6 +88,7 @@ launch() {
         chat|irc)
             instance=irc lines=100 columns=140 terminal \
                 --confirm-close-surface=false \
+                --grapheme-width-method=legacy \
                 -e mosh -- "$server_hostname" tmux -L weechat attach ${not_new:+-d} &;;
                 # -o bell.command='{program = "notify-send", args = ["-i", "0", "-r", "0x1F4AC", "💬"]}' \
         editor)
