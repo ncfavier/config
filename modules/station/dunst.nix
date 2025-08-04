@@ -23,6 +23,7 @@
         word_wrap = true;
         icon_theme = config.hm.gtk.iconTheme.name;
         icon_position = "right";
+        min_icon_size = 64;
         max_icon_size = 500;
         dmenu = "rofi -dmenu -p dunst -no-fixed-num-lines";
         browser = "xdg-open";
@@ -43,14 +44,15 @@
         timeout = 0;
       };
 
-      # Allow certain notifications in pause mode
       dunstify = {
         appname = "dunstify";
         override_pause_level = 100;
+        min_icon_size = 32;
       };
       wifi = {
         appname = "NetworkManager Applet";
         override_pause_level = 100;
+        min_icon_size = 24;
       };
       bluetooth = {
         appname = "blueman";

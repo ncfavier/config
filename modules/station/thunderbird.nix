@@ -31,9 +31,9 @@
           })
           (buildFirefoxXpiAddon rec {
             pname = "tbsync";
-            version = "4.15";
+            version = "4.16";
             url = "https://addons.thunderbird.net/user-media/addons/_attachments/773590/tbsync-${version}-tb.xpi";
-            sha256 = "gLRrG7NGrvFsNOLEzmMSfqeUoSDSQ3ihtBoJuc58/XM=";
+            sha256 = "sha256-YKujEncOWknc7fuNtny1ep+NrxL/1J3KLX7Rr4JbvLs=";
             addonId = "tbsync@jobisoft.de";
             meta = with lib; {
               homepage = "https://github.com/jobisoft/TbSync";
@@ -60,9 +60,9 @@
           })
           (buildFirefoxXpiAddon rec {
             pname = "provider-fur-exchange-activesync";
-            version = "4.16";
+            version = "4.17";
             url = "https://addons.thunderbird.net/user-media/addons/_attachments/986338/provider_fur_exchange_activesync-${version}-tb.xpi";
-            sha256 = "7T31TFWE/OKnw9+/IrC4+Vz7GAtaAS5ZdtIcnu6BtO0=";
+            sha256 = "sha256-9WTEBj5L9gPIHKD/Xfo0MvuUYXmhUgjMcwIv10enBGY=";
             addonId = "eas4tbsync@jobisoft.de";
             meta = with lib; {
               homepage = "https://github.com/jobisoft/EAS-4-TbSync";

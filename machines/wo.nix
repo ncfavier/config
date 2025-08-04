@@ -124,6 +124,12 @@
 
     keys.composeKey = "rctrl";
 
+    systemd.services.power-profiles-daemon = {
+      serviceConfig.ExecStartPost = [
+        "${getBin config.services.power-profiles-daemon.package}/bin/powerprofilesctl set power-saver"
+      ];
+    };
+
     battery.battery = "BAT1";
     battery.adapter = "ACAD";
     battery.fullAt = 99;
