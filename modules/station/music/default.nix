@@ -42,7 +42,7 @@
         deps = [ mpc_cli playerctl dunst ];
       } (readFile ./music-notify.sh))
       (shellScriptWith "music-add" {
-        deps = [ imagemagick ffmpeg-full audacity mpc_cli ];
+        deps = [ curl htmlq jq yt-dlp imagemagick ffmpeg-full audacity mpc_cli ];
       } (readFile ./music-add.sh))
       songrec
     ];

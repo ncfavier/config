@@ -51,6 +51,9 @@ for src in "${srcs[@]}"; do
             { read -r artist; read -r album; read -r cover_src; }
             if [[ $src == *soundcloud.com* ]]; then
                 cover_src=${cover_src/-large/-t1080x1080}
+            elif [[ $src == *bandcamp.com* ]]; then
+                # The yt-dlp bandcamp fetcher doesn't necessarily include the main album art in -J, so we fetch it manually
+                cover_src=$(curl -fsSL "$src" | htmlq --text 'script[type="application/ld+json"]' | jq -r '.image')
             fi
         fi
 
