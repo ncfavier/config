@@ -1,24 +1,10 @@
 { lib, config, pkgs, ... }: with lib; let
-  thunarWithPkgs = pkgs.thunar-unwrapped.xfce.thunar.override {
+  thunarWithPkgs = pkgs.xfce.thunar.override {
     thunarPlugins = with pkgs.xfce; [
       thunar-volman
       thunar-archive-plugin
       thunar-media-tags-plugin
     ];
-    thunar-unwrapped = pkgs.thunar-unwrapped.xfce.thunar-unwrapped.overrideAttrs (old: {
-      patches = old.patches or [] ++ [
-        # https://gitlab.xfce.org/xfce/thunar/-/merge_requests/671
-        (builtins.toFile "thunar-compact-patch" ''
-diff --git a/thunar/thunar-icon-view.c b/thunar/thunar-icon-view.c
-index 218601800..b03ef6ed9 100644
---- a/thunar/thunar-icon-view.c
-+++ b/thunar/thunar-icon-view.c
-@@ -212 +212 @@ thunar_icon_view_set_consistent_horizontal_spacing (ThunarIconView *icon_view)
--  if (exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
-+  if (TRUE || exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
-        '')
-      ];
-    });
   };
 in {
   services.gvfs.enable = true;
@@ -26,7 +12,32 @@ in {
   programs.dconf.enable = true;
   programs.file-roller.enable = true;
 
-  cachix.derivationsToPush = [ thunarWithPkgs ];
+  cachix.derivationsToPush = [ thunarWithPkgs pkgs.xfce.tumbler ];
+
+  nixpkgs.overlays = [ (self: super: {
+    xfce = super.xfce.overrideScope (xself: xsuper: {
+      tumbler = xsuper.tumbler.overrideAttrs (drv: {
+        patches = drv.patches or [] ++ [
+          ./tumbler-thumbnail-symlinks.patch
+        ];
+      });
+      thunar-unwrapped = xsuper.thunar-unwrapped.overrideAttrs (drv: {
+        patches = drv.patches or [] ++ [
+          # https://gitlab.xfce.org/xfce/thunar/-/merge_requests/671
+          (builtins.toFile "thunar-compact.patch" ''
+diff --git a/thunar/thunar-icon-view.c b/thunar/thunar-icon-view.c
+index 218601800..b03ef6ed9 100644
+--- a/thunar/thunar-icon-view.c
++++ b/thunar/thunar-icon-view.c
+@@ -212 +212 @@ thunar_icon_view_set_consistent_horizontal_spacing (ThunarIconView *icon_view)
+-  if (exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
++  if (TRUE || exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
+          '')
+          ./thunar-thumbnail-symlinks.patch
+        ];
+      });
+    });
+  }) ];
 
   hm = {
     home.packages = with pkgs; let

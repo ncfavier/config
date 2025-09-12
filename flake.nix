@@ -37,15 +37,11 @@
       inputs.nur.follows = "nur";
     };
     ghostty = {
-      url = "github:ghostty-org/ghostty";
+      url = "github:pluiedev/ghostty/pluie/jj-rslmomxuxwpl";
     };
 
     # Temporary nixpkgs pins
-    nixpkgs-agda-bump.url = "github:ncfavier/nixpkgs/agda-bump";
-    nixpkgs-discord-cli-args.url = "github:ncfavier/nixpkgs/discord-cli-args"; # merged
     nixpkgs-openrgb-bump.url = "github:ncfavier/nixpkgs/openrgb"; # 1.0rc1 supports ki's motherboard
-    nixpkgs-tela-breeze.url = "github:ncfavier/nixpkgs/tela-breeze"; # merged
-    nixpkgs-thunar-unwrapped.url = "github:ncfavier/nixpkgs/thunar-unwrapped"; # merged
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: let
@@ -74,9 +70,7 @@
     ) (catAttrs' "nixos" machines);
 
     packages."x86_64-linux" = mapAttrs (_: c: c.config.system.build.toplevel) self.nixosConfigurations // {
-      iso = self.nixosConfigurations.iso.config.system.build.isoImage.overrideAttrs {
-        unsafeDiscardReferences.out = true;
-      };
+      iso = self.nixosConfigurations.iso.config.system.build.isoImage;
     };
   };
 }

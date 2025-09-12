@@ -15,8 +15,8 @@ focus-window() {
             .monitors[].desktops[].root//empty |
             recurse(.firstChild//empty, .secondChild//empty) |
             select(.client != null) |
-            select($class == "" or (.client.className | test("^(\($class))$"; "i"))) |
-            select($instance == "" or (.client.instanceName | test("^(\($instance))$"; "i"))) |
+            select($class == "" or (.client.className | test("^(\($class))"; "i"))) |
+            select($instance == "" or (.client.instanceName | test("^(\($instance))"; "i"))) |
             .id
         ),
         "",
@@ -147,7 +147,6 @@ case $cmd in
     lock)
         i3lock -c 000000;;
     quit)
-        kill "$(< "$XDG_RUNTIME_DIR/bar.pid")" 2> /dev/null
         bspc quit;;
     *)
         die "no such command: $cmd";;

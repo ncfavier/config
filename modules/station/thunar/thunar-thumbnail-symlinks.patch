@@ -1,0 +1,52 @@
+diff --git a/thunar/thunar-file.c b/thunar/thunar-file.c
+index 9cd5de43d..b8cf5542e 100644
+--- a/thunar/thunar-file.c
++++ b/thunar/thunar-file.c
+@@ -3886,6 +3886,38 @@ thunar_file_set_is_thumbnail (ThunarFile *file,
+ }
+ 
+ 
++gchar *
++g_file_get_resolved_uri (GFile *file)
++{
++  gchar *path;
++  gchar *real_path;
++  GFile *resolved;
++  gchar *uri = NULL;
++
++  path = g_file_get_path (file);
++
++  if (path != NULL) {
++    real_path = realpath (path, NULL);
++    g_free (path);
++
++    if (real_path != NULL) {
++      resolved = g_file_new_for_path (real_path);
++      g_free (real_path);
++
++      if (resolved != NULL && G_IS_FILE (resolved)) {
++        uri = g_file_get_uri (resolved);
++        g_object_unref (resolved);
++      }
++    }
++  }
++
++  if (uri == NULL) {
++    uri = g_file_get_uri (file);
++  }
++
++  return uri;
++}
++
+ 
+ static gchar *
+ thunar_file_get_thumbnail_path_real (ThunarFile         *file,
+@@ -3905,7 +3937,7 @@ thunar_file_get_thumbnail_path_real (ThunarFile         *file,
+   checksum = g_checksum_new (G_CHECKSUM_MD5);
+   if (G_LIKELY (checksum != NULL))
+     {
+-      uri = thunar_file_dup_uri (file);
++      uri = g_file_get_resolved_uri (thunar_file_get_file(file));
+       g_checksum_update (checksum, (const guchar *) uri, strlen (uri));
+       g_free (uri);
+ 

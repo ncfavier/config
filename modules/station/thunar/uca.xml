@@ -73,7 +73,7 @@
 	<name>Set as wallpaper (fill)</name>
 	<submenu></submenu>
 	<unique-id>1548521467613563-1</unique-id>
-	<command>feh --bg-fill %F</command>
+	<command>feh --xinerama-index=0 --bg-fill %F</command>
 	<description></description>
 	<range></range>
 	<patterns>*</patterns>
@@ -84,7 +84,7 @@
 	<name>Set as wallpaper (tile)</name>
 	<submenu></submenu>
 	<unique-id>1548521561824976-2</unique-id>
-	<command>feh --bg-tile %F</command>
+	<command>feh --xinerama-index=0 --bg-tile %F</command>
 	<description></description>
 	<range></range>
 	<patterns>*</patterns>
@@ -95,7 +95,7 @@
 	<name>Set as wallpaper (center)</name>
 	<submenu></submenu>
 	<unique-id>1731433819648815-1</unique-id>
-	<command>feh --bg-center --image-bg &apos;#ffffff&apos; %F</command>
+	<command>feh --xinerama-index=0 --bg-center --image-bg &apos;#ffffff&apos; %F</command>
 	<description></description>
 	<range>*</range>
 	<patterns>*</patterns>

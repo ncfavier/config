@@ -9,7 +9,7 @@ from gi.repository import Gio, GLib
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 
-sizes = ['normal', 'large']
+sizes = ['normal', 'large', 'x-large']
 recursive = False
 hidden = False
 delete = False
@@ -51,6 +51,8 @@ for p in args:
 
 uris = []
 mimes = []
+n_total = len(files) * len(sizes)
+n_done = 0
 
 for path in files:
     f = Gio.File.new_for_path(str(path))
@@ -68,13 +70,21 @@ if not dry_run:
     thumbnailer = bus.get_object('org.freedesktop.thumbnails.Thumbnailer1', '/org/freedesktop/thumbnails/Thumbnailer1')
     interface = dbus.Interface(thumbnailer, 'org.freedesktop.thumbnails.Thumbnailer1')
     def on_ready(handle, uris):
+        global n_done
         for uri in uris:
-            print(f"{handles[handle]} {uri}")
+            n_done += 1
+            print(f"[{n_done}/{n_total}] ✅ {handles[handle]} {uri}")
+    def on_error(handle, failed_uris, error_code, message):
+        global n_done
+        for uri in failed_uris:
+            n_done += 1
+            print(f"[{n_done}/{n_total}] ❌ {handles[handle]} {uri} (failed: {message})")
     def on_finished(handle):
         del handles[handle]
         if not handles:
             loop.quit()
     interface.connect_to_signal('Ready', on_ready)
+    interface.connect_to_signal('Error', on_error)
     interface.connect_to_signal('Finished', on_finished)
     handles = {}
     for size in sizes:

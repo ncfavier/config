@@ -12,8 +12,11 @@
     #   publisher = "banacorn";
     #   version = "0.5.7";
     #   # issues with later versions:
-    #   # - https://github.com/banacorn/agda-mode-vscode/issues/243
-    #   # - https://github.com/banacorn/agda-mode-vscode/issues/248
+    #   # https://github.com/banacorn/agda-mode-vscode/issues/243
+    #   # https://github.com/banacorn/agda-mode-vscode/issues/247
+    #   # https://github.com/banacorn/agda-mode-vscode/issues/248
+    #   # https://github.com/banacorn/agda-mode-vscode/issues/254
+    #   # https://github.com/banacorn/agda-mode-vscode/issues/255
     # }
     {
       hash = "sha256-jPLwWZogHmUsjRbBO6fWODuRH+l93QJHT88dOM1TT4U=";
@@ -96,7 +99,7 @@ in {
         tamasfe.even-better-toml
         (pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
-          version = "0.6.2-unstable";
+          version = "0.6.5-unstable";
           vscodeExtPublisher = "banacorn";
           vscodeExtName = "agda-mode";
           vscodeExtUniqueId = "banacorn.agda-mode";
@@ -108,8 +111,14 @@ in {
               rev = "live";
               hash = "sha256-wCGTLf5h7VSRSFF6JCpdZ3dUf+cy+I6gPH1NuWUzL+o=";
             };
+            # src = pkgs.fetchFromGitHub {
+            #   owner = "fredrik-bakke";
+            #   repo = "agda-mode-vscode";
+            #   rev = "autocomplete-literate";
+            #   hash = "sha256-7Cc61IpEr0U1rrIc+gf6Mz5EZCN59TvoNVBiVgi934I=";
+            # };
             npmDepsHash = "sha256-kYo6XsxiHp1tQ4JiPZ0PoXXla5WW2n1MFpCEQMqIjyc=";
-            # PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = 1;
+            PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = 1;
             makeCacheWritable = true;
             nativeBuildInputs = [ pkgs.vsce ];
             forceGitDeps = true;

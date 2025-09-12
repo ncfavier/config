@@ -14,6 +14,7 @@
           redirector # ^https:\/\/(.*?)\.m\.wikipedia\.org\/(.*) → https://$1.wikipedia.org/$2
                      # ^https:\/\/(.*?)\.m\.wiktionary\.org\/(.*) → https://$1.wiktionary.org/$2
           video-resumer
+          youtube-no-translation
           uppity
           zotero-connector
         ];
@@ -27,6 +28,8 @@
           "browser.fixup.alternate.enabled" = false;
           "browser.gesture.swipe.left" = "";
           "browser.gesture.swipe.right" = "";
+          "browser.ml.enable" = false;
+          "browser.ml.chat.enabled" = false;
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
           "browser.newtabpage.activity-stream.feeds.snippets" = false;
           "browser.newtabpage.activity-stream.showSearch" = false;

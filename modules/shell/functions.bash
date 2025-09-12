@@ -509,7 +509,7 @@ what() {
 complete -c what
 
 nix-locate-program() {
-    nix-locate --minimal --type x --type s --whole-name --at-root --top-level /bin/"$1"
+    nix-locate --minimal --type x --type s --whole-name --at-root /bin/"$1"
 }
 
 fdnp() {

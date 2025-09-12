@@ -20,6 +20,11 @@
         pulse.enable = true;
 
         wireplumber.extraConfig.custom = {
+          "monitor.alsa.properties" = {
+            # https://github.com/NixOS/nixos-hardware/issues/1603
+            "alsa.use-ucm" = false;
+          };
+
           "wireplumber.settings" = {
             # https://github.com/marin-m/SongRec/issues/184
             "bluetooth.autoswitch-to-headset-profile" = false;

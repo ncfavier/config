@@ -1,9 +1,9 @@
 { lib, config, pkgs, ... }: with lib; let
   bspwm = config.hm.xsession.windowManager.bspwm.package;
+  tty = 1;
 in mkEnableModule [ "my-programs" "bspwm" ] {
   services.xserver = {
     displayManager.startx.enable = true;
-    tty = 1;
   };
 
   hm = {
@@ -37,7 +37,11 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           desktop = "web";
           follow = true;
         };
-        thunderbird = {
+        "thunderbird" = {
+          desktop = "mail";
+          follow = true;
+        };
+        "thunderbird-esr" = {
           desktop = "mail";
           follow = true;
         };
@@ -100,7 +104,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
     };
 
     programs.bash.profileExtra = ''
-      if [[ ! $DISPLAY && $XDG_VTNR == ${toString config.services.xserver.tty} ]]; then
+      if [[ ! $DISPLAY && $XDG_VTNR == ${toString tty} ]]; then
           export XDG_SESSION_TYPE=x11
           unset SHLVL_BASE
           exec systemd-cat -t xsession startx
@@ -208,8 +212,8 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + u" =
           "unicode-analyse";
-        "super + p" =
-          "xsel -bo | upload -";
+        "super + p" = # Framework Fn + F9 emits super + p
+          "true";
         "super + {_,shift} + space" =
           "wm launch";
         "super + shift + p" =

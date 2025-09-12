@@ -98,9 +98,12 @@
               mode = "2880x1920";
             };
           };
-          hooks.postswitch.bspwm = ''
-            bspc monitor DisplayPort-1 -r
+          hooks.postswitch.feh = ''
+            [[ -f ${config.my.home}/.fehbg ]] && ${config.my.home}/.fehbg
           '';
+          # hooks.postswitch.bspwm = ''
+          #   bspc monitor DisplayPort-1 -r
+          # '';
         };
         hdmi = {
           fingerprint = { inherit eDP DisplayPort-1; };
@@ -113,9 +116,12 @@
             DisplayPort-1 = {
               enable = true;
               mode = "1920x1080";
-              position = "0x0";
+              position = "2880x0";
             };
           };
+          hooks.postswitch.feh = ''
+            [[ -f ${config.my.home}/.fehbg ]] && ${config.my.home}/.fehbg
+          '';
         };
       };
     };

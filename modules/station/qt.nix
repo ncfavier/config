@@ -1,7 +1,7 @@
 {
   qt = {
     enable = true;
-    platformTheme = "kde6";
+    platformTheme = "kde";
     style = "adwaita-dark";
   };
 }

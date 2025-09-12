@@ -1,0 +1,65 @@
+diff --git a/plugins/xdg-cache/xdg-cache-cache.c b/plugins/xdg-cache/xdg-cache-cache.c
+index 04d1833..c4e1225 100644
+--- a/plugins/xdg-cache/xdg-cache-cache.c
++++ b/plugins/xdg-cache/xdg-cache-cache.c
+@@ -598,6 +598,38 @@ xdg_cache_cache_get_flavors (TumblerCache *cache)
+ }
+ 
+ 
++gchar *
++g_file_get_resolved_uri (GFile *file)
++{
++  gchar *path;
++  gchar *real_path;
++  GFile *resolved;
++  gchar *uri = NULL;
++
++  path = g_file_get_path (file);
++
++  if (path != NULL) {
++    real_path = realpath (path, NULL);
++    g_free (path);
++
++    if (real_path != NULL) {
++      resolved = g_file_new_for_path (real_path);
++      g_free (real_path);
++
++      if (resolved != NULL && G_IS_FILE (resolved)) {
++        uri = g_file_get_uri (resolved);
++        g_object_unref (resolved);
++      }
++    }
++  }
++
++  if (uri == NULL) {
++    uri = g_file_get_uri (file);
++  }
++
++  return uri;
++}
++
+ 
+ GFile *
+ xdg_cache_cache_get_file (const gchar *uri,
+@@ -605,7 +637,7 @@ xdg_cache_cache_get_file (const gchar *uri,
+ {
+   const gchar *cachedir;
+   const gchar *dirname;
+-  GFile *file;
++  GFile *file, *sourcefile;
+   gchar *filename;
+   gchar *md5_hash;
+   gchar *path;
+@@ -616,6 +648,12 @@ xdg_cache_cache_get_file (const gchar *uri,
+   cachedir = g_get_user_cache_dir ();
+   dirname = tumbler_thumbnail_flavor_get_name (flavor);
+ 
++  sourcefile = g_file_new_for_uri (uri);
++  if (sourcefile != NULL) {
++    uri = g_file_get_resolved_uri (sourcefile);
++    g_object_unref (sourcefile);
++  }
++
+   md5_hash = g_compute_checksum_for_string (G_CHECKSUM_MD5, uri, -1);
+   filename = g_strdup_printf ("%s.png", md5_hash);
+   path = g_build_filename (cachedir, "thumbnails", dirname, filename, NULL);

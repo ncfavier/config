@@ -1,5 +1,5 @@
 { lib, this, config, pkgs, ... }: with lib; let
-  agda = pkgs.agda-bump.agda.withPackages (p: with p; [
+  agda = pkgs.agda.withPackages (p: with p; [
     standard-library
     cubical
   ]);
@@ -13,10 +13,10 @@ in optionalAttrs this.isStation {
     environment.etc."systemd/system-sleep/batenergy".source = pkgs.writeShellScript "batenergy" ''
       PATH=${makeBinPath [ pkgs.coreutils pkgs.bc ]}
       source ${pkgs.fetchFromGitHub {
-        owner = my.githubUsername;
+        owner = "equaeghe";
         repo = "batenergy";
-        rev = "6109882f05c0762d82fa013dd76d8425aacd58fb";
-        hash = "sha256-JS/NAO8NhAy+3XmI+rNYRN/H0q50Zv+AETmfvmK03eE=";
+        rev = "07b44f6a009739d42cbfab37b81978a940471543";
+        hash = "sha256-A7GTZVrj+ZTgjzhIuJ3+OTDYIZzMyIsObOieY1PGA/M=";
       }}/batenergy.sh "$@"
     '';
 

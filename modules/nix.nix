@@ -15,12 +15,12 @@
           // {
             # Don't use these: flake inputs are more robust and do not
             # get garbage collected (see extraDependencies below).
-            rev = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
+            commit = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
               owner = "NixOS";
               repo = "nixpkgs";
               inherit rev sha256;
             });
-            pr = n: pkgs.rev "refs/pull/${toString n}/head";
+            pr = n: pkgs.commit "refs/pull/${toString n}/head";
             mine = rev: sha256: importNixpkgs (pkgs.fetchFromGitHub {
               owner = lib.my.githubUsername;
               repo = "nixpkgs";
@@ -35,7 +35,7 @@
 
       nix.settings = mkMerge [
         {
-          experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
+          experimental-features = [ "nix-command" "flakes" ];
           warn-dirty = false;
           trusted-users = [ "root" "@wheel" ];
           max-jobs = "auto";

@@ -2,6 +2,7 @@
   hm = {
     programs.thunderbird = {
       enable = true;
+      package = pkgs.thunderbird-esr-bin;
 
       profiles.default = {
         isDefault = true;

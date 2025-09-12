@@ -3,18 +3,12 @@
 
   hm.programs.ghostty = {
     enable = true;
-    package = inputs.ghostty.packages.x86_64-linux.default.overrideAttrs (old: {
-      patches = old.patches or [] ++ [
-        (pkgs.fetchpatch {
-          url = "https://github.com/Opposite34/ghostty/commit/5b871c595254eece6bf44ab48f71409b7ed36088.patch";
-          hash = "sha256-hCWp2MdoD89oYN3I+Pq/HW4k4RcozS1tDuXHO3Nd+Y8=";
-        })
-      ];
-    });
+    package = inputs.ghostty.packages.x86_64-linux.default;
     installVimSyntax = true;
 
     settings = with config.theme; {
       gtk-single-instance = true;
+      window-inherit-working-directory = false;
       window-decoration = false;
       font-family = [ "monospace" "emoji" ];
       font-size = fontSize;

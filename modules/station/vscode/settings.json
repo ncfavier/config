@@ -158,7 +158,6 @@
   },
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
-  "editor.occurrencesHighlight": "off",
   "vim.handleKeys": {
     "<C-b>": false,
     "<C-c>": false,
@@ -326,5 +325,9 @@
     "agda"
   ],
   "editor.experimentalEditContextEnabled": false,
+  "git.blame.editorDecoration.enabled": false,
+  "git.blame.statusBarItem.enabled": true,
+  "editor.editContext": false,
   "workbench.colorTheme": "Mr Pink",
+  "editor.occurrencesHighlight": "off",
 }
