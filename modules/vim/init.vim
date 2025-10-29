@@ -1,7 +1,8 @@
 lua << EOF
 require('nvim-lastplace').setup{}
 
-require('lspconfig').hls.setup {
+vim.lsp.enable('hls')
+vim.lsp.config('hls', {
   filetypes = { 'haskell', 'lhaskell', 'cabal' },
   settings = {
     haskell = {
@@ -15,7 +16,7 @@ require('lspconfig').hls.setup {
       },
     },
   },
-}
+})
 EOF
 
 autocmd CursorHold * lua vim.diagnostic.open_float()

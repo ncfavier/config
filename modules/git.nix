@@ -8,55 +8,19 @@
       enable = true;
       package = pkgs.gitFull;
 
-      userName = my.realName;
-      userEmail = my.email;
       signing = {
         key = my.pgpFingerprint;
         signByDefault = true;
       };
 
-      aliases = {
-        old = "bisect old";
-        new = "bisect new";
-        good = "bisect good";
-        bad = "bisect bad";
-        i = "init";
-        s = "status";
-        d = "diff --no-prefix";
-        dh = "d HEAD";
-        dc = "d --cached";
-        du = "d @{upstream}";
-        edit = "add -e";
-        b = "branch";
-        a = "add";
-        aa = "add -A";
-        au = "add -u";
-        track = "add -N";
-        c = ''!git commit --allow-empty-message -m "$*" #'';
-        ca = "commit --amend";
-        ce = "commit --edit";
-        fixup = "commit --fixup";
-        co = "checkout";
-        cr = ''!git commit -m "$(git-random-commit-message)"'';
-        r = "reset";
-        p = "push";
-        pa = "push --all";
-        pf = "push --force-with-lease";
-        pl = "pull --all --recurse-submodules --autostash";
-        cl = "clone";
-        cl1 = "clone --depth=1";
-        l = "log --graph --oneline";
-        la = "log --graph --oneline --all";
-        sw = "switch";
-        cat = "cat-file -p";
-        yeet = "restore";
-        w = "worktree";
-        rebuild = "clean -Xd";
-      };
-
       ignores = [ ".direnv" ".envrc" ];
 
-      extraConfig = {
+      settings = {
+        user = {
+          name = my.realName;
+          email = my.email;
+        };
+
         advice = {
           detachedHead = false;
           pushNonFFCurrent = false;
@@ -97,6 +61,45 @@
           smtpServerPort = 465;
           annotate = true;
           confirm = "always";
+        };
+
+        alias = {
+          old = "bisect old";
+          new = "bisect new";
+          good = "bisect good";
+          bad = "bisect bad";
+          i = "init";
+          s = "status";
+          d = "diff --no-prefix";
+          dh = "d HEAD";
+          dc = "d --cached";
+          du = "d @{upstream}";
+          edit = "add -e";
+          b = "branch";
+          a = "add";
+          aa = "add -A";
+          au = "add -u";
+          track = "add -N";
+          c = ''!git commit --allow-empty-message -m "$*" #'';
+          ca = "commit --amend";
+          ce = "commit --edit";
+          fixup = "commit --fixup";
+          co = "checkout";
+          cr = ''!git commit -m "$(git-random-commit-message)"'';
+          r = "reset";
+          p = "push";
+          pa = "push --all";
+          pf = "push --force-with-lease";
+          pl = "pull --all --recurse-submodules --autostash";
+          cl = "clone";
+          cl1 = "clone --depth=1";
+          l = "log --graph --oneline";
+          la = "log --graph --oneline --all";
+          sw = "switch";
+          cat = "cat-file -p";
+          yeet = "restore";
+          w = "worktree";
+          rebuild = "clean -Xd";
         };
       };
     };

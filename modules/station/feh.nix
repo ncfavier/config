@@ -2,7 +2,6 @@
   hm = {
     programs.feh = {
       enable = true;
-      package = pkgs.feh-new.feh;
 
       buttons = {
         prev_img = null;

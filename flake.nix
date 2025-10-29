@@ -41,9 +41,6 @@
     };
 
     # Temporary nixpkgs pins
-    nixpkgs-bspwm-new.url = "github:ncfavier/nixpkgs/bspwm";
-    nixpkgs-sxhkd-new.url = "github:ncfavier/nixpkgs/sxhkd";
-    nixpkgs-feh-new.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-openrgb-bump.url = "github:ncfavier/nixpkgs/openrgb"; # 1.0rc1 supports ki's motherboard
   };
 

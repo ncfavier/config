@@ -132,7 +132,6 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
     services.sxhkd = {
       enable = true;
-      package = pkgs.sxhkd-new.sxhkd;
       keybindings = {
         "super + @r" =
           "${config.hm.xdg.configHome}/bspwm/bspwmrc";
@@ -249,16 +248,11 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
   nixpkgs.overlays = [
     (_: prev: {
-      bspwm = pkgs.bspwm-new.bspwm.overrideAttrs (o: {
-        # src = pkgs.fetchFromGitHub {
-        #   owner = "baskerville";
-        #   repo = "bspwm";
-        #   rev = "1560df35be303807052c235634eb8d59415c37ff";
-        #   sha256 = "Ga3vLenEWM2pioRc/U4i4LW5wj97ekvKdJnyAOCjiHI=";
-        # };
+      bspwm = prev.bspwm.overrideAttrs (o: {
         patches = o.patches or [] ++ optional config.broadcasting.enable
           (pkgs.fetchpatch {
-            # hide_by_moving, useful for broadcasting windows
+            # hide_by_moving, useful for switching workspaces while broadcasting a window
+            # https://github.com/baskerville/bspwm/issues/478
             url = "https://github.com/ncfavier/bspwm/commit/9e84eaa6eebe7faff7c7d0d2a911ed6a0d0b0296.patch";
             hash = "sha256-2SDGO3Q+/VXtagoqipBjaP0F4pQQl3qam/uKDchZO3I=";
           });
