@@ -3,6 +3,15 @@
   port = 500;
   enable = this ? wireguard;
   allExemptions = config.networking.wireguard.exemptions ++ config.networking.wireguard.extraExemptions;
+
+  forwardPort = proto: port: map (addr: {
+    inherit proto;
+    sourcePort = port;
+    destination = "${addr}:${toString port}";
+  });
+  forwardTcp = forwardPort "tcp";
+  forwardUdp = forwardPort "udp";
+  forwardBoth = port: addrs: forwardTcp port addrs ++ forwardUdp port addrs;
 in {
   options.networking.wireguard = {
     interface = mkOption {
@@ -106,6 +115,7 @@ in {
           enableIPv6 = true;
           internalIPs = [ config.networking.wireguard.subnetv4 ];
           internalIPv6s = [ config.networking.wireguard.subnetv6 ];
+          forwardPorts = forwardBoth 51413 [ my.machines.wo.wireguard.ipv4 "[${my.machines.wo.wireguard.ipv6}]" ]; # Transmission
         };
       };
 

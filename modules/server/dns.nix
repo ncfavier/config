@@ -27,11 +27,6 @@ in {
       #   subdomains."*" = aaaaa;
       # });
 
-      "grove.monade.li".data = dns.toString "grove.monade.li" (soa // aaaaa // {
-        TTL = 60;
-        TXT = [ "across old bark" "in the ancient glade" "it's always dark" "the quiet shade" ];
-      });
-
       ${my.domain}.data = dns.toString my.domain (soa // aaaaa // {
         TTL = 60 * 60;
 
@@ -68,12 +63,17 @@ in {
           }
         ];
 
-        subdomains = rec {
+        subdomains = let
+          github.CNAME = [ "${my.githubUsername}.github.io." ];
+        in {
           "*" = aaaaa;
 
-          github.CNAME = [ "${my.githubUsername}.github.io." ];
           glam = github;
           agda = github;
+
+          grove = aaaaa // {
+            TXT = [ "across old bark" "in the ancient glade" "it's always dark" "the quiet shade" ];
+          };
         };
       });
     };

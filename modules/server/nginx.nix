@@ -110,12 +110,15 @@ in {
           extraConfig = ''
             default_type text/plain;
             autoindex on;
+            autoindex_exact_size off;
+            autoindex_localtime on;
           '';
         };
 
         "up.${my.domain}".globalRedirect = "f.${my.domain}";
 
         "git.${my.domain}".globalRedirect = "github.com/${my.githubUsername}";
+        "github.${my.domain}".globalRedirect = "ncfavier.github.io";
 
         # "yoneda.ninja".locations."/".return = "301 https://arxiv.org/pdf/1501.02503.pdf";
 

@@ -16,7 +16,7 @@
 
       echo "irc.server.ulminfo */msg ChanServ TOPIC #adventofcode $topic" > "$weechat_fifo"
     '';
-    startAt = "12-1..25 00:00:00 EST";
+    startAt = "12-1..12 00:00:00 EST";
   };
 
   systemd.timers.ulmaoc-topic.timerConfig.AccuracySec = "1s";
