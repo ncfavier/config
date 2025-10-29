@@ -21,7 +21,18 @@
     };
 
     services.mpd-mpris.enable = true;
-    services.playerctld.enable = true;
+    services.playerctld = {
+      enable = true;
+      package = pkgs.playerctl.overrideAttrs (drv: {
+        patches = drv.patches or [] ++ [
+          (pkgs.fetchpatch {
+            # fix: Checks if message body is NULL before getting number of children.
+            url = "https://patch-diff.githubusercontent.com/raw/altdesktop/playerctl/pull/349.patch";
+            hash = "sha256-DtxWv8VKugpOxaGIM/CnD0Dqoo86Q9rmX4ALwwqIkXU=";
+          })
+        ];
+      });
+    };
 
     programs.ncmpcpp = {
       enable = true;
@@ -33,7 +44,6 @@
     }/bin/music-rofi" ];
 
     home.packages = with pkgs; [
-      playerctl
       mpc_cli
       (shellScriptWith "music-play" {
         deps = [ mpc_cli ];

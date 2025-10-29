@@ -176,6 +176,7 @@ in {
 
           "module/light" = {
             type = "internal/backlight";
+            use-actual-brightness = false; # messes up scrolling
             enable-scroll = true;
             scroll-interval = 2;
             format.text = "<ramp> <label>";

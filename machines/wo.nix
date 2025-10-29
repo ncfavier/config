@@ -130,11 +130,21 @@
 
     keys.composeKey = "rctrl";
 
-    systemd.services.power-profiles-daemon = {
-      serviceConfig.ExecStartPost = [
-        "${getBin config.services.power-profiles-daemon.package}/bin/powerprofilesctl set power-saver"
-      ];
+    # TODO does this result in lower temperatures than ppd when charging?
+    services.tlp = {
+      enable = true;
+      settings = {
+        CPU_ENERGY_PERF_POLICY_ON_AC = "power";
+        START_CHARGE_THRESH_BAT0 = 100;
+        STOP_CHARGE_THRESH_BAT0 = 100;
+      };
     };
+    services.power-profiles-daemon.enable = false;
+    # systemd.services.power-profiles-daemon = {
+    #   serviceConfig.ExecStartPost = [
+    #     "${getBin config.services.power-profiles-daemon.package}/bin/powerprofilesctl set power-saver"
+    #   ];
+    # };
 
     battery.battery = "BAT1";
     battery.adapter = "ACAD";

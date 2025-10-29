@@ -27,6 +27,7 @@
       clipboard-write = "allow";
       copy-on-select = "clipboard";
       app-notifications = [ "no-clipboard-copy" ];
+      bell-features = [ "attention,no-title" ];
       keybind = [
         "alt+é=esc:é"
         "alt+è=esc:è"

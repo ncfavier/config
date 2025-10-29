@@ -37,6 +37,7 @@
     fortune
     imagemagickBig
     ffmpeg-full
+    asciinema
     jq
     htmlq
     python3

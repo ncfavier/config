@@ -31,7 +31,7 @@
         use-system-keyboard-layout = true;
         preload-engines = [ "xkb:fr:oss:fra" "anthy" "pinyin" "hangul" ];
       };
-      "desktop/ibus/general/hotkey".triggers = [ "<Super>i" ];
+      "desktop/ibus/general/hotkey".triggers = [ ];
       "desktop/ibus/panel" = {
         show = 0;
         lookup-table-orientation = 1;

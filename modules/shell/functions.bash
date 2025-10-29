@@ -70,6 +70,18 @@ unlock() {
     ssh "unlock.$host"
 }
 
+print_time() {
+  local seconds=$1 minutes hours
+  (( minutes = seconds / 60, seconds %= 60 ))
+  (( hours = minutes / 60, minutes %= 60 ))
+  (( hours )) && printf '%02d:' "$hours"
+  printf '%02d:%02d\n' "$minutes" "$seconds"
+}
+
+timed() {
+    print_time "$SECONDS_ELAPSED"
+}
+
 command_not_found_handle() {
     local IFS=$' \t\n'
     if [[ $1 == *@* ]]; then # [user]@[host] as a shorthand for ssh user@host (host defaults to main server)
@@ -432,6 +444,20 @@ _ghcWithPackages() {
     COMPREPLY=("${COMPREPLY[@]#"$prefix"}")
 }
 complete -F _ghcWithPackages ghcWithPackages
+
+pythonWithPackages() {
+    nix-shell -p "python3.withPackages (ps: with ps; [$*])"
+}
+_pythonWithPackages() {
+    local cur prev words cword prefix=python3Packages.
+    _init_completion
+    COMP_WORDS=(nix build -f /etc/nixpkgs "$prefix$cur")
+    COMP_CWORD=4
+    _completion_loader nix
+    _complete_nix
+    COMPREPLY=("${COMPREPLY[@]#"$prefix"}")
+}
+complete -F _pythonWithPackages pythonWithPackages
 
 nix-build-delete() { # useful for running NixOS tests
     sudo nix-store --delete --ignore-liveness "$(nix-build --no-out-link "$@")"

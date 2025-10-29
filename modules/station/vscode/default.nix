@@ -99,7 +99,7 @@ in {
         tamasfe.even-better-toml
         (pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
-          version = "0.6.5-unstable";
+          version = "0.5.7-patched";
           vscodeExtPublisher = "banacorn";
           vscodeExtName = "agda-mode";
           vscodeExtUniqueId = "banacorn.agda-mode";
@@ -109,7 +109,7 @@ in {
               owner = my.githubUsername;
               repo = "agda-mode-vscode";
               rev = "live";
-              hash = "sha256-wCGTLf5h7VSRSFF6JCpdZ3dUf+cy+I6gPH1NuWUzL+o=";
+              hash = "sha256-yLwL2UxOyRe91Y0Lt5d00ie8UheMYUAGEoL2hZSp/8s=";
             };
             # src = pkgs.fetchFromGitHub {
             #   owner = "fredrik-bakke";

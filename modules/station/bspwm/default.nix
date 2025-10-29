@@ -132,6 +132,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
 
     services.sxhkd = {
       enable = true;
+      package = pkgs.sxhkd-new.sxhkd;
       keybindings = {
         "super + @r" =
           "${config.hm.xdg.configHome}/bspwm/bspwmrc";
@@ -212,6 +213,8 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + u" =
           "unicode-analyse";
+        "super + shift + u" =
+          "xsel -bo | upload -";
         "super + p" = # Framework Fn + F9 emits super + p
           "true";
         "super + {_,shift} + space" =
@@ -245,14 +248,14 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
   programs.i3lock.enable = true;
 
   nixpkgs.overlays = [
-    (pkgs: prev: {
-      bspwm = assert prev.bspwm.version == "0.9.10"; prev.bspwm.overrideAttrs (o: {
-        src = pkgs.fetchFromGitHub {
-          owner = "baskerville";
-          repo = "bspwm";
-          rev = "1560df35be303807052c235634eb8d59415c37ff";
-          sha256 = "Ga3vLenEWM2pioRc/U4i4LW5wj97ekvKdJnyAOCjiHI=";
-        };
+    (_: prev: {
+      bspwm = pkgs.bspwm-new.bspwm.overrideAttrs (o: {
+        # src = pkgs.fetchFromGitHub {
+        #   owner = "baskerville";
+        #   repo = "bspwm";
+        #   rev = "1560df35be303807052c235634eb8d59415c37ff";
+        #   sha256 = "Ga3vLenEWM2pioRc/U4i4LW5wj97ekvKdJnyAOCjiHI=";
+        # };
         patches = o.patches or [] ++ optional config.broadcasting.enable
           (pkgs.fetchpatch {
             # hide_by_moving, useful for broadcasting windows
