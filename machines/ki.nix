@@ -74,6 +74,13 @@
 
     services.xserver.videoDrivers = [ "amdgpu" ];
 
+    services.udev = {
+      enable = true;
+      extraRules = ''
+        ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTR{power/wakeup}="disabled"
+      '';
+    };
+
     my.hashedPassword = "$y$j9T$HVlzhk1CJa7IPyHjmHTFN.$c1go/wt0izX52Ej/EWtykusUCmqJLCXtvgXGvjcrHu8";
 
     services.syncthing.cert = builtins.toFile "syncthing-cert" ''
