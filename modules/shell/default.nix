@@ -52,7 +52,7 @@
       serve = "http-server";
       l = "ls -l";
       ll = "ls -la";
-      nwd = "nix why-depends";
+      nwd = "nix why-depends --all";
       o = "xdg-open";
       rgs = "rg --sort path";
       tall = "tail -f -n +1";
