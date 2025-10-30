@@ -113,11 +113,15 @@ in {
     };
   };
 
-  systemd.services.syncthing = {
-    after = [ "home-manager-${my.username}.service" ]; # ensure ~/.config is created
+  systemd.services.syncthing = let
+    wgDevice = "sys-devices-virtual-net-${config.networking.wireguard.interface}.device";
+  in {
+    requires = [ wgDevice ];
+    after = [
+      wgDevice
+      "home-manager-${my.username}.service" # ensure ~/.config is created
+    ];
     environment.STNODEFAULTFOLDER = "yes";
-    serviceConfig.StartLimitIntervalSec = "1min";
-    serviceConfig.StartLimitBurst = 5;
   };
 
   environment.systemPackages = [ config.services.syncthing.package ];
