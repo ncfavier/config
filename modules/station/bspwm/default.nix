@@ -69,6 +69,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         "File-roller"
         "Lxappearance"
         "pavucontrol"
+        "plattenalbum"
         "*:calendar"
         "Qemu-system-x86_64"
         "Gucharmap"

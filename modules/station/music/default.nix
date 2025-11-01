@@ -43,8 +43,18 @@
       pkgs.shellScriptWith "music-rofi" {} (readFile ./music-rofi.sh)
     }/bin/music-rofi" ];
 
+    dconf.settings = {
+      "de/wagnermartin/Plattenalbum" = {
+        manual-connection = true;
+        host = "localhost";
+        mpris = false;
+      };
+    };
+
     home.packages = with pkgs; [
       mpc_cli
+      plattenalbum
+      quodlibet
       (shellScriptWith "music-play" {
         deps = [ mpc_cli ];
       } (readFile ./music-play.sh))

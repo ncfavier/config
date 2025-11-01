@@ -82,44 +82,62 @@ launch() {
     shift
     case $app in
         '')
-            rofi -sidebar-mode -show-icons -modes drun,run,window -show drun &;;
+            rofi -sidebar-mode -show-icons -modes drun,run,window -show drun &
+            ;;
         term|terminal|+([[:digit:]]))
-            terminal ${*:+-e "$@"} &;;
+            terminal ${*:+-e "$@"} &
+            ;;
         chat|irc)
             instance=irc lines=100 columns=140 terminal \
                 --confirm-close-surface=false \
                 --grapheme-width-method=legacy \
-                -e mosh -- "$server_hostname" tmux -L weechat attach ${not_new:+-d} &;;
+                -e mosh -- "$server_hostname" tmux -L weechat attach ${not_new:+-d} &
                 # -o bell.command='{program = "notify-send", args = ["-i", "0", "-r", "0x1F4AC", "💬"]}' \
+            ;;
         editor)
-            focus_title='- N?VIM$' terminal -e vim &;;
+            focus_title='- N?VIM$' terminal -e vim &
+            ;;
         web|browser)
             if (( new )); then
                 bspc rule -a firefox -o desktop=focused
             fi
-            class='firefox|chromium-browser' focus-window || exec firefox &;;
+            class='firefox|chromium-browser' focus-window || exec firefox &
+            ;;
         mail)
-            class=thunderbird focus-window || exec thunderbird &;;
+            class=thunderbird focus-window || exec thunderbird &
+            ;;
         files)
             if (( new )); then
                 bspc rule -a Thunar -o desktop=focused
             fi
-            class='thunar|dolphin' focus-window || exec thunar &;;
+            class='thunar|dolphin' focus-window || exec thunar &
+            ;;
         music)
-            exec rofi -kb-custom-1 'Control+r' -show music;;
+            if (( new )); then
+                exec plattenalbum &
+            else
+                exec rofi -kb-custom-1 'Control+r' -show music &
+            fi
+            ;;
         video)
-            class='mpv|feh|imv' focus-window;;
+            class='mpv|feh|imv' focus-window
+            ;;
         volume)
-            class=pavucontrol focus-window || exec pavucontrol &;;
+            class=pavucontrol focus-window || exec pavucontrol &
+            ;;
         cal|calendar)
-            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal --confirm-close-surface=false -e sh -c 'sleep 0.1 &&cal -3' &;;
+            instance=calendar title=calendar columns=64 lines=9 hold=1 terminal --confirm-close-surface=false -e sh -c 'sleep 0.1 &&cal -3' &
+            ;;
         wifi)
-            class=wpa_gui focus-window || exec wpa_gui &;;
+            class=wpa_gui focus-window || exec wpa_gui &
+            ;;
         emoji)
             rofi_args=(-theme-str "configuration { font: \"${theme[font]} 14\"; }")
-            exec rofimoji --selector-args "${rofi_args[*]@Q}";;
+            exec rofimoji --selector-args "${rofi_args[*]@Q}" &
+            ;;
         *)
-            die "unknown application $app";;
+            die "unknown application $app"
+            ;;
     esac
 }
 
