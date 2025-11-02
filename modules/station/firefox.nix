@@ -30,6 +30,7 @@
           "browser.gesture.swipe.right" = "";
           "browser.ml.enable" = false;
           "browser.ml.chat.enabled" = false;
+          "browser.ml.chat.menu" = false;
           "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
           "browser.newtabpage.activity-stream.feeds.snippets" = false;
           "browser.newtabpage.activity-stream.showSearch" = false;
