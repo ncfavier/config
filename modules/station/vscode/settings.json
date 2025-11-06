@@ -330,4 +330,7 @@
   "editor.editContext": false,
   "editor.occurrencesHighlight": "off",
   "workbench.colorTheme": "Mr Pink",
+  "chat.agent.enabled": false,
+  "chat.disableAIFeatures": true,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
 }
