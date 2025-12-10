@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Check Markdown links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v2
   build-iso:
     runs-on: ubuntu-latest
     steps:
