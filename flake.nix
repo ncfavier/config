@@ -39,6 +39,7 @@
     ghostty = {
       url = "github:pluiedev/ghostty/pluie/jj-rslmomxuxwpl";
     };
+    agda-compose.url = "github:ncfavier/agda-compose";
 
     # Temporary nixpkgs pins
     nixpkgs-openrgb-bump.url = "github:ncfavier/nixpkgs/openrgb"; # 1.0rc1 supports ki's motherboard

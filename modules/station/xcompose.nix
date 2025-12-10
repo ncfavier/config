@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: with lib; {
+{ inputs, lib, pkgs, ... }: with lib; {
   hm.home.file.".XCompose" = {
     text = ''
       include "%L"
@@ -419,9 +419,10 @@
       <Multi_key> <t> <f> : "(╯°□°）╯︵ ┻━┻"
       <Multi_key> <q> <t> : "(◕‿◕)"
       <Multi_key> <s> <a> <d> : "(｡•́︿•̀｡)"
+      <Multi_key> <s> <r> <y> : "('''''' •᷄ ᴗ •᷅ )"
       <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
 
-      ${builtins.readFile ./agda.xcompose}
+      include "${inputs.agda-compose.packages.${pkgs.system}.agda-compose}"
     '';
 
     onChange = ''

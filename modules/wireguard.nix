@@ -36,13 +36,15 @@ in {
         "129.16.0.0/16" "2001:6b0::/32" # Chalmers
         "130.241.0.0/16" # Gothenburg University
         "40.126.0.0/18" "2603:1000::/25" # Microsoft
-        "104.16.0.0/13" "172.64.0.0/13" # Stack Exchange (Cloudflare)
+        "104.16.0.0/13" "172.64.0.0/13" "198.252.206.0/24" # Stack Exchange (Cloudflare)
         "79.127.216.0/24" "89.187.169.0/24" "138.199.36.0/23" "169.150.247.0/24" # Bluesky CDN
+        "193.48.0.0/14" # HAL (Renater)
+        "45.79.32.0/19" # types.pl
       ];
     };
 
     # The AllowedIPs field has a length limit on WireGuard for Android, so having too many exemptions makes it go over the limit.
-    # These exemptions are ignored by the script below.
+    # These extra exemptions are ignored by the script below.
     extraExemptions = mkOption {
       type = with types; listOf str;
       default = [

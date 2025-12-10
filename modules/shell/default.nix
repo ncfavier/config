@@ -32,6 +32,7 @@
       cp = "cp -i";
       df = "df -h";
       du = "du -h";
+      fd = "fd -u";
       ffmpeg = "ffmpeg -hide_banner";
       ffplay = "ffplay -hide_banner";
       ffprobe = "ffprobe -hide_banner";

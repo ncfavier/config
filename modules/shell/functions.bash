@@ -350,6 +350,14 @@ _irg() {
 }
 complete -F _irg irg
 
+curl-bibtex() {
+    local url=$1
+    if [[ url != *://* ]]; then
+        url=https://doi.org/$url
+    fi
+    curl -LH 'Accept: application/x-bibtex' "$url"
+}
+
 # Tasks
 
 todo() {
