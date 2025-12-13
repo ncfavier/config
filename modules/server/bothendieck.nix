@@ -5,7 +5,7 @@
   configFile = settingsFormat.generate "bothendieck.toml" cfg.settings;
   firefoxDir = "/run/bothendieck/firefox";
 
-  bothendieck = inputs.bothendieck.packages.${pkgs.system}.bothendieckWithEvaluators.override (old: {
+  bothendieck = inputs.bothendieck.packages.x86_64-linux.bothendieckWithEvaluators.override (old: {
     yt-dlp = pkgs.runCommand "yt-dlp-wrapper" {
       nativeBuildInputs = [ pkgs.makeWrapper ];
     } ''

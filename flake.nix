@@ -34,7 +34,6 @@
     };
     qeval = {
       url = "github:ncfavier/qeval";
-      inputs.nur.follows = "nur";
     };
     ghostty = {
       url = "github:pluiedev/ghostty/pluie/jj-rslmomxuxwpl";
