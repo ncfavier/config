@@ -36,6 +36,7 @@ in mkEnableModule [ "my-services" "lambdabot" ] {
           "bifunctors",
           "bytestring",
           "deepseq",
+          "ghc-internal",
           "ghc-prim",
           "lambdabot-trusted",
           "random",
