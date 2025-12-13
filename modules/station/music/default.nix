@@ -52,17 +52,17 @@
     };
 
     home.packages = with pkgs; [
-      mpc_cli
+      mpc
       plattenalbum
       quodlibet
       (shellScriptWith "music-play" {
-        deps = [ mpc_cli ];
+        deps = [ mpc ];
       } (readFile ./music-play.sh))
       (shellScriptWith "music-notify" {
-        deps = [ mpc_cli playerctl dunst ];
+        deps = [ mpc playerctl dunst ];
       } (readFile ./music-notify.sh))
       (shellScriptWith "music-add" {
-        deps = [ curl htmlq jq yt-dlp imagemagick ffmpeg-full audacity mpc_cli ];
+        deps = [ curl htmlq jq yt-dlp imagemagick ffmpeg-full audacity mpc ];
       } (readFile ./music-add.sh))
       songrec
     ];

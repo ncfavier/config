@@ -422,7 +422,7 @@
       <Multi_key> <s> <r> <y> : "('''''' •᷄ ᴗ •᷅ )"
       <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
 
-      include "${inputs.agda-compose.packages.${pkgs.system}.agda-compose}"
+      include "${inputs.agda-compose.packages.x86_64-linux.agda-compose}"
     '';
 
     onChange = ''

@@ -52,7 +52,7 @@ in optionalAttrs this.isStation {
       gimp3
       evince
       inkscape
-      poppler_utils
+      poppler-utils
       transmission_4-gtk
       qemu
       rustdesk-flutter

@@ -28,7 +28,7 @@
           inriafonts
           twitter-color-emoji
           noto-fonts
-          noto-fonts-emoji
+          noto-fonts-color-emoji
           symbola
           dina-font
           tewi-font

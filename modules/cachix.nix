@@ -13,7 +13,7 @@
 
     hm.xdg.configFile."cachix/cachix.dhall".source = config.hm.lib.file.mkOutOfStoreSymlink config.secrets.cachix.path;
 
-    system.extraSystemBuilderCmds = ''
+    system.systemBuilderCommands = ''
       {
         printf '%s\n' ${escapeShellArgs (concatMap getAllOutputs config.cachix.derivationsToPush)}
         grep -oE '\S*-man-cache' "$out/etc/man_db.conf" 2> /dev/null || true

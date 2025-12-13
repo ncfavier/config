@@ -9,7 +9,6 @@ in {
   services.gvfs.enable = true;
   services.tumbler.enable = true;
   programs.dconf.enable = true;
-  programs.file-roller.enable = true;
 
   cachix.derivationsToPush = [ thunarWithPkgs pkgs.xfce.tumbler ];
 
@@ -56,6 +55,7 @@ index 218601800..b03ef6ed9 100644
       xfce.xfconf
       xfce.exo
       glib
+      file-roller
       zenity
       webp-pixbuf-loader
       libavif
