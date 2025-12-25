@@ -39,6 +39,9 @@
       programs.password-store = {
         enable = true;
         package = pkgs.pass.withExtensions (e: [ e.pass-otp ]);
+        settings = {
+          PASSWORD_STORE_DIR = "${config.hm.xdg.dataHome}/password-store";
+        };
       };
 
       xdg.dataFile.password-store.source =

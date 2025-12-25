@@ -1,9 +1,7 @@
 { inputs, lib, config, pkgs, ...}: with lib; {
-  cachix.derivationsToPush = [ config.hm.programs.ghostty.package ];
-
   hm.programs.ghostty = {
     enable = true;
-    package = inputs.ghostty.packages.x86_64-linux.default;
+    package = pkgs.ghostty;
     installVimSyntax = true;
 
     settings = with config.theme; {
@@ -28,12 +26,7 @@
       copy-on-select = "clipboard";
       app-notifications = [ "no-clipboard-copy" ];
       bell-features = [ "attention,no-title" ];
-      keybind = [
-        "alt+é=esc:é"
-        "alt+è=esc:è"
-        "alt+ç=esc:ç"
-        "alt+à=esc:à"
-      ];
+      keybind = map (n: "alt+digit_${toString n}=esc:${toString n}") (range 0 9); # https://github.com/ghostty-org/ghostty/issues/7110
 
       background = background;
       foreground = foreground;

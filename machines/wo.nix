@@ -73,6 +73,17 @@
       v4l-utils
     ];
 
+    nixpkgs.overlays = [ (pkgs: prev: {
+      linux-firmware = prev.linux-firmware.overrideAttrs (o: {
+        src = pkgs.fetchFromGitLab {
+          owner = "kernel-firmware";
+          repo = "linux-firmware";
+          rev = "a0f0e52138e5f77fb0f358ff952447623ae0a7c4";
+          hash = "sha256-ukXZjh5OWnFoppD1TVBwHvcXvH4IOoebnQI+pDm/nOk=";
+        };
+      });
+    }) ];
+
     hardware.bluetooth.enable = true;
     services.blueman.enable = true;
     hm.services.blueman-applet.enable = true;
@@ -130,21 +141,21 @@
 
     keys.composeKey = "rctrl";
 
-    # TODO does this result in lower temperatures than ppd when charging?
-    services.tlp = {
-      enable = true;
-      settings = {
-        CPU_ENERGY_PERF_POLICY_ON_AC = "power";
-        START_CHARGE_THRESH_BAT0 = 100;
-        STOP_CHARGE_THRESH_BAT0 = 100;
-      };
-    };
-    services.power-profiles-daemon.enable = false;
-    # systemd.services.power-profiles-daemon = {
-    #   serviceConfig.ExecStartPost = [
-    #     "${getBin config.services.power-profiles-daemon.package}/bin/powerprofilesctl set power-saver"
-    #   ];
+    # TLP spawns endless processes for some reason
+    # services.tlp = {
+    #   enable = true;
+    #   settings = {
+    #     CPU_ENERGY_PERF_POLICY_ON_AC = "power";
+    #     START_CHARGE_THRESH_BAT0 = 100;
+    #     STOP_CHARGE_THRESH_BAT0 = 100;
+    #   };
     # };
+    # services.power-profiles-daemon.enable = false;
+    systemd.services.power-profiles-daemon = {
+      serviceConfig.ExecStartPost = [
+        "${getBin config.services.power-profiles-daemon.package}/bin/powerprofilesctl set power-saver"
+      ];
+    };
 
     battery.battery = "BAT1";
     battery.adapter = "ACAD";

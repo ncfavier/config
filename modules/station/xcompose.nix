@@ -93,7 +93,7 @@
       <Multi_key> <ampersand> <ampersand> : "⅋"
       <Multi_key> <p> <a> <r> : "⅋"
       <Multi_key> <minus> <o> : "⊸"
-      <Multi_key> <s> <q> : "√"
+      <Multi_key> <s> <q> <r> <t> : "√"
       <Multi_key> <3> <s> <q> : "∛"
       <Multi_key> <4> <s> <q> : "∜"
       <Multi_key> <i> <n> <t> : "∫"

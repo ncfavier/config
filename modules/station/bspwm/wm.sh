@@ -60,7 +60,7 @@ terminal() {
         class="$class" instance="$instance" title="$focus_title" focus-window && return
     fi
     . /etc/set-environment # reset PATH
-    exec ghostty --launched-from=cli \
+    exec ghostty \
         ${class:+--class="$class"} \
         ${instance:+--x11-instance-name="$instance"} \
         ${new_instance:+--gtk-single-instance=false} \

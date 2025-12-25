@@ -35,9 +35,6 @@
     qeval = {
       url = "github:ncfavier/qeval";
     };
-    ghostty = {
-      url = "github:pluiedev/ghostty/pluie/jj-rslmomxuxwpl";
-    };
     agda-compose.url = "github:ncfavier/agda-compose";
 
     # Temporary nixpkgs pins

@@ -5,7 +5,7 @@
 	<name>Open a terminal here</name>
 	<submenu></submenu>
 	<unique-id>1631819606206187-1</unique-id>
-	<command>ghostty --working-directory=&quot;$(closest-dir %f)&quot;</command>
+	<command>ghostty --gtk-single-instance=false --working-directory=&quot;$(closest-dir %f)&quot;</command>
 	<description></description>
 	<range></range>
 	<patterns>*</patterns>
