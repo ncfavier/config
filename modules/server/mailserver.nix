@@ -19,7 +19,7 @@
     localDnsResolver = false;
     fqdn = my.domain;
     domains = [ my.domain ];
-    certificateScheme = "acme";
+    x509.useACMEHost = config.mailserver.fqdn;
     dkimKeyDirectory = "/etc/dkim";
     loginAccounts.${my.email} = {
       hashedPassword = "$2b$05$1YO805N1yn2vVM/c4K8nRuNix1ruHc4SJDDbWREgrcAaamxiqCYKS";
