@@ -31,7 +31,6 @@
           noto-fonts-color-emoji
           symbola
           dina-font
-          tewi-font
           efont-unicode
           siji
           babelstone-han
@@ -58,7 +57,6 @@
                 <family>bitmap</family>
                 <prefer>
                   <family>Dina</family>
-                  <family>tewi</family>
                   <family>Biwidth</family>
                   <family>emoji</family>
                 </prefer>

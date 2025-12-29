@@ -104,7 +104,7 @@ in {
           vscodeExtName = "agda-mode";
           vscodeExtUniqueId = "banacorn.agda-mode";
           src = pkgs.buildNpmPackage {
-            name = "agda-mode-vscode.zip";
+            name = "agda-mode-vscode.vsix";
             src = pkgs.fetchFromGitHub {
               owner = my.githubUsername;
               repo = "agda-mode-vscode";

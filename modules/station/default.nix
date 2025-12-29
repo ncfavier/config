@@ -51,6 +51,7 @@ in optionalAttrs this.isStation {
       audacity
       gimp3
       evince
+      graphviz
       inkscape
       poppler-utils
       transmission_4-gtk

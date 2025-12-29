@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/fix-xfconf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xhmm.url = "github:schuelermine/xhmm";

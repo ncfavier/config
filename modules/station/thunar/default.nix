@@ -52,8 +52,8 @@ index 218601800..b03ef6ed9 100644
       ''} %o %s %i %u";
     in [
       thunarWithPkgs
-      xfce.xfconf
-      xfce.exo
+      xfconf
+      exo
       glib
       file-roller
       zenity
