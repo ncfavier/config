@@ -8,11 +8,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1765476670,
-        "narHash": "sha256-d+myoDBeapFBnSgXvU21z48hPeu55GTCUmi1aMsBCow=",
+        "lastModified": 1767482616,
+        "narHash": "sha256-LkEcpft/XzXTI8PK1E0nZufdb2KgVIFyspINoH84+ho=",
         "owner": "ncfavier",
         "repo": "agda-compose",
-        "rev": "7f3f93c51ad85424973facbc533e87a0bacfacb6",
+        "rev": "cc8357924db9647a48df05bbe3862d3b8a236c84",
         "type": "github"
       },
       "original": {
