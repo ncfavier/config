@@ -1,428 +1,282 @@
-{ inputs, lib, pkgs, ... }: with lib; {
+{ inputs, lib, pkgs, ... }: with lib; let
+  series = f: from: to: listToAttrs (zipListsWith nameValuePair (map f from) to);
+  digitChars = stringToCharacters "0123456789";
+
+  compose =
+    series (x: "C${x}") upperChars [ "𝒜" "ℬ" "𝒞" "𝒟" "ℰ" "ℱ" "𝒢" "ℋ" "ℐ" "𝒥" "𝒦" "ℒ" "ℳ" "𝒩" "𝒪" "𝒫" "𝒬" "ℛ" "𝒮" "𝒯" "𝒰" "𝒱" "𝒲" "𝒳" "𝒴" "𝒵" ] //
+    series (x: "B${x}") upperChars [ "𝔸" "𝔹" "ℂ" "𝔻" "𝔼" "𝔽" "𝔾" "ℍ" "𝕀" "𝕁" "𝕂" "𝕃" "𝕄" "ℕ" "𝕆" "ℙ" "ℚ" "ℝ" "𝕊" "𝕋" "𝕌" "𝕍" "𝕎" "𝕏" "𝕐" "ℤ" ] //
+    series (x: "B${x}") lowerChars [ "𝕒" "𝕓" "𝕔" "𝕕" "𝕖" "𝕗" "𝕘" "𝕙" "𝕚" "𝕛" "𝕜" "𝕝" "𝕞" "𝕟" "𝕠" "𝕡" "𝕢" "𝕣" "𝕤" "𝕥" "𝕦" "𝕧" "𝕨" "𝕩" "𝕪" "𝕫" ] //
+    series (x: "B${x}") digitChars [ "𝟘" "𝟙" "𝟚" "𝟛" "𝟜" "𝟝" "𝟞" "𝟟" "𝟠" "𝟡" ] //
+    series (x: "b${x}") upperChars [ "𝐀" "𝐁" "𝐂" "𝐃" "𝐄" "𝐅" "𝐆" "𝐇" "𝐈" "𝐉" "𝐊" "𝐋" "𝐌" "𝐍" "𝐎" "𝐏" "𝐐" "𝐑" "𝐒" "𝐓" "𝐔" "𝐕" "𝐖" "𝐗" "𝐘" "𝐙" ] //
+    series (x: "b${x}") lowerChars [ "𝐚" "𝐛" "𝐜" "𝐝" "𝐞" "𝐟" "𝐠" "𝐡" "𝐢" "𝐣" "𝐤" "𝐥" "𝐦" "𝐧" "𝐨" "𝐩" "𝐪" "𝐫" "𝐬" "𝐭" "𝐮" "𝐯" "𝐰" "𝐱" "𝐲" "𝐳" ] //
+    series (x: "b${x}") digitChars [ "𝟎" "𝟏" "𝟐" "𝟑" "𝟒" "𝟓" "𝟔" "𝟕" "𝟖" "𝟗" ] //
+    series (x: "f${x}") upperChars [ "𝔄" "𝔅" "ℭ" "𝔇" "𝔈" "𝔉" "𝔊" "ℌ" "ℑ" "𝔍" "𝔎" "𝔏" "𝔐" "𝔑" "𝔒" "𝔓" "𝔔" "ℜ" "𝔖" "𝔗" "𝔘" "𝔙" "𝔚" "𝔛" "𝔜" "ℨ" ] //
+    series (x: "f${x}") lowerChars [ "𝔞" "𝔟" "𝔠" "𝔡" "𝔢" "𝔣" "𝔤" "𝔥" "𝔦" "𝔧" "𝔨" "𝔩" "𝔪" "𝔫" "𝔬" "𝔭" "𝔮" "𝔯" "𝔰" "𝔱" "𝔲" "𝔳" "𝔴" "𝔵" "𝔶" "𝔷" ] //
+    series (x: "F${x}") upperChars [ "𝕬" "𝕭" "𝕮" "𝕯" "𝕰" "𝕱" "𝕲" "𝕳" "𝕴" "𝕵" "𝕶" "𝕷" "𝕸" "𝕹" "𝕺" "𝕻" "𝕼" "𝕽" "𝕾" "𝕿" "𝖀" "𝖁" "𝖂" "𝖃" "𝖄" "𝖅" ] //
+    series (x: "F${x}") lowerChars [ "𝖆" "𝖇" "𝖈" "𝖉" "𝖊" "𝖋" "𝖌" "𝖍" "𝖎" "𝖏" "𝖐" "𝖑" "𝖒" "𝖓" "𝖔" "𝖕" "𝖖" "𝖗" "𝖘" "𝖙" "𝖚" "𝖛" "𝖜" "𝖝" "𝖞" "𝖟" ] //
+    series (x: "_${x}") (stringToCharacters "acehijklmnoprstuvx") [ "ₐ" "𞁞" "ₑ" "ₕ" "ᵢ" "ⱼ" "ₖ" "ₗ" "ₘ" "ₙ" "ₒ" "ₚ" "ᵣ" "ₛ" "ₜ" "ᵤ" "ᵥ" "ₓ" ] //
+  {
+    "en" = "–";
+    "<|s" = "◂";
+    "|>s" = "▸";
+    "|>w" = "▹";
+    "<|b" = "◀";
+    "|>b" = "▶";
+    "box" = "□";
+    "|→" = "↦";
+    "qed" = "∎";
+    "oo" = "∘";
+    "**" = "⋆";
+    "ast" = "∗";
+    "*." = "∙";
+    "*," = "·";
+    "*o" = "∘";
+    "<*>" = "⊛";
+    "×|" = "⋊";
+    "x|" = "⋊";
+    "|×" = "⋉";
+    "|x" = "⋉";
+    "wr" = "≀";
+    ":=" = "≔";
+    "==" = "≡";
+    "=3" = "≡";
+    "=/=" = "≢";
+    "=/3" = "≢";
+    "=4" = "≣";
+    "~=" = "≃";
+    "=~" = "≅";
+    "~~" = "≈";
+    "?=" = "≟";
+    ".=" = "≐";
+    "=." = "≐";
+    "<(" = "⟨";
+    ">)" = "⟩";
+    "(<" = "⟨";
+    ")>" = "⟩";
+    "(|" = "⦇";
+    "|)" = "⦈";
+    "[|" = "⟦";
+    "|]" = "⟧";
+    "{|" = "⦃";
+    "|}" = "⦄";
+    "_[" = "⌞";
+    "[_" = "⌞";
+    "_]" = "⌟";
+    "]_" = "⌟";
+    "()" = "≬";
+    "<<" = "≪";
+    ">>" = "≫";
+    "mid" = "∣";
+    "||" = "∥";
+    "/\\" = "∧";
+    "land" = "∧";
+    "lor" = "∨";
+    "iff" = "⇔";
+    "top" = "⊤";
+    "bot" = "⊥";
+    "_|_" = "⊥";
+    "ex" = "∃";
+    "/ex" = "∄";
+    "all" = "∀";
+    "|-" = "⊢";
+    "2|-" = "⊩";
+    "-|" = "⊣";
+    "|=" = "⊨";
+    "mem" = "∈";
+    "nmem" = "∉";
+    "inc" = "⊂";
+    "cni" = "⊃";
+    "ninc" = "⊄";
+    "/inc" = "⊄";
+    "=inc" = "⊆";
+    "=cni" = "⊇";
+    "cup" = "∪";
+    "cap" = "∩";
+    "sqcup" = "⊔";
+    "sqcap" = "⊓";
+    "u+" = "⊎";
+    "U+" = "⊎";
+    "/0" = "∅";
+    "inf" = "∞";
+    "aleph" = "ℵ";
+    "alef" = "ℵ";
+    "o*" = "⊗";
+    "o+" = "⊕";
+    "o." = "⊙";
+    "&&" = "⅋";
+    "par" = "⅋";
+    "-o" = "⊸";
+    "sqrt" = "√";
+    "3sq" = "∛";
+    "4sq" = "∜";
+    "int" = "∫";
+    "1/4" = "¼";
+    "1/2" = "½";
+    "3/4" = "¾";
+    "1/3" = "⅓";
+    "2/3" = "⅔";
+    "1/5" = "⅕";
+    "2/5" = "⅖";
+    "3/5" = "⅗";
+    "4/5" = "⅘";
+    "1/6" = "⅙";
+    "5/6" = "⅚";
+    "1/8" = "⅛";
+    "3/8" = "⅜";
+    "5/8" = "⅝";
+    "7/8" = "⅞";
+    "<dead_greek>/l" = "ƛ";
+    "^a" = "ᵃ";
+    "^A" = "ᴬ";
+    "<dead_circumflex>b" = "ᵇ";
+    "<dead_circumflex>B" = "ᴮ";
+    "<dead_circumflex>c" = "ᶜ";
+    "<dead_circumflex>C" = "ꟲ";
+    "<dead_circumflex>d" = "ᵈ";
+    "<dead_circumflex>D" = "ᴰ";
+    "^e" = "ᵉ";
+    "^E" = "ᴱ";
+    "<dead_circumflex>f" = "ᶠ";
+    "<dead_circumflex>F" = "ꟳ";
+    "<dead_circumflex>g" = "ᵍ";
+    "<dead_circumflex>G" = "ᴳ";
+    "<dead_circumflex>h" = "ʰ";
+    "<dead_circumflex>H" = "ᴴ";
+    "^i" = "ⁱ";
+    "^I" = "ᴵ";
+    "^j" = "ʲ";
+    "^J" = "ᴶ";
+    "<dead_circumflex>k" = "ᵏ";
+    "<dead_circumflex>K" = "ᴷ";
+    "<dead_circumflex>l" = "ˡ";
+    "<dead_circumflex>L" = "ᴸ";
+    "<dead_circumflex>m" = "ᵐ";
+    "<dead_circumflex>M" = "ᴹ";
+    "<dead_circumflex>n" = "ⁿ";
+    "<dead_circumflex>N" = "ᴺ";
+    "^o" = "ᵒ";
+    "^O" = "ᴼ";
+    "<dead_circumflex>p" = "ᵖ";
+    "<dead_circumflex>P" = "ᴾ";
+    "<dead_circumflex>q" = "𐞥";
+    "<dead_circumflex>Q" = "ꟴ";
+    "<dead_circumflex>r" = "ʳ";
+    "<dead_circumflex>R" = "ᴿ";
+    "<dead_circumflex>s" = "ˢ";
+    "<dead_circumflex>t" = "ᵗ";
+    "<dead_circumflex>T" = "ᵀ";
+    "^u" = "ᵘ";
+    "^U" = "ᵁ";
+    "<dead_circumflex>v" = "ᵛ";
+    "<dead_circumflex>V" = "ⱽ";
+    "<dead_circumflex>w" = "ʷ";
+    "<dead_circumflex>W" = "ᵂ";
+    "<dead_circumflex>x" = "ˣ";
+    "^y" = "ʸ";
+    "<dead_circumflex>z" = "ᶻ";
+    "<dead_circumflex>'" = "′";
+    "<dead_circumflex>\"" = "″";
+    "b~" = "∼";
+    "el" = "ℓ";
+    "dee" = "∂";
+    "nab" = "∇";
+    "yo" = "よ";
+    "\"o" = "ő";
+    "\"O" = "Ő";
+    "  " = "␣";
+    "⌫" = "⌫";
+    "↑" = "↑";
+    "↓" = "↓";
+    "←" = "←";
+    "→" = "→";
+    "sw" = "↙";
+    "se" = "↘";
+    "nw" = "↖";
+    "ne" = "↗";
+    "lr" = "↔";
+    "ud" = "↕";
+    "(→" = "↪";
+    "-/>" = "↛";
+    "</-" = "↚";
+    "2←" = "⇇";
+    "2→" = "⇉";
+    "3→" = "⇶";
+    "l→" = "⟶";
+    "l←" = "⟵";
+    "=↑" = "⇑";
+    "l=>" = "⟹";
+    "l=<" = "⟸";
+    "⇥" = "⇥";
+    "↵" = "↵";
+    "fl" = "❧";
+    "ok" = "✓";
+    "nok" = "✗";
+    "zap" = "↯";
+    "1." = "⒈";
+    "2." = "⒉";
+    "3." = "⒊";
+    "4." = "⒋";
+    "5." = "⒌";
+    "6." = "⒍";
+    "7." = "⒎";
+    "8." = "⒏";
+    "9." = "⒐";
+    "10." = "⒑";
+    "fll" = "⌊";
+    "flr" = "⌋";
+    "cel" = "⌈";
+    "cer" = "⌉";
+    "<dead_circumflex>[" = "⌜";
+    "<dead_circumflex>]" = "⌝";
+    "2!" = "‼";
+    "2?" = "⁇";
+    "zw" = "​";
+    "znj" = "";
+    "zwj" = "";
+    "wj" = "⁠";
+    ".|." = "⋮";
+    "+|" = "†";
+    "++" = "‡";
+    "st" = "ﬆ";
+    "ft" = "ﬅ";
+    "_-" = "₋";
+    "::" = "∷";
+    "#G" = "𝄞";
+    "#F" = "𝄢";
+    "#C" = "𝄡";
+    "°C" = "℃";
+    "°F" = "℉";
+    "mu" = "無";
+    "om" = "ॐ";
+    "et" = "ꝫ";
+    "ET" = "Ꝫ";
+    "sh" = "ʃ";
+    "cube" = "🧊";
+    "OO" = "👀";
+    "><" = "👉👈";
+    "lem" = "https://f.monade.li/lemon.webp";
+    "sus" = "ඞ";
+    "\\/" = "¯\\_(ツ)_/¯";
+    "2\\/" = "┐('~'; )┌";
+    "len" = "( ͡° ͜ʖ ͡°)";
+    "meh" = "ಠ_ಠ";
+    "tf" = "(╯°□°）╯︵ ┻━┻";
+    "qt" = "(◕‿◕)";
+    "sad" = "(｡•́︿•̀｡)";
+    "sry" = "('''' •᷄ ᴗ •᷅ )";
+  };
+
+  composeFile = pkgs.runCommand "custom.compose" {
+    nativeBuildInputs = [ inputs.agda-compose.packages.x86_64-linux.json2compose ];
+  } ''
+    json2compose < ${builtins.toFile "compose.json" (builtins.toJSON compose)} > "$out"
+  '';
+in {
   hm.home.file.".XCompose" = {
     text = ''
       include "%L"
-
-      <Multi_key> <e> <n> : "–"
-      <Multi_key> <less> <bar> <s> : "◂"
-      <Multi_key> <bar> <greater> <s> : "▸"
-      <Multi_key> <bar> <greater> <w> : "▹"
-      <Multi_key> <less> <bar> <b> : "◀"
-      <Multi_key> <bar> <greater> <b> : "▶"
-      <Multi_key> <b> <o> <x> : "□"
-      <Multi_key> <bar> <Right> : "↦"
-      <Multi_key> <q> <e> <d> : "∎"
-      <Multi_key> <o> <o> : "∘"
-      <Multi_key> <asterisk> <asterisk> : "⋆"
-      <Multi_key> <a> <s> <t> : "∗"
-      <Multi_key> <asterisk> <period> : "∙"
-      <Multi_key> <asterisk> <comma> : "·"
-      <Multi_key> <asterisk> <o> : "∘"
-      <Multi_key> <less> <asterisk> <greater> : "⊛"
-      <Multi_key> <multiply> <bar> : "⋊"
-      <Multi_key> <x> <bar> : "⋊"
-      <Multi_key> <bar> <multiply> : "⋉"
-      <Multi_key> <bar> <x> : "⋉"
-      <Multi_key> <w> <r> : "≀"
-      <Multi_key> <colon> <equal> : "≔"
-      <Multi_key> <equal> <equal> : "≡"
-      <Multi_key> <equal> <3> : "≡"
-      <Multi_key> <equal> <slash> <equal> : "≢"
-      <Multi_key> <equal> <slash> <3> : "≢"
-      <Multi_key> <equal> <4> : "≣"
-      <Multi_key> <asciitilde> <equal> : "≃"
-      <Multi_key> <equal> <asciitilde> : "≅"
-      <Multi_key> <asciitilde> <asciitilde> : "≈"
-      <Multi_key> <question> <equal> : "≟"
-      <Multi_key> <period> <equal> : "≐"
-      <Multi_key> <equal> <period> : "≐"
-      <Multi_key> <less> <parenleft> : "⟨"
-      <Multi_key> <greater> <parenright> : "⟩"
-      <Multi_key> <parenleft> <less> : "⟨"
-      <Multi_key> <parenright> <greater> : "⟩"
-      <Multi_key> <parenleft> <bar> : "⦇"
-      <Multi_key> <bar> <parenright> : "⦈"
-      <Multi_key> <bracketleft> <bar> : "⟦"
-      <Multi_key> <bar> <bracketright> : "⟧"
-      <Multi_key> <braceleft> <bar> : "⦃"
-      <Multi_key> <bar> <braceright> : "⦄"
-      <Multi_key> <underscore> <bracketleft> : "⌞"
-      <Multi_key> <bracketleft> <underscore> : "⌞"
-      <Multi_key> <underscore> <bracketright> : "⌟"
-      <Multi_key> <bracketright> <underscore> : "⌟"
-      <Multi_key> <parenleft> <parenright> : "≬"
-      <Multi_key> <less> <less> : "≪"
-      <Multi_key> <greater> <greater> : "≫"
-      <Multi_key> <m> <i> <d> : "∣"
-      <Multi_key> <bar> <bar> : "∥"
-      <Multi_key> <slash> <backslash> : "∧"
-      <Multi_key> <l> <a> <n> <d> : "∧"
-      <Multi_key> <l> <o> <r> : "∨"
-      <Multi_key> <i> <f> <f> : "⇔"
-      <Multi_key> <t> <o> <p> : "⊤"
-      <Multi_key> <b> <o> <t> : "⊥"
-      <Multi_key> <underscore> <bar> <underscore> : "⊥"
-      <Multi_key> <e> <x> : "∃"
-      <Multi_key> <slash> <e> <x> : "∄"
-      <Multi_key> <a> <l> <l> : "∀"
-      <Multi_key> <bar> <minus> : "⊢"
-      <Multi_key> <2> <bar> <minus> : "⊩"
-      <Multi_key> <minus> <bar> : "⊣"
-      <Multi_key> <bar> <equal> : "⊨"
-      <Multi_key> <m> <e> <m> : "∈"
-      <Multi_key> <n> <m> <e> <m> : "∉"
-      <Multi_key> <i> <n> <c> : "⊂"
-      <Multi_key> <c> <n> <i> : "⊃"
-      <Multi_key> <n> <i> <n> <c> : "⊄"
-      <Multi_key> <slash> <i> <n> <c> : "⊄"
-      <Multi_key> <equal> <i> <n> <c> : "⊆"
-      <Multi_key> <equal> <c> <n> <i> : "⊇"
-      <Multi_key> <c> <u> <p> : "∪"
-      <Multi_key> <c> <a> <p> : "∩"
-      <Multi_key> <s> <q> <c> <u> <p> : "⊔"
-      <Multi_key> <s> <q> <c> <a> <p> : "⊓"
-      <Multi_key> <u> <plus> : "⊎"
-      <Multi_key> <U> <plus> : "⊎"
-      <Multi_key> <slash> <0> : "∅"
-      <Multi_key> <i> <n> <f> : "∞"
-      <Multi_key> <a> <l> <e> <p> <h> : "ℵ"
-      <Multi_key> <a> <l> <e> <f> : "ℵ"
-      <Multi_key> <o> <asterisk> : "⊗"
-      <Multi_key> <o> <plus> : "⊕"
-      <Multi_key> <o> <period> : "⊙"
-      <Multi_key> <ampersand> <ampersand> : "⅋"
-      <Multi_key> <p> <a> <r> : "⅋"
-      <Multi_key> <minus> <o> : "⊸"
-      <Multi_key> <s> <q> <r> <t> : "√"
-      <Multi_key> <3> <s> <q> : "∛"
-      <Multi_key> <4> <s> <q> : "∜"
-      <Multi_key> <i> <n> <t> : "∫"
-      <Multi_key> <1> <slash> <4> : "¼"
-      <Multi_key> <1> <slash> <2> : "½"
-      <Multi_key> <3> <slash> <4> : "¾"
-      <Multi_key> <1> <slash> <3> : "⅓"
-      <Multi_key> <2> <slash> <3> : "⅔"
-      <Multi_key> <1> <slash> <5> : "⅕"
-      <Multi_key> <2> <slash> <5> : "⅖"
-      <Multi_key> <3> <slash> <5> : "⅗"
-      <Multi_key> <4> <slash> <5> : "⅘"
-      <Multi_key> <1> <slash> <6> : "⅙"
-      <Multi_key> <5> <slash> <6> : "⅚"
-      <Multi_key> <1> <slash> <8> : "⅛"
-      <Multi_key> <3> <slash> <8> : "⅜"
-      <Multi_key> <5> <slash> <8> : "⅝"
-      <Multi_key> <7> <slash> <8> : "⅞"
-      <dead_greek> <slash> <l> : "ƛ"
-      <Multi_key> <underscore> <a> : "ₐ"
-      <Multi_key> <underscore> <c> : "𞁞"
-      <Multi_key> <underscore> <e> : "ₑ"
-      <Multi_key> <underscore> <h> : "ₕ"
-      <Multi_key> <underscore> <i> : "ᵢ"
-      <Multi_key> <underscore> <j> : "ⱼ"
-      <Multi_key> <underscore> <k> : "ₖ"
-      <Multi_key> <underscore> <l> : "ₗ"
-      <Multi_key> <underscore> <m> : "ₘ"
-      <Multi_key> <underscore> <n> : "ₙ"
-      <Multi_key> <underscore> <o> : "ₒ"
-      <Multi_key> <underscore> <p> : "ₚ"
-      <Multi_key> <underscore> <r> : "ᵣ"
-      <Multi_key> <underscore> <s> : "ₛ"
-      <Multi_key> <underscore> <t> : "ₜ"
-      <Multi_key> <underscore> <u> : "ᵤ"
-      <Multi_key> <underscore> <v> : "ᵥ"
-      <Multi_key> <underscore> <x> : "ₓ"
-      <Multi_key> <asciicircum> <a> : "ᵃ"
-      <Multi_key> <asciicircum> <A> : "ᴬ"
-      <dead_circumflex> <b> : "ᵇ"
-      <dead_circumflex> <B> : "ᴮ"
-      <dead_circumflex> <c> : "ᶜ"
-      <dead_circumflex> <C> : "ꟲ"
-      <dead_circumflex> <d> : "ᵈ"
-      <dead_circumflex> <D> : "ᴰ"
-      <Multi_key> <asciicircum> <e> : "ᵉ"
-      <Multi_key> <asciicircum> <E> : "ᴱ"
-      <dead_circumflex> <f> : "ᶠ"
-      <dead_circumflex> <F> : "ꟳ"
-      <dead_circumflex> <g> : "ᵍ"
-      <dead_circumflex> <G> : "ᴳ"
-      <dead_circumflex> <h> : "ʰ"
-      <dead_circumflex> <H> : "ᴴ"
-      <Multi_key> <asciicircum> <i> : "ⁱ"
-      <Multi_key> <asciicircum> <I> : "ᴵ"
-      <Multi_key> <asciicircum> <j> : "ʲ"
-      <Multi_key> <asciicircum> <J> : "ᴶ"
-      <dead_circumflex> <k> : "ᵏ"
-      <dead_circumflex> <K> : "ᴷ"
-      <dead_circumflex> <l> : "ˡ"
-      <dead_circumflex> <L> : "ᴸ"
-      <dead_circumflex> <m> : "ᵐ"
-      <dead_circumflex> <M> : "ᴹ"
-      <dead_circumflex> <n> : "ⁿ"
-      <dead_circumflex> <N> : "ᴺ"
-      <Multi_key> <asciicircum> <o> : "ᵒ"
-      <Multi_key> <asciicircum> <O> : "ᴼ"
-      <dead_circumflex> <p> : "ᵖ"
-      <dead_circumflex> <P> : "ᴾ"
-      <dead_circumflex> <q> : "𐞥"
-      <dead_circumflex> <Q> : "ꟴ"
-      <dead_circumflex> <r> : "ʳ"
-      <dead_circumflex> <R> : "ᴿ"
-      <dead_circumflex> <s> : "ˢ"
-      <dead_circumflex> <t> : "ᵗ"
-      <dead_circumflex> <T> : "ᵀ"
-      <Multi_key> <asciicircum> <u> : "ᵘ"
-      <Multi_key> <asciicircum> <U> : "ᵁ"
-      <dead_circumflex> <v> : "ᵛ"
-      <dead_circumflex> <V> : "ⱽ"
-      <dead_circumflex> <w> : "ʷ"
-      <dead_circumflex> <W> : "ᵂ"
-      <dead_circumflex> <x> : "ˣ"
-      <Multi_key> <asciicircum> <y> : "ʸ"
-      <dead_circumflex> <z> : "ᶻ"
-      <dead_circumflex> <apostrophe> : "′"
-      <dead_circumflex> <quotedbl> : "″"
-      <Multi_key> <C> <A> : "𝒜"
-      <Multi_key> <C> <B> : "ℬ"
-      <Multi_key> <C> <C> : "𝒞"
-      <Multi_key> <C> <D> : "𝒟"
-      <Multi_key> <C> <E> : "ℰ"
-      <Multi_key> <C> <F> : "ℱ"
-      <Multi_key> <C> <G> : "𝒢"
-      <Multi_key> <C> <H> : "ℋ"
-      <Multi_key> <C> <I> : "ℐ"
-      <Multi_key> <C> <J> : "𝒥"
-      <Multi_key> <C> <K> : "𝒦"
-      <Multi_key> <C> <L> : "ℒ"
-      <Multi_key> <C> <M> : "ℳ"
-      <Multi_key> <C> <N> : "𝒩"
-      <Multi_key> <C> <O> : "𝒪"
-      <Multi_key> <C> <P> : "𝒫"
-      <Multi_key> <C> <Q> : "𝒬"
-      <Multi_key> <C> <R> : "ℛ"
-      <Multi_key> <C> <S> : "𝒮"
-      <Multi_key> <C> <T> : "𝒯"
-      <Multi_key> <C> <U> : "𝒰"
-      <Multi_key> <C> <V> : "𝒱"
-      <Multi_key> <C> <W> : "𝒲"
-      <Multi_key> <C> <X> : "𝒳"
-      <Multi_key> <C> <Y> : "𝒴"
-      <Multi_key> <C> <Z> : "𝒵"
-      <Multi_key> <B> <A> : "𝔸"
-      <Multi_key> <B> <B> : "𝔹"
-      <Multi_key> <B> <C> : "ℂ"
-      <Multi_key> <B> <D> : "𝔻"
-      <Multi_key> <B> <E> : "𝔼"
-      <Multi_key> <B> <F> : "𝔽"
-      <Multi_key> <B> <G> : "𝔾"
-      <Multi_key> <B> <H> : "ℍ"
-      <Multi_key> <B> <I> : "𝕀"
-      <Multi_key> <B> <J> : "𝕁"
-      <Multi_key> <B> <K> : "𝕂"
-      <Multi_key> <B> <L> : "𝕃"
-      <Multi_key> <B> <M> : "𝕄"
-      <Multi_key> <B> <N> : "ℕ"
-      <Multi_key> <B> <O> : "𝕆"
-      <Multi_key> <B> <P> : "ℙ"
-      <Multi_key> <B> <Q> : "ℚ"
-      <Multi_key> <B> <R> : "ℝ"
-      <Multi_key> <B> <S> : "𝕊"
-      <Multi_key> <B> <T> : "𝕋"
-      <Multi_key> <B> <U> : "𝕌"
-      <Multi_key> <B> <V> : "𝕍"
-      <Multi_key> <B> <W> : "𝕎"
-      <Multi_key> <B> <X> : "𝕏"
-      <Multi_key> <B> <Y> : "𝕐"
-      <Multi_key> <B> <Z> : "ℤ"
-      <Multi_key> <B> <a> : "𝕒"
-      <Multi_key> <B> <b> : "𝕓"
-      <Multi_key> <B> <c> : "𝕔"
-      <Multi_key> <B> <d> : "𝕕"
-      <Multi_key> <B> <e> : "𝕖"
-      <Multi_key> <B> <f> : "𝕗"
-      <Multi_key> <B> <g> : "𝕘"
-      <Multi_key> <B> <h> : "𝕙"
-      <Multi_key> <B> <i> : "𝕚"
-      <Multi_key> <B> <j> : "𝕛"
-      <Multi_key> <B> <k> : "𝕜"
-      <Multi_key> <B> <l> : "𝕝"
-      <Multi_key> <B> <m> : "𝕞"
-      <Multi_key> <B> <n> : "𝕟"
-      <Multi_key> <B> <o> : "𝕠"
-      <Multi_key> <B> <p> : "𝕡"
-      <Multi_key> <B> <q> : "𝕢"
-      <Multi_key> <B> <r> : "𝕣"
-      <Multi_key> <B> <s> : "𝕤"
-      <Multi_key> <B> <t> : "𝕥"
-      <Multi_key> <B> <u> : "𝕦"
-      <Multi_key> <B> <v> : "𝕧"
-      <Multi_key> <B> <w> : "𝕨"
-      <Multi_key> <B> <x> : "𝕩"
-      <Multi_key> <B> <y> : "𝕪"
-      <Multi_key> <B> <z> : "𝕫"
-      <Multi_key> <B> <0> : "𝟘"
-      <Multi_key> <B> <1> : "𝟙"
-      <Multi_key> <B> <2> : "𝟚"
-      <Multi_key> <B> <3> : "𝟛"
-      <Multi_key> <B> <4> : "𝟜"
-      <Multi_key> <B> <5> : "𝟝"
-      <Multi_key> <B> <6> : "𝟞"
-      <Multi_key> <B> <7> : "𝟟"
-      <Multi_key> <B> <8> : "𝟠"
-      <Multi_key> <B> <9> : "𝟡"
-      <Multi_key> <b> <A> : "𝐀"
-      <Multi_key> <b> <B> : "𝐁"
-      <Multi_key> <b> <C> : "𝐂"
-      <Multi_key> <b> <D> : "𝐃"
-      <Multi_key> <b> <E> : "𝐄"
-      <Multi_key> <b> <F> : "𝐅"
-      <Multi_key> <b> <G> : "𝐆"
-      <Multi_key> <b> <H> : "𝐇"
-      <Multi_key> <b> <I> : "𝐈"
-      <Multi_key> <b> <J> : "𝐉"
-      <Multi_key> <b> <K> : "𝐊"
-      <Multi_key> <b> <L> : "𝐋"
-      <Multi_key> <b> <M> : "𝐌"
-      <Multi_key> <b> <N> : "𝐍"
-      <Multi_key> <b> <O> : "𝐎"
-      <Multi_key> <b> <P> : "𝐏"
-      <Multi_key> <b> <Q> : "𝐐"
-      <Multi_key> <b> <R> : "𝐑"
-      <Multi_key> <b> <S> : "𝐒"
-      <Multi_key> <b> <T> : "𝐓"
-      <Multi_key> <b> <U> : "𝐔"
-      <Multi_key> <b> <V> : "𝐕"
-      <Multi_key> <b> <W> : "𝐖"
-      <Multi_key> <b> <X> : "𝐗"
-      <Multi_key> <b> <Y> : "𝐘"
-      <Multi_key> <b> <Z> : "𝐙"
-      <Multi_key> <b> <a> : "𝐚"
-      <Multi_key> <b> <b> : "𝐛"
-      <Multi_key> <b> <c> : "𝐜"
-      <Multi_key> <b> <d> : "𝐝"
-      <Multi_key> <b> <e> : "𝐞"
-      <Multi_key> <b> <f> : "𝐟"
-      <Multi_key> <b> <g> : "𝐠"
-      <Multi_key> <b> <h> : "𝐡"
-      <Multi_key> <b> <i> : "𝐢"
-      <Multi_key> <b> <j> : "𝐣"
-      <Multi_key> <b> <k> : "𝐤"
-      <Multi_key> <b> <l> : "𝐥"
-      <Multi_key> <b> <m> : "𝐦"
-      <Multi_key> <b> <n> : "𝐧"
-      <Multi_key> <b> <o> : "𝐨"
-      <Multi_key> <b> <p> : "𝐩"
-      <Multi_key> <b> <q> : "𝐪"
-      <Multi_key> <b> <r> : "𝐫"
-      <Multi_key> <b> <s> : "𝐬"
-      <Multi_key> <b> <t> : "𝐭"
-      <Multi_key> <b> <u> : "𝐮"
-      <Multi_key> <b> <v> : "𝐯"
-      <Multi_key> <b> <w> : "𝐰"
-      <Multi_key> <b> <x> : "𝐱"
-      <Multi_key> <b> <y> : "𝐲"
-      <Multi_key> <b> <z> : "𝐳"
-      <Multi_key> <b> <0> : "𝟎"
-      <Multi_key> <b> <1> : "𝟏"
-      <Multi_key> <b> <2> : "𝟐"
-      <Multi_key> <b> <3> : "𝟑"
-      <Multi_key> <b> <4> : "𝟒"
-      <Multi_key> <b> <5> : "𝟓"
-      <Multi_key> <b> <6> : "𝟔"
-      <Multi_key> <b> <7> : "𝟕"
-      <Multi_key> <b> <8> : "𝟖"
-      <Multi_key> <b> <9> : "𝟗"
-      <Multi_key> <b> <asciitilde> : "∼"
-      <Multi_key> <e> <l> : "ℓ"
-      <Multi_key> <d> <e> <e> : "∂"
-      <Multi_key> <n> <a> <b> : "∇"
-      <Multi_key> <y> <o> : "よ"
-      <Multi_key> <quotedbl> <o> : "ő"
-      <Multi_key> <quotedbl> <O> : "Ő"
-      <Multi_key> <space> <space> : "␣"
-      <Multi_key> <BackSpace> : "⌫"
-      <Multi_key> <Up> : "↑"
-      <Multi_key> <Down> : "↓"
-      <Multi_key> <Left> : "←"
-      <Multi_key> <Right> : "→"
-      <Multi_key> <s> <w> : "↙"
-      <Multi_key> <s> <e> : "↘"
-      <Multi_key> <n> <w> : "↖"
-      <Multi_key> <n> <e> : "↗"
-      <Multi_key> <l> <r> : "↔"
-      <Multi_key> <u> <d> : "↕"
-      <Multi_key> <parenleft> <Right> : "↪"
-      <Multi_key> <minus> <slash> <greater> : "↛"
-      <Multi_key> <less> <slash> <minus> : "↚"
-      <Multi_key> <2> <Left> : "⇇"
-      <Multi_key> <2> <Right> : "⇉"
-      <Multi_key> <3> <Right> : "⇶"
-      <Multi_key> <l> <Right> : "⟶"
-      <Multi_key> <l> <Left> : "⟵"
-      <Multi_key> <equal> <Up> : "⇑"
-      <Multi_key> <l> <equal> <greater> : "⟹"
-      <Multi_key> <l> <equal> <less> : "⟸"
-      <Multi_key> <Tab> : "⇥"
-      <Multi_key> <Return> : "↵"
-      <Multi_key> <f> <l> : "❧"
-      <Multi_key> <o> <k> : "✓"
-      <Multi_key> <n> <o> <k> : "✗"
-      <Multi_key> <z> <a> <p> : "↯"
-      <Multi_key> <1> <period> : "⒈"
-      <Multi_key> <2> <period> : "⒉"
-      <Multi_key> <3> <period> : "⒊"
-      <Multi_key> <4> <period> : "⒋"
-      <Multi_key> <5> <period> : "⒌"
-      <Multi_key> <6> <period> : "⒍"
-      <Multi_key> <7> <period> : "⒎"
-      <Multi_key> <8> <period> : "⒏"
-      <Multi_key> <9> <period> : "⒐"
-      <Multi_key> <1> <0> <period> : "⒑"
-      <Multi_key> <f> <l> <l> : "⌊"
-      <Multi_key> <f> <l> <r> : "⌋"
-      <Multi_key> <c> <e> <l> : "⌈"
-      <Multi_key> <c> <e> <r> : "⌉"
-      <dead_circumflex> <bracketleft> : "⌜"
-      <dead_circumflex> <bracketright> : "⌝"
-      <Multi_key> <2> <exclam> : "‼"
-      <Multi_key> <2> <question> : "⁇"
-      <Multi_key> <z> <w> : "​"
-      <Multi_key> <z> <n> <j> : "‌"
-      <Multi_key> <z> <w> <j> : "‍"
-      <Multi_key> <w> <j> : "⁠"
-      <Multi_key> <period> <bar> <period> : "⋮"
-      <Multi_key> <plus> <bar> : "†"
-      <Multi_key> <plus> <plus> : "‡"
-      <Multi_key> <s> <t> : "ﬆ"
-      <Multi_key> <f> <t> : "ﬅ"
-      <Multi_key> <underscore> <minus> : "₋"
-      <Multi_key> <colon> <colon> : "∷"
-      <Multi_key> <numbersign> <G> : "𝄞"
-      <Multi_key> <numbersign> <F> : "𝄢"
-      <Multi_key> <numbersign> <C> : "𝄡"
-      <Multi_key> <degree> <C> : "℃"
-      <Multi_key> <degree> <F> : "℉"
-      <Multi_key> <m> <u> : "無"
-      <Multi_key> <o> <m> : "ॐ"
-      <Multi_key> <e> <t> : "ꝫ"
-      <Multi_key> <E> <T> : "Ꝫ"
-      <Multi_key> <s> <h> : "ʃ"
-      <Multi_key> <c> <u> <b> <e> : "🧊"
-      <Multi_key> <y> <y> : "☯"
-      <Multi_key> <O> <O> : "👀"
-      <Multi_key> <greater> <less> : "👉👈"
-      <Multi_key> <l> <e> <m> : "https://f.monade.li/lemon.webp"
-      <Multi_key> <s> <u> <s> : "ඞ"
-      <Multi_key> <backslash> <slash> : "¯\\_(ツ)_/¯"
-      <Multi_key> <s> <2> <h> : "┐('~'; )┌"
-      <Multi_key> <l> <e> <n> : "( ͡° ͜ʖ ͡°)"
-      <Multi_key> <m> <e> <h> : "ಠ_ಠ"
-      <Multi_key> <t> <f> : "(╯°□°）╯︵ ┻━┻"
-      <Multi_key> <q> <t> : "(◕‿◕)"
-      <Multi_key> <s> <a> <d> : "(｡•́︿•̀｡)"
-      <Multi_key> <s> <r> <y> : "('''''' •᷄ ᴗ •᷅ )"
-      <Multi_key> <r> <r> : "https://www.youtube.com/watch?v=dQw4w9WgXcQ" # for emergency use only
-
       include "${inputs.agda-compose.packages.x86_64-linux.agda-compose}"
+      include "${composeFile}"
     '';
 
     onChange = ''
