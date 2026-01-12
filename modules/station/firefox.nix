@@ -18,6 +18,7 @@
           dearrow
           uppity
           zotero-connector
+          inlinedisposition-reloaded
         ];
         settings = {
           "accessibility.typeaheadfind.autostart" = false;

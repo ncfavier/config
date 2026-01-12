@@ -38,6 +38,8 @@
     agda-compose.url = "github:ncfavier/agda-compose";
 
     # Temporary nixpkgs pins
+    nixpkgs-vim-paramount.url = "github:ncfavier/nixpkgs/vim-paramount";
+    nixpkgs-mpv-cut.url = "github:ncfavier/nixpkgs/mpv-cut";
     nixpkgs-openrgb-bump.url = "github:ncfavier/nixpkgs/openrgb"; # 1.0rc1 supports ki's motherboard
   };
 

@@ -48,10 +48,6 @@ let g:agdavim_includeutf8_mappings = 0 " barely works, messes with /
 
 au FileType diff,gitcommit,gitsendemail let b:EditorConfig_disable = 1
 
-" colors noirbuddy
-" lua require("noirbuddy").setup { colors = { primary = "#d903ff", background = "#000000", } }
-set notermguicolors
-
 set breakindent
 set clipboard+=unnamedplus
 set expandtab
@@ -98,7 +94,8 @@ let &t_SR = "\e[3 q"
 
 " Colours
 
-set t_Co=16
+colors paramount
+
 highlight Search ctermfg=0
 
 " highlight trailing whitespace

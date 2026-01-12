@@ -360,6 +360,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-mpv-cut": {
+      "locked": {
+        "lastModified": 1767739229,
+        "narHash": "sha256-HWqdQjiMBmg8mqhVjkgXSuQ8Ocv35xtQ7t0luV7HNj8=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "f036a43ef9f45ded3517c0b090cf4aa405de4d80",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "mpv-cut",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-openrgb-bump": {
       "locked": {
         "lastModified": 1745062660,
@@ -404,6 +420,22 @@
         "id": "nixpkgs",
         "ref": "nixpkgs-unstable",
         "type": "indirect"
+      }
+    },
+    "nixpkgs-vim-paramount": {
+      "locked": {
+        "lastModified": 1768178835,
+        "narHash": "sha256-SkHkHz7C0fPcFiD8n2Za0/UryUrXzCCD/vL7gfTGV7A=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "b6a41ac1a7ca5a89a7b3a004b1bb889a320f447a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "vim-paramount",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs_2": {
@@ -453,11 +485,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1766902085,
-        "narHash": "sha256-coBu0ONtFzlwwVBzmjacUQwj3G+lybcZ1oeNSQkgC0M=",
+        "lastModified": 1767892417,
+        "narHash": "sha256-dhhvQY67aboBk8b0/u0XB6vwHdgbROZT3fJAjyNh5Ww=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c0b0e0fddf73fd517c3471e546c0df87a42d53f4",
+        "rev": "3497aa5c9457a9d88d71fa93a4a8368816fbeeba",
         "type": "github"
       },
       "original": {
@@ -504,11 +536,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1767015722,
-        "narHash": "sha256-XnS59HDcsz5jRswaEVgsFKjh0u3IXAT44upDqGwWU4o=",
+        "lastModified": 1768150883,
+        "narHash": "sha256-E91ct0tcf+KktZk07sFxxVoenhWI2VM6PTfpTP9xOdU=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "4e652d1ef9b506557f284753cf1678cfc250d434",
+        "rev": "ef1a09ad4ccb09e3444c234d45b57f93a16fd06c",
         "type": "github"
       },
       "original": {
@@ -565,9 +597,11 @@
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-mpv-cut": "nixpkgs-mpv-cut",
         "nixpkgs-openrgb-bump": "nixpkgs-openrgb-bump",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-vim-paramount": "nixpkgs-vim-paramount",
         "nur": "nur",
         "qeval": "qeval",
         "simple-nixos-mailserver": "simple-nixos-mailserver",

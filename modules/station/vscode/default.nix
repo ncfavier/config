@@ -79,6 +79,7 @@
       version = "1.3.0";
     }
   ];
+  # TODO: port vim-colors-paramount
 in {
   hm = {
     programs.vscode = {
