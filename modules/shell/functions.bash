@@ -140,10 +140,12 @@ diff-json() {
     rm -f "$old" "$new"
 }
 
-cd() { # ls after cd
-    builtin cd "$@" &&
-    if [[ -t 1 ]] && (( ${#FUNCNAME[@]} == 1 )); then ls; fi
-}
+# cd() { # ls after cd
+#     builtin cd "$@" &&
+#     if [[ -t 1 ]] && (( ${#FUNCNAME[@]} == 1 )) && (( $(count *) < 30 )); then
+#         ls
+#     fi
+# }
 
 mkcd() { # create a directory and move into it
     mkdir -p "$1" && builtin cd "$1"

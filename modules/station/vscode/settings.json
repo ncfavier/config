@@ -157,7 +157,6 @@
     },
   },
   "rust-analyzer.inlayHints.typeHints.enable": false,
-  "rust-analyzer.inlayHints.chainingHints.enable": false,
   "vim.handleKeys": {
     "<C-b>": false,
     "<C-c>": false,
@@ -308,7 +307,6 @@
   ],
   "workbench.editor.empty.hint": "hidden",
   "rust-analyzer.cargo.features": "all",
-  "haskell.plugin.importLens.codeActionsOn": false,
   "git.openRepositoryInParentFolders": "always",
   "editor.fontSize": 13,
   "lean4.alwaysShowTitleBarMenu": false,
@@ -369,5 +367,7 @@
     "/dev/null",
     "**/*.template.tex"
   ],
+  "rust-analyzer.inlayHints.chainingHints.enable": false,
+  "haskell.plugin.explicit-fields.inlayHintsOn": false,
   "workbench.colorTheme": "Mr Pink",
 }

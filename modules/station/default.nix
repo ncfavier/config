@@ -7,7 +7,6 @@ in optionalAttrs this.isStation {
   imports = attrValues (modulesIn ./.);
 
   config = {
-    boot.kernelParams = [ "mitigations=off" ];
     boot.kernel.sysctl."kernel.sysrq" = 1;
 
     environment.etc."systemd/system-sleep/batenergy".source = pkgs.writeShellScript "batenergy" ''
@@ -54,6 +53,9 @@ in optionalAttrs this.isStation {
       graphviz
       inkscape
       poppler-utils
+      (typst.withPackages (ps: with ps; [
+        touying
+      ]))
       transmission_4-gtk
       qemu
       rustdesk-flutter

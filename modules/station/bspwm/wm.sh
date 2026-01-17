@@ -34,6 +34,14 @@ focus-window() {
     }
 }
 
+focus-workspace() {
+    bspc desktop -f "$@"
+}
+
+move-window-to-workspace() {
+    bspc node -d "$@" -f
+}
+
 get-workspaces() {
     readarray -t workspaces < <(bspc query --desktops --monitor focused --names "$@")
     n=0
@@ -85,6 +93,9 @@ launch() {
             rofi -sidebar-mode -show-icons -modes drun,run,window -show drun &
             ;;
         term|terminal|+([[:digit:]]))
+            if [[ $app == +([[:digit:]]) ]]; then
+                focus-workspace "$app"
+            fi
             terminal ${*:+-e "$@"} &
             ;;
         chat|irc)
@@ -149,9 +160,9 @@ case $cmd in
     focus-window)
         focus-window "$@";;
     focus-workspace)
-        bspc desktop -f "$@";;
+        focus-workspace "$@";;
     move-window-to-workspace)
-        bspc node -d "$@" -f;;
+        move-window-to-workspace "$@";;
     remove-workspace)
         get-workspaces --desktop '.!occupied'
         if (( n )); then

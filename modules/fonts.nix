@@ -37,6 +37,7 @@
           eb-garamond
           crimson-pro
           alice
+          alegreya
           libre-baskerville
           libertinus
         ];
@@ -59,6 +60,18 @@
                   <family>Dina</family>
                   <family>Biwidth</family>
                   <family>emoji</family>
+                </prefer>
+              </alias>
+              <alias binding="same">
+                <family>DejaVu Serif</family>
+                <prefer>
+                  <family>serif</family>
+                </prefer>
+              </alias>
+              <alias binding="same">
+                <family>DejaVu Math TeX Gyre</family>
+                <prefer>
+                  <family>serif</family>
                 </prefer>
               </alias>
               <alias binding="same">

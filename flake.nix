@@ -5,13 +5,13 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "nixos-hardware";
+    nixos-hardware.url = "nixos-hardware/no-alsa-ucm";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/fix-xfconf";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xhmm.url = "github:schuelermine/xhmm";

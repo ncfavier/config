@@ -48,5 +48,12 @@
         "k" = "cycle pause";
       };
     };
+
+    xdg.configFile."mpv-cut/config.lua".text = ''
+      KEY_CUT = "alt+c"
+      KEY_CANCEL_CUT = "alt+C"
+      KEY_CYCLE_ACTION = "alt+a"
+      KEY_BOOKMARK_ADD = "alt+i"
+    '';
   };
 }

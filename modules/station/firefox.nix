@@ -13,6 +13,7 @@
           refined-github
           redirector # ^https:\/\/(.*?)\.m\.wikipedia\.org\/(.*) → https://$1.wikipedia.org/$2
                      # ^https:\/\/(.*?)\.m\.wiktionary\.org\/(.*) → https://$1.wiktionary.org/$2
+                     # https://dl.acm.org/doi/epdf/* → https://dl.acm.org/doi/pdf/$1
           clearurls
           video-resumer
           dearrow

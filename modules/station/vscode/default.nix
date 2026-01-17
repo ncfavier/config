@@ -98,6 +98,7 @@ in {
         yzhang.markdown-all-in-one
         james-yu.latex-workshop
         tamasfe.even-better-toml
+        myriad-dreamin.tinymist
         (pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
           version = "0.5.7-patched";
