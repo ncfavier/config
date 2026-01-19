@@ -53,9 +53,15 @@ in optionalAttrs this.isStation {
       graphviz
       inkscape
       poppler-utils
-      (typst.withPackages (ps: with ps; [
-        touying
-      ]))
+      (pkgs.typst-wrapper.typst.wrapper {
+        packages = ps: with ps; [
+          touying
+        ];
+        fonts = [
+          pkgs.twemoji-color-font
+        ];
+        extraWrapperArgs = [ "--set" "TYPST_IGNORE_SYSTEM_FONTS" "true" ]; # ignore the non-SVG version of Twemoji
+      })
       transmission_4-gtk
       qemu
       rustdesk-flutter

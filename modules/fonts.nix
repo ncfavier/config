@@ -1,7 +1,13 @@
-{ lib, this, config, pkgs, ... }: with lib; {
+{ inputs, lib, this, config, pkgs, ... }: with lib; {
   config = mkMerge [
     {
       fonts.fontconfig.enable = mkDefault false;
+
+      nixpkgs.overlays = [ (self: super: {
+        twemoji-color-font = pkgs.twemoji-src.twemoji-color-font-src.overrideAttrs (old: {
+          src = inputs.twemoji;
+        });
+      }) ];
     }
 
     (mkIf this.isStation {
@@ -49,7 +55,7 @@
             monospace = [ "JuliaMono" "Source Code Pro" "Source Han Mono" "emoji" ];
             emoji     = [ "Twitter Color Emoji" "Noto Color Emoji" "Symbola" ];
           };
-          # test: ™ ´ ” ☺ 🦢 🪿 π œuf ✓ → ∀ ⬛🟩
+          # test: ™ ´ ” ☺ 🦢 🪿 🪊 π œuf ✓ → ∀ ⬛🟩
           localConf = ''
             <?xml version='1.0'?>
             <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>

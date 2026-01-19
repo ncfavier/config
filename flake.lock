@@ -407,6 +407,38 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-twemoji-src": {
+      "locked": {
+        "lastModified": 1768848585,
+        "narHash": "sha256-maFGKTUATtkJY4kPUtUZxNmFvN2t176/eBZHnfKDkDk=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "30c0ca37253aded36267654dbbe9d8912c10a44e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "twemoji-src",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-typst-wrapper": {
+      "locked": {
+        "lastModified": 1768852910,
+        "narHash": "sha256-VvjBRB02Umx9/Nm3sB1smpibwOB7/EdVGeyJpM+aUPc=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "2baaab95d0181ace629991ddf20a5568cba8795c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "typst-fonts",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1766870016,
@@ -600,12 +632,15 @@
         "nixpkgs-mpv-cut": "nixpkgs-mpv-cut",
         "nixpkgs-openrgb-bump": "nixpkgs-openrgb-bump",
         "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs-twemoji-src": "nixpkgs-twemoji-src",
+        "nixpkgs-typst-wrapper": "nixpkgs-typst-wrapper",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-vim-paramount": "nixpkgs-vim-paramount",
         "nur": "nur",
         "qeval": "qeval",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
+        "twemoji": "twemoji",
         "www": "www",
         "xhmm": "xhmm"
       }
@@ -734,6 +769,23 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "twemoji": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768846432,
+        "narHash": "sha256-m+7v75L+1wpimyAl3tcRTlTF0VHhtu9+rBaoSaYb9Vk=",
+        "owner": "ncfavier",
+        "repo": "twemoji-color-font",
+        "rev": "ab1c2d7b265d2a4b76c140da4fe556ba5bc8af8d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "emoji-17",
+        "repo": "twemoji-color-font",
         "type": "github"
       }
     },
