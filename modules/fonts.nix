@@ -46,6 +46,11 @@
           alegreya
           libre-baskerville
           libertinus
+          tex-gyre.pagella
+          tex-gyre-math.pagella
+          tex-gyre.schola
+          tex-gyre-math.schola
+          etBook
         ];
         fontconfig = {
           enable = true;

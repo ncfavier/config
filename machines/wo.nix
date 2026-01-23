@@ -29,6 +29,7 @@
       };
 
       kernelPackages = pkgs.linuxPackages_latest;
+      kernelParams = [ "amdgpu.dcdebugmask=0x10" ]; # https://community.frame.work/t/framework-13-amd-gpu-crash-debian/68629
       kernelModules = [ "kvm-amd" ];
       initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
 
