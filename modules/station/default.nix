@@ -19,8 +19,6 @@ in optionalAttrs this.isStation {
       }}/batenergy.sh "$@"
     '';
 
-    programs.adb.enable = true;
-
     programs.wireshark = {
       enable = true;
       package = pkgs.wireshark;
@@ -64,6 +62,7 @@ in optionalAttrs this.isStation {
       })
       transmission_4-gtk
       qemu
+      android-tools
       rustdesk-flutter
       (writeShellScriptBin "power" ''
         actions=(shutdown reboot suspend "lock and suspend" logout)

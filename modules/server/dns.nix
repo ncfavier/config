@@ -113,7 +113,7 @@ in {
       };
       forward-zone = [ {
         name = ".";
-        forward-addr = config.services.resolved.fallbackDns;
+        forward-addr = config.services.resolved.settings.Resolve.FallbackDNS;
         forward-tls-upstream = true;
       } ];
     };

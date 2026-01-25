@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }: with lib; let
-  thunarWithPkgs = pkgs.xfce.thunar.override {
-    thunarPlugins = with pkgs.xfce; [
+  thunarWithPkgs = pkgs.thunar.override {
+    thunarPlugins = with pkgs; [
       thunar-volman
       thunar-archive-plugin
     ];
@@ -10,19 +10,19 @@ in {
   services.tumbler.enable = true;
   programs.dconf.enable = true;
 
-  cachix.derivationsToPush = [ thunarWithPkgs pkgs.xfce.tumbler ];
+  cachix.derivationsToPush = [ thunarWithPkgs pkgs.tumbler ];
 
   nixpkgs.overlays = [ (self: super: {
-    xfce = super.xfce.overrideScope (xself: xsuper: {
-      tumbler = xsuper.tumbler.overrideAttrs (drv: {
-        patches = drv.patches or [] ++ [
-          ./tumbler-thumbnail-symlinks.patch
-        ];
-      });
-      thunar-unwrapped = xsuper.thunar-unwrapped.overrideAttrs (drv: {
-        patches = drv.patches or [] ++ [
-          # https://gitlab.xfce.org/xfce/thunar/-/merge_requests/671
-          (builtins.toFile "thunar-compact.patch" ''
+    tumbler = super.tumbler.overrideAttrs (drv: {
+      patches = drv.patches or [] ++ [
+        ./tumbler-thumbnail-symlinks.patch
+      ];
+    });
+
+    thunar-unwrapped = super.thunar-unwrapped.overrideAttrs (drv: {
+      patches = drv.patches or [] ++ [
+        # https://gitlab.xfce.org/xfce/thunar/-/merge_requests/671
+        (builtins.toFile "thunar-compact.patch" ''
 diff --git a/thunar/thunar-icon-view.c b/thunar/thunar-icon-view.c
 index 218601800..b03ef6ed9 100644
 --- a/thunar/thunar-icon-view.c
@@ -30,10 +30,9 @@ index 218601800..b03ef6ed9 100644
 @@ -212 +212 @@ thunar_icon_view_set_consistent_horizontal_spacing (ThunarIconView *icon_view)
 -  if (exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
 +  if (TRUE || exo_icon_view_get_orientation (exo_icon_view) == GTK_ORIENTATION_HORIZONTAL)
-          '')
-          ./thunar-thumbnail-symlinks.patch
-        ];
-      });
+        '')
+        ./thunar-thumbnail-symlinks.patch
+      ];
     });
   }) ];
 
@@ -103,7 +102,7 @@ index 218601800..b03ef6ed9 100644
       "tumbler/tumbler.rc" = {
         source = ./tumbler.rc;
         onChange = ''
-          ${getBin pkgs.procps}/bin/pkill ''${VERBOSE+-e} -f ${pkgs.xfce.tumbler} || true
+          ${getBin pkgs.procps}/bin/pkill ''${VERBOSE+-e} -f ${pkgs.tumbler} || true
         '';
       };
     };

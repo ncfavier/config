@@ -5,7 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "nixos-hardware/no-alsa-ucm"; # TODO
+    nixos-hardware.url = "github:nixos/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,8 +42,6 @@
     nixpkgs-twemoji-src.url = "github:ncfavier/nixpkgs/twemoji-src";
     twemoji.url = "github:ncfavier/twemoji-color-font/emoji-17";
     twemoji.flake = false;
-    nixpkgs-vim-paramount.url = "github:ncfavier/nixpkgs/vim-paramount";
-    nixpkgs-mpv-cut.url = "github:ncfavier/nixpkgs/mpv-cut";
     nixpkgs-openrgb-bump.url = "github:ncfavier/nixpkgs/openrgb"; # 1.0rc1 supports ki's motherboard
   };
 

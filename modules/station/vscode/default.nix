@@ -149,7 +149,7 @@ in {
           in
           map (e: e // new.''${e.name}) old
         ''} |
-        ${pkgs.nixfmt-rfc-style}/bin/nixfmt
+        ${pkgs.nixfmt}/bin/nixfmt
       '')
     ];
   };

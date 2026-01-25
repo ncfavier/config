@@ -369,6 +369,6 @@
   ],
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   "haskell.plugin.explicit-fields.inlayHintsOn": false,
-  "workbench.colorTheme": "Mr Pink",
+  "workbench.colorTheme": "Lilac",
   "tinymist.exportPdf": "onSave",
 }

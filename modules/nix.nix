@@ -143,7 +143,7 @@
         nix-tree
         nixpkgs-fmt
         nixpkgs-review
-        nixfmt-rfc-style
+        nixfmt
       ];
 
       lib.shellEnv = {

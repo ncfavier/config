@@ -26,7 +26,7 @@
         kotlin-vim
 
         # https://github.com/mcchrish/vim-no-color-collections
-        pkgs.vim-paramount.vimPlugins.vim-colors-paramount
+        vim-colors-paramount
       ];
     };
 

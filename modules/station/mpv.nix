@@ -7,7 +7,7 @@
           autoload
           mpris
           quality-menu
-          pkgs.mpv-cut.mpvScripts.cut
+          cut
         ];
       };
 
