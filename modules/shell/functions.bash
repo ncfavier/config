@@ -607,3 +607,7 @@ ffmpeg-concat() { # ffmpeg-concat a b c -- out
     done
     ffmpeg -f concat -safe 0 -i <(printf 'file %q\n' "${files[@]}") "$@"
 }
+
+amdgpu_recover() {
+    sudo cat /sys/kernel/debug/dri/1/amdgpu_gpu_recover
+}
