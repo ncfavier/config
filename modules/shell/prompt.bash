@@ -1,7 +1,7 @@
 prompt_git() {
     local branch=$(__git_ps1 %s)
     if [[ $branch && $branch != @(master|main) ]]; then
-        printf ' \1\e[34m\2%s\1\e[0m\2' "$branch"
+        printf ' \1\e[35m\2%s\1\e[0m\2' "$branch"
     fi
 }
 
@@ -10,7 +10,7 @@ prompt_symbol() {
         printf '+'
     done
     if [[ -v DIRENV_FILE && -v IN_NIX_SHELL ]]; then
-        printf '\1\e[34m\2$\1\e[0m\2'
+        printf '\1\e[35m\2$\1\e[0m\2'
     else
         printf '$'
     fi

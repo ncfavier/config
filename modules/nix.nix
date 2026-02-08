@@ -136,6 +136,26 @@
 
       environment.systemPackages = with pkgs; [
         config-cli
+        (shellScriptWith "pkgs" {
+          deps = [ config-cli ];
+          completion = ''
+            complete_alias pkgs nix build -f /etc/nixpkgs
+          '';
+        } ''
+          attr=$1
+          shift
+          exec config bld pkgs."$attr" --no-out-link "$@"
+        '')
+        (shellScriptWith "exe" {
+          deps = [ config-cli ];
+          completion = ''
+            complete_alias exe nix run -f /etc/nixpkgs
+          '';
+        } ''
+          attr=$1
+          shift
+          exec config run pkgs."$attr" "$@"
+        '')
         nix-bash-completions
         nix-index-unwrapped # use the system-wide nix
         nix-diff

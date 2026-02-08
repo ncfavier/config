@@ -182,10 +182,10 @@ in {
           persistentKeepalive = 21;
         }) (my.machinesThat (m: m.isServer && m ? wireguard));
         postUp = ''
-          ${getExe wg-exempt} ${escapeShellArgs allExemptions}
+          ${getExe wg-exempt} ${escapeShellArgs allExemptions} || true
         '';
-        postDown = ''
-          timeout 3s ${getExe wg-exempt} -d ${escapeShellArgs allExemptions} || true
+        preDown = ''
+          timeout 5s ${getExe wg-exempt} -d ${escapeShellArgs allExemptions} || true
         '';
       };
 
@@ -194,7 +194,11 @@ in {
         after = [ "nss-lookup.target" ];
       };
 
-      environment.systemPackages = [ wg-toggle wg-exempt ];
+      environment.systemPackages = with pkgs; [
+        wireguard-tools
+        wg-toggle
+        wg-exempt
+      ];
     }))
   ];
 }

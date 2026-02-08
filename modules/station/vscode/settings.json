@@ -319,9 +319,6 @@
   "git.autoStash": true,
   "git.fetchOnPull": true,
   "diffEditor.renderSideBySide": false,
-  "agdaMode.connection.paths": [
-    "agda"
-  ],
   "editor.experimentalEditContextEnabled": false,
   "git.blame.editorDecoration.enabled": false,
   "git.blame.statusBarItem.enabled": true,
@@ -369,6 +366,6 @@
   ],
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   "haskell.plugin.explicit-fields.inlayHintsOn": false,
-  "workbench.colorTheme": "Lilac",
   "tinymist.exportPdf": "onSave",
+  "workbench.colorTheme": "Lilac",
 }

@@ -89,6 +89,36 @@
             *) pactl set-sink-volume @DEFAULT_SINK@ "$1%";;
           esac fi
         '')
+        sox
+        (writeShellScriptBin "bip" ''
+          notes=()
+          times=()
+          t=0
+          octave=4
+
+          for arg in "$@"; do
+            if [[ $arg =~ ^[A-G](\#|b)?([0-9]?)$ ]]; then
+              if [[ -n ''${BASH_REMATCH[2]} ]]; then
+                octave=''${BASH_REMATCH[2]}
+              else
+                arg+=$octave
+              fi
+              notes+=(sine "$arg")
+              times+=("''${t}s")
+            fi
+            (( t += 4000 ))
+          done
+
+          args=()
+          if [[ -t 1 ]]; then
+            args+=(-t pulseaudio)
+          else
+            args+=(-t ogg -)
+          fi
+
+          sox --norm=-15 -qn -c1 "''${args[@]}" synth 1 "''${notes[@]}" \
+            fade 0.01 0.1 0.06 delay "''${times[@]}"
+        '')
       ];
     }
   ];

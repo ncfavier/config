@@ -18,8 +18,8 @@
       darkGrey       = if dark then "#666666" else "#aaaaaa";
       lightGrey      = if dark then "#444444" else "#cccccc";
       white          = "#ffffff";
-      hot            = "#d13cff";
-      cold           = if dark then "#4befdb" else "#33aacc";
+      hot            = "#c13cff";
+      cold           = if dark then "#4afff3" else "#33aacc";
       background     = if dark then black else white;
       foreground     = if dark then white else black;
       backgroundAlt  = darkGrey;

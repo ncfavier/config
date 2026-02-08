@@ -18,6 +18,8 @@
         sub-auto = "fuzzy";
         sub-border-size = 1;
 
+        image-display-duration = "inf";
+
         ao = "pulse";
         hwdec = "auto-safe";
 
@@ -31,9 +33,10 @@
       };
 
       profiles = {
-        "loop" = {
+        "short" = {
+          profile-cond = "p.duration <= 30";
+          profile-restore = "copy-equal";
           loop-file = "inf";
-          profile-cond = "p.duration<=30";
         };
       };
 

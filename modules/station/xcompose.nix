@@ -266,6 +266,8 @@
     "⋆OO" = "👀";
     "⋆><" = "👉👈";
     "⋆lem" = "https://f.monade.li/lemon.webp";
+    "⋆waa" = "https://f.monade.li/oooooohhh_gone.gif";
+    "⋆load" = "https://f.monade.li/loading.gif";
     "⋆sus" = "ඞ";
     "⋆\\/" = "¯\\_(ツ)_/¯";
     "⋆2\\/" = "┐('~'; )┌";

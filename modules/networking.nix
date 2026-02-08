@@ -80,6 +80,7 @@
         enable = true;
         plugins = with pkgs; [
           networkmanager-l2tp
+          networkmanager-openvpn
         ];
 
         ensureProfiles = {
@@ -108,6 +109,7 @@
               };
             };
 
+            # TODO remove
             chalmers = {
               connection = {
                 type = "vpn";
@@ -143,6 +145,13 @@
           };
         };
       };
+
+      # https://codeberg.org/eduVPN/linux-app/issues/682
+      networking.firewall.checkReversePath = "loose";
+
+      environment.systemPackages = with pkgs; [
+        eduvpn-client
+      ];
 
       # https://github.com/NixOS/nixpkgs/issues/375352
       environment.etc."strongswan.conf".text = "";

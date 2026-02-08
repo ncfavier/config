@@ -21,6 +21,8 @@
     };
 
     services.mpd-mpris.enable = true;
+    services.mpd-mpris.package = pkgs.mpd-mpris-fix.mpd-mpris;
+
     services.playerctld = {
       enable = true;
       package = pkgs.playerctl.overrideAttrs (drv: {
@@ -53,7 +55,12 @@
 
     home.packages = with pkgs; [
       mpc
-      plattenalbum
+      (plattenalbum.overrideAttrs (_: {
+        patches = [ (fetchpatch {
+          url = "https://github.com/ncfavier/plattenalbum/commit/all-artists.patch";
+          hash = "sha256-sekzAGXyXuVmkg165AU+E8AYotYtK/kx1mZTjfNO6Q0=";
+        }) ];
+      }))
       quodlibet
       (shellScriptWith "music-play" {
         deps = [ mpc ];

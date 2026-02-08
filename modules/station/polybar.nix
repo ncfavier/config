@@ -3,6 +3,7 @@
     "${font}:size=${toString fontSize};${toString (config.lib.x.dpiScale 2)}"
     "${font}:size=${toString fontSize}:weight=bold;${toString (config.lib.x.dpiScale 2)}"
     "emoji:scale=6;${toString (config.lib.x.dpiScale 2)}"
+    "DejaVu Sans;${toString (config.lib.x.dpiScale 3)}"
     "Material Design Icons;${toString (config.lib.x.dpiScale 3)}"
   ];
   boldFont = 2;

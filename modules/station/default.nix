@@ -42,9 +42,8 @@ in optionalAttrs this.isStation {
       inlyne
       typos
       agda
-      coq
+      (rocq-update.coq.withPackages (ps: with ps; [ stdlib vsrocq-language-server ]))
       elan
-      ocamlPackages.cooltt
       audacity
       gimp3
       evince

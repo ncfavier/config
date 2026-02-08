@@ -518,18 +518,6 @@ nix-mv() {
     nix-store --realise "$dest" --add-root "$dest"
 }
 
-pkgs() {
-    config bld pkgs."$1" --no-out-link
-}
-complete_alias pkgs nix build -f /etc/nixpkgs
-
-exe() {
-    local attr=$1
-    shift
-    config run pkgs."$attr" "$@"
-}
-complete_alias exe nix run -f /etc/nixpkgs
-
 drv() {
     nix derivation show "$@" | if [[ -t 1 ]]; then
         less
@@ -550,6 +538,12 @@ nix-locate-program() {
 
 fdnp() {
     fd -L "$@" $NIX_PROFILES
+}
+
+fc-which() {
+    local char=${1:0:1} codepoint
+    printf -v codepoint %x "'$char"
+    fc-list ":charset=$codepoint"
 }
 
 xcompose() { # print the path to the system-wide XCompose file

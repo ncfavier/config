@@ -11,6 +11,7 @@
       font-family = [ "monospace" "emoji" ];
       font-size = fontSize;
       font-codepoint-map = "U+2600-U+27BF,U+2B00-U+2BFF,U+1F300-U+1F5FF=emoji";
+      font-feature = [ "-calt" "-liga" "-dlig" ];
       window-title-font-family = "monospace";
       window-padding-x = padding;
       window-padding-y = padding;

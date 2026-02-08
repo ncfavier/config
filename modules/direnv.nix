@@ -9,5 +9,6 @@
     };
 
     home.sessionVariables.DIRENV_LOG_FORMAT = "";
+    xsession.importedVariables = [ "DIRENV_LOG_FORMAT" ];
   };
 }

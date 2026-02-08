@@ -13,9 +13,6 @@
     #   version = "0.5.7";
     #   # issues with later versions:
     #   # https://github.com/banacorn/agda-mode-vscode/issues/243
-    #   # https://github.com/banacorn/agda-mode-vscode/issues/247
-    #   # https://github.com/banacorn/agda-mode-vscode/issues/248
-    #   # https://github.com/banacorn/agda-mode-vscode/issues/254
     #   # https://github.com/banacorn/agda-mode-vscode/issues/255
     # }
     {
@@ -61,12 +58,6 @@
       version = "1.0.1";
     }
     {
-      hash = "sha256-QBUTOFhdksHGkpYqgQIF2u+WodYH5PmMMvGFHwEEEIk=";
-      name = "vscoq";
-      publisher = "maximedenes";
-      version = "2.2.6";
-    }
-    {
       hash = "sha256-OPOgjjkooaDQzYoPOmly6WenvAILWhxBKuqRKmQi+rQ=";
       name = "vscode-duotone-dark";
       publisher = "sallar";
@@ -99,9 +90,10 @@ in {
         james-yu.latex-workshop
         tamasfe.even-better-toml
         myriad-dreamin.tinymist
+        rocq-prover.vsrocq
         (pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
-          version = "0.5.7-patched";
+          version = "0.6.7-unstable";
           vscodeExtPublisher = "banacorn";
           vscodeExtName = "agda-mode";
           vscodeExtUniqueId = "banacorn.agda-mode";
@@ -110,16 +102,10 @@ in {
             src = pkgs.fetchFromGitHub {
               owner = my.githubUsername;
               repo = "agda-mode-vscode";
-              rev = "live";
-              hash = "sha256-yLwL2UxOyRe91Y0Lt5d00ie8UheMYUAGEoL2hZSp/8s=";
+              rev = "live2";
+              hash = "sha256-onpePI80PnAA2VK3nUF4xzT45M3vi5q3F21LbIoWpFM=";
             };
-            # src = pkgs.fetchFromGitHub {
-            #   owner = "fredrik-bakke";
-            #   repo = "agda-mode-vscode";
-            #   rev = "autocomplete-literate";
-            #   hash = "sha256-7Cc61IpEr0U1rrIc+gf6Mz5EZCN59TvoNVBiVgi934I=";
-            # };
-            npmDepsHash = "sha256-kYo6XsxiHp1tQ4JiPZ0PoXXla5WW2n1MFpCEQMqIjyc=";
+            npmDepsHash = "sha256-JiqFhSmL8FB3zrp+jx7gP9jFfPPJHwXqOTJ43Ob4AqE=";
             PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = 1;
             makeCacheWritable = true;
             nativeBuildInputs = [ pkgs.vsce ];
@@ -138,7 +124,6 @@ in {
     };
 
     home.packages = [
-      pkgs.coqPackages.vscoq-language-server
       (pkgs.writeShellScriptBin "update-vscode-extensions" ''
         ${pkgs.path}/pkgs/applications/editors/vscode/extensions/update_installed_exts.sh |
         nix eval -f - --apply ${escapeShellArg ''

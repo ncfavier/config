@@ -3,8 +3,8 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-22.11";
-    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable-small";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -38,6 +38,8 @@
     agda-compose.url = "github:ncfavier/agda-compose";
 
     # Temporary pins
+    nixpkgs-rocq-update.url = "github:nixos/nixpkgs/master";
+    nixpkgs-mpd-mpris-fix.url = "github:ncfavier/nixpkgs/mpd-mpris-revert";
     nixpkgs-typst-wrapper.url = "github:ncfavier/nixpkgs/typst-fonts";
     nixpkgs-twemoji-src.url = "github:ncfavier/nixpkgs/twemoji-src";
     twemoji.url = "github:ncfavier/twemoji-color-font/emoji-17";

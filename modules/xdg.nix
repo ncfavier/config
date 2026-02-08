@@ -78,6 +78,9 @@
               amfora = [
                 "x-scheme-handler/gemini"
               ];
+              "org.gnome.Evince" = [
+                "application/postscript"
+              ];
             });
           };
 

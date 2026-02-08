@@ -337,6 +337,7 @@
     };
 
     home.sessionVariables.MOZ_USE_XINPUT2 = "1";
+    xsession.importedVariables = [ "MOZ_USE_XINPUT2" ];
 
     # https://firefox-source-docs.mozilla.org/devtools/backend/protocol.html
     # https://searchfox.org/mozilla-central/source/devtools/server/actors/style-sheets.js
@@ -356,39 +357,40 @@
       verbose=0
       if [[ $1 == -v ]]; then
         verbose=1
-          shift
+        shift
       fi
       port=''${1:-6001}
 
       firefox --start-debugger-server "$port" || exit 0
       exec {ff}<>/dev/tcp/localhost/"$port"
-      shopt -s lastpipe # for `jobs`
+      trap 'trap "" TERM; kill 0' EXIT # leave no trace on exit
 
-      while read -u "$ff" -rd : len && IFS= LC_ALL=C read -u "$ff" -rd "" -n "$len" json; do
-        printf '%s\n' "$json"
-        (( verbose )) && printf '<== %s\n' "$json" >&2
-      done |
-      jq -cn --unbuffered --rawfile text ~/.mozilla/firefox/default/chrome/userChrome.css '
-        def expect(f): first(inputs | if has("error") then "error \(.error): \(.message)\n" | halt_error(1) else . end | f);
-        {to: "root", type: "getProcess", id: 0}, (
-        expect(.processDescriptor.actor | values) as $process |
-        {to: $process, type: "getTarget"}, (
-        expect(.process.styleSheetsActor | values) as $styleSheets |
-        {to: $process, type: "getWatcher"}, (
-        expect(select(.from == $process) | .actor | values) as $watcher |
-        {to: $watcher, type: "watchResources", resourceTypes: ["stylesheet"]}, (
-        expect(.array[]?[1][] | select(.href | values | endswith("/userChrome.css")).resourceId) as $userChrome |
-        {to: $styleSheets, type: "update", resourceId: $userChrome, $text, transition: false}, (
-        expect(.array[]?[1][] | select(.updateType == "style-applied" and .resourceId == $userChrome)) |
-        halt
-        )))))
-      ' | {
+      {
+        jq -cn --unbuffered --rawfile text ~/.mozilla/firefox/default/chrome/userChrome.css '
+          def expect(f): first(inputs | if has("error") then "error \(.error): \(.message)\n" | halt_error(1) else . end | f);
+          {to: "root", type: "getProcess", id: 0}, (
+          expect(.processDescriptor.actor | values) as $process |
+          {to: $process, type: "getTarget"}, (
+          expect(.process.styleSheetsActor | values) as $styleSheets |
+          {to: $process, type: "getWatcher"}, (
+          expect(select(.from == $process) | .actor | values) as $watcher |
+          {to: $watcher, type: "watchResources", resourceTypes: ["stylesheet"]}, (
+          expect(.array[]?[1][] | select(.href | values | endswith("/userChrome.css")).resourceId) as $userChrome |
+          {to: $styleSheets, type: "update", resourceId: $userChrome, $text, transition: false}, (
+          expect(.array[]?[1][] | select(.updateType == "style-applied" and .resourceId == $userChrome)) |
+          halt
+          )))))
+        ' |
         while IFS= read -r json; do
           printf '%s:%s' "''${#json}" "$json"
           (( verbose )) && printf '==> %s\n' "$json" >&2
         done >& "$ff"
-        kill $(jobs -p) 2> /dev/null
-      } || (( ! PIPESTATUS[1] ))
+      } < <(
+        while read -u "$ff" -rd : len && IFS= LC_ALL=C read -u "$ff" -rd "" -n "$len" json; do
+          printf '%s\n' "$json"
+          (( verbose )) && printf '<== %s\n' "$json" >&2
+        done
+      )
     '';
   }) ];
 
