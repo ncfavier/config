@@ -44,6 +44,7 @@
       nix = "nix -vL";
       pgrep = "pgrep -a";
       pkill = "pkill -e";
+      execsnoop = "sudo execsnoop";
 
       # Shorthands
       C = "LC_ALL=C ";

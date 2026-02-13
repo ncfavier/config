@@ -266,7 +266,7 @@ in {
                 fi
                 output+=("$item")
               elif [[ $type == vpn ]]; then
-                output+=("${icon "󰌆"}")
+                output+=("%{F${foregroundAlt}}${icon "󰯄"}%{F-}")
               fi
             done
             printf '%s\n' "''${output[*]}"

@@ -17,7 +17,7 @@
         volume-max = 200;
         sub-auto = "fuzzy";
         sub-border-size = 1;
-
+        reset-on-next-file = "video-pan-x,video-pan-y,video-zoom";
         image-display-duration = "inf";
 
         ao = "pulse";
@@ -34,7 +34,7 @@
 
       profiles = {
         "short" = {
-          profile-cond = "p.duration <= 30";
+          profile-cond = "p.duration <= 30 and not p['current-tracks/video/image']";
           profile-restore = "copy-equal";
           loop-file = "inf";
         };

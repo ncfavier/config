@@ -61,6 +61,7 @@
           hash = "sha256-sekzAGXyXuVmkg165AU+E8AYotYtK/kx1mZTjfNO6Q0=";
         }) ];
       }))
+      eyed3
       quodlibet
       (shellScriptWith "music-play" {
         deps = [ mpc ];

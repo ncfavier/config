@@ -1,5 +1,5 @@
 { lib, this, config, pkgs, ... }: with lib; let
-  agda = pkgs.agda.withPackages (p: with p; [
+  agdaWithLibs = pkgs.agda.withPackages (p: with p; [
     standard-library
     cubical
   ]);
@@ -41,10 +41,10 @@ in optionalAttrs this.isStation {
       pandoc
       inlyne
       typos
-      agda
+      agdaWithLibs
       (rocq-update.coq.withPackages (ps: with ps; [ stdlib vsrocq-language-server ]))
       elan
-      audacity
+      tenacity
       gimp3
       evince
       graphviz
@@ -103,6 +103,6 @@ in optionalAttrs this.isStation {
       cubical
     '';
 
-    cachix.derivationsToPush = [ pkgs.tmsu agda ];
+    cachix.derivationsToPush = [ pkgs.tmsu agdaWithLibs ];
   };
 }

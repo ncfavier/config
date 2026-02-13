@@ -90,7 +90,6 @@ in {
         james-yu.latex-workshop
         tamasfe.even-better-toml
         myriad-dreamin.tinymist
-        rocq-prover.vsrocq
         (pkgs.vscode-utils.buildVscodeExtension {
           pname = "agda-mode-vscode";
           version = "0.6.7-unstable";
@@ -115,6 +114,8 @@ in {
             '';
           };
         })
+        rocq-prover.vsrocq
+        leanprover.lean4
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace exts;
     };
 
