@@ -11,7 +11,6 @@
     bat
     xxd
     dos2unix
-    ripgrep
     file
     fd
     tree
@@ -59,26 +58,32 @@
 
   environment.etc.topdefaultrc.source = config.lib.meta.mkMutableSymlink ./toprc;
 
-  hm.programs.htop = {
-    enable = true;
-    settings = {
-      hide_kernel_threads = true;
-      hide_userland_threads = true;
-      show_thread_names = true;
-      highlight_base_name = true;
-      show_cpu_frequency = true;
-      show_cpu_temperature = true;
-      screen_tabs = true;
+  hm = {
+    programs.ripgrep = {
+      enable = true;
+      arguments = [ "--hidden" ];
     };
-  };
 
-  hm.xdg.configFile."htop".force = true;
+    programs.htop = {
+      enable = true;
+      settings = {
+        hide_kernel_threads = true;
+        hide_userland_threads = true;
+        show_thread_names = true;
+        highlight_base_name = true;
+        show_cpu_frequency = true;
+        show_cpu_temperature = true;
+        screen_tabs = true;
+      };
+    };
 
-  hm.programs.yt-dlp = {
-    enable = true;
-    package = pkgs.unstable.yt-dlp.override { withAlias = true; };
-    settings = {
-      cookies-from-browser = "firefox";
+    xdg.configFile."htop".force = true;
+
+    programs.yt-dlp = {
+      enable = true;
+      settings = {
+        cookies-from-browser = "firefox";
+      };
     };
   };
 
@@ -117,6 +122,8 @@
           install -D -m555 ${src} "$out/bin/${name}"
         '';
       };
+
+    yt-dlp = pkgs.unstable.yt-dlp;
 
     tmsu = prev.tmsu.overrideAttrs (o: {
       patches = o.patches or [] ++ [ (builtins.toFile "tmsu-patch" ''

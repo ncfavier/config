@@ -15,7 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xhmm.url = "github:schuelermine/xhmm";
-    nur.url = "nur";
+    nur = {
+      url = "nur";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     dns = {
       url = "github:kirelagin/dns.nix";
       inputs.nixpkgs.follows = "nixpkgs";

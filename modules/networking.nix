@@ -108,40 +108,6 @@
                 phase2-auth = "mschapv2";
               };
             };
-
-            # TODO remove
-            chalmers = {
-              connection = {
-                type = "vpn";
-                id = "Chalmers";
-                autoconnect = "false";
-              };
-              ipv4 = {
-                method = "auto";
-                never-default = "true";
-                route1 = "129.16.0.0/16"; # Chalmers
-                route2 = "130.241.0.0/16"; # GU
-                route3 = "40.126.0.0/10"; # Microsoft
-              };
-              ipv6 = {
-                method = "disabled";
-              };
-              vpn = {
-                gateway = "vpn-gw.chalmers.se";
-                ipsec-enabled = "yes";
-                refuse-chap = "yes";
-                refuse-eap = "yes";
-                refuse-mschap = "yes";
-                refuse-pap = "yes";
-                service-type = "org.freedesktop.NetworkManager.l2tp";
-                user = my.chalmersId;
-                user-auth-type = "password";
-              };
-              vpn-secrets = {
-                ipsec-psk = "$CHALMERS_PSK";
-                password = "$CHALMERS_PASSWORD";
-              };
-            };
           };
         };
       };

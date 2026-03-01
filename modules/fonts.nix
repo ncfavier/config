@@ -51,6 +51,7 @@
           tex-gyre.schola
           tex-gyre-math.schola
           etBook
+          vollkorn
         ];
         fontconfig = {
           enable = true;
