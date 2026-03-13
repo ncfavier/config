@@ -130,20 +130,19 @@
 
     keys.composeKey = "rctrl";
 
-    # TLP spawns endless processes for some reason
-    # services.tlp = {
-    #   enable = true;
-    #   settings = {
-    #     CPU_ENERGY_PERF_POLICY_ON_AC = "power";
-    #     START_CHARGE_THRESH_BAT0 = 100;
-    #     STOP_CHARGE_THRESH_BAT0 = 100;
-    #   };
-    # };
-    # services.power-profiles-daemon.enable = false;
-    systemd.services.power-profiles-daemon = {
-      serviceConfig.ExecStartPost = [
-        "${getBin config.services.power-profiles-daemon.package}/bin/powerprofilesctl set power-saver"
-      ];
+    services.power-profiles-daemon.enable = false;
+    services.tlp.enable = false;
+    services.auto-cpufreq = {
+      enable = true;
+      settings = rec {
+        charger = {
+          governor = "powersave";
+          turbo = "never";
+          energy_performance_preference = "power";
+          energy_perf_bias = "power";
+          platform_profile = "low-power";
+        };
+      };
     };
 
     battery.battery = "BAT1";

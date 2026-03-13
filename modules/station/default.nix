@@ -80,7 +80,7 @@ in optionalAttrs this.isStation {
       tmsu
       gucharmap
       (shellScriptWith "unicode-analyse" {
-        deps = [ zenity gucharmap ];
+        deps = [ zenity gucharmap pkgs.xcompose.xcompose ];
       } (readFile ./unicode-analyse.sh))
     ];
 
@@ -96,6 +96,10 @@ in optionalAttrs this.isStation {
           collection-publishers
           ;
       };
+    };
+
+    hm.programs.halloy = {
+      enable = true;
     };
 
     hm.xdg.configFile."agda/defaults".text = ''

@@ -68,6 +68,13 @@
           port = 4022;
           user = "nf";
         };
+
+        "darwin darwin-build-box.nix-community.org" = {
+          hostname = "darwin-build-box.nix-community.org";
+          user = my.githubUsername;
+          setEnv.TERM = "xterm-256color";
+          setEnv.LANG = "en_US.UTF-8";
+        };
       } ]
     );
   };

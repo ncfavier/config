@@ -546,10 +546,6 @@ fc-which() {
     fc-list ":charset=$codepoint"
 }
 
-xcompose() { # print the path to the system-wide XCompose file
-    echo "$(pkgs xorg.libX11)/share/X11/locale/en_US.UTF-8/Compose"
-}
-
 hm() {
     if (( ! $# )); then
         set -- status

@@ -102,9 +102,9 @@ in {
               owner = my.githubUsername;
               repo = "agda-mode-vscode";
               rev = "live2";
-              hash = "sha256-onpePI80PnAA2VK3nUF4xzT45M3vi5q3F21LbIoWpFM=";
+              hash = "sha256-AF6vn0z7zDTLJDIU1RpPAqUfG0JD2VX9ttwLtUyOb0Y=";
             };
-            npmDepsHash = "sha256-JiqFhSmL8FB3zrp+jx7gP9jFfPPJHwXqOTJ43Ob4AqE=";
+            npmDepsHash = "sha256-3/xwpWkm8h+vWqxcPMHEwi84nxMkaJ5uLL5vi53Dwqc=";
             PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = 1;
             makeCacheWritable = true;
             nativeBuildInputs = [ pkgs.vsce ];

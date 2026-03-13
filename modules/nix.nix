@@ -270,6 +270,11 @@
       ];
 
       hm = {
+        programs.nix-init = {
+          enable = true;
+          settings.maintainers = [ my.githubUsername ];
+        };
+
         programs.bash.initExtra = ''
           _complete_nix_cmd() {
             local skip=$1; shift

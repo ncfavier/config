@@ -61,7 +61,10 @@
   hm = {
     programs.ripgrep = {
       enable = true;
-      arguments = [ "--hidden" ];
+      arguments = [
+        "--hidden"
+        "--glob=!.git"
+      ];
     };
 
     programs.htop = {

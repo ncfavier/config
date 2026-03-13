@@ -457,17 +457,33 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1772064736,
-        "narHash": "sha256-xwL+opBKxhoIVlg/jjv1yghwKI+MZQLWyo/YWNXKOck=",
+        "lastModified": 1773046814,
+        "narHash": "sha256-3CEw64UyzEk5QjfbcXNIl4TfmIpa2oY+duuo6aiawcU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "89b61a4c827bf12b223642f59fcc0753efd528cb",
+        "rev": "0c6c0dd2469abaa216599bb19bbf77a328af6564",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
         "ref": "nixos-unstable-small",
         "type": "indirect"
+      }
+    },
+    "nixpkgs-xcompose": {
+      "locked": {
+        "lastModified": 1773325028,
+        "narHash": "sha256-NPR0DSb2MKPioiqkocl8rxmHTOury2Qdj+dgJYez+5A=",
+        "owner": "ncfavier",
+        "repo": "nixpkgs",
+        "rev": "1af1956174a7db5e9f8046cbeb92bc1e0d49175b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ncfavier",
+        "ref": "xcompose",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs_2": {
@@ -554,11 +570,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769190062,
-        "narHash": "sha256-HXy1M80RWBW7cIIMQ/bBV/pMa3NmK6MYOOz/kA4bHIw=",
+        "lastModified": 1772663582,
+        "narHash": "sha256-4BGP649jCk5z86TfyqwYSzsAdVlor/rsumBNhids/lc=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "82023efed13ef3c1bfe99f0cd669139b4a2d2694",
+        "rev": "5547836efb37724c9786cb5c1f4f671a4ad82bdb",
         "type": "github"
       },
       "original": {
@@ -622,6 +638,7 @@
         "nixpkgs-twemoji-src": "nixpkgs-twemoji-src",
         "nixpkgs-typst-wrapper": "nixpkgs-typst-wrapper",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-xcompose": "nixpkgs-xcompose",
         "nur": "nur",
         "qeval": "qeval",
         "simple-nixos-mailserver": "simple-nixos-mailserver",

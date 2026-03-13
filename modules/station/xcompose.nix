@@ -241,7 +241,7 @@
     "‸]" = "⌝";
     "⋆2!" = "‼";
     "⋆2?" = "⁇";
-    "⋆zw" = "​";
+    "⋆zw" = "​"; # ZERO WIDTH SPACE
     "⋆znj" = "";
     "⋆zwj" = "";
     "⋆wj" = "⁠";
@@ -285,15 +285,21 @@
     json2compose < ${builtins.toFile "compose.json" (builtins.toJSON compose)} > "$out"
   '';
 in {
-  hm.home.file.".XCompose" = {
-    text = ''
-      include "%L"
-      include "${inputs.agda-compose.packages.x86_64-linux.agda-compose}"
-      include "${composeFile}"
-    '';
+  hm = {
+    home.file.".XCompose" = {
+      text = ''
+        include "%L"
+        include "${inputs.agda-compose.packages.x86_64-linux.agda-compose}"
+        include "${composeFile}"
+      '';
 
-    onChange = ''
-      ${getBin pkgs.ibus}/bin/ibus restart || true
-    '';
+      onChange = ''
+        ${getBin pkgs.ibus}/bin/ibus restart || true
+      '';
+    };
+
+    home.packages = [
+      pkgs.xcompose.xcompose
+    ];
   };
 }
