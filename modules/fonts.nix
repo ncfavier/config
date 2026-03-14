@@ -4,7 +4,7 @@
       fonts.fontconfig.enable = mkDefault false;
 
       nixpkgs.overlays = [ (self: super: {
-        twemoji-color-font = pkgs.twemoji-src.twemoji-color-font-src.overrideAttrs (old: {
+        twemoji-color-font-src = super.twemoji-color-font-src.overrideAttrs (old: {
           src = inputs.twemoji;
         });
       }) ];
@@ -50,7 +50,7 @@
           tex-gyre-math.pagella
           tex-gyre.schola
           tex-gyre-math.schola
-          etBook
+          et-book
           vollkorn
         ];
         fontconfig = {
@@ -124,7 +124,7 @@
 
       environment.systemPackages = with pkgs; [
         (writeShellScriptBin "show-siji" ''
-          exec ${xorg.xfd}/bin/xfd -rows 23 -columns 28 -fn '-*-siji-*-10-*'
+          exec ${xfd}/bin/xfd -rows 23 -columns 28 -fn '-*-siji-*-10-*'
         '')
       ];
     })

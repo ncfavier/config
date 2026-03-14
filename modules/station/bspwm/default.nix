@@ -100,7 +100,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
       numlock.enable = true;
       initExtra = ''
         [[ -f ~/.fehbg ]] && ~/.fehbg &
-        ${pkgs.xorg.xset}/bin/xset -b
+        ${pkgs.xset}/bin/xset -b
       '';
     };
 
@@ -208,7 +208,7 @@ in mkEnableModule [ "my-programs" "bspwm" ] {
         "XF86AudioMicMute" =
           "volume toggle-mute && mic-notify";
         "XF86MonBrightness{Down,Up}" =
-          "backlight {-,+}";
+          "brightnessctl -q set 5%{-,+}";
         "{_,super} + {_,ctrl} + {_,alt} + {_,shift} + ${config.keys.printScreenKey}" =
           "shoot {_,-c} {_,-n} {_,-v} {_,-u}";
         "super + u" =

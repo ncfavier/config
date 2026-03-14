@@ -8,7 +8,7 @@
       viAlias = true;
       extraConfig = readFile ./init.vim;
       plugins = with pkgs.vimPlugins; [
-        ctrlp
+        ctrlp-vim
         nvim-lastplace
         editorconfig-vim
         vim-sleuth

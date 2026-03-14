@@ -30,6 +30,7 @@ in optionalAttrs this.isStation {
       gparted
       gnome-system-monitor
       gnome-disk-utility
+      brightnessctl
     ];
 
     hm.home.packages = with pkgs; [
@@ -42,7 +43,7 @@ in optionalAttrs this.isStation {
       inlyne
       typos
       agdaWithLibs
-      (rocq-update.coq.withPackages (ps: with ps; [ stdlib vsrocq-language-server ]))
+      (coq.withPackages (ps: with ps; [ stdlib vsrocq-language-server ]))
       elan
       tenacity
       gimp3
@@ -50,12 +51,12 @@ in optionalAttrs this.isStation {
       graphviz
       inkscape
       poppler-utils
-      (pkgs.typst-wrapper.typst.wrapper {
+      (pkgs.typst.wrapper {
         packages = ps: with ps; [
           touying
         ];
         fonts = [
-          pkgs.twemoji-color-font
+          pkgs.twemoji-color-font-src
         ];
         extraWrapperArgs = [ "--set" "TYPST_IGNORE_SYSTEM_FONTS" "true" ]; # ignore the non-SVG version of Twemoji
       })

@@ -21,7 +21,6 @@
     };
 
     services.mpd-mpris.enable = true;
-    services.mpd-mpris.package = pkgs.mpd-mpris-fix.mpd-mpris;
 
     services.playerctld = {
       enable = true;

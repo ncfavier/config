@@ -41,10 +41,6 @@
     agda-compose.url = "github:ncfavier/agda-compose";
 
     # Temporary pins
-    nixpkgs-rocq-update.url = "github:nixos/nixpkgs/master";
-    nixpkgs-mpd-mpris-fix.url = "github:ncfavier/nixpkgs/mpd-mpris-revert";
-    nixpkgs-typst-wrapper.url = "github:ncfavier/nixpkgs/typst-fonts";
-    nixpkgs-twemoji-src.url = "github:ncfavier/nixpkgs/twemoji-src";
     nixpkgs-xcompose.url = "github:ncfavier/nixpkgs/xcompose";
     twemoji.url = "github:ncfavier/twemoji-color-font/emoji-17";
     twemoji.flake = false;

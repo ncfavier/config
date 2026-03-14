@@ -67,7 +67,7 @@ in {
       gtk.gtk4.cursorTheme = cursorTheme; # GTK 4 does its own DPI scaling
 
       home.packages = with pkgs; [
-        xorg.xev
+        xev
         arandr
         xdotool
       ];

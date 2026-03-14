@@ -37,7 +37,7 @@
         {
           experimental-features = [ "nix-command" "flakes" ];
           warn-dirty = false;
-          trusted-users = [ "root" "@wheel" ];
+          trusted-users = [ "@wheel" ];
           max-jobs = "auto";
           log-lines = 30;
           connect-timeout = 5;
@@ -74,9 +74,11 @@
 
       nix = {
         settings = {
-          experimental-features = [ "auto-allocate-uids" ];
           keep-derivations = true;
-          auto-allocate-uids = true;
+
+          # https://git.lix.systems/lix-project/lix/issues/1154
+          # experimental-features = [ "auto-allocate-uids" ];
+          # auto-allocate-uids = true;
         };
 
         extraOptions = ''
