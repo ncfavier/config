@@ -48,6 +48,7 @@ in {
           locations."= /glam-slides.pdf".alias = "${workRoot}/l3-ens/internship-glam/report/slides.pdf";
           locations."= /focusing.pdf".alias = "${workRoot}/m1-ens/internship-linearlogic/report.pdf";
           locations."= /focusing-slides.pdf".alias = "${workRoot}/m1-ens/internship-linearlogic/slides.pdf";
+          locations."= /levels.pdf".alias = "${workRoot}/phd/universe-polymorphism/popl26-final.pdf";
         };
 
         "www.${my.domain}".globalRedirect = my.domain;

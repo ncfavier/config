@@ -121,7 +121,7 @@ in {
         };
       };
 
-      services.resolved.domains = [ interface ];
+      services.resolved.settings.Resolve.Domains = [ interface ];
     })
 
     (mkIf (enable && this.isStation) (let
