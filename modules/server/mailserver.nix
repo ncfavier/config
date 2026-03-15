@@ -2,7 +2,7 @@
   imports = [ inputs.simple-nixos-mailserver.nixosModules.default ];
 
   secrets.dkim = {
-    path = "/etc/dkim/${my.domain}.${config.mailserver.dkimSelector}.key";
+    path = "/etc/dkim/${my.domain}.${config.mailserver.dkim.defaults.selector}.key";
     owner = config.services.rspamd.user;
     group = config.services.rspamd.group;
   };
@@ -20,7 +20,7 @@
     fqdn = my.domain;
     domains = [ my.domain ];
     x509.useACMEHost = config.mailserver.fqdn;
-    dkimKeyDirectory = "/etc/dkim";
+    dkim.keyDirectory = "/etc/dkim";
     loginAccounts.${my.email} = {
       hashedPassword = "$2b$05$1YO805N1yn2vVM/c4K8nRuNix1ruHc4SJDDbWREgrcAaamxiqCYKS";
       aliases = [ "@${my.domain}" ];

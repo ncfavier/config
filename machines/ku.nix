@@ -91,6 +91,7 @@
     my-services.weechat.enable = true;
     my-services.bothendieck.enable = true;
     my-services.lambdabot.enable = true;
+    my-services.soju.enable = true;
 
     my.hashedPassword = "$y$j9T$gdhcWVYa8vkGfJpYE7XbQ.$QN9N0v0BZpFbAfMkqDoYN0O8KiTwXTN193kRowdrG0B";
 

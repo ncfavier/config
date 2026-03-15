@@ -122,7 +122,7 @@ in {
       after = [ "network.target" "network-online.target" "nss-lookup.target" ];
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
-      environment.TYPST_FONT_PATHS = pkgs.twemoji-color-font;
+      environment.TYPST_FONT_PATHS = pkgs.twemoji-color-font-src;
       serviceConfig = {
         DynamicUser = true;
         LoadCredential = mkIf (cfg.secretsFile != null) "secrets:${cfg.secretsFile}";
