@@ -154,5 +154,15 @@ in {
     systemd.services.phpfpm-upload.serviceConfig.ProtectHome = mkForce false;
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+    systemd.services.check-links-www = {
+      serviceConfig.Type = "oneshot";
+      startAt = "Sunday 12:34";
+      path = [ pkgs.lychee ];
+      script = ''
+        cd ${inputs.www}
+        lychee -vv --no-progress './**/*.md' './**/*.html' './**/*.rst'
+      '';
+    };
   };
 }

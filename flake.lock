@@ -745,17 +745,17 @@
     "www": {
       "flake": false,
       "locked": {
-        "lastModified": 1772981577,
-        "narHash": "sha256-DVH0USwMFOvyZaUqS/UdyDY6Sa+JCCLVtBhs6i2pAAk=",
-        "owner": "ncfavier",
-        "repo": "monade.li",
-        "rev": "090e8a912a01d29d31d4e229a40ff01eed35ea0a",
-        "type": "github"
+        "lastModified": 1773593756,
+        "narHash": "sha256-eUpku9KSWLFZPWS0YYz+Z6UdrsHoCcA8stWRA4suV6M=",
+        "ref": "refs/heads/main",
+        "rev": "109ce524c216e05737af09aa6d3c62ec9ff7ddd9",
+        "revCount": 100,
+        "type": "git",
+        "url": "https://codeberg.org/ncf/monade.li"
       },
       "original": {
-        "owner": "ncfavier",
-        "repo": "monade.li",
-        "type": "github"
+        "type": "git",
+        "url": "https://codeberg.org/ncf/monade.li"
       }
     },
     "xhmm": {

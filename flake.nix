@@ -28,7 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     www = {
-      url = "github:ncfavier/monade.li";
+      url = "git+https://codeberg.org/ncf/monade.li";
       flake = false;
     };
     bothendieck = {
